@@ -1,5 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.PJ6000.hydra</groupId>
   <artifactId>hydra</artifactId>
@@ -65,8 +67,12 @@
               <artifactId>wildfly-maven-plugin</artifactId>
               <version>1.0.2.Final</version>
               <configuration>
+                  <!-- To deploy on the remote server:-->
+
                   <!--<hostname>80.240.140.23</hostname>
                   <port>9990</port>-->
+
+                  <!-- Without this, the project will deploy on local server-->
                   <username>admin</username>
                   <password>admin</password>
               </configuration>
@@ -77,8 +83,8 @@
               <artifactId>maven-compiler-plugin</artifactId>
               <version>3.2</version>
               <configuration>
-                  <source>1.7</source>
-                  <target>1.7</target>
+                  <source>1.8</source>
+                  <target>1.8</target>
               </configuration>
           </plugin>
 
