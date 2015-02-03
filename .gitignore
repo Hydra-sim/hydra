@@ -1,6 +1,7 @@
 ### Custom gitingores
 
 src/main/webapp/js/vendor/
+node/
 
 ###
 
