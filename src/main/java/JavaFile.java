@@ -3,5 +3,5 @@
  */
 public class JavaFile {
 
-    // What about now?
+    String testing = "Do I have to make drastic changes?";
 }
