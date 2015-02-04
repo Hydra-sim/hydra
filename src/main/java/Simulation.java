@@ -52,6 +52,33 @@ public class Simulation {
     //endregion
 
     public SimulationData simulate() {
-        return new SimulationData();
+
+        int entitiesProduced, entitiesConsumed;
+
+        entitiesProduced = entitiesConsumed = 0;
+
+        for(int i = 0; i < ticks; i++) {
+
+            for(Producer producer : producers) {
+
+                if(i == 0 || producer.getTicksToWait() % i == 0) {
+
+                    entitiesProduced += producer.getEntitiesToProduce();
+                }
+            }
+
+            for(Consumer consumer : consumers) {
+
+                entitiesConsumed += consumer.getEntitesConsumedPerTick();
+            }
+
+        }
+
+        if(entitiesConsumed > entitiesProduced) entitiesConsumed = entitiesProduced;
+
+        int entitesInQueue = entitiesProduced - entitiesConsumed;
+        if(entitesInQueue < 0) entitesInQueue = 0;
+
+        return new SimulationData(entitiesConsumed, entitesInQueue, 0);
     }
 }
