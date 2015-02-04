@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class TestSimulation {
 
     private int ticks = 10;
-    private int baseValue = 10;
+    private int baseValue = 1;
 
     @Test
     public void testSimulationConsumedAndProducedEqual(){
@@ -56,5 +56,23 @@ public class TestSimulation {
 
         assertEquals(0, simulationData.getEntitiesInQueue());
         assertEquals(baseValue * ticks, simulationData.getEntitiesConsumed());
+    }
+
+    @Test
+    public void testSimulationWaitingTime() {
+
+        List<Producer> producers = new ArrayList<>();
+        producers.add(new Producer(baseValue * 2, 0));
+        List<Consumer> consumers = new ArrayList<>();
+        consumers.add(new Consumer(baseValue));
+
+        Simulation simulation = new Simulation(consumers, producers, ticks);
+        SimulationData simulationData = simulation.simulate();
+
+        int waitingTime;
+        if(ticks / 2 - 1 < 0) waitingTime = 0;
+        else waitingTime = ticks / 2 - 1;
+
+        assertEquals(waitingTime, simulationData.getMaxWaitingTimeInTicks());
     }
 }

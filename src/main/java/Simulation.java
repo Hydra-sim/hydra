@@ -53,32 +53,43 @@ public class Simulation {
 
     public SimulationData simulate() {
 
-        int entitiesProduced, entitiesConsumed;
+        List<Entity> entities = new ArrayList<>();
 
-        entitiesProduced = entitiesConsumed = 0;
+        int entitiesConsumed = 0;
 
         for(int i = 0; i < ticks; i++) {
+
+            for(Entity entity : entities) {
+
+                entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + 1 );
+            }
 
             for(Producer producer : producers) {
 
                 if(i == 0 || producer.getTicksToWait() % i == 0) {
 
-                    entitiesProduced += producer.getEntitiesToProduce();
+                    for(int j = 0; j < producer.getEntitiesToProduce(); j++) {
+                        entities.add(new Entity(0));
+                    }
                 }
             }
 
             for(Consumer consumer : consumers) {
 
-                entitiesConsumed += consumer.getEntitesConsumedPerTick();
+                for (int j = 0; j < consumer.getEntitesConsumedPerTick(); j++) {
+                    if (entities.size() != 0) entities.remove(0);
+                    else break;
+                    entitiesConsumed++;
+                }
             }
 
         }
+        //Calculate longest waiting time in ticks
 
-        if(entitiesConsumed > entitiesProduced) entitiesConsumed = entitiesProduced;
+        int maxWaitingTime;
+        if(entities.size() == 0) maxWaitingTime = 0;
+        else maxWaitingTime = entities.get(0).getWaitingTimeInTicks();
 
-        int entitesInQueue = entitiesProduced - entitiesConsumed;
-        if(entitesInQueue < 0) entitesInQueue = 0;
-
-        return new SimulationData(entitiesConsumed, entitesInQueue, 0);
+        return new SimulationData(entitiesConsumed, entities.size(), maxWaitingTime);
     }
 }
