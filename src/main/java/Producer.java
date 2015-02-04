@@ -9,8 +9,7 @@ public class Producer {
     //region constructors
     public Producer() {
 
-        this.entitiesToProduce = 0;
-        this.ticksToWait = 0;
+        this(0, 0);
     }
 
     public Producer(int entitiesToProduce, int ticksToWait) {

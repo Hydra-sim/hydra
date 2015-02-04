@@ -9,19 +9,19 @@ public class Simulation {
     private List<Consumer> consumers;
     private List<Producer> producers;
     private int ticks;
+    List<Entity> entities;
 
     //region constructors
     public Simulation() {
 
-        consumers = new ArrayList<>();
-        producers = new ArrayList<>();
-        ticks = 0;
+        this(new ArrayList<>(), new ArrayList<>(), 0);
     }
 
     public Simulation(List<Consumer> consumers, List<Producer> producers, int ticks) {
         this.consumers = consumers;
         this.producers = producers;
         this.ticks = ticks;
+        entities = new ArrayList<>();
     }
     //endregion
 
@@ -51,45 +51,68 @@ public class Simulation {
     }
     //endregion
 
+    //region simulation
     public SimulationData simulate() {
 
-        List<Entity> entities = new ArrayList<>();
+        entities = new ArrayList<>();
 
         int entitiesConsumed = 0;
 
         for(int i = 0; i < ticks; i++) {
 
-            for(Entity entity : entities) {
+            increaseWaitingTime();
 
-                entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + 1 );
-            }
+            addEntities(i);
 
-            for(Producer producer : producers) {
-
-                if(i == 0 || producer.getTicksToWait() % i == 0) {
-
-                    for(int j = 0; j < producer.getEntitiesToProduce(); j++) {
-                        entities.add(new Entity(0));
-                    }
-                }
-            }
-
-            for(Consumer consumer : consumers) {
-
-                for (int j = 0; j < consumer.getEntitesConsumedPerTick(); j++) {
-                    if (entities.size() != 0) entities.remove(0);
-                    else break;
-                    entitiesConsumed++;
-                }
-            }
+            entitiesConsumed = consumeEntities(entitiesConsumed);
 
         }
-        //Calculate longest waiting time in ticks
 
-        int maxWaitingTime;
-        if(entities.size() == 0) maxWaitingTime = 0;
-        else maxWaitingTime = entities.get(0).getWaitingTimeInTicks();
+        int maxWaitingTime = calculateWaitingTime();
 
         return new SimulationData(entitiesConsumed, entities.size(), maxWaitingTime);
     }
+
+    private int calculateWaitingTime() {
+
+        if(entities.size() == 0) return 0;
+        else return entities.get(0).getWaitingTimeInTicks();
+
+    }
+
+    private int consumeEntities(int entitiesConsumed) {
+
+        for(Consumer consumer : consumers) {
+
+            for (int j = 0; j < consumer.getEntitesConsumedPerTick(); j++) {
+                if (entities.size() != 0) entities.remove(0);
+                else break;
+                entitiesConsumed++;
+            }
+        }
+
+        return entitiesConsumed;
+    }
+
+    private void addEntities(int i) {
+
+        for(Producer producer : producers) {
+
+            if(i == 0 || producer.getTicksToWait() % i == 0) {
+
+                for(int j = 0; j < producer.getEntitiesToProduce(); j++) {
+                    entities.add(new Entity(0));
+                }
+            }
+        }
+    }
+
+    private void increaseWaitingTime() {
+
+        for(Entity entity : entities) {
+
+            entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + 1 );
+        }
+    }
+    //endregion
 }

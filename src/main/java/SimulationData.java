@@ -10,9 +10,7 @@ public class SimulationData {
     //region constructors
     public SimulationData() {
 
-        this.entitiesConsumed = 0;
-        this.entitiesInQueue = 0;
-        this.maxWaitingTimeInTicks = 0;
+        this(0, 0, 0);
     }
 
     public SimulationData(int entitiesConsumed, int entitiesInQueue, int maxWaitingTimeInTicks) {

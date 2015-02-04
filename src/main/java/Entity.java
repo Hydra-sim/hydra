@@ -8,7 +8,7 @@ public class Entity {
     //region constructor
     public Entity() {
 
-        this.waitingTimeInTicks = 0;
+        this(0);
     }
 
     public Entity(int waitingTimeInTicks) {

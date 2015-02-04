@@ -7,7 +7,7 @@ public class Consumer {
 
     //region constructors
     public Consumer() {
-        this.entitesConsumedPerTick = 0;
+        this(0);
     }
 
     public Consumer(int entitesConsumedPerTick) {
