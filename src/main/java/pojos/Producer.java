@@ -1,3 +1,5 @@
+package pojos;
+
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
  */

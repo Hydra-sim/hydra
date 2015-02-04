@@ -1,3 +1,10 @@
+package calculations;
+
+import pojos.Consumer;
+import pojos.Entity;
+import pojos.Producer;
+import pojos.SimulationData;
+
 import java.util.ArrayList;
 import java.util.List;
 

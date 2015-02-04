@@ -1,4 +1,8 @@
+import calculations.Simulation;
 import org.junit.Test;
+import pojos.Consumer;
+import pojos.Producer;
+import pojos.SimulationData;
 
 import java.util.ArrayList;
 import java.util.List;
