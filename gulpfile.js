@@ -2,7 +2,7 @@ var gulp = require('gulp'),
     bower = require('gulp-bower');
 
 var config = {
-    bowerDir: './src/main/webapp/js/vendor/'
+    bowerDir: './src/main/webapp/vendor/'
 };
 
 gulp.task('default', ['bower']);
