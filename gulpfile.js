@@ -43,6 +43,16 @@ gulp.task('connect', ['watch'], function() {
         livereload: true,
         port: 8081
     });
+
+    /*
+    new SimplePathRouter()
+        .when('/', new SimpleReverseProxy(['http://localhost:8081']))
+        .when('/api', new SimpleReverseProxy(['http://localhost:8080']))
+        .listen(8082);
+    */
+    var proxy = require('redbird')({port: 8082});
+    proxy.register('http://localhost:8082/api', 'http://localhost:8080/hydra/api');
+    proxy.register('http://localhost:8082', 'http://localhost:8081');
 });
 
-gulp.task('dev', ['watch']);
+gulp.task('dev', ['connect']);
