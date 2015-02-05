@@ -10,4 +10,10 @@
         return $resource('api/simulation/:id', {id: "@_id"});
     }]);
 
+    app.factory('SimResult', function() {
+        return {
+            data: {}
+        }
+    });
+
 })();

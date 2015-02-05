@@ -1,14 +1,11 @@
 package api;
 
-import org.hibernate.engine.spi.QueryParameters;
 import pojos.Consumer;
 import pojos.Producer;
 import pojos.SimulationData;
 
-import javax.json.Json;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
