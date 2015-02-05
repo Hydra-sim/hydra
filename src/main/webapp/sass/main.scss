@@ -1,5 +1,9 @@
 $header_bg: black;
 
+body {
+  margin-top: 50px;
+}
+
 header {
   background: $header_bg;
   position: absolute;
@@ -11,4 +15,5 @@ header {
 
 .logo img {
   height: 25px;
+  margin: 13px;
 }

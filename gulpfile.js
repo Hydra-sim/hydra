@@ -1,27 +1,48 @@
 var gulp = require('gulp'),
     bower = require('gulp-bower'),
-    sass = require('gulp-sass');
+    sass = require('gulp-sass')
+    connect = require('gulp-connect');
+
+var rootWebDir = './src/main/webapp/';
 
 var config = {
-    bowerDir: './src/main/webapp/vendor/',
-    sassFiles:  './src/main/webapp/sass/*.scss',
-    cssOutputDir: './src/main/webapp/css/'
+    bowerDir: rootWebDir + 'vendor/',
+    sassFiles:  rootWebDir + 'sass/*.scss',
+    cssOutputDir: rootWebDir + 'css/'
 };
 
 gulp.task('default', ['bower', 'sass']);
 
 gulp.task('bower', function() {
     return bower()
-        .pipe(gulp.dest(config.bowerDir));
+        .pipe(gulp.dest(config.bowerDir))
+        .pipe(connect.reload());
 });
 
 gulp.task('sass', function () {
     return gulp.src(config.sassFiles)
         .pipe(sass())
-        .pipe(gulp.dest(config.cssOutputDir));
+        .pipe(gulp.dest(config.cssOutputDir))
+        .pipe(connect.reload());
+});
+
+gulp.task('html', function () {
+    gulp.src(rootWebDir + '*.html')
+        .pipe(connect.reload());
 });
 
 gulp.task('watch', ['default'], function () {
     gulp.watch('./bower.json', ['bower']);
     gulp.watch(config.sassFiles, ['sass']);
-})
+    gulp.watch(rootWebDir + '*.html', ['html']);
+});
+
+gulp.task('connect', ['watch'], function() {
+    connect.server({
+        root: [rootWebDir],
+        livereload: true,
+        port: 8081
+    });
+});
+
+gulp.task('dev', ['watch']);
