@@ -34,7 +34,7 @@ gulp.task('html', function () {
 gulp.task('watch', ['default'], function () {
     gulp.watch('./bower.json', ['bower']);
     gulp.watch(config.sassFiles, ['sass']);
-    gulp.watch(rootWebDir + '*.html', ['html']);
+    gulp.watch(rootWebDir + '/**/*.html', ['html']);
 });
 
 gulp.task('connect', ['watch'], function() {
