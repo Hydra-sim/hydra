@@ -1,0 +1,14 @@
+$header_bg: black;
+
+header {
+  background: $header_bg;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+}
+
+.logo img {
+  height: 25px;
+}
