@@ -6,11 +6,13 @@
             <div class="col-lg-12">
                 <h2>Producers</h2>
             </div>
-            <div class="col-lg-6">
-                <span>Time between buses</span>
-            </div>
+            <div class="col-lg-6">Time between buses</div>
             <div class="col-lg-6">
                 <input type="text" class="form-control" ng-model="timeBetweenBuses"/>
+            </div>
+            <div class="col-lg-6">Entities to produce</div>
+            <div class="col-lg-6">
+                <input type="text" class="form-control" ng-model="entitesToProduce"/>
             </div>
         </div>
 
@@ -24,14 +26,16 @@
             <div class="col-lg-6">
                 <input type="text" class="form-control" ng-model="numberOfEntrances"/>
             </div>
+            <div class="col-lg-6">Entites Consumed Per Tick</div>
+            <div class="col-lg-6">
+                <input type="text" class="form-control" ng-model="entitesConsumedPerTick"/>
+            </div>
         </div>
 
         <div class="row">
             <div class="col-lg-12">
                 <h3>Time the simulation will run</h3>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-1">Days</div>
             <div class="col-lg-3">
                 <input type="text" class="form-control" ng-model="days" />
