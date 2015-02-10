@@ -3,51 +3,46 @@
 
     <form class="form-horizontal">
         <div class="row">
-            <div class="col-lg-6">
-                <div class="input-group">
-                    <span>Time between buses</span>
-                </div>
+            <div class="col-lg-12">
+                <h2>Producers</h2>
             </div>
             <div class="col-lg-6">
-                <div class="input-group">
-                    <input type="text" class="form-control" ng-model="timeBetweenBuses"/>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="input-group">
-                    <span>Number of entrances</span>
-                </div>
+                <span>Time between buses</span>
             </div>
             <div class="col-lg-6">
-                <div class="input-group">
-                    <input type="text" class="form-control" ng-model="numberOfEntrances"/>
-                </div>
+                <input type="text" class="form-control" ng-model="timeBetweenBuses"/>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-12">
-                <div class="input-group">
-                    Time the simulation will run:
-                </div>
+                <h2>Consumers</h2>
             </div>
-            <div class="col-lg-3">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="days" ng-model="days" />
-                </div>
+            <div class="col-lg-6">
+                <span>Number of entrances</span>
             </div>
-            <div class="col-lg-3">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="hours" ng-model="hours" />
-                </div>
+            <div class="col-lg-6">
+                <input type="text" class="form-control" ng-model="numberOfEntrances"/>
             </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Time the simulation will run</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1">Days</div>
             <div class="col-lg-3">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="minutes" ng-model="minutes" />
-                </div>
+                <input type="text" class="form-control" ng-model="days" />
+            </div>
+            <div class="col-lg-1">Hours</div>
+            <div class="col-lg-3">
+                    <input type="text" class="form-control" ng-model="hours" />
+            </div>
+            <div class="col-lg-1">Minutes</div>
+            <div class="col-lg-3">
+                    <input type="text" class="form-control" ng-model="minutes" />
             </div>
         </div>
     </form>

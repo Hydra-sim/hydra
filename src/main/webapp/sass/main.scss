@@ -7,7 +7,7 @@ $header_height: 100px;
 body {
   margin-top: $header_height;
   margin-bottom: 30px;
-  font-family: Avinor;
+  font-family: Avinor, sans-serif;
 }
 
 header {
@@ -40,6 +40,10 @@ footer {
   font-weight: 100;
   margin-top: 10px;
   text-align: center;
+}
+
+.menu-field-name:hover span {
+  border-bottom: 1px dashed #999;
 }
 
 .menu-field-button {
