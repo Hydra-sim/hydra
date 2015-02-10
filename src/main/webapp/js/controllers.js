@@ -44,9 +44,7 @@
             var sim = new Simulation({
                 'timeBetweenBuses': $scope.timeBetweenBuses,
                 'numberOfEntrances': $scope.numberOfEntrances,
-                'days': $scope.days,
-                'hours': $scope.hours,
-                'minutes': $scope.minutes
+                'ticks': $scope.days*24*60 + $scope.hours * 60 + $scope.minutes
             });
 
             sim.$save().then(function(result) {

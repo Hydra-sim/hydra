@@ -72,9 +72,8 @@ public class Simulation {
         for(int i = 0; i < input.numberOfEntrances; i++)
             consumers.add(new Consumer(baseValue));
 
-        int ticks = input.days * 24 * 60 + input.hours * 60 + input.minutes;
 
-        calculations.Simulation simulation = new calculations.Simulation(consumers, producers, ticks);
+        calculations.Simulation simulation = new calculations.Simulation(consumers, producers, input.ticks);
         return Response.ok(simulation.simulate()).build();
     }
 

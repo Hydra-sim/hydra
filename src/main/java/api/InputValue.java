@@ -6,7 +6,5 @@ package api;
 class InputValue {
     public int timeBetweenBuses;
     public int numberOfEntrances;
-    public int days;
-    public int hours;
-    public int minutes;
+    public int ticks;
 }
