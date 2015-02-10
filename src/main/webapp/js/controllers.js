@@ -35,6 +35,8 @@
         $scope.days = 0;
         $scope.hours = 1;
         $scope.minutes = 0;
+        $scope.entitesToProduce = 1;
+        $scope.entitesConsumedPerTick = 1;
 
         $rootScope.menu_field_name = "Untitled simulation 01";
 
@@ -44,7 +46,9 @@
             var sim = new Simulation({
                 'timeBetweenBuses': $scope.timeBetweenBuses,
                 'numberOfEntrances': $scope.numberOfEntrances,
-                'ticks': $scope.days*24*60 + $scope.hours * 60 + $scope.minutes
+                'ticks': $scope.days*24*60 + $scope.hours * 60 + $scope.minutes,
+                'entitesToProduce': $scope.entitesToProduce,
+                'entitesConsumedPerTick': $scope.entitesConsumedPerTick
             });
 
             sim.$save().then(function(result) {

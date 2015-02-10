@@ -7,4 +7,6 @@ class InputValue {
     public int timeBetweenBuses;
     public int numberOfEntrances;
     public int ticks;
+    public int entitesToProduce;
+    public int entitesConsumedPerTick;
 }
