@@ -63,7 +63,9 @@
         $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;
         $scope.maxWaitingTimeInTicks    = SimResult.data.maxWaitingTimeInTicks;
 
-        $rootScope.menu_field_button = "test";
+        $rootScope.menu_field_button = "";
+        $rootScope.menu_field_button_icon = "";
+        $rootScope.menu_field_button_click = function() {};
     }]);
 
 })();
