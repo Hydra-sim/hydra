@@ -7,7 +7,7 @@ var rootWebDir = './src/main/webapp/';
 
 var config = {
     bowerDir: rootWebDir + 'vendor/',
-    sassFiles:  rootWebDir + 'sass/*.scss',
+    sassFiles:  rootWebDir + 'sass/main.scss',
     cssOutputDir: rootWebDir + 'css/'
 };
 

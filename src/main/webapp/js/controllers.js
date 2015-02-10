@@ -25,12 +25,14 @@
         };
     }]);
 
-    app.controller('SimulationNew', ['$scope', '$location', 'Simulation', 'SimResult', function ($scope, $location, Simulation, SimResult) {
+    app.controller('SimulationNew', ['$scope', '$location', '$rootScope', 'Simulation', 'SimResult', function ($scope, $location, $rootScope, Simulation, SimResult) {
         $scope.timeBetweenBuses = 10;
         $scope.numberOfEntrances = 1;
         $scope.days = 0;
         $scope.hours = 1;
         $scope.minutes = 0;
+
+        $rootScope.menu_field_name = "Untitled simulation 01";
 
         $scope.runSim = function(timeBetweenBuses, numberOfEntrances, days, hours, minutes) {
             var sim = new Simulation({
