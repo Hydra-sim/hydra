@@ -7,7 +7,7 @@
     ]);
 
     app.factory('Simulation', ['$resource', function($resource) {
-        return $resource('api/simulation/:id', {id: "@_id"});
+        return $resource('api/simulation/:simulationId', {simulationId: '@id'});
     }]);
 
     app.factory('SimResult', function() {

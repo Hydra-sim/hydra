@@ -50,6 +50,10 @@ public class Simulation
         this.date = date;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Simulation(String name, Date date) {
         this.name = name;
         this.date = date;

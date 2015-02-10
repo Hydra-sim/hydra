@@ -14,9 +14,15 @@
     }]);
 
     app.controller('SimulationController', ['$scope', 'Simulation', function ($scope, Simulation) {
-        Simulation.query({}, function(res) {
-            $scope.simulations = res;
-        });
+        $scope.simulations = Simulation.query({});
+
+        $scope.deleteSimulation = function(id) {
+
+            Simulation.delete({}, {"id": id}, function() {
+                $scope.simulations = Simulation.query({});
+            });
+
+        };
     }]);
 
     app.controller('SimulationNew', ['$scope', '$location', 'Simulation', 'SimResult', function ($scope, $location, Simulation, SimResult) {

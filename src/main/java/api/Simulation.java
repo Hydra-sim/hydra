@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,34 +24,39 @@ public class Simulation {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response simulations()
+    public Response list()
     {
-        /*
-        List<model.Simulation> simulations = new ArrayList<model.Simulation>();
-
-        simulations.add(new model.Simulation("Untitled simulation 1", new Date()));
-        simulations.add(new model.Simulation("Untitled simulation 2", new Date()));
-        simulations.add(new model.Simulation("Frank simulation 1", new Date()));
-
-        return Response.ok(simulations).build();
-        */
-
         TypedQuery<model.Simulation> query = entityManager.createNamedQuery(
             "Simulation.findAll",
             model.Simulation.class
         );
 
-        List<model.Simulation> result = query.getResultList();
+        return Response.ok( query.getResultList() ).build();
+    }
 
-        return Response.ok(result).build();
+    @Transactional
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public Response delete(@PathParam("id") int id)
+    {
+        try {
+            model.Simulation item = entityManager.find(model.Simulation.class, id);
+            entityManager.remove(item);
+        }
+        catch (Exception e) {
+            return Response.serverError().build();
+        }
 
+        return Response.ok().build();
     }
 
     @Transactional
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response tasks(InputValue input)
+    public Response add(InputValue input)
     {
         // Create new object in database
         model.Simulation sim = new model.Simulation();
