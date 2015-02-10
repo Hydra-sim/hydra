@@ -7,10 +7,14 @@
         'services'
     ]);
 
-    app.controller('ApplicationController', ['$scope', '$location', function($scope, $location) {
-        $scope.newsimulation = function() {
-            $location.path('/newsimulation')
-        }
+    app.controller('ApplicationController', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
+        $rootScope.menu_field_button = "New Simulation";
+        $rootScope.menu_field_button_icon = "fa-plus-circle";
+        $rootScope.menu_field_button_click = function() {
+            $location.path('/newsimulation');
+        };
+
+        $rootScope.menu_field_name = "";
     }]);
 
     app.controller('SimulationController', ['$scope', 'Simulation', function ($scope, Simulation) {
@@ -34,13 +38,15 @@
 
         $rootScope.menu_field_name = "Untitled simulation 01";
 
-        $scope.runSim = function(timeBetweenBuses, numberOfEntrances, days, hours, minutes) {
+        $rootScope.menu_field_button = "Submit";
+        $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
+        $rootScope.menu_field_button_click = function() {
             var sim = new Simulation({
-                'timeBetweenBuses': timeBetweenBuses,
-                'numberOfEntrances': numberOfEntrances,
-                'days': days,
-                'hours': hours,
-                'minutes': minutes
+                'timeBetweenBuses': $scope.timeBetweenBuses,
+                'numberOfEntrances': $scope.numberOfEntrances,
+                'days': $scope.days,
+                'hours': $scope.hours,
+                'minutes': $scope.minutes
             });
 
             sim.$save().then(function(result) {
@@ -57,7 +63,7 @@
         $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;
         $scope.maxWaitingTimeInTicks    = SimResult.data.maxWaitingTimeInTicks;
 
-        $rootScope.menu_field_1 = "test";
+        $rootScope.menu_field_button = "test";
     }]);
 
 })();

@@ -23,10 +23,13 @@
                     <a ng-href="#/"><img src="img/logo.png" alt="" /></a>
                 </div>
                 <div class="col-md-3 menu-field-name">
-                    <div class="pull-right">{{menu_field_name}}</div>
+                    <div>{{menu_field_name}}</div>
                 </div>
-                <div class="col-md-4 menu-field-1">
-                    <div class="pull-right">{{menu_field_1}}</div>
+                <div class="col-md-4 menu-field-button">
+                    <div class="pull-right" ng-click="menu_field_button_click()">
+                        <span>{{menu_field_button}} </span>
+                        <span class="fa {{menu_field_button_icon}}" />
+                    </div>
                 </div>
             </row>
         </header>
