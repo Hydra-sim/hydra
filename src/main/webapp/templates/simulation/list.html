@@ -1,0 +1,18 @@
+<div ng-controller="SimulationController">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <th>Date created</th>
+            </tr>
+            <tr ng-repeat="simulation in simulations">
+                <td>
+                    {{simulation.name}}
+                </td>
+                <td>
+                    {{simulation.date | date}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

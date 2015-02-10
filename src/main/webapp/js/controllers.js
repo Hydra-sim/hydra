@@ -7,7 +7,19 @@
         'services'
     ]);
 
-    app.controller('ApplicationController', ['$scope', '$location', 'Simulation', 'SimResult', function ($scope, $location, Simulation, SimResult) {
+    app.controller('ApplicationController', ['$scope', '$location', function($scope, $location) {
+        $scope.newsimulation = function() {
+            $location.path('/newsimulation')
+        }
+    }]);
+
+    app.controller('SimulationController', ['$scope', 'Simulation', function ($scope, Simulation) {
+        Simulation.query({}, function(res) {
+            $scope.simulations = res;
+        });
+    }]);
+
+    app.controller('SimulationNew', ['$scope', '$location', 'Simulation', 'SimResult', function ($scope, $location, Simulation, SimResult) {
         $scope.timeBetweenBuses = 10;
         $scope.numberOfEntrances = 1;
         $scope.days = 0;
@@ -32,10 +44,12 @@
         };
     }]);
 
-    app.controller('SimulationResult', ['$scope', 'SimResult', function($scope, SimResult) {
+    app.controller('SimulationResult', ['$scope', '$rootScope', 'SimResult', function($scope, $rootScope, SimResult) {
         $scope.entitiesConsumed         = SimResult.data.entitiesConsumed;
         $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;
         $scope.maxWaitingTimeInTicks    = SimResult.data.maxWaitingTimeInTicks;
+
+        $rootScope.menu_field_1 = "test";
     }]);
 
 })();

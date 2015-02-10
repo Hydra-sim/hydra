@@ -1,7 +1,8 @@
-$header_bg: black;
+$header_bg: #403738;
+$header_height: 100px;
 
 body {
-  margin-top: 50px;
+  margin-top: $header_height;
 }
 
 header {
@@ -10,10 +11,11 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  height: 50px;
+  height: $header_height;
+  color: white;
+  padding: 25px;
 }
 
 .logo img {
-  height: 25px;
-  margin: 13px;
+  height: 50px;
 }

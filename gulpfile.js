@@ -27,7 +27,12 @@ gulp.task('sass', function () {
 });
 
 gulp.task('html', function () {
-    gulp.src(rootWebDir + '*.html')
+    gulp.src(rootWebDir + '/**/*.html')
+        .pipe(connect.reload());
+});
+
+gulp.task('js', function () {
+    gulp.src(rootWebDir + '/**/*.js')
         .pipe(connect.reload());
 });
 
@@ -35,6 +40,7 @@ gulp.task('watch', ['default'], function () {
     gulp.watch('./bower.json', ['bower']);
     gulp.watch(config.sassFiles, ['sass']);
     gulp.watch(rootWebDir + '/**/*.html', ['html']);
+    gulp.watch(rootWebDir + '/**/*.js', ['js']);
 });
 
 gulp.task('connect', ['watch'], function() {

@@ -8,6 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @XmlRootElement
@@ -24,6 +25,20 @@ class InputValue {
  */
 @Path("simulation")
 public class Simulation {
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response simulations()
+    {
+        List<model.Simulation> simulations = new ArrayList<model.Simulation>();
+
+        simulations.add(new model.Simulation("Untitled simulation 1", new Date()));
+        simulations.add(new model.Simulation("Untitled simulation 2", new Date()));
+        simulations.add(new model.Simulation("Frank simulation 1", new Date()));
+
+        return Response.ok(simulations).build();
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
