@@ -97,7 +97,7 @@ public class TestSimulation {
     }
 
     @Test
-    public void testSimulation2InShouldHave1InQueue() {
+    public void testSimulationProducing2ShouldHaveMoreThan0WaitingTime() {
 
         List<Producer> producers = new ArrayList<>();
         producers.add(new Producer(2, 10));
