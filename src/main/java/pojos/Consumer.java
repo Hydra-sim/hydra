@@ -26,4 +26,9 @@ public class Consumer {
         this.entitesConsumedPerTick = entitesConsumedPerTick;
     }
     //endregion
+
+    public String toString() {
+
+        return "Entites consumed pr. tick: " + entitesConsumedPerTick;
+    }
 }

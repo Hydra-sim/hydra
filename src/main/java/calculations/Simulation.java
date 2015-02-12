@@ -58,6 +58,13 @@ public class Simulation {
     }
     //endregion
 
+    public String toString() {
+
+        return "Producers: " + producers.toString() + "\n" +
+                "Consumers: " + consumers.toString() + "\n" +
+                "Ticks: " + ticks;
+    }
+
     //region simulation
     public SimulationData simulate() {
 

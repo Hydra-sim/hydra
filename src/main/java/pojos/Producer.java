@@ -37,4 +37,10 @@ public class Producer {
         this.ticksToWait = ticksToWait;
     }
     //endregion
+
+    public String toString() {
+
+        return "Entities to produce: " + entitiesToProduce +
+                "Ticks to wait: " + ticksToWait;
+    }
 }

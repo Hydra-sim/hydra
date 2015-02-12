@@ -84,7 +84,7 @@ public class TestSimulation {
     public void testSimulationDefaultValuesPrototype1() {
 
         List<Producer> producers = new ArrayList<>();
-        producers.add(new Producer(1, 10));
+        producers.add(new Producer(1, 5));
         List<Consumer> consumers = new ArrayList<>();
         consumers.add(new Consumer(1));
 
