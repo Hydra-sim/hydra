@@ -95,4 +95,18 @@ public class TestSimulation {
         assertEquals(0, simulationData.getMaxWaitingTimeInTicks());
         assertEquals(0, simulationData.getEntitiesInQueue());
     }
+
+    @Test
+    public void testSimulation2InShouldHave1InQueue() {
+
+        List<Producer> producers = new ArrayList<>();
+        producers.add(new Producer(2, 10));
+        List<Consumer> consumers = new ArrayList<>();
+        consumers.add(new Consumer(1));
+
+        Simulation simulation = new Simulation(consumers, producers, 60);
+        SimulationData simulationData = simulation.simulate();
+
+        assertTrue(simulationData.getMaxWaitingTimeInTicks() > 0);
+    }
 }
