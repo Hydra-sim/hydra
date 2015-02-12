@@ -64,7 +64,7 @@ public class Simulation {
 
 
         List<Producer> producers = new ArrayList<>();
-        producers.add(new Producer(input.entitesToProduce, input.timeBetweenBuses * 60));
+        producers.add(new Producer(input.entitesToProduce, input.timeBetweenBuses));
 
         List<Consumer> consumers = new ArrayList<>();
         for(int i = 0; i < input.numberOfEntrances; i++)

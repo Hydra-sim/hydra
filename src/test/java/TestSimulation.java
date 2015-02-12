@@ -91,7 +91,7 @@ public class TestSimulation {
         Simulation simulation = new Simulation(consumers, producers, 60);
         SimulationData simulationData = simulation.simulate();
 
-        assertEquals(17, simulationData.getEntitiesConsumed());
+        assertEquals(5, simulationData.getEntitiesConsumed());
         assertEquals(0, simulationData.getMaxWaitingTimeInTicks());
         assertEquals(0, simulationData.getEntitiesInQueue());
     }
