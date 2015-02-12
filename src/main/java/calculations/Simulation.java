@@ -112,7 +112,7 @@ public class Simulation {
 
         for(Producer producer : producers) {
 
-            if(i == 0 || producer.getTicksToWait() % i == 0) {
+            if(i == 0 || producer.getTicksToWait() == 0 || i % producer.getTicksToWait() == 0) {
 
                 for(int j = 0; j < producer.getEntitiesToProduce(); j++) {
                     entities.add(new Entity(0));
