@@ -79,4 +79,20 @@ public class TestSimulation {
 
         assertEquals(waitingTime, simulationData.getMaxWaitingTimeInTicks());
     }
+
+    @Test
+    public void testSimulationDefaultValuesPrototype1() {
+
+        List<Producer> producers = new ArrayList<>();
+        producers.add(new Producer(1, 10));
+        List<Consumer> consumers = new ArrayList<>();
+        consumers.add(new Consumer(1));
+
+        Simulation simulation = new Simulation(consumers, producers, 60);
+        SimulationData simulationData = simulation.simulate();
+
+        assertEquals(17, simulationData.getEntitiesConsumed());
+        assertEquals(0, simulationData.getMaxWaitingTimeInTicks());
+        assertEquals(0, simulationData.getEntitiesInQueue());
+    }
 }
