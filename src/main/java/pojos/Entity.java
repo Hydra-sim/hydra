@@ -3,7 +3,7 @@ package pojos;
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
  */
-public class Entity {
+public class Entity implements Comparable<Entity>{
 
     private int waitingTimeInTicks;
 
@@ -27,4 +27,12 @@ public class Entity {
         this.waitingTimeInTicks = waitingTimeInTicks;
     }
     //endregion
+
+    @Override
+    public int compareTo(Entity o) {
+        if(o == this) return 0;
+
+        if(o.getWaitingTimeInTicks() > getWaitingTimeInTicks()) return 1;
+        return -1;
+    }
 }

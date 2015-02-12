@@ -75,7 +75,7 @@ public class TestSimulation {
 
         int waitingTime;
         if(ticks / 2 - 1 < 0) waitingTime = 0;
-        else waitingTime = ticks / 2 - 1;
+        else waitingTime = ticks / 2;
 
         assertEquals(waitingTime, simulationData.getMaxWaitingTimeInTicks());
     }
@@ -100,7 +100,7 @@ public class TestSimulation {
     public void testSimulationProducing2ShouldHaveMoreThan0WaitingTime() {
 
         List<Producer> producers = new ArrayList<>();
-        producers.add(new Producer(2, 10));
+        producers.add(new Producer(10, 10));
         List<Consumer> consumers = new ArrayList<>();
         consumers.add(new Consumer(1));
 

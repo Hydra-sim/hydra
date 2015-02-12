@@ -6,6 +6,7 @@ import pojos.Producer;
 import pojos.SimulationData;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -69,6 +70,7 @@ public class Simulation {
     public SimulationData simulate() {
 
         entities = new ArrayList<>();
+        int maxWaitingTime = 0;
 
         int entitiesConsumed = 0;
 
@@ -80,9 +82,10 @@ public class Simulation {
 
             entitiesConsumed = consumeEntities(entitiesConsumed);
 
-        }
+            int tempMaxWaitingTime = calculateWaitingTime();
+            if(tempMaxWaitingTime > maxWaitingTime) maxWaitingTime = tempMaxWaitingTime;
 
-        int maxWaitingTime = calculateWaitingTime();
+        }
 
         return new SimulationData(entitiesConsumed, entities.size(), maxWaitingTime);
     }
@@ -90,7 +93,8 @@ public class Simulation {
     private int calculateWaitingTime() {
 
         if(entities.size() == 0) return 0;
-        else return entities.get(0).getWaitingTimeInTicks();
+        Collections.sort(entities);
+        return entities.get(0).getWaitingTimeInTicks();
 
     }
 
@@ -115,7 +119,7 @@ public class Simulation {
             if(i == 0 || producer.getTicksToWait() == 0 || i % producer.getTicksToWait() == 0) {
 
                 for(int j = 0; j < producer.getEntitiesToProduce(); j++) {
-                    entities.add(new Entity(0));
+                    entities.add(new Entity(1));
                 }
             }
         }
