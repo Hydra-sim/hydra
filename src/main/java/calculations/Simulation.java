@@ -82,19 +82,21 @@ public class Simulation {
 
             entitiesConsumed = consumeEntities(entitiesConsumed);
 
-            int tempMaxWaitingTime = calculateWaitingTime();
-            if(tempMaxWaitingTime > maxWaitingTime) maxWaitingTime = tempMaxWaitingTime;
+            maxWaitingTime = calculateWaitingTime(maxWaitingTime);
 
         }
 
         return new SimulationData(entitiesConsumed, entities.size(), maxWaitingTime);
     }
 
-    private int calculateWaitingTime() {
+    private int calculateWaitingTime(int maxWaitingTime) {
 
         if(entities.size() == 0) return 0;
         Collections.sort(entities);
-        return entities.get(0).getWaitingTimeInTicks();
+        int temp = entities.get(0).getWaitingTimeInTicks();
+
+        if(temp > maxWaitingTime) return temp;
+        return maxWaitingTime;
 
     }
 
