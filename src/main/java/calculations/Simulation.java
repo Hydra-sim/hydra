@@ -70,8 +70,8 @@ public class Simulation {
     public SimulationData simulate() {
 
         entities = new ArrayList<>();
-        int maxWaitingTime = 0;
 
+        int maxWaitingTime = 0;
         int entitiesConsumed = 0;
 
         for(int i = 0; i < ticks; i++) {
