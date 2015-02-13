@@ -33,7 +33,7 @@ public class Simulation {
     }
     //endregion
 
-    //region getters and setters
+    //region getters, setters and toString
     public List<Consumer> getConsumers() {
         return consumers;
     }
@@ -57,7 +57,6 @@ public class Simulation {
     public void setTicks(int ticks) {
         this.ticks = ticks;
     }
-    //endregion
 
     public String toString() {
 
@@ -65,6 +64,7 @@ public class Simulation {
                 "Consumers: " + consumers.toString() + "\n" +
                 "Ticks: " + ticks;
     }
+    //endregion
 
     //region simulation
     public SimulationData simulate() {
@@ -89,6 +89,7 @@ public class Simulation {
         return new SimulationData(entitiesConsumed, entities.size(), maxWaitingTime);
     }
 
+    //region simulation methods
     private int calculateWaitingTime(int maxWaitingTime) {
 
         if(entities.size() == 0) return 0;
@@ -134,5 +135,7 @@ public class Simulation {
             entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + 1 );
         }
     }
+    //endregion
+
     //endregion
 }
