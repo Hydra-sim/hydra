@@ -109,4 +109,18 @@ public class TestSimulation {
 
         assertTrue(simulationData.getMaxWaitingTimeInTicks() > 0);
     }
+
+    @Test
+    public void produce10Every10TicksCosume1EveryTick() {
+
+        List<Producer> producers = new ArrayList<>();
+        producers.add(new Producer(10, 10));
+        List<Consumer> consumers = new ArrayList<>();
+        consumers.add(new Consumer(1));
+
+        Simulation simulation = new Simulation(consumers, producers, 60);
+        SimulationData simulationData = simulation.simulate();
+
+        assertEquals(0, simulationData.getMaxWaitingTimeInTicks());
+    }
 }
