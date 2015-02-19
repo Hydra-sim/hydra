@@ -1,5 +1,4 @@
 import calculations.Simulation;
-import org.junit.Ignore;
 import org.junit.Test;
 import pojos.Consumer;
 import pojos.Producer;
@@ -97,14 +96,11 @@ public class TestSimulation {
         assertEquals(0, simulationData.getEntitiesInQueue());
     }
 
-    // This fails for some reason, but is works when testing it frontend.
-    //TODO: Fix this
-    @Ignore
     @Test
     public void testSimulationProducing2ShouldHaveMoreThan0WaitingTime() {
 
         List<Producer> producers = new ArrayList<>();
-        producers.add(new Producer(10, 10));
+        producers.add(new Producer(2, 1));
         List<Consumer> consumers = new ArrayList<>();
         consumers.add(new Consumer(1));
 
