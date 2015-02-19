@@ -1,13 +1,15 @@
 package pojos;
 
 /**
- * Created by kristinesundtlorentzen on 4/2/15.
+ * An object that saves all the data from the simulation done in {@link calculations.Simulation#simulate()}
  */
 public class SimulationData {
 
+    //region attributes
     private int entitiesConsumed;
     private int entitiesInQueue;
     private int maxWaitingTimeInTicks;
+    //endregion
 
     //region constructors
     public SimulationData() {
