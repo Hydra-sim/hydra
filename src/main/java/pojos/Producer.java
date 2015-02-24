@@ -1,9 +1,11 @@
 package pojos;
 
+import interfaces.Node;
+
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
  */
-public class Producer {
+public class Producer implements Node{
 
     private int entitiesToProduce;
     private int ticksToWait;
@@ -15,18 +17,22 @@ public class Producer {
     }
 
     public Producer(int entitiesToProduce, int ticksToWait) {
-        this.entitiesToProduce = entitiesToProduce;
+        setEntitiesToProduce(entitiesToProduce);
         this.ticksToWait = ticksToWait;
     }
+
     //endregion
 
     //region getters and setters
+
     public int getEntitiesToProduce() {
         return entitiesToProduce;
     }
 
     public void setEntitiesToProduce(int entitiesToProduce) {
-        this.entitiesToProduce = entitiesToProduce;
+
+        if(entitiesToProduce == 0) this.entitiesToProduce = 1;
+        else this.entitiesToProduce = entitiesToProduce;
     }
 
     public int getTicksToWait() {
@@ -41,6 +47,6 @@ public class Producer {
     public String toString() {
 
         return "Entities to produce: " + entitiesToProduce +
-                "Ticks to wait: " + ticksToWait;
+                "\nTicks to wait: " + ticksToWait;
     }
 }
