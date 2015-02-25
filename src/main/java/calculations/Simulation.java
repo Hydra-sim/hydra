@@ -1,8 +1,6 @@
 package calculations;
 
 import controllers.ConsumerController;
-import controllers.DependencyController;
-import interfaces.Node;
 import pojos.*;
 
 import java.util.ArrayList;
@@ -18,31 +16,23 @@ public class Simulation {
     //region attributes
     private List<Consumer> consumers;
     private List<Producer> producers;
-    private List<Dependency> dependencies;
     private int ticks;
 
     ConsumerController consumerController;
-    DependencyController dependencyController;
     //endregion
 
     //region constructors
     public Simulation() {
 
-        this(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        this(new ArrayList<>(), new ArrayList<>(), 0);
     }
 
     public Simulation(List<Consumer> consumers, List<Producer> producers, int ticks) {
-        this(consumers, producers, new ArrayList<>(), ticks);
-    }
-
-    public Simulation(List<Consumer> consumers, List<Producer> producers, List<Dependency> dependencies, int ticks) {
         this.consumers = consumers;
         this.producers = producers;
-        this.dependencies = dependencies;
         this.ticks = ticks;
 
         consumerController = new ConsumerController();
-        dependencyController = new DependencyController();
     }
     //endregion
 
@@ -100,7 +90,9 @@ public class Simulation {
 
             increaseWaitingTime();
 
-            addEntities(i);
+            addEntitiesFromProducer(i);
+
+            addEntitiesFromConsumers();
 
             consumeEntities();
 
@@ -137,7 +129,6 @@ public class Simulation {
      * Takes the list of entities and deletes them from the list of entities according to the number and strength of
      * the consumers registered in the simulation. Every time an entity is deleted, the method adds 1 to the number of
      * entities consumed.
-     * @param entitiesConsumed The number of entites consumed so far in the simulation
      * @return The number of entities consumed so far in the simulation + the number of entities consumed during the
      *         running of the method.
      */
@@ -156,45 +147,56 @@ public class Simulation {
      * @param currentTick The current tick number the simulation is on, to check if it is time for the producer to
      *                    produce entities.
      */
-    private void addEntities(int currentTick) {
+    private void addEntitiesFromProducer(int currentTick) {
 
-        for(int i = 0; i < producers.size(); i++) {
+        for(Producer producer : producers) {
 
-            if(currentTick % producers.get(i).getTicksToWait() == 0) {
+            if(currentTick % producer.getTicksToWait() == 0) {
 
-                List<Dependency> currentDependencies = getCurrentDependencies(i);
+                if(producer.getRelationships().size() != 0) {
 
-                for(Dependency dependency : currentDependencies) {
+                    List<Relationship> relationships = producer.getRelationships();
 
-                    Node node = dependencyController.getDependantID(dependency, producers.get(i));
-                    int index = consumers.indexOf(node);
-                    Consumer consumer = consumers.get(index);
-                    ConsumerController consumerController = new ConsumerController();
+                    for(int i = 0; i < producer.getEntitiesToProduce(); i++) {
 
-                    for(int j = 0; j < producers.get(i).getEntitiesToProduce(); j++) {
+                        for(Relationship relationship : relationships) {
 
-                        consumerController.addEntity(consumer, new Entity());
+                            int recieved = consumerController.getTotalSentToConsumer(relationship.getChild());
+                            double currentWeight = (double) recieved / producer.getEntitiesTransfered();
+
+                            if(currentWeight <= relationship.getWeight() || producer.getEntitiesTransfered() == 0){
+
+                                consumerController.addEntity(relationship.getChild(), new Entity());
+                                producer.setEntitiesTransfered(producer.getEntitiesTransfered() + 1);
+                            }
+                        }
                     }
                 }
             }
         }
     }
 
-    private List<Dependency> getCurrentDependencies(int i) {
+    private void addEntitiesFromConsumers() {
 
-        List<Dependency> currentDependencies = new ArrayList<>();
+        for(Consumer consumer : consumers) {
 
-        for(Dependency dependency : dependencies) {
+            List<Relationship> relationships = consumer.getRelationships();
 
-            Node node = dependencyController.getDependantID(dependency, producers.get(i));
+            for(Relationship relationship : relationships) {
 
-            if(node != null) {
+                int recieved = consumerController.getTotalSentToConsumer(relationship.getChild());
+                double currentWeight = (double) recieved / consumer.getEntitiesTransfered();
 
-                currentDependencies.add(dependency);
+                if(currentWeight <= relationship.getWeight() || consumer.getEntitiesTransfered() == 0) {
+
+                    if(consumer.getEntitesConsumed().size() != 0) {
+
+                        Entity entity = consumer.getEntitesConsumed().get(0);
+                        consumerController.addEntity(relationship.getChild(), entity);
+                    }
+                }
             }
         }
-
-        return currentDependencies;
     }
 
     /**
@@ -227,7 +229,7 @@ public class Simulation {
 
         for(Consumer consumer : consumers) {
 
-            entitiesConsumed += consumer.getEntitesConsumed();
+            entitiesConsumed += consumer.getEntitesConsumed().size();
         }
 
         return entitiesConsumed;

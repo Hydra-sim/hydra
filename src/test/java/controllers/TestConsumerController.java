@@ -45,7 +45,7 @@ public class TestConsumerController {
 
         controller.consumeEntity(con);
         assertEquals(0, con.getEntitesInQueue().size());
-        assertEquals(1, con.getEntitesConsumed());
+        assertEquals(1, con.getEntitesConsumed().size());
     }
 
     @Test

@@ -3,6 +3,7 @@ package controllers;
 import pojos.Consumer;
 import pojos.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,14 +29,26 @@ public class ConsumerController {
     public void consumeEntity(Consumer con) {
 
         List<Entity> entities = con.getEntitesInQueue();
+        List<Entity> entitiesConsumed = new ArrayList<>();
 
         for(int i = 0; i < con.getEntitesConsumedPerTick(); i++) {
 
-            if(!entities.isEmpty()) entities.remove(0);
+            if(!entities.isEmpty()) {
+
+                entitiesConsumed.add(con.getEntitesInQueue().get(0));
+                entities.remove(0);
+            }
         }
 
         con.setEntitesInQueue(entities);
-        con.setEntitesConsumed(con.getEntitesConsumed() + 1);
+
+        List<Entity> entitiesConsumedBeforeSimulation = con.getEntitesConsumed();
+
+        for(Entity entity : entitiesConsumed) {
+            entitiesConsumedBeforeSimulation.add(entity);
+        }
+
+        con.setEntitesConsumed(entitiesConsumedBeforeSimulation);
     }
 
     public int getMaxWaitingTime(Consumer con) {
@@ -48,5 +61,10 @@ public class ConsumerController {
         }
 
         return maxWaitingTime;
+    }
+
+    public int getTotalSentToConsumer(Consumer consumer) {
+
+        return consumer.getEntitesConsumed().size() + consumer.getEntitesInQueue().size();
     }
 }

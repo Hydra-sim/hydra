@@ -1,11 +1,9 @@
 package pojos;
 
-import interfaces.Node;
-
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
  */
-public class Producer implements Node{
+public class Producer extends Node{
 
     private int entitiesToProduce;
     private int ticksToWait;
@@ -42,6 +40,7 @@ public class Producer implements Node{
     public void setTicksToWait(int ticksToWait) {
         this.ticksToWait = ticksToWait;
     }
+
     //endregion
 
     public String toString() {

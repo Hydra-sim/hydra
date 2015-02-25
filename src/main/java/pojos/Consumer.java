@@ -1,17 +1,15 @@
 package pojos;
 
-import interfaces.Node;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
  */
-public class Consumer implements Node{
+public class Consumer extends Node{
 
     private int entitesConsumedPerTick;
-    private int entitesConsumed;
+    private List<Entity> entitesConsumed;
     private List<Entity> entitesInQueue;
 
     //region constructors
@@ -21,7 +19,7 @@ public class Consumer implements Node{
 
     public Consumer(int entitesConsumedPerTick) {
         this.entitesConsumedPerTick = entitesConsumedPerTick;
-        this.entitesConsumed = 0;
+        this.entitesConsumed = new ArrayList<>();
         this.entitesInQueue = new ArrayList<>();
     }
     //endregion
@@ -36,11 +34,11 @@ public class Consumer implements Node{
         this.entitesConsumedPerTick = entitesConsumedPerTick;
     }
 
-    public int getEntitesConsumed() {
+    public List<Entity> getEntitesConsumed() {
         return entitesConsumed;
     }
 
-    public void setEntitesConsumed(int entitesConsumed) {
+    public void setEntitesConsumed(List<Entity> entitesConsumed) {
         this.entitesConsumed = entitesConsumed;
     }
 
