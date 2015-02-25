@@ -136,7 +136,7 @@ public class Simulation {
 
         for(int i = 0; i < consumers.size(); i++) {
 
-            consumerController.consumeEntity(consumers.get(0));
+            consumerController.consumeEntity(consumers.get(i));
         }
     }
 
@@ -168,6 +168,7 @@ public class Simulation {
 
                                 consumerController.addEntity(relationship.getChild(), new Entity());
                                 producer.setEntitiesTransfered(producer.getEntitiesTransfered() + 1);
+                                break;
                             }
                         }
                     }
