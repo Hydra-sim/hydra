@@ -72,4 +72,18 @@
         $rootScope.menu_field_button_click = function() {};
     }]);
 
+    app.controller('SimulationShow', ['$scope', '$rootScope', '$routeParams', 'Simulation', function($scope, $rootScope, $routeParams, Simulation) {
+        Simulation.get({}, {"id": $routeParams.id}, function(data) {
+            console.log(data);
+
+            $scope.entitiesConsumed         = data.result.entitiesConsumed;
+            $scope.entitiesInQueue          = data.result.entitiesInQueue;
+            $scope.maxWaitingTimeInTicks    = data.result.maxWaitingTimeInTicks;
+        });
+
+        $rootScope.menu_field_button = "";
+        $rootScope.menu_field_button_icon = "";
+        $rootScope.menu_field_button_click = function() {};
+    }]);
+
 })();

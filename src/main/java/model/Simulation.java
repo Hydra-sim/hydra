@@ -1,5 +1,6 @@
 package model;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -29,10 +30,19 @@ public class Simulation
      */
     @NotBlank
     @Length(max = 255)
-    public String name;
+    private String name;
 
+    /**
+     * Date the simulation was created
+     */
     @Temporal(TemporalType.TIMESTAMP)
-    public Date date;
+    private Date date;
+
+    /**
+     * Result of the simulation
+     */
+    @OneToOne(cascade = {CascadeType.ALL})
+    private SimulationData result;
 
     public String getName() {
         return name;
@@ -52,6 +62,14 @@ public class Simulation
 
     public int getId() {
         return id;
+    }
+
+    public SimulationData getResult() {
+        return result;
+    }
+
+    public void setResult(SimulationData result) {
+        this.result = result;
     }
 
     public Simulation(String name, Date date) {

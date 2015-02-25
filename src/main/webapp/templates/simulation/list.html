@@ -8,7 +8,7 @@
             </tr>
             <tr ng-repeat="simulation in simulations">
                 <td>
-                    {{simulation.name}}
+                    <a ng-href="#/show/{{simulation.id}}">{{simulation.name}}</a>
                 </td>
                 <td>
                     {{simulation.date | date}}

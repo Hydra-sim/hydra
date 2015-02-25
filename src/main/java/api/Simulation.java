@@ -9,8 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by knarf on 04/02/15.
@@ -32,6 +31,22 @@ public class Simulation {
         );
 
         return Response.ok( query.getResultList() ).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public Response get(@PathParam("id") int id)
+    {
+        try {
+            model.Simulation item = entityManager.find(model.Simulation.class, id);
+
+            return Response.ok( item ).build();
+        }
+        catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @Transactional
@@ -60,8 +75,6 @@ public class Simulation {
     {
         // Create new object in database
         model.Simulation sim = new model.Simulation(input.name);
-        entityManager.persist(sim);
-
 
         List<Producer> producers = new ArrayList<>();
         producers.add(new Producer(input.entitesToProduce, input.timeBetweenBuses));
@@ -70,9 +83,11 @@ public class Simulation {
         for(int i = 0; i < input.numberOfEntrances; i++)
             consumers.add(new Consumer(input.entitesConsumedPerTick));
 
-
         calculations.Simulation simulation = new calculations.Simulation(consumers, producers, input.ticks);
-        return Response.ok(simulation.simulate()).build();
+        sim.setResult(simulation.simulate());
+        entityManager.persist(sim);
+
+        return Response.ok(sim.getResult()).build();
     }
 
 }

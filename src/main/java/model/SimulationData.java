@@ -1,11 +1,23 @@
-package pojos;
+package model;
+
+import org.hibernate.annotations.Cascade;
+
+import javax.persistence.*;
 
 /**
  * An object that saves all the data from the simulation done in {@link calculations.Simulation#simulate()}
  */
+@Entity
 public class SimulationData {
 
     //region attributes
+    /**
+     * An automatically generated id
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id;
+
     private int entitiesConsumed;
     private int entitiesInQueue;
     private int maxWaitingTimeInTicks;
@@ -49,4 +61,5 @@ public class SimulationData {
         this.maxWaitingTimeInTicks = maxWaitingTimeInTicks;
     }
     //endregion
+
 }
