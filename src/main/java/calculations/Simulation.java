@@ -1,12 +1,7 @@
 package calculations;
 
 import controllers.ConsumerController;
-<<<<<<< HEAD
-import model.SimulationData;
-import pojos.*;
-=======
 import models.*;
->>>>>>> 232257d218dc9e54678cb83d3d3d81c60283107c
 
 import java.util.ArrayList;
 import java.util.List;
