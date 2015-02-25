@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var app = angular.module('controllers', [
+    var app = angular.module('unit.controllers', [
         'ngRoute',
         'services'
     ]);

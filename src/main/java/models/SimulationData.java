@@ -1,4 +1,4 @@
-package pojos;
+package models;
 
 /**
  * An object that saves all the data from the simulation done in {@link calculations.Simulation#simulate()}

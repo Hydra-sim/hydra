@@ -1,7 +1,7 @@
 package calculations;
 
 import controllers.ConsumerController;
-import pojos.*;
+import models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +80,7 @@ public class Simulation {
      * and remove entities from the list over entities. It uses the list of entities to check which one has the
      * highest waiting time at the end of the simulation.
      *
-     * @return A {@link pojos.SimulationData} object with entities consumed, entities left in queue and max waiting time.
+     * @return A {@link models.SimulationData} object with entities consumed, entities left in queue and max waiting time.
      */
     public SimulationData simulate() {
 

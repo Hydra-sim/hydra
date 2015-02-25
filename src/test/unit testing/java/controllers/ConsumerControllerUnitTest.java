@@ -1,18 +1,18 @@
 package controllers;
 
 import org.junit.Test;
-import pojos.Consumer;
-import pojos.Entity;
+import models.Consumer;
+import models.Entity;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by kristinesundtlorentzen on 24/2/15.
  */
-public class TestConsumerController {
+public class ConsumerControllerUnitTest {
 
     @Test
-    public void testAdd1Entity() {
+    public void testAddEntity() {
 
         Consumer con = new Consumer();
         ConsumerController controller = new ConsumerController();

@@ -1,7 +1,7 @@
 package api;
 
-import pojos.Consumer;
-import pojos.Producer;
+import models.Consumer;
+import models.Producer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,9 +26,9 @@ public class Simulation {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response list()
     {
-        TypedQuery<model.Simulation> query = entityManager.createNamedQuery(
+        TypedQuery<models.Simulation> query = entityManager.createNamedQuery(
             "Simulation.findAll",
-            model.Simulation.class
+            models.Simulation.class
         );
 
         return Response.ok( query.getResultList() ).build();
@@ -42,7 +42,7 @@ public class Simulation {
     public Response delete(@PathParam("id") int id)
     {
         try {
-            model.Simulation item = entityManager.find(model.Simulation.class, id);
+            models.Simulation item = entityManager.find(models.Simulation.class, id);
             entityManager.remove(item);
         }
         catch (Exception e) {
@@ -59,7 +59,7 @@ public class Simulation {
     public Response add(InputValue input)
     {
         // Create new object in database
-        model.Simulation sim = new model.Simulation(input.name);
+        models.Simulation sim = new models.Simulation(input.name);
         entityManager.persist(sim);
 
 

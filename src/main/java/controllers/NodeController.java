@@ -1,7 +1,7 @@
 package controllers;
 
-import pojos.Node;
-import pojos.Relationship;
+import models.Node;
+import models.Relationship;
 
 import java.util.List;
 
