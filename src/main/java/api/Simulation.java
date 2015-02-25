@@ -59,7 +59,7 @@ public class Simulation {
     public Response add(InputValue input)
     {
         // Create new object in database
-        model.Simulation sim = new model.Simulation();
+        model.Simulation sim = new model.Simulation(input.name);
         entityManager.persist(sim);
 
 

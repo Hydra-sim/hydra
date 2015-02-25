@@ -16,4 +16,22 @@
         }
     });
 
+    app.factory('menu_field_name', function() {
+        return {
+            value: '',
+            enabled: false,
+            disable: function() {
+                this.enabled = false;
+                this.value = "";
+            },
+            enable: function() {
+                this.enabled = true;
+            },
+            setValue: function(value) {
+                this.value = value;
+                this.enable();
+            }
+        };
+    });
+
 })();

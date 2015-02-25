@@ -7,14 +7,15 @@
         'services'
     ]);
 
-    app.controller('ApplicationController', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
+    app.controller('ApplicationController', ['$scope', '$rootScope', '$location', 'menu_field_name', function($scope, $rootScope, $location, menu_field_name) {
         $rootScope.menu_field_button = "New Simulation";
         $rootScope.menu_field_button_icon = "fa-plus-circle";
         $rootScope.menu_field_button_click = function() {
             $location.path('/newsimulation');
         };
 
-        $rootScope.menu_field_name = "";
+        $rootScope.menu_field_name = menu_field_name;
+        menu_field_name.disable();
     }]);
 
     app.controller('SimulationController', ['$scope', 'Simulation', function ($scope, Simulation) {
@@ -29,7 +30,7 @@
         };
     }]);
 
-    app.controller('SimulationNew', ['$scope', '$location', '$rootScope', 'Simulation', 'SimResult', function ($scope, $location, $rootScope, Simulation, SimResult) {
+    app.controller('SimulationNew', ['$scope', '$location', '$rootScope', 'Simulation', 'SimResult', 'menu_field_name', function ($scope, $location, $rootScope, Simulation, SimResult, menu_field_name) {
         $scope.timeBetweenBuses = 10;
         $scope.numberOfEntrances = 1;
         $scope.days = 0;
@@ -38,12 +39,13 @@
         $scope.entitesToProduce = 1;
         $scope.entitesConsumedPerTick = 1;
 
-        $rootScope.menu_field_name = "Untitled simulation 01";
+        menu_field_name.setValue("Untitled simulation");
 
         $rootScope.menu_field_button = "Submit";
         $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
         $rootScope.menu_field_button_click = function() {
             var sim = new Simulation({
+                'name': menu_field_name.value,
                 'timeBetweenBuses': $scope.timeBetweenBuses,
                 'numberOfEntrances': $scope.numberOfEntrances,
                 'ticks': $scope.days*24*60 + $scope.hours * 60 + $scope.minutes,

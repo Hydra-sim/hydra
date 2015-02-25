@@ -1,5 +1,6 @@
 @import 'font';
 @import 'common';
+@import 'reset';
 
 $header_bg: #403738;
 $header_height: 100px;
@@ -42,7 +43,17 @@ footer {
   text-align: center;
 }
 
-.menu-field-name:hover span {
+.menu-field-name > * {
+  background: none;
+  border: 0;
+  text-align: center;
+}
+
+.menu-field-name > *.disabled {
+  display: none;
+}
+
+.menu-field-name:hover > *, .menu-field-name > *:focus {
   border-bottom: 1px dashed #999;
 }
 
