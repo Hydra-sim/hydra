@@ -1,5 +1,6 @@
-package controllers;
+package managers;
 
+import org.junit.Before;
 import org.junit.Test;
 import models.Consumer;
 import models.Entity;
@@ -11,26 +12,31 @@ import static org.junit.Assert.assertEquals;
  */
 public class ConsumerManagerUnitTest {
 
+    ConsumerManager consumerManager;
+    @Before
+    public void before() {
+
+        consumerManager = new ConsumerManager();
+    }
+
     @Test
     public void testAddEntity() {
 
         Consumer con = new Consumer();
-        ConsumerManager controller = new ConsumerManager();
 
-        controller.addEntity(con, new Entity());
+        consumerManager.addEntity(con, new Entity());
         assertEquals(1, con.getEntitesInQueue().size());
     }
 
     @Test
-    public void testIncreaseWaitingTimeBy1() {
+    public void testIncreaseWaitingTime() {
 
         Consumer con = new Consumer();
-        ConsumerManager controller = new ConsumerManager();
 
-        controller.addEntity(con, new Entity());
+        consumerManager.addEntity(con, new Entity());
 
         int ticks = 1;
-        controller.increaseWaitingTime(con, ticks);
+        consumerManager.increaseWaitingTime(con, ticks);
         assertEquals(ticks, con.getEntitesInQueue().get(0).getWaitingTimeInTicks());
     }
 
@@ -38,12 +44,11 @@ public class ConsumerManagerUnitTest {
     public void testConsumeEntites() {
 
         Consumer con = new Consumer(1);
-        ConsumerManager controller = new ConsumerManager();
 
-        controller.addEntity(con, new Entity());
+        consumerManager.addEntity(con, new Entity());
         assertEquals(1, con.getEntitesInQueue().size());
 
-        controller.consumeEntity(con);
+        consumerManager.consumeEntity(con);
         assertEquals(0, con.getEntitesInQueue().size());
         assertEquals(1, con.getEntitesConsumed().size());
     }
@@ -52,12 +57,22 @@ public class ConsumerManagerUnitTest {
     public void testGetMaxWaitingTime() {
 
         Consumer consumer = new Consumer();
-        ConsumerManager controller = new ConsumerManager();
 
-        controller.addEntity(consumer, new Entity(0));
-        controller.addEntity(consumer, new Entity(1));
+        consumerManager.addEntity(consumer, new Entity(0));
+        consumerManager.addEntity(consumer, new Entity(1));
 
         assertEquals(2, consumer.getEntitesInQueue().size());
-        assertEquals(1, controller.getMaxWaitingTime(consumer));
+        assertEquals(1, consumerManager.getMaxWaitingTime(consumer));
+    }
+
+    @Test
+    public void testTotalSentToConsumer() {
+
+        Consumer consumer = new Consumer();
+
+        consumer.getEntitesInQueue().add(new Entity());
+        consumer.getEntitesConsumed().add(new Entity());
+
+        assertEquals(2, consumerManager.getTotalSentToConsumer(consumer));
     }
 }

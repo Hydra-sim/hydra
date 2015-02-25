@@ -1,6 +1,6 @@
 package models;
 
-import controllers.ConsumerManager;
+import managers.ConsumerManager;
 
 //TODO: Add a check when using dependencies so that it doesn't crash if you make something dependent to itself?
 public class Relationship implements Comparable<Relationship>{

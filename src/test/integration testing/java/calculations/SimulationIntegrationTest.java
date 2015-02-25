@@ -6,7 +6,7 @@ import models.Producer;
 import models.Relationship;
 import models.SimulationData;
 
-import controllers.ConsumerManager;
+import managers.ConsumerManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +39,16 @@ public class SimulationIntegrationTest {
 
         SimulationData simulationData = setUpStandardSimulationOneProducerOneConsumer(2, 1, 1, 1).simulate();
         assertEquals(0, simulationData.getEntitiesInQueue());
+    }
+
+    @Test
+    public void testSimulate10ProducedPr10TicksAllConsumed() {
+
+        SimulationData simulationData = setUpStandardSimulationOneProducerOneConsumer(1, 10, 10, 10).simulate();
+
+        assertEquals(0, simulationData.getEntitiesInQueue());
+        assertTrue(simulationData.getMaxWaitingTimeInTicks() > 0);
+        assertTrue(simulationData.getEntitiesConsumed() > 0);
     }
 
     @Test

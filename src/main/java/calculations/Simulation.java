@@ -1,7 +1,7 @@
 package calculations;
 
-import controllers.ConsumerManager;
-import controllers.NodeManager;
+import managers.ConsumerManager;
+import managers.NodeManager;
 import models.*;
 
 import java.util.ArrayList;
