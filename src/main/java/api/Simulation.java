@@ -2,6 +2,7 @@ package api;
 
 import models.Consumer;
 import models.Producer;
+import models.Relationship;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -76,18 +77,34 @@ public class Simulation {
         // Create new object in database
         models.Simulation sim = new models.Simulation(input.name);
 
+        // Producer
+        Producer producer = new Producer(input.entitesToProduce, input.timeBetweenBuses);
         List<Producer> producers = new ArrayList<>();
-        producers.add(new Producer(input.entitesToProduce, input.timeBetweenBuses));
-
+        producers.add(producer);
+        
+        // Consumers
+        List<Relationship> relationships = new ArrayList<>();
         List<Consumer> consumers = new ArrayList<>();
-        for(int i = 0; i < input.numberOfEntrances; i++)
-            consumers.add(new Consumer(input.entitesConsumedPerTick));
 
+        for(int i = 0; i < input.numberOfEntrances; i++) {
+            Consumer consumer = new Consumer(input.entitesConsumedPerTick);
+            Relationship relationship1 = new Relationship(consumer, 0.0);
+            relationships.add(relationship1);
+            consumers.add(consumer);
+        }
+        
+        producer.setRelationships(relationships);
+
+        // Create simulation
         calculations.Simulation simulation = new calculations.Simulation(consumers, producers, input.ticks);
+
+        // Run and save to database
         sim.setResult(simulation.simulate());
         entityManager.persist(sim);
 
+        // Return stuff
         return Response.ok(sim.getResult()).build();
+
     }
 
 }
