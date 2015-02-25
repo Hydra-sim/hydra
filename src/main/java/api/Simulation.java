@@ -40,7 +40,7 @@ public class Simulation {
     public Response get(@PathParam("id") int id)
     {
         try {
-            model.Simulation item = entityManager.find(model.Simulation.class, id);
+            models.Simulation item = entityManager.find(models.Simulation.class, id);
 
             return Response.ok( item ).build();
         }

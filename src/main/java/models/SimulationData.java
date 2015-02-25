@@ -1,11 +1,24 @@
 package models;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
 /**
  * An object that saves all the data from the simulation done in {@link calculations.Simulation#simulate()}
  */
+@Entity
 public class SimulationData {
 
     //region attributes
+    /**
+     * An automatically generated id
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id;
+
     private int entitiesConsumed;
     private int entitiesInQueue;
     private int maxWaitingTimeInTicks;

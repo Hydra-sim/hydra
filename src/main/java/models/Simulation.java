@@ -1,6 +1,5 @@
 package models;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
