@@ -1,6 +1,7 @@
 package calculations;
 
-import controllers.ConsumerController;
+import controllers.ConsumerManager;
+import controllers.NodeManager;
 import models.*;
 
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ public class Simulation {
     private List<Producer> producers;
     private int ticks;
 
-    ConsumerController consumerController;
+    ConsumerManager consumerManager;
+    NodeManager nodeManager;
     //endregion
 
     //region constructors
@@ -32,7 +34,11 @@ public class Simulation {
         this.producers = producers;
         this.ticks = ticks;
 
-        consumerController = new ConsumerController();
+        consumerManager = new ConsumerManager();
+        nodeManager = new NodeManager();
+
+        distributeWeightConsumers();
+        distributeWeightProducers();
     }
     //endregion
 
@@ -118,7 +124,7 @@ public class Simulation {
 
         for(Consumer consumer : consumers) {
 
-            int waitingTime = consumerController.getMaxWaitingTime(consumer);
+            int waitingTime = consumerManager.getMaxWaitingTime(consumer);
             if(waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
         }
 
@@ -136,7 +142,7 @@ public class Simulation {
 
         for(int i = 0; i < consumers.size(); i++) {
 
-            consumerController.consumeEntity(consumers.get(i));
+            consumerManager.consumeEntity(consumers.get(i));
         }
     }
 
@@ -161,12 +167,12 @@ public class Simulation {
 
                         for(Relationship relationship : relationships) {
 
-                            int recieved = consumerController.getTotalSentToConsumer(relationship.getChild());
+                            int recieved = consumerManager.getTotalSentToConsumer(relationship.getChild());
                             double currentWeight = (double) recieved / producer.getEntitiesTransfered();
 
                             if(currentWeight <= relationship.getWeight() || producer.getEntitiesTransfered() == 0){
 
-                                consumerController.addEntity(relationship.getChild(), new Entity());
+                                consumerManager.addEntity(relationship.getChild(), new Entity());
                                 producer.setEntitiesTransfered(producer.getEntitiesTransfered() + 1);
                                 break;
                             }
@@ -185,7 +191,7 @@ public class Simulation {
 
             for(Relationship relationship : relationships) {
 
-                int recieved = consumerController.getTotalSentToConsumer(relationship.getChild());
+                int recieved = consumerManager.getTotalSentToConsumer(relationship.getChild());
                 double currentWeight = (double) recieved / consumer.getEntitiesTransfered();
 
                 if(currentWeight <= relationship.getWeight() || consumer.getEntitiesTransfered() == 0) {
@@ -193,7 +199,7 @@ public class Simulation {
                     if(consumer.getEntitesConsumed().size() != 0) {
 
                         Entity entity = consumer.getEntitesConsumed().get(0);
-                        consumerController.addEntity(relationship.getChild(), entity);
+                        consumerManager.addEntity(relationship.getChild(), entity);
                     }
                 }
             }
@@ -208,7 +214,7 @@ public class Simulation {
 
         for(int i = 0; i < consumers.size(); i++) {
 
-            consumerController.increaseWaitingTime(consumers.get(i), 1);
+            consumerManager.increaseWaitingTime(consumers.get(i), 1);
         }
     }
 
@@ -236,6 +242,21 @@ public class Simulation {
         return entitiesConsumed;
     }
 
+    private void distributeWeightProducers() {
+
+        for (int i = 0; i < producers.size(); i++) {
+
+            nodeManager.distributeWeightIfNotSpecified(producers.get(i));
+        }
+    }
+
+    private void distributeWeightConsumers() {
+
+        for(int i = 0; i < consumers.size(); i++) {
+
+            nodeManager.distributeWeightIfNotSpecified(consumers.get(i));
+        }
+    }
     //endregion
 
     //endregion

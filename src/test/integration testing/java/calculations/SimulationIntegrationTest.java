@@ -6,7 +6,7 @@ import models.Producer;
 import models.Relationship;
 import models.SimulationData;
 
-import controllers.ConsumerController;
+import controllers.ConsumerManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ public class SimulationIntegrationTest {
         Simulation simulation = setUpStandardSimulationOneProducerTwoConsumers(1, 1, 1, ticks, weight1, weight2);
         simulation.simulate();
 
-        ConsumerController con = new ConsumerController();
+        ConsumerManager con = new ConsumerManager();
         assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulation.getConsumers().get(0)), 0.0);
         assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulation.getConsumers().get(1)), 0.0);
     }

@@ -9,13 +9,13 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by kristinesundtlorentzen on 24/2/15.
  */
-public class ConsumerControllerUnitTest {
+public class ConsumerManagerUnitTest {
 
     @Test
     public void testAddEntity() {
 
         Consumer con = new Consumer();
-        ConsumerController controller = new ConsumerController();
+        ConsumerManager controller = new ConsumerManager();
 
         controller.addEntity(con, new Entity());
         assertEquals(1, con.getEntitesInQueue().size());
@@ -25,7 +25,7 @@ public class ConsumerControllerUnitTest {
     public void testIncreaseWaitingTimeBy1() {
 
         Consumer con = new Consumer();
-        ConsumerController controller = new ConsumerController();
+        ConsumerManager controller = new ConsumerManager();
 
         controller.addEntity(con, new Entity());
 
@@ -38,7 +38,7 @@ public class ConsumerControllerUnitTest {
     public void testConsumeEntites() {
 
         Consumer con = new Consumer(1);
-        ConsumerController controller = new ConsumerController();
+        ConsumerManager controller = new ConsumerManager();
 
         controller.addEntity(con, new Entity());
         assertEquals(1, con.getEntitesInQueue().size());
@@ -52,7 +52,7 @@ public class ConsumerControllerUnitTest {
     public void testGetMaxWaitingTime() {
 
         Consumer consumer = new Consumer();
-        ConsumerController controller = new ConsumerController();
+        ConsumerManager controller = new ConsumerManager();
 
         controller.addEntity(consumer, new Entity(0));
         controller.addEntity(consumer, new Entity(1));

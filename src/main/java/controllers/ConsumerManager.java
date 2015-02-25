@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by kristinesundtlorentzen on 24/2/15.
  */
-public class ConsumerController {
+public class ConsumerManager {
 
     public void addEntity(Consumer con, Entity entity) {
 

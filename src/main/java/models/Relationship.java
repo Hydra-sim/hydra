@@ -1,10 +1,6 @@
 package models;
 
-import controllers.ConsumerController;
-
-/**
- * Created by kristinesundtlorentzen on 24/2/15.
- */
+import controllers.ConsumerManager;
 
 //TODO: Add a check when using dependencies so that it doesn't crash if you make something dependent to itself?
 public class Relationship implements Comparable<Relationship>{
@@ -53,7 +49,7 @@ public class Relationship implements Comparable<Relationship>{
 
         if(o == this) return 0;
 
-        ConsumerController controller = new ConsumerController();
+        ConsumerManager controller = new ConsumerManager();
         if(controller.getTotalSentToConsumer(o.getChild()) > controller.getTotalSentToConsumer(this.getChild())) return 1;
         if(o.getWeight() > this.getWeight()) return 1;
         return -1;
