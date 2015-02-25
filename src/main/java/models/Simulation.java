@@ -1,10 +1,11 @@
-package model;
+package models;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.Date;
 
 /**

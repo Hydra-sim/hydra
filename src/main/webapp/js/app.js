@@ -4,7 +4,7 @@
 
     var app = angular.module('hydra', [
         'ngRoute',
-        'controllers'
+        'unit.controllers'
     ]);
 
     app.config(function ($routeProvider) {

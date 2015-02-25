@@ -1,7 +1,7 @@
 package controllers;
 
-import pojos.Consumer;
-import pojos.Entity;
+import models.Consumer;
+import models.Entity;
 
 import java.util.ArrayList;
 import java.util.List;

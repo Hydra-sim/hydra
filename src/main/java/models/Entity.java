@@ -1,4 +1,4 @@
-package pojos;
+package models;
 
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
