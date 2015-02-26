@@ -57,4 +57,20 @@
         </div>
     </form>
 </div>
-<button class="btn" ng-click="showComplex()">New</button>
+<script type="text/ng-template" id="modalNewController">
+    <div class="modal-header">
+        <h3 class="modal-title">New producer</h3>
+    </div>
+    <div class="modal-body">
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+<script type="text/ng-template" id="modalNewProducer">
+
+</script>
+<button class="btn" ng-click="showComplex()">New Controller</button>
+<button class="btn" ng-click="showComplex()">New Producer</button>

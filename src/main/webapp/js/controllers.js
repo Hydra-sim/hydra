@@ -68,7 +68,7 @@
         $scope.showComplex = function (size) {
 
             var modalInstance = $modal.open({
-                templateUrl: 'templates/myModalContent.html',
+                templateUrl: 'modalNewController',
                 controller: 'ModalInstanceCtrl',
                 size: size,
                 resolve: {
