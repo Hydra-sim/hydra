@@ -40,7 +40,7 @@ gulp.task('watch', ['default'], function () {
     gulp.watch('./bower.json', ['bower']);
     gulp.watch(config.sassFiles, ['sass']);
     gulp.watch(rootWebDir + '/**/*.html', ['html']);
-    gulp.watch(rootWebDir + '/**/*.js', ['js']);
+    gulp.watch(rootWebDir + '/js/*.js', ['js']);
 });
 
 gulp.task('connect', ['watch'], function() {

@@ -4,7 +4,8 @@
 
     var app = angular.module('unit.controllers', [
         'ngRoute',
-        'services'
+        'services',
+        'ui.bootstrap'
     ]);
 
     app.controller('ApplicationController', ['$scope', '$rootScope', '$location', 'menu_field_name', function($scope, $rootScope, $location, menu_field_name) {
@@ -30,7 +31,8 @@
         };
     }]);
 
-    app.controller('SimulationNew', ['$scope', '$location', '$rootScope', 'Simulation', 'SimResult', 'menu_field_name', function ($scope, $location, $rootScope, Simulation, SimResult, menu_field_name) {
+    app.controller('SimulationNew', ['$scope', '$location', '$rootScope', 'Simulation', 'SimResult', 'menu_field_name', '$modal',
+        function ($scope, $location, $rootScope, Simulation, SimResult, menu_field_name, $modal) {
         $scope.timeBetweenBuses = 10;
         $scope.numberOfEntrances = 1;
         $scope.days = 0;
@@ -60,6 +62,28 @@
                 SimResult.data = result;
             });
         };
+
+        $scope.items = ['item1', 'item2', 'item3'];
+
+        $scope.showComplex = function (size) {
+
+            var modalInstance = $modal.open({
+                templateUrl: 'templates/myModalContent.html',
+                controller: 'ModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return $scope.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                console.info('Modal dismissed at: ' + new Date());
+            });
+        };
     }]);
 
     app.controller('SimulationResult', ['$scope', '$rootScope', 'SimResult', function($scope, $rootScope, SimResult) {
@@ -85,5 +109,21 @@
         $rootScope.menu_field_button_icon = "";
         $rootScope.menu_field_button_click = function() {};
     }]);
+
+    app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+
+        $scope.items = items;
+        $scope.selected = {
+            item: $scope.items[0]
+        };
+
+        $scope.ok = function () {
+            $modalInstance.close($scope.selected.item);
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
 
 })();
