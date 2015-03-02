@@ -157,7 +157,7 @@ public class Simulation {
 
         for(Producer producer : producers) {
 
-            if(currentTick % producer.getTicksToWait() == 0) {
+            if(producer.getTimetable().contains(currentTick)) {
 
                 if(producer.getRelationships().size() != 0) {
 

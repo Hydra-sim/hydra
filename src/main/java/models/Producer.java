@@ -1,22 +1,29 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
  */
 public class Producer extends Node{
 
     private int entitiesToProduce;
-    private int ticksToWait;
+    /**
+     * Simulation starts at tick = 0. The ints in this list represent the number of ticks after 0 it should produce its
+     * entities.
+     */
+    private List<Integer> timetable;
 
     //region constructors
     public Producer() {
 
-        this(0, 0);
+        this(0, new ArrayList<>());
     }
 
-    public Producer(int entitiesToProduce, int ticksToWait) {
+    public Producer(int entitiesToProduce, List<Integer> timetable) {
         setEntitiesToProduce(entitiesToProduce);
-        this.ticksToWait = ticksToWait;
+
     }
 
     //endregion
@@ -33,12 +40,12 @@ public class Producer extends Node{
         else this.entitiesToProduce = entitiesToProduce;
     }
 
-    public int getTicksToWait() {
-        return ticksToWait;
+    public List<Integer> getTimetable() {
+        return timetable;
     }
 
-    public void setTicksToWait(int ticksToWait) {
-        this.ticksToWait = ticksToWait;
+    public void setTimetable(List<Integer> timetable) {
+        this.timetable = timetable;
     }
 
     //endregion
@@ -46,6 +53,6 @@ public class Producer extends Node{
     public String toString() {
 
         return "Entities to produce: " + entitiesToProduce +
-                "\nTicks to wait: " + ticksToWait;
+                "\nNumber of producers:" + timetable.size();
     }
 }

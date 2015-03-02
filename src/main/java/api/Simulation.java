@@ -1,5 +1,6 @@
 package api;
 
+import managers.ProducerManager;
 import models.Consumer;
 import models.Producer;
 import models.Relationship;
@@ -78,7 +79,10 @@ public class Simulation {
         models.Simulation sim = new models.Simulation(input.name);
 
         // Producer
-        Producer producer = new Producer(input.entitesToProduce, input.timeBetweenBuses);
+        //Producer producer = new Producer(input.entitesToProduce, input.timeBetweenBuses);
+        Producer producer = new Producer(input.entitesToProduce, null);
+        new ProducerManager().generateTimetable(producer, 0, 1, input.ticks);
+
         List<Producer> producers = new ArrayList<>();
         producers.add(producer);
         
