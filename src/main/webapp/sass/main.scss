@@ -1,9 +1,9 @@
 @import 'font';
 @import 'common';
 @import 'reset';
-
-$header_bg: #403738;
-$header_height: 100px;
+@import 'variables';
+@import '../vendor/fontawesome/scss/font-awesome';
+@import 'graph';
 
 body {
   margin-top: $header_height;

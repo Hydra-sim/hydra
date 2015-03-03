@@ -84,6 +84,10 @@
                 console.info('Modal dismissed at: ' + new Date());
             });
         };
+
+        $scope.log = function(data) {
+            console.log(data);
+        }
     }]);
 
     app.controller('SimulationResult', ['$scope', '$rootScope', 'SimResult', function($scope, $rootScope, SimResult) {

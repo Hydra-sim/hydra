@@ -7,7 +7,8 @@ var rootWebDir = './src/main/webapp/';
 
 var config = {
     bowerDir: rootWebDir + 'vendor/',
-    sassFiles:  rootWebDir + 'sass/main.scss',
+    sassFiles:  rootWebDir + 'sass/*.scss',
+    sassInputFile: rootWebDir + 'sass/main.scss',
     cssOutputDir: rootWebDir + 'css/'
 };
 
@@ -20,7 +21,7 @@ gulp.task('bower', function() {
 });
 
 gulp.task('sass', function () {
-    return gulp.src(config.sassFiles)
+    return gulp.src(config.sassInputFile)
         .pipe(sass())
         .pipe(gulp.dest(config.cssOutputDir))
         .pipe(connect.reload());
