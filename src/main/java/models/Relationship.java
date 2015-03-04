@@ -2,7 +2,10 @@ package models;
 
 import managers.ConsumerManager;
 
+import javax.persistence.Embeddable;
+
 //TODO: Add a check when using dependencies so that it doesn't crash if you make something dependent to itself?
+@Embeddable
 public class Relationship implements Comparable<Relationship>{
 
     //region attributes

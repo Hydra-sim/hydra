@@ -1,9 +1,9 @@
 package models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An object that saves all the data from the simulation done in {@link calculations.Simulation#simulate()}
@@ -18,6 +18,11 @@ public class SimulationData {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
+
+    @ElementCollection
+    private List<Consumer> consumers = new ArrayList<>();
+    @ElementCollection
+    private List<Producer> producers = new ArrayList<>();
 
     private int entitiesConsumed;
     private int entitiesInQueue;

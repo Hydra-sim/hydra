@@ -1,15 +1,24 @@
 package models;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
  */
+@Embeddable
 public class Consumer extends Node{
 
     private int entitesConsumedPerTick;
+
+    @Transient
+    @ElementCollection
     private List<Entity> entitesConsumed;
+    @Transient
+    @ElementCollection
     private List<Entity> entitesInQueue;
 
     //region constructors

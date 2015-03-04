@@ -1,11 +1,15 @@
 package models;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
  */
+@Embeddable
 public class Producer extends Node{
 
     private int entitiesToProduce;
@@ -13,6 +17,8 @@ public class Producer extends Node{
      * Simulation starts at tick = 0. The ints in this list represent the number of ticks after 0 it should produce its
      * entities.
      */
+    @Transient
+    @ElementCollection
     private List<Integer> timetable;
 
     //region constructors

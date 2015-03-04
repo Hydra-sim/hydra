@@ -1,13 +1,19 @@
 package models;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.Inheritance;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by kristinesundtlorentzen on 24/2/15.
  */
+@Embeddable
+@Inheritance
 public class Node {
 
+    @ElementCollection
     List<Relationship> relationships = new ArrayList<>();
     int entitiesTransfered;
 
