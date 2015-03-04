@@ -88,6 +88,17 @@
         $scope.log = function(data) {
             console.log(data);
         }
+
+        $scope.dataset = {
+            nodes: [
+                { x: -50,  y: 0  }
+            ]
+        };
+        $scope.addData = function() {
+            $scope.dataset.nodes.push(
+                { x: 10, y: 10 }
+            );
+        };
     }]);
 
     app.controller('SimulationResult', ['$scope', '$rootScope', 'SimResult', function($scope, $rootScope, SimResult) {
