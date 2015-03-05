@@ -30,12 +30,12 @@
                         .attr("height", height);
 
                     scope.$watchCollection(nodes_exp, function(newVal, oldVal){
-                        nodes = newVal;
+                        //nodes = newVal;
                         update();
                     });
 
                     scope.$watchCollection(edges_exp, function(newVal, oldVal){
-                        edges = newVal;
+                        //edges = newVal;
                         update();
                     });
 
