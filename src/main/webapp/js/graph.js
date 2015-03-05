@@ -9,43 +9,42 @@
                 restrict: 'E',
 
                 // replace <graph> with this html
-                template: '<canvas class="graph"></canvas>',
+                template: '<div class="graph"></div>',
                 replace: true,
 
                 // observe and manipulate the DOM
                 link : function(scope, element, attrs) {
+                    var width  = 960,
+                        height = 500;
+
                     var nodes_exp = $parse(attrs.nodes);
                     var nodes = nodes_exp(scope);
 
-                    var ctx = element[0].getContext("2d");
-                    ctx.canvas.width    = 960;
-                    ctx.canvas.height   = 500;
+                    var edges_exp = $parse(attrs.edges);
+                    var edges = edges_exp(scope);
 
+
+                    var svg = d3.select(element[0])
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", height);
 
                     scope.$watchCollection(nodes_exp, function(newVal, oldVal){
                         nodes = newVal;
                         update();
                     });
 
-                    function clear() {
-                        //noinspection SillyAssignmentJS
-                        ctx.canvas.width = ctx.canvas.width;
-                    }
+                    scope.$watchCollection(edges_exp, function(newVal, oldVal){
+                        edges = newVal;
+                        update();
+                    });
+
+                    var graph = new GraphCreator(svg, nodes, edges);
+                    graph.setIdCt(2);
+                    graph.updateGraph();
 
                     function update() {
-                        clear();
-                        ctx.fillStyle = "#aaaaff";
-                        var centerX = ctx.canvas.width / 2,
-                            centerY = ctx.canvas.height / 2;
-
-                        for(var i=0; i<nodes.length; i++) {
-                            var x=nodes[i].x + centerX,
-                                y=nodes[i].y + centerY;
-
-                            ctx.beginPath();
-                            ctx.arc(x,y,10,0,2*Math.PI);
-                            ctx.fill();
-                        }
+                        graph.updateGraph();
                     }
                 }
             }

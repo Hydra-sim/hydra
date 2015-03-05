@@ -31,8 +31,7 @@
         };
     }]);
 
-    app.controller('SimulationNew', ['$scope', '$location', '$rootScope', 'Simulation', 'SimResult', 'menu_field_name', '$modal',
-        function ($scope, $location, $rootScope, Simulation, SimResult, menu_field_name, $modal) {
+    app.controller('SimulationNew', ['$scope', '$location', '$rootScope', 'Simulation', 'SimResult', 'menu_field_name', '$modal', function ($scope, $location, $rootScope, Simulation, SimResult, menu_field_name, $modal) {
         $scope.timeBetweenBuses = 10;
         $scope.numberOfEntrances = 1;
         $scope.days = 0;
@@ -87,16 +86,21 @@
 
         $scope.log = function(data) {
             console.log(data);
-        }
+        };
 
         $scope.dataset = {
             nodes: [
-                { x: -50,  y: 0  }
-            ]
+                {title: "new concept", id: 0, x: 100, y: 100},
+                {title: "new concept", id: 1, x: 100, y: 300}
+            ],
+            edges: []
         };
+
+        $scope.dataset.edges.push({source: $scope.dataset.nodes[1], target: $scope.dataset.nodes[0]});
+
         $scope.addData = function() {
             $scope.dataset.nodes.push(
-                { x: 10, y: 10 }
+                {title: "new concept", id: 0, x: 0, y: 0}
             );
         };
     }]);
