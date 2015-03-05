@@ -82,8 +82,6 @@ var GraphCreator = function(svg, nodes, edges){
             if (d3.event.sourceEvent.shiftKey){
                 // TODO  the internal d3 state is still changing
                 return false;
-            } else{
-                thisGraph.zoomed.call(thisGraph);
             }
             return true;
         })
@@ -474,10 +472,4 @@ GraphCreator.prototype.updateGraph = function(){
 
     // remove old nodes
     thisGraph.circles.exit().remove();
-};
-
-GraphCreator.prototype.zoomed = function(){
-    this.state.justScaleTransGraph = true;
-    d3.select("." + this.consts.graphClass)
-        .attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
 };
