@@ -19,21 +19,31 @@ EXPOSE 8080
 # Add buildfiles
 ADD . /buildfiles
 
-# Install node.js and gulp
+# Install nodejs, gulp and run frontendbuild
 USER root
-#RUN curl -sL https://rpm.nodesource.com/setup | bash -
-#RUN yum -y install npm gcc-c++ make
-#RUN cd /buildfiles && npm install -g gulp
-
-# Get package.json dependencies, and run the gulp build
-#RUN cd /buildfiles && npm install
-#RUN cd /buildfiles && gulp
-#USER jboss
+RUN yum install g++ curl openssl openssl-devel make gcc-c++ glibc-devel wget -y
+RUN \
+  cd /tmp && \
+  wget http://nodejs.org/dist/node-latest.tar.gz && \
+  tar xvzf node-latest.tar.gz && \
+  rm -f node-latest.tar.gz && \
+  cd node-v* && \
+  ./configure && \
+  CXX="g++ -Wno-unused-local-typedefs" make && \
+  CXX="g++ -Wno-unused-local-typedefs" make install && \
+  cd /tmp && \
+  rm -rf /tmp/node-v* && \
+  npm install -g npm && \
+  echo -e '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
+RUN npm install -g gulp
+RUN yum install bzip2 -y
+RUN cd /buildfiles && npm install
+RUN cd /buildfiles && gulp
+USER jboss
 
 # Install maven and build artifact
 RUN cd $HOME && curl http://mirror.olnevhost.net/pub/apache/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar zx
-RUN cd /buildfiles && $HOME/apache-maven-$MAVEN_VERSION/bin/mvn package
-USER jboss
+RUN cd /buildfiles && $HOME/apache-maven-$MAVEN_VERSION/bin/mvn -DfrontendBuild=none package
 
 # Add target war
 run cp /buildfiles/target/hydra.war /opt/jboss/wildfly/standalone/deployments/
