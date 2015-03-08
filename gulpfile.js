@@ -20,7 +20,7 @@ gulp.task('bower', function() {
         .pipe(connect.reload());
 });
 
-gulp.task('sass', function () {
+gulp.task('sass', ['bower'], function () {
     return gulp.src(config.sassInputFile)
         .pipe(sass())
         .pipe(gulp.dest(config.cssOutputDir))
