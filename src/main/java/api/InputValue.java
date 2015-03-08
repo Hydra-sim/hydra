@@ -10,4 +10,6 @@ class InputValue {
     public int ticks;
     public int entitesToProduce;
     public int entitesConsumedPerTick;
+    public int startTickForProducer;
+    public int tickBetweenArrivals;
 }
