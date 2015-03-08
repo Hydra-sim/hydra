@@ -24,7 +24,7 @@ USER jboss
 
 # Install maven and build artifact
 RUN cd $HOME && curl http://mirror.olnevhost.net/pub/apache/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar zx
-RUN cd /buildfiles && $HOME/apache-maven-$MAVEN_VERSION/bin/mvn -DfrontendBuild=none package
+RUN cd /buildfiles && $HOME/apache-maven-$MAVEN_VERSION/bin/mvn package
 
 # Add target war
 run cp /buildfiles/target/hydra.war /opt/jboss/wildfly/standalone/deployments/
