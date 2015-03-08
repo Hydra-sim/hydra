@@ -16,12 +16,24 @@ ENV JBOSS_HOME /opt/jboss/wildfly
 # Expose the ports we're interested in
 EXPOSE 8080
 
-# Install maven
-RUN cd $HOME && curl http://mirror.olnevhost.net/pub/apache/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar zx
-
-# Build artifact
+# Add buildfiles
 ADD . /buildfiles
+
+# Install node.js and gulp
+USER root
+#RUN curl -sL https://rpm.nodesource.com/setup | bash -
+#RUN yum -y install npm gcc-c++ make
+#RUN cd /buildfiles && npm install -g gulp
+
+# Get package.json dependencies, and run the gulp build
+#RUN cd /buildfiles && npm install
+#RUN cd /buildfiles && gulp
+#USER jboss
+
+# Install maven and build artifact
+RUN cd $HOME && curl http://mirror.olnevhost.net/pub/apache/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar zx
 RUN cd /buildfiles && $HOME/apache-maven-$MAVEN_VERSION/bin/mvn package
+USER jboss
 
 # Add target war
 run cp /buildfiles/target/hydra.war /opt/jboss/wildfly/standalone/deployments/
