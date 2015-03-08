@@ -1,5 +1,8 @@
 all:
 	
+docker: clean
+	docker build --tag=hydra .
+
 clean:
 	rm -rf bower_components
 	rm -rf node_modules
