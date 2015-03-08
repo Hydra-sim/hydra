@@ -1,0 +1,77 @@
+@import 'font';
+@import 'common';
+@import 'reset';
+@import 'variables';
+@import '../vendor/fontawesome/scss/font-awesome';
+@import 'graph';
+
+body {
+  margin-top: $header_height;
+  margin-bottom: 50px;
+  font-family: Avinor, sans-serif;
+}
+
+header {
+  background: $header_bg;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header_height;
+  color: white;
+  padding: 25px;
+}
+
+footer {
+  position: fixed;
+  background: $header_bg;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  padding: 10px 25px;
+  z-index: 100;
+}
+
+.logo img {
+  height: 50px;
+}
+
+.menu-field-name, .menu-field-button {
+  font-size: 1.8em;
+  font-weight: 100;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.menu-field-name > * {
+  background: none;
+  border: 0;
+  text-align: center;
+}
+
+.menu-field-name > *.disabled {
+  display: none;
+}
+
+.menu-field-name:hover > *, .menu-field-name > *:focus {
+  border-bottom: 1px dashed #999;
+}
+
+.menu-field-button {
+  cursor: pointer;
+
+  .fa {
+    opacity: 0.5;
+    @include transition(opacity, 0.2s, ease-in-out);
+  }
+
+  &:hover .fa {
+    opacity: 1;
+    @include transition(opacity, 0.2s, ease-in-out);
+  }
+
+  &:hover span:first-child {
+    text-decoration: underline;
+  }
+}

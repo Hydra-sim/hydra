@@ -1,13 +1,33 @@
-package pojos;
+package models;
+
+import javax.persistence.*;
+import javax.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by kristinesundtlorentzen on 4/2/15.
+ * An object that saves all the data from the simulation done in {@link calculations.Simulation#simulate()}
  */
+@Entity
 public class SimulationData {
+
+    //region attributes
+    /**
+     * An automatically generated id
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id;
+
+    @ElementCollection
+    private List<Consumer> consumers = new ArrayList<>();
+    @ElementCollection
+    private List<Producer> producers = new ArrayList<>();
 
     private int entitiesConsumed;
     private int entitiesInQueue;
     private int maxWaitingTimeInTicks;
+    //endregion
 
     //region constructors
     public SimulationData() {

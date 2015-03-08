@@ -1,0 +1,22 @@
+<div ng-controller="SimulationController">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <th>Date created</th>
+                <th>Delete</th>
+            </tr>
+            <tr ng-repeat="simulation in simulations">
+                <td>
+                    <a ng-href="#/show/{{simulation.id}}">{{simulation.name}}</a>
+                </td>
+                <td>
+                    {{simulation.date | date}}
+                </td>
+                <td>
+                    <button class="btn btn-danger" ng-click="deleteSimulation(simulation.id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

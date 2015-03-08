@@ -1,22 +1,27 @@
 package calculations;
 
-import pojos.Consumer;
-import pojos.Entity;
-import pojos.Producer;
-import pojos.SimulationData;
+import managers.ConsumerManager;
+import managers.NodeManager;
+import models.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kristinesundtlorentzen on 4/2/15.
+ * This class represents the simulation engine in its current state.
+ *
+ * @author Kristine Sundt Lorentzen
  */
 public class Simulation {
 
+    //region attributes
     private List<Consumer> consumers;
     private List<Producer> producers;
     private int ticks;
-    List<Entity> entities;
+
+    ConsumerManager consumerManager;
+    NodeManager nodeManager;
+    //endregion
 
     //region constructors
     public Simulation() {
@@ -28,11 +33,16 @@ public class Simulation {
         this.consumers = consumers;
         this.producers = producers;
         this.ticks = ticks;
-        entities = new ArrayList<>();
+
+        consumerManager = new ConsumerManager();
+        nodeManager = new NodeManager();
+
+        distributeWeightConsumers();
+        distributeWeightProducers();
     }
     //endregion
 
-    //region getters and setters
+    //region getters, setters and toString
     public List<Consumer> getConsumers() {
         return consumers;
     }
@@ -56,70 +66,198 @@ public class Simulation {
     public void setTicks(int ticks) {
         this.ticks = ticks;
     }
+
+    public String toString() {
+
+        return "Producers: " + producers.toString() + "\n" +
+                "Consumers: " + consumers.toString() + "\n" +
+                "Ticks: " + ticks;
+    }
     //endregion
 
     //region simulation
+
+    /**
+     * This method simulates the trafic flow from the producers, through all the cosumers.
+     *
+     * Changelog:
+     *
+     * 13.02.2015, Kristine: The algorithm uses one list of producers and one list of consumers to add entities to
+     * and remove entities from the list over entities. It uses the list of entities to check which one has the
+     * highest waiting time at the end of the simulation.
+     *
+     * @return A {@link models.SimulationData} object with entities consumed, entities left in queue and max waiting time.
+     */
     public SimulationData simulate() {
 
-        entities = new ArrayList<>();
-
-        int entitiesConsumed = 0;
+        int maxWaitingTime = 0;
 
         for(int i = 0; i < ticks; i++) {
 
             increaseWaitingTime();
 
-            addEntities(i);
+            addEntitiesFromProducer(i);
 
-            entitiesConsumed = consumeEntities(entitiesConsumed);
+            addEntitiesFromConsumers();
+
+            consumeEntities();
+
+            maxWaitingTime = calculateWaitingTime(maxWaitingTime);
 
         }
 
-        int maxWaitingTime = calculateWaitingTime();
-
-        return new SimulationData(entitiesConsumed, entities.size(), maxWaitingTime);
+        return new SimulationData(getEntitesConsumed(), getEntitiesInQueue(), maxWaitingTime);
     }
 
-    private int calculateWaitingTime() {
+    //region simulation methods
 
-        if(entities.size() == 0) return 0;
-        else return entities.get(0).getWaitingTimeInTicks();
-
-    }
-
-    private int consumeEntities(int entitiesConsumed) {
+    /**
+     * Checks which entity has the longest waiting time registered on it, and checks if this is higher than the highest
+     * waiting time registered so far in the simulation.
+     *
+     * @param maxWaitingTime The largest of the registered waiting times so far in the simulation
+     *
+     * @return Whichever value is largest of the registered waiting times so far in the simulation and the highest
+     *         waiting time of the entities registered on the entities list.
+     */
+    private int calculateWaitingTime(int maxWaitingTime) {
 
         for(Consumer consumer : consumers) {
 
-            for (int j = 0; j < consumer.getEntitesConsumedPerTick(); j++) {
-                if (entities.size() != 0) entities.remove(0);
-                else break;
-                entitiesConsumed++;
-            }
+            int waitingTime = consumerManager.getMaxWaitingTime(consumer);
+            if(waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
         }
 
-        return entitiesConsumed;
+        return maxWaitingTime;
     }
 
-    private void addEntities(int i) {
+    /**
+     * Takes the list of entities and deletes them from the list of entities according to the number and strength of
+     * the consumers registered in the simulation. Every time an entity is deleted, the method adds 1 to the number of
+     * entities consumed.
+     * @return The number of entities consumed so far in the simulation + the number of entities consumed during the
+     *         running of the method.
+     */
+    private void consumeEntities() {
+
+        for(int i = 0; i < consumers.size(); i++) {
+
+            consumerManager.consumeEntity(consumers.get(i));
+        }
+    }
+
+    /**
+     * Adds entities to the list of entities according to the number and strength of the producers registered in the
+     * simulation.
+     *
+     * @param currentTick The current tick number the simulation is on, to check if it is time for the producer to
+     *                    produce entities.
+     */
+    private void addEntitiesFromProducer(int currentTick) {
 
         for(Producer producer : producers) {
 
-            if(i == 0 || producer.getTicksToWait() % i == 0) {
+            if(producer.getTimetable().contains(currentTick)) {
 
-                for(int j = 0; j < producer.getEntitiesToProduce(); j++) {
-                    entities.add(new Entity(0));
+                if(producer.getRelationships().size() != 0) {
+
+                    List<Relationship> relationships = producer.getRelationships();
+
+                    for(int i = 0; i < producer.getEntitiesToProduce(); i++) {
+
+                        for(Relationship relationship : relationships) {
+
+                            int recieved = consumerManager.getTotalSentToConsumer(relationship.getChild());
+                            double currentWeight = (double) recieved / producer.getEntitiesTransfered();
+
+                            if(currentWeight <= relationship.getWeight() || producer.getEntitiesTransfered() == 0){
+
+                                consumerManager.addEntity(relationship.getChild(), new Entity());
+                                producer.setEntitiesTransfered(producer.getEntitiesTransfered() + 1);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
-    private void increaseWaitingTime() {
+    private void addEntitiesFromConsumers() {
 
-        for(Entity entity : entities) {
+        for(Consumer consumer : consumers) {
 
-            entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + 1 );
+            List<Relationship> relationships = consumer.getRelationships();
+
+            for(Relationship relationship : relationships) {
+
+                int recieved = consumerManager.getTotalSentToConsumer(relationship.getChild());
+                double currentWeight = (double) recieved / consumer.getEntitiesTransfered();
+
+                if(currentWeight <= relationship.getWeight() || consumer.getEntitiesTransfered() == 0) {
+
+                    if(consumer.getEntitesConsumed().size() != 0) {
+
+                        Entity entity = consumer.getEntitesConsumed().get(0);
+                        consumerManager.addEntity(relationship.getChild(), entity);
+                    }
+                }
+            }
         }
     }
+
+    /**
+     * Increases the waiting time of all the entities that have not been consumed by 1.
+     */
+    private void increaseWaitingTime() {
+
+
+        for(int i = 0; i < consumers.size(); i++) {
+
+            consumerManager.increaseWaitingTime(consumers.get(i), 1);
+        }
+    }
+
+    private int getEntitiesInQueue() {
+
+        int entitiesInQueue = 0;
+
+        for(Consumer consumer : consumers) {
+
+            entitiesInQueue += consumer.getEntitesInQueue().size();
+        }
+
+        return entitiesInQueue;
+    }
+
+    private int getEntitesConsumed() {
+
+        int entitiesConsumed = 0;
+
+        for(Consumer consumer : consumers) {
+
+            entitiesConsumed += consumer.getEntitesConsumed().size();
+        }
+
+        return entitiesConsumed;
+    }
+
+    private void distributeWeightProducers() {
+
+        for (int i = 0; i < producers.size(); i++) {
+
+            nodeManager.distributeWeightIfNotSpecified(producers.get(i));
+        }
+    }
+
+    private void distributeWeightConsumers() {
+
+        for(int i = 0; i < consumers.size(); i++) {
+
+            nodeManager.distributeWeightIfNotSpecified(consumers.get(i));
+        }
+    }
+    //endregion
+
     //endregion
 }

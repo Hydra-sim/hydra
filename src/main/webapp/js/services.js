@@ -7,7 +7,31 @@
     ]);
 
     app.factory('Simulation', ['$resource', function($resource) {
-        return $resource('api/simulation/:id', {id: "@_id"});
+        return $resource('api/simulation/:simulationId', {simulationId: '@id'});
     }]);
+
+    app.factory('SimResult', function() {
+        return {
+            data: {}
+        }
+    });
+
+    app.factory('menu_field_name', function() {
+        return {
+            value: '',
+            enabled: false,
+            disable: function() {
+                this.enabled = false;
+                this.value = "";
+            },
+            enable: function() {
+                this.enabled = true;
+            },
+            setValue: function(value) {
+                this.value = value;
+                this.enable();
+            }
+        };
+    });
 
 })();
