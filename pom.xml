@@ -9,7 +9,7 @@
     <name>Hydra</name>
     <url>http://maven.apache.org</url>
     <properties>
-    	<dockerBuild>generate-resources</dockerBuild>
+    	<frontendBuild>generate-resources</frontendBuild>
    	</properties>
     <dependencies>
         <dependency>
@@ -89,7 +89,7 @@
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
-                        <phase>${dockerBuild}</phase>
+                        <phase>${frontendBuild}</phase>
                         <configuration>
                             <nodeVersion>v0.10.18</nodeVersion>
                             <npmVersion>1.3.8</npmVersion>
@@ -100,7 +100,7 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
-                        <phase>${dockerBuild}</phase>
+                        <phase>${frontendBuild}</phase>
                         <configuration>
                             <arguments>install</arguments>
                         </configuration>
@@ -110,7 +110,7 @@
                         <goals>
                             <goal>gulp</goal>
                         </goals>
-                        <phase>${dockerBuild}</phase>
+                        <phase>${frontendBuild}</phase>
                     </execution>
                 </executions>
             </plugin>
