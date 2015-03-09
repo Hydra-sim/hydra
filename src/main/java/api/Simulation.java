@@ -107,6 +107,7 @@ public class Simulation {
         // Run and save to database
         sim.setResult(simulation123.simulate());
         entityManager.persist(sim);
+        entityManager.persist(simulation123);
 
         // Return stuff
         return Response.ok(sim.getResult()).build();

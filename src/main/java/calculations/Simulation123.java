@@ -25,10 +25,10 @@ public class Simulation123 {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Consumer> consumers;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Producer> producers;
 
     private int ticks;

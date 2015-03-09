@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Inheritance;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 @Inheritance
 public class Node {
 
-    @OneToMany
+    @OneToMany(cascade= CascadeType.ALL)
     List<Relationship> relationships = new ArrayList<>();
 
     int entitiesTransfered;

@@ -17,7 +17,7 @@ public class Relationship implements Comparable<Relationship>{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private Consumer child;
 
     private double weight;
