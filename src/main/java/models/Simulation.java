@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * A query to get all Simulations in the database
  */
-@NamedQuery(name = "Simulation.findAll", query = "SELECT a FROM Simulation a")
+@NamedQuery(name = "Simulation.findAll", query = "SELECT a FROM Simulation123 a")
 
 /**
  * Created by knarf on 10/02/15.
@@ -82,7 +82,7 @@ public class Simulation
     }
 
     public Simulation() {
-        this.name = "Untitled Simulation";
+        this.name = "Untitled Simulation123";
         this.date = new Date();
     }
 }

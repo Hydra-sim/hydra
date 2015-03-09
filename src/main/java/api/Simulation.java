@@ -1,5 +1,6 @@
 package api;
 
+import calculations.Simulation123;
 import managers.ProducerManager;
 import models.Consumer;
 import models.Producer;
@@ -100,11 +101,11 @@ public class Simulation {
         
         producer.setRelationships(relationships);
 
-        // Create simulation
-        calculations.Simulation simulation = new calculations.Simulation(consumers, producers, input.ticks);
+        // Create simulation123
+        Simulation123 simulation123 = new Simulation123(consumers, producers, input.ticks);
 
         // Run and save to database
-        sim.setResult(simulation.simulate());
+        sim.setResult(simulation123.simulate());
         entityManager.persist(sim);
 
         // Return stuff

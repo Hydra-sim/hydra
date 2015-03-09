@@ -15,7 +15,7 @@ import java.util.List;
  * @author Kristine Sundt Lorentzen
  */
 @javax.persistence.Entity
-public class Simulation {
+public class Simulation123 {
 
     //region attributes
     /**
@@ -38,12 +38,12 @@ public class Simulation {
     //endregion
 
     //region constructors
-    public Simulation() {
+    public Simulation123() {
 
         this(new ArrayList<>(), new ArrayList<>(), 0);
     }
 
-    public Simulation(List<Consumer> consumers, List<Producer> producers, int ticks) {
+    public Simulation123(List<Consumer> consumers, List<Producer> producers, int ticks) {
         this.consumers = consumers;
         this.producers = producers;
         this.ticks = ticks;

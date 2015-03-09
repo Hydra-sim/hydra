@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by kristinesundtlorentzen on 25/2/15.
  */
-public class SimulationIntegrationTest {
+public class Simulation123IntegrationTest {
 
     ProducerManager producerManager;
 
@@ -82,15 +82,15 @@ public class SimulationIntegrationTest {
     //region helping methods
     private void testSimulateWeight(double weight1, double weight2, int ticks) {
 
-        Simulation simulation = setUpStandardSimulationOneProducerTwoConsumers(1, 1, 0, 1, ticks, weight1, weight2);
-        simulation.simulate();
+        Simulation123 simulation123 = setUpStandardSimulationOneProducerTwoConsumers(1, 1, 0, 1, ticks, weight1, weight2);
+        simulation123.simulate();
 
         ConsumerManager con = new ConsumerManager();
-        assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulation.getConsumers().get(0)), 0.0);
-        assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulation.getConsumers().get(1)), 0.0);
+        assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulation123.getConsumers().get(0)), 0.0);
+        assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulation123.getConsumers().get(1)), 0.0);
     }
 
-    private Simulation setUpStandardSimulationOneProducerTwoConsumers(int consumedPrTick, int entitiesToProduce, int startTick,
+    private Simulation123 setUpStandardSimulationOneProducerTwoConsumers(int consumedPrTick, int entitiesToProduce, int startTick,
                                                                       int tickBetweenArrivals, int ticks,
                                                                       double consumerWeight1, double consumerWeight2) {
 
@@ -115,10 +115,10 @@ public class SimulationIntegrationTest {
         consumers.add(consumer1);
         consumers.add(consumer2);
 
-        return new Simulation(consumers, producers, 10);
+        return new Simulation123(consumers, producers, 10);
     }
 
-    private Simulation setUpStandardSimulationOneProducerOneConsumer(int consumedPrTick, int entitiesToProduce, int startTick,
+    private Simulation123 setUpStandardSimulationOneProducerOneConsumer(int consumedPrTick, int entitiesToProduce, int startTick,
                                                                      int tickBetweenArrivals,
                                                                      int ticks) {
 
@@ -138,9 +138,9 @@ public class SimulationIntegrationTest {
         consumerList.add(consumer);
         producerList.add(producer);
 
-        Simulation simulation = new Simulation(consumerList, producerList, ticks);
+        Simulation123 simulation123 = new Simulation123(consumerList, producerList, ticks);
 
-        return simulation;
+        return simulation123;
     }
     //endregion
 }
