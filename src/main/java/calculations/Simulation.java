@@ -3,7 +3,9 @@ package calculations;
 import managers.ConsumerManager;
 import managers.NodeManager;
 import models.*;
+import models.Entity;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +14,23 @@ import java.util.List;
  *
  * @author Kristine Sundt Lorentzen
  */
+@javax.persistence.Entity
 public class Simulation {
 
     //region attributes
+    /**
+     * An automatically generated id
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id;
+
+    @OneToMany
     private List<Consumer> consumers;
+
+    @OneToMany
     private List<Producer> producers;
+
     private int ticks;
 
     ConsumerManager consumerManager;
@@ -73,6 +87,11 @@ public class Simulation {
                 "Consumers: " + consumers.toString() + "\n" +
                 "Ticks: " + ticks;
     }
+
+    public int getId() {
+        return id;
+    }
+
     //endregion
 
     //region simulation

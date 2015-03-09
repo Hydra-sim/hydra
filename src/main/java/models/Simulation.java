@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.Date;
 
 /**
@@ -15,7 +14,7 @@ import java.util.Date;
 /**
  * Created by knarf on 10/02/15.
  */
-@Entity
+@javax.persistence.Entity
 public class Simulation
 {
     /**

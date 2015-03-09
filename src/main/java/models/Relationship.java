@@ -2,15 +2,24 @@ package models;
 
 import managers.ConsumerManager;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
 //TODO: Add a check when using dependencies so that it doesn't crash if you make something dependent to itself?
-@Embeddable
+@javax.persistence.Entity
 public class Relationship implements Comparable<Relationship>{
 
     //region attributes
 
+    /**
+     * An automatically generated id
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id;
+
+    @OneToOne
     private Consumer child;
+
     private double weight;
 
     //endregion

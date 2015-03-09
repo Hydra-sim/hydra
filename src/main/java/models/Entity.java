@@ -1,11 +1,8 @@
 package models;
 
-import javax.persistence.Embeddable;
-
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
  */
-@Embeddable
 public class Entity implements Comparable<Entity>{
 
     private int waitingTimeInTicks;
