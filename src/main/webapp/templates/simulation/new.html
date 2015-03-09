@@ -13,5 +13,60 @@
 <script type="text/ng-template" id="modalNewProducer">
 
 </script>-->
-<button class="btn" ng-click="addData()">New Controller</button>
+<!--<button class="btn" ng-click="createNodeFormActive = true">New Controller</button>-->
+
+<div ng-controller="ModalDemoCtrl">
+    <script type="text/ng-template" id="producerModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Create new producer</h3>
+        </div>
+        <div class="modal-body">
+
+            <!-- Create Producer Form -->
+                <form novalidate ng-submit="createProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)">
+                    <div class="form-group">
+                        <label for="entitesToProduce">Entities to produce per tick:</label>
+                        <input type="number" id="entitesToProduce" class="form-control" ng-model="entitesToProduce" min="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="startTickForProducer">Number of ticks before arrival:</label>
+                        <input type="number" id="startTickForProducer" class="form-control" ng-model="startTickForProducer" min="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="timeBetweenBuses">Ticks between buses:</label>
+                        <input type="number" id="timeBetweenBuses" class="form-control" ng-model="timeBetweenBuses" min="0" />
+                    </div>
+                </form>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()" type = "submit">Submit</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="consumerModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Create new consumer</h3>
+        </div>
+        <div class="modal-body">
+
+                <!-- Create Consumer Form -->
+                <form novalidate ng-submit="createConsumer(entitesConsumedPerTick)">
+                    <div class="form-group">
+                        <label for="entitesConsumedPerTick">Number of entities consumed per tick:</label>
+                        <input type="number" id="entitesConsumedPerTick" class="form-control" ng-model="entitesConsumedPerTick" min="0" />
+                    </div>
+                </form>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()" type="submit">Submit</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <button class="btn btn-default" ng-click="openProducerModal()">Create Producer!</button>
+    <button class="btn btn-default" ng-click="openConsumerModal()">Create Consumer!</button>
+</div>
+
 <graph nodes="dataset.nodes" edges="dataset.edges"></graph>
