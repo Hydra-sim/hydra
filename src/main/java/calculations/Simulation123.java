@@ -33,7 +33,10 @@ public class Simulation123 {
 
     private int ticks;
 
+    @Transient
     ConsumerManager consumerManager;
+
+    @Transient
     NodeManager nodeManager;
     //endregion
 
