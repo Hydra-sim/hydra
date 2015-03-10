@@ -296,6 +296,8 @@ GraphCreator.prototype.circleMouseUp = function(d3node, d){
             return d.source === newEdge.source && d.target === newEdge.target;
         });
         if (!filtRes[0].length){
+            thisGraph.nodes[ newEdge.source.id ].children.push( newEdge.target.id );
+
             thisGraph.edges.push(newEdge);
             thisGraph.updateGraph();
         }
@@ -338,15 +340,19 @@ GraphCreator.prototype.svgMouseDown = function(){
 
 // mouseup on main svg
 GraphCreator.prototype.svgMouseUp = function(){
+
     var thisGraph = this,
         state = thisGraph.state;
+
     if (state.justScaleTransGraph) {
         // dragged not clicked
         state.justScaleTransGraph = false;
+
+    // When creating new nodes.
     } else if (state.graphMouseDown && d3.event.shiftKey){
         // clicked not dragged from svg
         var xycoords = d3.mouse(thisGraph.svgG.node()),
-            d = {id: thisGraph.idct++, title: "new concept", x: xycoords[0], y: xycoords[1]};
+            d = {id: thisGraph.idct++, title: "new concept", x: xycoords[0], y: xycoords[1], children: []};
         thisGraph.nodes.push(d);
         thisGraph.updateGraph();
         // make title of text immediently editable
@@ -356,8 +362,9 @@ GraphCreator.prototype.svgMouseUp = function(){
             txtNode = d3txt.node();
         thisGraph.selectElementContents(txtNode);
         txtNode.focus();
+
+    // When the arrow hit pure nothingness
     } else if (state.shiftNodeDrag){
-        // dragged from node
         state.shiftNodeDrag = false;
         thisGraph.dragLine.classed("hidden", true);
     }

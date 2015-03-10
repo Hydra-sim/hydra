@@ -23,7 +23,6 @@
                     var edges_exp = $parse(attrs.edges);
                     var edges = edges_exp(scope);
 
-
                     var svg = d3.select(element[0])
                         .append("svg")
                         .attr("width", width)

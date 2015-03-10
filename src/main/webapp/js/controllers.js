@@ -39,6 +39,8 @@
         $scope.minutes = 0;
         $scope.entitesToProduce = 1;
         $scope.entitesConsumedPerTick = 1;
+        $scope.consumers = [];
+        $scope.producers = [];
 
         menu_field_name.setValue("Untitled simulation");
 
@@ -90,13 +92,14 @@
 
         $scope.dataset = {
             nodes: [
-                {title: "new concept", id: 0, x: 100, y: 100},
-                {title: "new concept", id: 1, x: 100, y: 300}
+                {title: "new concept", id: 0, x: 100, y: 100, children: []},
+                {title: "new concept", id: 1, x: 100, y: 300, children: []}
             ],
             edges: []
         };
 
         $scope.dataset.edges.push({source: $scope.dataset.nodes[1], target: $scope.dataset.nodes[0]});
+        $scope.dataset.nodes[ 1 ].children.push( 0 );
 
         $scope.addData = function() {
             $scope.dataset.nodes.push(
@@ -151,49 +154,66 @@
 
             var modalInstance = $modal.open({
                 templateUrl: 'producerModal.html',
-                controller: 'ModalInstanceCtrl',
+                controller: 'ProducerModalInstanceCtrl',
                 size: size,
                 resolve: {
-                    items: function () {
-                        return $scope.items;
+                    producers: function () {
+                        return $scope.producers;
                     }
                 }
-            });
-
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
             });
         };
 
         $scope.openConsumerModal = function (size) {
 
-            var modalInstance = $modal.open({
+            $modal.open({
                 templateUrl: 'consumerModal.html',
                 controller: 'ConsumerModalInstanceCtrl',
                 size: size,
                 resolve: {
-                    items: function () {
-                        return $scope.items;
+                    consumers: function () {
+                        return $scope.consumers;
                     }
                 }
             });
-
-            $scope.entitesConsumedPerTick = 10;
-        }
+        };
     });
 
-    app.controller('ConsumerModalInstanceCtrl', function ($scope, $modalInstance, items) {
+    app.controller('ConsumerModalInstanceCtrl', function ($scope, $modalInstance, $log, consumers) {
 
-        $scope.items = items;
+        $scope.consumers = consumers;
 
-        $scope.selected = {
-            item: $scope.items[0]
+        $scope.submit = function () {
+            $modalInstance.close();
+
+            var consumer = {
+                entitesConsumedPerTick: $scope.entitesConsumedPerTick
+            };
+
+            $scope.consumers.push( consumer );
         };
 
-        $scope.ok = function () {
-            $modalInstance.close($scope.selected.item);
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+    app.controller('ProducerModalInstanceCtrl', function ($scope, $modalInstance, $log, producers) {
+
+        $scope.producers = producers;
+
+        $scope.submit = function () {
+            $modalInstance.close();
+
+            var producer = {
+                entitiesToProduce: $scope.entitiesToProduce,
+                timetable: {
+                    startTickForProducer: $scope.startTickForProducer,
+                    timeBetweenBuses: $scope.timeBetweenBuses
+                }
+            };
+
+            $scope.producers.push( producer );
         };
 
         $scope.cancel = function () {
