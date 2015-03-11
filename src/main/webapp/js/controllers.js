@@ -222,10 +222,16 @@
     });
 
     app.controller('TimetableList', function($scope, $rootScope, Timetable) {
-        $scope.timetables = Timetable.query({});
-        $rootScope.$on('updateTimetable', function (event, args) {
+        function updateTimetableScope() {
             $scope.timetables = Timetable.query({});
-        });
+        }
+        updateTimetableScope();
+
+        $rootScope.$on('updateTimetable', updateTimetableScope);
+
+        $scope.deleteTimetable = function(id) {gi
+            Timetable.delete({}, {"id": id}, updateTimetableScope);
+        };
     });
 
     app.controller('TimetableNew', function($scope, $rootScope, $modalInstance, Timetable) {

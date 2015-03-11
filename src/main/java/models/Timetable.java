@@ -54,4 +54,8 @@ public class Timetable {
     public void setArrivals(List<TimetableEntry> arrivals) {
         this.arrivals = arrivals;
     }
+
+    public int getId() {
+        return id;
+    }
 }
