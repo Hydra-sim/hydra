@@ -1,24 +1,32 @@
 package api;
 
-import calculations.Simulation123;
+import calculations.SimulationEngine;
 import managers.ProducerManager;
 import models.Consumer;
 import models.Producer;
 import models.Relationship;
+import models.SimulationData;
 
+import javax.json.Json;
+import javax.json.JsonReader;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import java.util.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by knarf on 04/02/15.
  */
 @Path("simulation")
 public class Simulation {
+
+    //private static final Logger log = Logger.getLogger(Simulation.class.getName());
 
     @PersistenceContext(unitName = "manager")
     private EntityManager entityManager;
@@ -80,34 +88,41 @@ public class Simulation {
         models.Simulation sim = new models.Simulation(input.name);
 
         // Producer
-        Producer producer = new Producer(input.entitesToProduce, null);
-        new ProducerManager().generateTimetable(producer, input.startTickForProducer, input.timeBetweenBuses,
-                input.ticks / input.timeBetweenBuses);
-
-
         List<Producer> producers = new ArrayList<>();
-        producers.add(producer);
-        
+
+        for(int i = 0; i < input.entitiesToProduceList.length; i++) {
+
+            Producer producer = new Producer(input.entitiesToProduceList[i], null);
+            new ProducerManager().generateTimetable(producer, input.startTickForProducerList[i],
+                    input.timeBetweenBusesList[i], input.ticks / input.timeBetweenBusesList[i]);
+
+            producers.add(producer);
+        }
+
         // Consumers
         List<Relationship> relationships = new ArrayList<>();
         List<Consumer> consumers = new ArrayList<>();
 
-        for(int i = 0; i < input.numberOfEntrances; i++) {
-            Consumer consumer = new Consumer(input.entitesConsumedPerTick);
-            Relationship relationship1 = new Relationship(consumer, 0.0);
-            relationships.add(relationship1);
+        for(int i = 0; i < input.entitiesConsumedPerTickList.length; i++) {
+            Consumer consumer = new Consumer(input.entitiesConsumedPerTickList[i]);
+            Relationship relationship = new Relationship(consumer, 0.0);
+            relationships.add(relationship);
             consumers.add(consumer);
         }
-        
-        producer.setRelationships(relationships);
+
+        for(int i = 0; i < producers.size(); i++) {
+            producers.get(i).setRelationships(relationships);
+        }
 
         // Create simulation123
-        Simulation123 simulation123 = new Simulation123(consumers, producers, input.ticks);
+        SimulationEngine simulationEngine = new SimulationEngine(consumers, producers, input.ticks);
 
         // Run and save to database
-        sim.setResult(simulation123.simulate());
+        sim.setResult(simulationEngine.simulate());
+
+        //sim.input = input.consumerList;
         entityManager.persist(sim);
-        entityManager.persist(simulation123);
+        entityManager.persist(simulationEngine);
 
         // Return stuff
         return Response.ok(sim.getResult()).build();

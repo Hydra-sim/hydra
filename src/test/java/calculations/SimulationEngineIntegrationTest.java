@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by kristinesundtlorentzen on 25/2/15.
  */
-public class Simulation123IntegrationTest {
+public class SimulationEngineIntegrationTest {
 
     ProducerManager producerManager;
 
@@ -82,15 +82,15 @@ public class Simulation123IntegrationTest {
     //region helping methods
     private void testSimulateWeight(double weight1, double weight2, int ticks) {
 
-        Simulation123 simulation123 = setUpStandardSimulationOneProducerTwoConsumers(1, 1, 0, 1, ticks, weight1, weight2);
-        simulation123.simulate();
+        SimulationEngine simulationEngine = setUpStandardSimulationOneProducerTwoConsumers(1, 1, 0, 1, ticks, weight1, weight2);
+        simulationEngine.simulate();
 
         ConsumerManager con = new ConsumerManager();
-        assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulation123.getConsumers().get(0)), 0.0);
-        assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulation123.getConsumers().get(1)), 0.0);
+        assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulationEngine.getConsumers().get(0)), 0.0);
+        assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulationEngine.getConsumers().get(1)), 0.0);
     }
 
-    private Simulation123 setUpStandardSimulationOneProducerTwoConsumers(int consumedPrTick, int entitiesToProduce, int startTick,
+    private SimulationEngine setUpStandardSimulationOneProducerTwoConsumers(int consumedPrTick, int entitiesToProduce, int startTick,
                                                                       int tickBetweenArrivals, int ticks,
                                                                       double consumerWeight1, double consumerWeight2) {
 
@@ -115,10 +115,10 @@ public class Simulation123IntegrationTest {
         consumers.add(consumer1);
         consumers.add(consumer2);
 
-        return new Simulation123(consumers, producers, 10);
+        return new SimulationEngine(consumers, producers, 10);
     }
 
-    private Simulation123 setUpStandardSimulationOneProducerOneConsumer(int consumedPrTick, int entitiesToProduce, int startTick,
+    private SimulationEngine setUpStandardSimulationOneProducerOneConsumer(int consumedPrTick, int entitiesToProduce, int startTick,
                                                                      int tickBetweenArrivals,
                                                                      int ticks) {
 
@@ -138,9 +138,9 @@ public class Simulation123IntegrationTest {
         consumerList.add(consumer);
         producerList.add(producer);
 
-        Simulation123 simulation123 = new Simulation123(consumerList, producerList, ticks);
+        SimulationEngine simulationEngine = new SimulationEngine(consumerList, producerList, ticks);
 
-        return simulation123;
+        return simulationEngine;
     }
     //endregion
 }

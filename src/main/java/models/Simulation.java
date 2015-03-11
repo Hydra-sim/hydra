@@ -3,6 +3,7 @@ package models;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.json.JsonObject;
 import javax.persistence.*;
 import java.util.Date;
 

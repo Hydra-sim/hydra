@@ -5,11 +5,10 @@ package api;
  */
 class InputValue {
     public String name;
-    public int timeBetweenBuses;
-    public int numberOfEntrances;
     public int ticks;
-    public int entitesToProduce;
-    public int entitesConsumedPerTick;
-    public int startTickForProducer;
-    public int tickBetweenArrivals;
+
+    public int[] entitiesConsumedPerTickList;
+    public int[] entitiesToProduceList;
+    public int[] startTickForProducerList;
+    public int[] timeBetweenBusesList;
 }
