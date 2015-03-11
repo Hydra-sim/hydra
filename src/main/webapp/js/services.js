@@ -10,6 +10,11 @@
         return $resource('api/simulation/:simulationId', {simulationId: '@id'});
     }]);
 
+
+    app.factory('Timetable', ['$resource', function($resource) {
+        return $resource('api/timetable/:timetableId', {timetableId: '@id'});
+    }]);
+
     app.factory('SimResult', function() {
         return {
             data: {}

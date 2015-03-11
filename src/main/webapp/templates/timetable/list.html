@@ -1,0 +1,18 @@
+<div ng-controller="TimetableList">
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Name</th>
+            <th>Delete</th>
+        </tr>
+        <tr ng-repeat="timetable in timetables">
+            <td>
+                <a ng-href="#/timetable/show/{{timetable.id}}">{{timetable.name}}</a>
+            </td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteSimulation(timetable.id)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

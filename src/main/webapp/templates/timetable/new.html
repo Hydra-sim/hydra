@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        <input type="text" placeholder="name" ng-model="name" />
+    </h3>
+</div>
+<div class="modal-body">
+    <span>Arrival</span>
+    <span>Passengers</span>
+    <div class="vertical-scrollable">
+        <div ng-repeat="arrival in arrivals">
+            <input type="text" ng-model="arrival.time" />
+            <input type="text" ng-model="arrival.passengers" />
+        </div>
+    </div>
+    <span>{{totalArrivals}}</span>
+    <a href="" ng-click="addLine()">New line</a>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()" type="submit">Add timetable</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

@@ -221,4 +221,49 @@
         };
     });
 
+    app.controller('TimetableList', function($scope, $rootScope, Timetable) {
+        $scope.timetables = Timetable.query({});
+        $rootScope.$on('updateTimetable', function (event, args) {
+            $scope.timetables = Timetable.query({});
+        });
+    });
+
+    app.controller('TimetableNew', function($scope, $rootScope, $modalInstance, Timetable) {
+        $scope.arrivals = [
+            { time: 0, passengers: 0 }
+        ];
+
+        $scope.totalArrivals = 1;
+        $scope.name = "";
+
+        $scope.addLine = function() {
+            $scope.arrivals.push({ time: 0, passengers: 0 });
+            $scope.totalArrivals = $scope.arrivals.length;
+        };
+
+        $scope.ok = function () {
+            var timetable = new Timetable({
+                name: $scope.name,
+                arrivals: $scope.arrivals
+            });
+            timetable.$save().then(function() {
+                $rootScope.$emit('updateTimetable');
+            });
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+    app.controller('TimetableController', function($scope, $modal) {
+         $scope.newTimetable = function() {
+             $modal.open({
+                 templateUrl: 'templates/timetable/new.html',
+                 controller: 'TimetableNew'
+             });
+         }
+    });
+
 })();
