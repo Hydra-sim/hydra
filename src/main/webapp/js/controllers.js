@@ -229,7 +229,7 @@
 
         $rootScope.$on('updateTimetable', updateTimetableScope);
 
-        $scope.deleteTimetable = function(id) {gi
+        $scope.deleteTimetable = function(id) {
             Timetable.delete({}, {"id": id}, updateTimetableScope);
         };
     });
