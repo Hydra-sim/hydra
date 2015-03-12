@@ -31,7 +31,7 @@ public class ConsumerManager {
         List<Entity> entities = con.getEntitesInQueue();
         List<Entity> entitiesConsumed = new ArrayList<>();
 
-        for(int i = 0; i < con.getEntitesConsumedPerTick(); i++) {
+        for(int i = 0; i < con.getTicksToConsumeEntities(); i++) {
 
             if(!entities.isEmpty()) {
 

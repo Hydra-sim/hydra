@@ -39,11 +39,11 @@ public class Consumer extends Node{
 
     //region getters and setters
 
-    public int getticksToConsumeEntities() {
+    public int getTicksToConsumeEntities() {
         return ticksToConsumeEntities;
     }
 
-    public void setticksToConsumeEntities(int ticksToConsumeEntities) {
+    public void setTicksToConsumeEntities(int ticksToConsumeEntities) {
         this.ticksToConsumeEntities = ticksToConsumeEntities;
     }
 
