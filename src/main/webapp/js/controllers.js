@@ -253,4 +253,16 @@
          }
     });
 
+
+    app.controller('PresetList', function($scope, $rootScope, Preset) {
+        function updatePresetScope() {
+            $scope.presets = Preset.query({});
+        }
+        updatePresetScope();
+
+        $scope.deletePreset = function(id) {
+            Preset.delete({}, {"id": id}, updatePresetScope);
+        };
+    });
+
 })();

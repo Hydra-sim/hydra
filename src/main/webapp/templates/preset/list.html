@@ -1,0 +1,22 @@
+<div ng-controller="PresetList">
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Name</th>
+            <th>Date created</th>
+            <th>Delete</th>
+        </tr>
+        <tr ng-repeat="preset in presets">
+            <td>
+                <a ng-href="#/preset/{{preset.id}}">{{preset.name}}</a>
+            </td>
+            <td>
+                {{preset.date | date}}
+            </td>
+            <td>
+                <button class="btn btn-danger" ng-click="deletePreset(preset.id)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
