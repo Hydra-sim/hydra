@@ -1,6 +1,5 @@
 package api;
 
-import calculations.Simulation123;
 import managers.ProducerManager;
 import models.Consumer;
 import models.Producer;
