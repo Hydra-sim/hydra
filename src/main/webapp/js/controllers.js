@@ -32,15 +32,18 @@
     }]);
 
     app.controller('SimulationNew', ['$scope', '$location', '$rootScope', 'Simulation', 'SimResult', 'menu_field_name', '$modal', function ($scope, $location, $rootScope, Simulation, SimResult, menu_field_name, $modal) {
-        $scope.timeBetweenBuses = 10;
-        $scope.numberOfEntrances = 1;
+        //Default values
         $scope.days = 0;
-        $scope.hours = 1;
+        $scope.hours = 0;
         $scope.minutes = 0;
-        $scope.entitesToProduce = 1;
-        $scope.entitesConsumedPerTick = 1;
-        $scope.consumers = [];
-        $scope.producers = [];
+
+        $scope.ticks = 60;
+
+        $scope.entitiesConsumedPerTickList = [];
+        $scope.entitiesToProduceList = [];
+        $scope.startTickForProducerList = [];
+        $scope.timeBetweenBusesList = [];
+
 
         menu_field_name.setValue("Untitled simulation");
 
@@ -49,11 +52,13 @@
         $rootScope.menu_field_button_click = function() {
             var sim = new Simulation({
                 'name': menu_field_name.value,
-                'timeBetweenBuses': $scope.timeBetweenBuses,
-                'numberOfEntrances': $scope.numberOfEntrances,
-                'ticks': $scope.days*24*60 + $scope.hours * 60 + $scope.minutes,
-                'entitesToProduce': $scope.entitesToProduce,
-                'entitesConsumedPerTick': $scope.entitesConsumedPerTick
+                'ticks': $scope.ticks,
+
+                'entitiesConsumedPerTickList' : $scope.entitiesConsumedPerTickList,
+                'entitiesToProduceList' : $scope.entitiesToProduceList,
+                'startTickForProducerList' : $scope.startTickForProducerList,
+                'timeBetweenBusesList' : $scope.timeBetweenBusesList
+
             });
 
             sim.$save().then(function(result) {
@@ -148,78 +153,117 @@
         };
     });
 
-    app.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
+    app.controller('ModalCtrl', function ($scope, $modal, $log) {
 
-        $scope.openProducerModal = function (size) {
-
-            var modalInstance = $modal.open({
-                templateUrl: 'producerModal.html',
-                controller: 'ProducerModalInstanceCtrl',
-                size: size,
-                resolve: {
-                    producers: function () {
-                        return $scope.producers;
-                    }
-                }
-            });
-        };
-
-        $scope.openConsumerModal = function (size) {
+        $scope.openModal = function (size) {
 
             $modal.open({
-                templateUrl: 'consumerModal.html',
-                controller: 'ConsumerModalInstanceCtrl',
+                templateUrl: 'modal.html',
+                controller: 'ModalInstanceCtrl',
                 size: size,
                 resolve: {
-                    consumers: function () {
-                        return $scope.consumers;
+                    entitiesConsumedPerTickList: function () {
+                        return $scope.entitiesConsumedPerTickList;
+                    }
+                    ,
+                    entitiesToProduceList: function () {
+                        return $scope.entitiesToProduceList;
+                    },
+                    startTickForProducerList: function () {
+                        return $scope.startTickForProducerList;
+                    },
+                    timeBetweenBusesList: function () {
+                        return $scope.timeBetweenBusesList;
                     }
                 }
             });
         };
-    });
 
-    app.controller('ConsumerModalInstanceCtrl', function ($scope, $modalInstance, $log, consumers) {
+        $scope.openConfigModal = function(size) {
 
-        $scope.consumers = consumers;
-
-        $scope.submit = function () {
-            $modalInstance.close();
-
-            var consumer = {
-                entitesConsumedPerTick: $scope.entitesConsumedPerTick
-            };
-
-            $scope.consumers.push( consumer );
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
-
-    app.controller('ProducerModalInstanceCtrl', function ($scope, $modalInstance, $log, producers) {
-
-        $scope.producers = producers;
-
-        $scope.submit = function () {
-            $modalInstance.close();
-
-            var producer = {
-                entitiesToProduce: $scope.entitiesToProduce,
-                timetable: {
-                    startTickForProducer: $scope.startTickForProducer,
-                    timeBetweenBuses: $scope.timeBetweenBuses
+            $modal.open({
+                templateUrl: 'configModal.html',
+                controller: 'ConfigModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    ticks: function () {
+                        return $scope.ticks;
+                    },
+                    days: function () {
+                        return $scope.days;
+                    },
+                    hours: function () {
+                        return $scope.hours;
+                    },
+                    minutes: function () {
+                        return $scope.minutes;
+                    }
                 }
-            };
+            });
+        }
+    });
 
-            $scope.producers.push( producer );
+    app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, entitiesConsumedPerTickList,
+                                                  entitiesToProduceList, startTickForProducerList, timeBetweenBusesList) {
+
+        $scope.entitiesConsumedPerTickList = entitiesConsumedPerTickList;
+
+        $scope.submitConsumer = function (entitiesConsumedPerTick) {
+
+            $scope.entitiesConsumedPerTickList.push( entitiesConsumedPerTick );
+
+            $modalInstance.close();
+        };
+
+
+        $scope.entitiesToProduceList = entitiesToProduceList;
+        $scope.startTickForProducerList = startTickForProducerList;
+        $scope.timeBetweenBusesList = timeBetweenBusesList;
+
+        $scope.submitProducer = function (entitiesToProduce, startTickForProducer, timeBetweenBuses) {
+
+            $scope.entitiesToProduceList.push( entitiesToProduce );
+            $scope.startTickForProducerList.push( startTickForProducer );
+            $scope.timeBetweenBusesList.push( timeBetweenBuses );
+
+
+            $modalInstance.close();
+
         };
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
     });
+
+    app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, $log, ticks, days, hours, minutes) {
+
+        $scope.ticks = ticks;
+        $scope.days = days;
+        $scope.hours = hours;
+        $scope.minutes = minutes;
+
+        //TODO: Make this FUCKING thing work
+        $scope.submitConfig = function (days, hours, minutes) {
+
+            $log.info("Submitting. Ticks: " + $scope.ticks);
+
+            $scope.ticks = ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60)); // WHY DOESN'T THIS WORK??!! WHYYY?!
+
+            $log.info("Submitted. Ticks: " + $scope.ticks);
+
+            $modalInstance.close();
+        };
+
+        $log.info("TICKS:" + $scope.ticks);
+        $log.info($scope);
+
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
 
     app.controller('TimetableList', function($scope, $rootScope, Timetable) {
         function updateTimetableScope() {
