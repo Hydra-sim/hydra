@@ -7,7 +7,7 @@ class InputValue {
     public String name;
     public int ticks;
 
-    public int[] entitiesConsumedPerTickList;
+    public int[] ticksToConsumeEntitiesList;
     public int[] entitiesToProduceList;
     public int[] startTickForProducerList;
     public int[] timeBetweenBusesList;

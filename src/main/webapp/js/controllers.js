@@ -39,7 +39,7 @@
 
         $scope.ticks = 60;
 
-        $scope.entitiesConsumedPerTickList = [];
+        $scope.ticksToConsumeEntitiesList = [];
         $scope.entitiesToProduceList = [];
         $scope.startTickForProducerList = [];
         $scope.timeBetweenBusesList = [];
@@ -54,7 +54,7 @@
                 'name': menu_field_name.value,
                 'ticks': $scope.ticks,
 
-                'entitiesConsumedPerTickList' : $scope.entitiesConsumedPerTickList,
+                'ticksToConsumeEntitiesList' : $scope.ticksToConsumeEntitiesList,
                 'entitiesToProduceList' : $scope.entitiesToProduceList,
                 'startTickForProducerList' : $scope.startTickForProducerList,
                 'timeBetweenBusesList' : $scope.timeBetweenBusesList
@@ -124,8 +124,8 @@
                 controller: 'ModalInstanceCtrl',
                 size: size,
                 resolve: {
-                    entitiesConsumedPerTickList: function () {
-                        return $scope.entitiesConsumedPerTickList;
+                    ticksToConsumeEntitiesList: function () {
+                        return $scope.ticksToConsumeEntitiesList;
                     },
                     entitiesToProduceList: function () {
                         return $scope.entitiesToProduceList;
@@ -154,14 +154,14 @@
         }
     });
 
-    app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, entitiesConsumedPerTickList,
+    app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,
                                                   entitiesToProduceList, startTickForProducerList, timeBetweenBusesList) {
 
-        $scope.entitiesConsumedPerTickList = entitiesConsumedPerTickList;
+        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
 
-        $scope.submitConsumer = function (entitiesConsumedPerTick) {
+        $scope.submitConsumer = function (ticksToConsumeEntities) {
 
-            $scope.entitiesConsumedPerTickList.push( entitiesConsumedPerTick );
+            $scope.ticksToConsumeEntitiesList.push( ticksToConsumeEntities );
 
             $modalInstance.close();
         };

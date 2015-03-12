@@ -103,8 +103,8 @@ public class Simulation {
         List<Relationship> relationships = new ArrayList<>();
         List<Consumer> consumers = new ArrayList<>();
 
-        for(int i = 0; i < input.entitiesConsumedPerTickList.length; i++) {
-            Consumer consumer = new Consumer(input.entitiesConsumedPerTickList[i]);
+        for(int i = 0; i < input.ticksToConsumeEntitiesList.length; i++) {
+            Consumer consumer = new Consumer(input.ticksToConsumeEntitiesList[i]);
             Relationship relationship = new Relationship(consumer, 0.0);
             relationships.add(relationship);
             consumers.add(consumer);

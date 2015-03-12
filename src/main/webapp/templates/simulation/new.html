@@ -38,12 +38,12 @@
                     <br/>
                     <form novalidate>
                         <div class="form-group">
-                            <label for="entitiesConsumedPerTick">Number of entities consumed per tick:</label>
-                            <input type="number" id="entitiesConsumedPerTick" class="form-control" ng-model="entitiesConsumedPerTick" min="0" />
+                            <label for="ticksToConsumeEntities">Number of entities consumed per tick:</label>
+                            <input type="number" id="ticksToConsumeEntities" class="form-control" ng-model="ticksToConsumeEntities" min="0" />
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" ng-click="submitConsumer(entitiesConsumedPerTick)" type="submit">Submit</button>
+                        <button class="btn btn-primary" ng-click="submitConsumer(ticksToConsumeEntities)" type="submit">Submit</button>
                         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
                     </div>
                 </tab>
@@ -76,7 +76,7 @@
         </div>
     </script>
     <button class="btn btn-default" ng-click="openModal()">Add Node</button>
-    <p>{{entitiesConsumedPerTickList.length}} consumers, {{entitiesToProduceList.length}} producers, {{ticks}} ticks</p>
+    <p>{{ticksToConsumeEntitiesList.length}} consumers, {{entitiesToProduceList.length}} producers, {{ticks}} ticks</p>
     <!--<p>{{days}} days, {{hours}} hours, {{minutes}} minutes</p>-->
 
 </div>

@@ -17,7 +17,7 @@ public class Consumer extends Node{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    private int entitesConsumedPerTick;
+    private int ticksToConsumeEntities;
 
     @Transient
     private List<Entity> entitesConsumed;
@@ -30,8 +30,8 @@ public class Consumer extends Node{
         this(0);
     }
 
-    public Consumer(int entitesConsumedPerTick) {
-        this.entitesConsumedPerTick = entitesConsumedPerTick;
+    public Consumer(int ticksToConsumeEntities) {
+        this.ticksToConsumeEntities = ticksToConsumeEntities;
         this.entitesConsumed = new ArrayList<>();
         this.entitesInQueue = new ArrayList<>();
     }
@@ -39,12 +39,12 @@ public class Consumer extends Node{
 
     //region getters and setters
 
-    public int getEntitesConsumedPerTick() {
-        return entitesConsumedPerTick;
+    public int getticksToConsumeEntities() {
+        return ticksToConsumeEntities;
     }
 
-    public void setEntitesConsumedPerTick(int entitesConsumedPerTick) {
-        this.entitesConsumedPerTick = entitesConsumedPerTick;
+    public void setticksToConsumeEntities(int ticksToConsumeEntities) {
+        this.ticksToConsumeEntities = ticksToConsumeEntities;
     }
 
     public List<Entity> getEntitesConsumed() {
@@ -67,6 +67,6 @@ public class Consumer extends Node{
 
     public String toString() {
 
-        return "Entites consumed pr. tick: " + entitesConsumedPerTick;
+        return "Entites consumed pr. tick: " + ticksToConsumeEntities;
     }
 }

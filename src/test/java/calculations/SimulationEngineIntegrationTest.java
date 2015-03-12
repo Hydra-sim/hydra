@@ -90,13 +90,13 @@ public class SimulationEngineIntegrationTest {
         assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulationEngine.getConsumers().get(1)), 0.0);
     }
 
-    private SimulationEngine setUpStandardSimulationOneProducerTwoConsumers(int consumedPrTick, int entitiesToProduce, int startTick,
+    private SimulationEngine setUpStandardSimulationOneProducerTwoConsumers(int ticksToConsumeEntities, int entitiesToProduce, int startTick,
                                                                       int tickBetweenArrivals, int ticks,
                                                                       double consumerWeight1, double consumerWeight2) {
 
         Producer producer = new Producer(entitiesToProduce, null);
-        Consumer consumer1 = new Consumer(consumedPrTick);
-        Consumer consumer2 = new Consumer(consumedPrTick);
+        Consumer consumer1 = new Consumer(ticksToConsumeEntities);
+        Consumer consumer2 = new Consumer(ticksToConsumeEntities);
 
         Relationship relationship1 = new Relationship(consumer1, consumerWeight1);
         Relationship relationship2 = new Relationship(consumer2, consumerWeight2);
@@ -118,11 +118,11 @@ public class SimulationEngineIntegrationTest {
         return new SimulationEngine(consumers, producers, 10);
     }
 
-    private SimulationEngine setUpStandardSimulationOneProducerOneConsumer(int consumedPrTick, int entitiesToProduce, int startTick,
+    private SimulationEngine setUpStandardSimulationOneProducerOneConsumer(int ticksToConsumeEntities, int entitiesToProduce, int startTick,
                                                                      int tickBetweenArrivals,
                                                                      int ticks) {
 
-        Consumer consumer = new Consumer(consumedPrTick);
+        Consumer consumer = new Consumer(ticksToConsumeEntities);
         Producer producer = new Producer(entitiesToProduce, null);
         Relationship relationship = new Relationship(consumer, 1.0);
 
