@@ -181,24 +181,14 @@
 
         $scope.openConfigModal = function(size) {
 
-            $modal.open({
+            var configModal = $modal.open({
                 templateUrl: 'configModal.html',
                 controller: 'ConfigModalInstanceCtrl',
-                size: size,
-                resolve: {
-                    ticks: function () {
-                        return $scope.ticks;
-                    },
-                    days: function () {
-                        return $scope.days;
-                    },
-                    hours: function () {
-                        return $scope.hours;
-                    },
-                    minutes: function () {
-                        return $scope.minutes;
-                    }
-                }
+                size: size
+            });
+
+            configModal.result.then(function (ticks) {
+                $scope.ticks = ticks;
             });
         }
     });
@@ -236,28 +226,15 @@
         };
     });
 
-    app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, $log, ticks, days, hours, minutes) {
+    app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, $log) {
+        $scope.days = 0;
+        $scope.hours = 1;
+        $scope.minutes = 0;
 
-        $scope.ticks = ticks;
-        $scope.days = days;
-        $scope.hours = hours;
-        $scope.minutes = minutes;
-
-        //TODO: Make this FUCKING thing work
         $scope.submitConfig = function (days, hours, minutes) {
-
-            $log.info("Submitting. Ticks: " + $scope.ticks);
-
-            $scope.ticks = ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60)); // WHY DOESN'T THIS WORK??!! WHYYY?!
-
-            $log.info("Submitted. Ticks: " + $scope.ticks);
-
-            $modalInstance.close();
+            var ticks = ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60));
+            $modalInstance.close(ticks);
         };
-
-        $log.info("TICKS:" + $scope.ticks);
-        $log.info($scope);
-
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
