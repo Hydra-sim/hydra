@@ -8,7 +8,7 @@
         'ui.bootstrap'
     ]);
 
-    app.controller('ApplicationController', ['$scope', '$rootScope', '$location', 'menu_field_name', function($scope, $rootScope, $location, menu_field_name) {
+    app.controller('ApplicationController', function($scope, $rootScope, $location, menu_field_name) {
         $rootScope.menu_field_button = "New Simulation";
         $rootScope.menu_field_button_icon = "fa-plus-circle";
         $rootScope.menu_field_button_click = function() {
@@ -17,9 +17,9 @@
 
         $rootScope.menu_field_name = menu_field_name;
         menu_field_name.disable();
-    }]);
+    });
 
-    app.controller('SimulationController', ['$scope', 'Simulation', function ($scope, Simulation) {
+    app.controller('SimulationController', function ($scope, Simulation) {
         $scope.simulations = Simulation.query({});
 
         $scope.deleteSimulation = function(id) {
@@ -29,9 +29,9 @@
             });
 
         };
-    }]);
+    });
 
-    app.controller('SimulationNew', ['$scope', '$location', '$rootScope', 'Simulation', 'SimResult', 'menu_field_name', '$modal', function ($scope, $location, $rootScope, Simulation, SimResult, menu_field_name, $modal) {
+    app.controller('SimulationNew', function ($scope, $location, $rootScope, Simulation, SimResult, menu_field_name) {
         //Default values
         $scope.days = 0;
         $scope.hours = 0;
@@ -89,9 +89,9 @@
                 {title: "new concept", id: 0, x: 0, y: 0}
             );
         };
-    }]);
+    });
 
-    app.controller('SimulationResult', ['$scope', '$rootScope', 'SimResult', function($scope, $rootScope, SimResult) {
+    app.controller('SimulationResult', function($scope, $rootScope, SimResult) {
         $scope.entitiesConsumed         = SimResult.data.entitiesConsumed;
         $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;
         $scope.maxWaitingTimeInTicks    = SimResult.data.maxWaitingTimeInTicks;
@@ -99,9 +99,9 @@
         $rootScope.menu_field_button = "";
         $rootScope.menu_field_button_icon = "";
         $rootScope.menu_field_button_click = function() {};
-    }]);
+    });
 
-    app.controller('SimulationShow', ['$scope', '$rootScope', '$routeParams', 'Simulation', function($scope, $rootScope, $routeParams, Simulation) {
+    app.controller('SimulationShow', function($scope, $rootScope, $routeParams, Simulation) {
         Simulation.get({}, {"id": $routeParams.id}, function(data) {
             console.log(data);
 
@@ -113,7 +113,7 @@
         $rootScope.menu_field_button = "";
         $rootScope.menu_field_button_icon = "";
         $rootScope.menu_field_button_click = function() {};
-    }]);
+    });
 
     app.controller('ModalCtrl', function ($scope, $modal, $log) {
 
