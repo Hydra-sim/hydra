@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 /**
  * Created by knarf on 10/03/15.
  */
-@Path("/timetable")
+@Path("/preset")
 public class Preset {
 
     @PersistenceContext(unitName = "manager")
