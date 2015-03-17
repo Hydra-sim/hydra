@@ -1,12 +1,9 @@
 package calculations;
 
 import managers.ProducerManager;
+import models.*;
 import org.junit.Before;
 import org.junit.Test;
-import models.Consumer;
-import models.Producer;
-import models.Relationship;
-import models.SimulationResult;
 
 import managers.ConsumerManager;
 
@@ -32,8 +29,9 @@ public class SimulationEngineIntegrationTest {
     @Test
     public void testSimulateEqualAmountProducedAndConsumed() throws Exception{
 
-        SimulationResult simulationResult = setUpStandardSimulationOneProducerOneConsumer(1, 1, 0, 1, 1).simulate();
-        assertEquals(0, simulationResult.getEntitiesInQueue());
+        Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(1, 1, 0, 1, 1);
+        simulation.simulate();
+        assertEquals(0, simulation.getResult().getEntitiesInQueue());
     }
 
     @Test
@@ -42,15 +40,17 @@ public class SimulationEngineIntegrationTest {
         int ticks = 10;
         int ticksBetweenArrival = 1;
 
-        SimulationResult simulationResult = setUpStandardSimulationOneProducerOneConsumer(1, 2, 0, ticksBetweenArrival, ticks).simulate();
-        assertTrue(simulationResult.getEntitiesInQueue() > 0);
+        Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(1, 2, 0, ticksBetweenArrival, ticks);
+        simulation.simulate();
+        assertTrue(simulation.getResult().getEntitiesInQueue() > 0);
     }
 
     @Test
     public void testSimulateMoreConsumedThanProduced() throws Exception{
 
-        SimulationResult simulationResult = setUpStandardSimulationOneProducerOneConsumer(2, 1, 0, 1, 1).simulate();
-        assertEquals(0, simulationResult.getEntitiesInQueue());
+        Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(2, 1, 0, 1, 1);
+        simulation.simulate();
+        assertEquals(0, simulation.getResult().getEntitiesInQueue());
     }
 
     @Test
@@ -59,11 +59,12 @@ public class SimulationEngineIntegrationTest {
         int ticks = 10;
         int ticksBetweenArrival = 10;
 
-        SimulationResult simulationResult = setUpStandardSimulationOneProducerOneConsumer(1, 10, 0, 10, 10).simulate();
+        Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(1, 10, 0, ticksBetweenArrival, ticks);
+        simulation.simulate();
 
-        assertEquals(0, simulationResult.getEntitiesInQueue());
-        assertTrue(simulationResult.getMaxWaitingTimeInTicks() > 0);
-        assertTrue(simulationResult.getEntitiesConsumed() > 0);
+        assertEquals(0, simulation.getResult().getEntitiesInQueue());
+        assertTrue(simulation.getResult().getMaxWaitingTimeInTicks() > 0);
+        assertTrue(simulation.getResult().getEntitiesConsumed() > 0);
     }
 
     @Test
@@ -82,15 +83,15 @@ public class SimulationEngineIntegrationTest {
     //region helping methods
     private void testSimulateWeight(double weight1, double weight2, int ticks) {
 
-        SimulationEngine simulationEngine = setUpStandardSimulationOneProducerTwoConsumers(1, 1, 0, 1, ticks, weight1, weight2);
-        simulationEngine.simulate();
+        Simulation simulation = setUpStandardSimulationOneProducerTwoConsumers(1, 1, 0, 1, ticks, weight1, weight2);
+        simulation.simulate();
 
         ConsumerManager con = new ConsumerManager();
-        assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulationEngine.getConsumers().get(0)), 0.0);
-        assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulationEngine.getConsumers().get(1)), 0.0);
+        assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulation.getConsumers().get(0)), 0.0);
+        assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulation.getConsumers().get(1)), 0.0);
     }
 
-    private SimulationEngine setUpStandardSimulationOneProducerTwoConsumers(int ticksToConsumeEntities, int entitiesToProduce, int startTick,
+    private Simulation setUpStandardSimulationOneProducerTwoConsumers(int ticksToConsumeEntities, int entitiesToProduce, int startTick,
                                                                       int tickBetweenArrivals, int ticks,
                                                                       double consumerWeight1, double consumerWeight2) {
 
@@ -115,10 +116,10 @@ public class SimulationEngineIntegrationTest {
         consumers.add(consumer1);
         consumers.add(consumer2);
 
-        return new SimulationEngine(consumers, producers, 10);
+        return new Simulation("Test", consumers, producers, 10);
     }
 
-    private SimulationEngine setUpStandardSimulationOneProducerOneConsumer(int ticksToConsumeEntities, int entitiesToProduce, int startTick,
+    private Simulation setUpStandardSimulationOneProducerOneConsumer(int ticksToConsumeEntities, int entitiesToProduce, int startTick,
                                                                      int tickBetweenArrivals,
                                                                      int ticks) {
 
@@ -138,9 +139,7 @@ public class SimulationEngineIntegrationTest {
         consumerList.add(consumer);
         producerList.add(producer);
 
-        SimulationEngine simulationEngine = new SimulationEngine(consumerList, producerList, ticks);
-
-        return simulationEngine;
+        return new Simulation("Test", consumerList, producerList, ticks);
     }
     //endregion
 }

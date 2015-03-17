@@ -5,7 +5,9 @@ import managers.NodeManager;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.inject.Named;
 import javax.persistence.*;
+import java.lang.annotation.Repeatable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +15,11 @@ import java.util.List;
 /**
  * A query to get all Simulations in the database
  */
-@NamedQuery(name = "Simulation.findAll", query = "SELECT a FROM Simulation a")
+@NamedQueries({
+        @NamedQuery(name = "Simulation.findAll", query = "SELECT a FROM Simulation a"),
+        @NamedQuery(name = "Simulation.findPresets", query = "SELECT a FROM Simulation a WHERE preset = TRUE"),
+        @NamedQuery(name = "Simulation.findNotPreset", query = "SELECT a FROM Simulation a WHERE preset = FALSE")
+})
 
 /**
  * Created by knarf on 10/02/15.
@@ -57,6 +63,8 @@ public class Simulation
     private List<Producer> producers;
 
     private int ticks;
+
+    private boolean preset;
     //endregion
 
     //region transient attributes
@@ -93,10 +101,10 @@ public class Simulation
         consumerManager = new ConsumerManager();
         nodeManager = new NodeManager();
 
-        /*
         distributeWeightConsumers();
         distributeWeightProducers();
-        */
+
+        preset = false;
     }
     //endregion
 
@@ -152,6 +160,15 @@ public class Simulation
     public void setTicks(int ticks) {
         this.ticks = ticks;
     }
+
+    public boolean isPreset() {
+        return preset;
+    }
+
+    public void setPreset(boolean preset) {
+        this.preset = preset;
+    }
+
     //endregion
 
     //region simulation

@@ -23,7 +23,7 @@ public class Preset {
     public Response list()
     {
         TypedQuery<models.Simulation> query = entityManager.createNamedQuery(
-                "Presets.findAll",
+                "Simulation.findPresets",
                 models.Simulation.class
         );
 

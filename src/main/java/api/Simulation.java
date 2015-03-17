@@ -1,6 +1,5 @@
 package api;
 
-import calculations.SimulationEngine;
 import managers.ProducerManager;
 import models.Consumer;
 import models.Producer;
@@ -33,7 +32,7 @@ public class Simulation {
     public Response list()
     {
         TypedQuery<models.Simulation> query = entityManager.createNamedQuery(
-            "Simulation.findAll",
+            "Simulation.findNotPreset",
             models.Simulation.class
         );
 

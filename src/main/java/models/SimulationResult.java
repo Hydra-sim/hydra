@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An object that saves all the data from the simulation done in {@link calculations.SimulationEngine#simulate()}
+ * An object that saves all the data from the simulation done in {@link models.Simulation}
  */
 @javax.persistence.Entity
 public class SimulationResult {
