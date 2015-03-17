@@ -6,7 +6,7 @@ import org.junit.Test;
 import models.Consumer;
 import models.Producer;
 import models.Relationship;
-import models.SimulationData;
+import models.SimulationResult;
 
 import managers.ConsumerManager;
 
@@ -32,8 +32,8 @@ public class SimulationEngineIntegrationTest {
     @Test
     public void testSimulateEqualAmountProducedAndConsumed() throws Exception{
 
-        SimulationData simulationData = setUpStandardSimulationOneProducerOneConsumer(1, 1, 0, 1, 1).simulate();
-        assertEquals(0, simulationData.getEntitiesInQueue());
+        SimulationResult simulationResult = setUpStandardSimulationOneProducerOneConsumer(1, 1, 0, 1, 1).simulate();
+        assertEquals(0, simulationResult.getEntitiesInQueue());
     }
 
     @Test
@@ -42,15 +42,15 @@ public class SimulationEngineIntegrationTest {
         int ticks = 10;
         int ticksBetweenArrival = 1;
 
-        SimulationData simulationData = setUpStandardSimulationOneProducerOneConsumer(1, 2, 0, ticksBetweenArrival, ticks).simulate();
-        assertTrue(simulationData.getEntitiesInQueue() > 0);
+        SimulationResult simulationResult = setUpStandardSimulationOneProducerOneConsumer(1, 2, 0, ticksBetweenArrival, ticks).simulate();
+        assertTrue(simulationResult.getEntitiesInQueue() > 0);
     }
 
     @Test
     public void testSimulateMoreConsumedThanProduced() throws Exception{
 
-        SimulationData simulationData = setUpStandardSimulationOneProducerOneConsumer(2, 1, 0, 1, 1).simulate();
-        assertEquals(0, simulationData.getEntitiesInQueue());
+        SimulationResult simulationResult = setUpStandardSimulationOneProducerOneConsumer(2, 1, 0, 1, 1).simulate();
+        assertEquals(0, simulationResult.getEntitiesInQueue());
     }
 
     @Test
@@ -59,11 +59,11 @@ public class SimulationEngineIntegrationTest {
         int ticks = 10;
         int ticksBetweenArrival = 10;
 
-        SimulationData simulationData = setUpStandardSimulationOneProducerOneConsumer(1, 10, 0, 10, 10).simulate();
+        SimulationResult simulationResult = setUpStandardSimulationOneProducerOneConsumer(1, 10, 0, 10, 10).simulate();
 
-        assertEquals(0, simulationData.getEntitiesInQueue());
-        assertTrue(simulationData.getMaxWaitingTimeInTicks() > 0);
-        assertTrue(simulationData.getEntitiesConsumed() > 0);
+        assertEquals(0, simulationResult.getEntitiesInQueue());
+        assertTrue(simulationResult.getMaxWaitingTimeInTicks() > 0);
+        assertTrue(simulationResult.getEntitiesConsumed() > 0);
     }
 
     @Test

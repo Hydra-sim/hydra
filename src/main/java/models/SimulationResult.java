@@ -8,7 +8,7 @@ import java.util.List;
  * An object that saves all the data from the simulation done in {@link calculations.SimulationEngine#simulate()}
  */
 @javax.persistence.Entity
-public class SimulationData {
+public class SimulationResult {
 
     //region attributes
     /**
@@ -29,12 +29,12 @@ public class SimulationData {
     //endregion
 
     //region constructors
-    public SimulationData() {
+    public SimulationResult() {
 
         this(0, 0, 0);
     }
 
-    public SimulationData(int entitiesConsumed, int entitiesInQueue, int maxWaitingTimeInTicks) {
+    public SimulationResult(int entitiesConsumed, int entitiesInQueue, int maxWaitingTimeInTicks) {
         this.entitiesConsumed = entitiesConsumed;
         this.entitiesInQueue = entitiesInQueue;
         this.maxWaitingTimeInTicks = maxWaitingTimeInTicks;

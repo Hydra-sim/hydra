@@ -108,9 +108,9 @@ public class SimulationEngine {
      * and remove entities from the list over entities. It uses the list of entities to check which one has the
      * highest waiting time at the end of the simulation.
      *
-     * @return A {@link models.SimulationData} object with entities consumed, entities left in queue and max waiting time.
+     * @return A {@link models.SimulationResult} object with entities consumed, entities left in queue and max waiting time.
      */
-    public SimulationData simulate() {
+    public SimulationResult simulate() {
 
         int maxWaitingTime = 0;
 
@@ -128,7 +128,7 @@ public class SimulationEngine {
 
         }
 
-        return new SimulationData(getEntitesConsumed(), getEntitiesInQueue(), maxWaitingTime);
+        return new SimulationResult(getEntitesConsumed(), getEntitiesInQueue(), maxWaitingTime);
     }
 
     //region simulation methods

@@ -5,10 +5,7 @@ import managers.ProducerManager;
 import models.Consumer;
 import models.Producer;
 import models.Relationship;
-import models.SimulationData;
 
-import javax.json.Json;
-import javax.json.JsonReader;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -16,7 +13,6 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
