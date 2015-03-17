@@ -246,6 +246,7 @@
 
     app.controller('TimetableEdit', function($scope, $routeParams, Timetable) {
         Timetable.get({}, {"id": $routeParams.id}, function(result) {
+            $scope.id = result.id;
             $scope.arrivals = result.arrivals;
             $scope.totalArrivals = result.arrivals.length;
             $scope.name = result.name;
@@ -257,6 +258,12 @@
         };
 
         $scope.ok = function () {
+            var timetable = new Timetable({
+                id: $scope.id,
+                name: $scope.name,
+                arrivals: $scope.arrivals
+            });
+            Timetable.update({"id": $scope.id}, timetable);
         };
 
         $scope.cancel = function () {

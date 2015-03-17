@@ -1,19 +1,14 @@
 package api;
 
-import managers.ProducerManager;
-import models.Consumer;
-import models.Producer;
-import models.Relationship;
-
+import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by knarf on 10/03/15.
@@ -78,6 +73,24 @@ public class Timetable {
     public Response add(models.Timetable timetable)
     {
         entityManager.persist(timetable);
+        return Response.ok().build();
+    }
+
+
+    @Transactional
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public Response edit(@PathParam("id") int id, models.Timetable timetable)
+    {
+        try {
+            entityManager.merge(timetable);
+        }
+        catch (Exception e) {
+            return Response.serverError().build();
+        }
+
         return Response.ok().build();
     }
 }

@@ -11,7 +11,10 @@
     }]);
 
     app.factory('Timetable', ['$resource', function($resource) {
-        return $resource('api/timetable/:timetableId', {timetableId: '@id'});
+        return $resource('api/timetable/:timetableId', {timetableId: '@id'},
+            {
+                'update': { method:'PUT' }
+            });
     }]);
 
     app.factory('Preset', ['$resource', function($resource) {
