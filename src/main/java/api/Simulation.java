@@ -80,13 +80,12 @@ public class Simulation {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(InputValue input)
     {
-        // Create new object in database
-        models.Simulation sim = new models.Simulation(input.name);
-
         // Producer
         List<Producer> producers = new ArrayList<>();
 
         for(int i = 0; i < input.entitiesToProduceList.length; i++) {
+
+            if(input.timeBetweenBusesList[i] < 1) input.timeBetweenBusesList[i] = 1;
 
             Producer producer = new Producer(input.entitiesToProduceList[i], null);
             new ProducerManager().generateTimetable(producer, input.startTickForProducerList[i],
@@ -110,15 +109,14 @@ public class Simulation {
             producers.get(i).setRelationships(relationships);
         }
 
-        // Create simulation123
-        SimulationEngine simulationEngine = new SimulationEngine(consumers, producers, input.ticks);
+        // Create new object in database
+        models.Simulation sim = new models.Simulation(input.name, consumers, producers, input.ticks);
 
         // Run and save to database
-        sim.setResult(simulationEngine.simulate());
+        sim.simulate();
 
         //sim.input = input.consumerList;
         entityManager.persist(sim);
-        entityManager.persist(simulationEngine);
 
         // Return stuff
         return Response.ok(sim.getResult()).build();

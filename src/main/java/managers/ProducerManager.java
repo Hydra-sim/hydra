@@ -12,6 +12,8 @@ public class ProducerManager {
 
     public void generateTimetable(Producer producer, int startTick, int tickBetweenArrivals, int numberOfArrivals) {
 
+        if(tickBetweenArrivals == 0) tickBetweenArrivals = 1;
+
         List<Integer> timetable = new ArrayList<>();
 
         for(int i = startTick; i < numberOfArrivals*tickBetweenArrivals; i += tickBetweenArrivals) {
