@@ -7,7 +7,7 @@
         </tr>
         <tr ng-repeat="timetable in timetables">
             <td>
-                <a ng-href="#/timetable/show/{{timetable.id}}">{{timetable.name}}</a>
+                <a ng-href="#/timetable/{{timetable.id}}/">{{timetable.name}}</a>
             </td>
             <td>
                 <button class="btn btn-danger" ng-click="deleteTimetable(timetable.id)">Delete</button>
