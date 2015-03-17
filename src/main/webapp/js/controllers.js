@@ -244,7 +244,7 @@
         };
     });
 
-    app.controller('TimetableEdit', function($scope, $routeParams, Timetable) {
+    app.controller('TimetableEdit', function($scope, $routeParams, $rootScope, $location, Timetable) {
         Timetable.get({}, {"id": $routeParams.id}, function(result) {
             $scope.id = result.id;
             $scope.arrivals = result.arrivals;
@@ -263,10 +263,14 @@
                 name: $scope.name,
                 arrivals: $scope.arrivals
             });
-            Timetable.update({"id": $scope.id}, timetable);
+            Timetable.update({"id": $scope.id}, timetable).$promise.then(function() {
+                $rootScope.$emit('updateTimetable');
+                $location.path('/timetable');
+            });
         };
 
         $scope.cancel = function () {
+            $location.path('/timetable');
         };
     });
 
