@@ -244,6 +244,25 @@
         };
     });
 
+    app.controller('TimetableEdit', function($scope, $routeParams, Timetable) {
+        Timetable.get({}, {"id": $routeParams.id}, function(result) {
+            $scope.arrivals = result.arrivals;
+            $scope.totalArrivals = result.arrivals.length;
+            $scope.name = result.name;
+        });
+
+        $scope.addLine = function() {
+            $scope.arrivals.push({ time: 0, passengers: 0 });
+            $scope.totalArrivals = $scope.arrivals.length;
+        };
+
+        $scope.ok = function () {
+        };
+
+        $scope.cancel = function () {
+        };
+    });
+
     app.controller('TimetableController', function($scope, $modal) {
          $scope.newTimetable = function() {
              $modal.open({
