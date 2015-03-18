@@ -51,15 +51,13 @@ public class Simulation
     /**
      * Result of the simulation
      */
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL)
     private SimulationResult result;
 
-    @Transient
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Consumer> consumers;
 
-    @Transient
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Producer> producers;
 
     private int ticks;
