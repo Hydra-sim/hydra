@@ -10,13 +10,6 @@ import java.util.List;
 @javax.persistence.Entity
 public class Consumer extends Node{
 
-    /**
-     * An automatically generated id
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
-
     public String name;
 
     private int ticksToConsumeEntities;

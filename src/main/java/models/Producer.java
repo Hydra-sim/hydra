@@ -10,14 +10,6 @@ import java.util.List;
 @javax.persistence.Entity
 public class Producer extends Node{
 
-
-    /**
-     * An automatically generated id
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
-
     private int entitiesToProduce;
 
     /**

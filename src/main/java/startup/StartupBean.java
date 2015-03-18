@@ -24,6 +24,7 @@ public class StartupBean {
 
     @PostConstruct
     public void startup() {
+        // Creating a test timetable and saving it to the database
         Timetable test1 = new Timetable("test1");
         test1.setArrivals(new ArrayList<TimetableEntry>() {{
             add(new TimetableEntry(10, 10));
@@ -32,6 +33,7 @@ public class StartupBean {
 
         entityManager.persist(test1);
 
+        // Creating the OSL preset and saving it to the database
         Simulation simulation = new OSLPreset().createOSLPreset();
         entityManager.persist(simulation);
     }

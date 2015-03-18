@@ -7,8 +7,16 @@ import java.util.List;
 /**
  * Created by kristinesundtlorentzen on 24/2/15.
  */
-@Inheritance
+@javax.persistence.Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Node {
+
+    /**
+     * An automatically generated id
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id;
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Relationship> relationships = new ArrayList<>();

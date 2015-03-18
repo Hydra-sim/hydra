@@ -18,11 +18,6 @@ public class SimulationResult {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @ElementCollection
-    private List<Consumer> consumers = new ArrayList<>();
-    @ElementCollection
-    private List<Producer> producers = new ArrayList<>();
-
     private int entitiesConsumed;
     private int entitiesInQueue;
     private int maxWaitingTimeInTicks;
