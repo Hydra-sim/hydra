@@ -100,11 +100,21 @@
 
             $scope.ticks = result.ticks;
 
-            //TODO: Make lists persistant so that they are reachable in the simulation
             $scope.ticksToConsumeEntitiesList = [];
-            $scope.entitiesToProduceList = [];
-            $scope.startTickForProducerList = [];
-            $scope.timeBetweenBusesList = [];
+
+            for(var i = 0; i < result.consumers.length; i++) {
+                $scope.ticksToConsumeEntitiesList.push (result.consumers[i].ticksToConsumeEntities);
+            }
+
+            $scope.timetableIds = [];
+
+            for(var i = 0; i < result.producers.length; i++) {
+                $scope.timetableIds.push( result.producers[i].timetable.id );
+            }
+
+            $log.info(result.consumers);
+            $log.info("Lenght: " + result.consumers.length);
+
         });
 
         $rootScope.menu_field_button = "Submit";
@@ -115,10 +125,7 @@
                 'ticks': $scope.ticks,
 
                 'ticksToConsumeEntitiesList' : $scope.ticksToConsumeEntitiesList,
-                'entitiesToProduceList' : $scope.entitiesToProduceList,
-                'startTickForProducerList' : $scope.startTickForProducerList,
-                'timeBetweenBusesList' : $scope.timeBetweenBusesList
-
+                'timetableIds' : $scope.timetableIds
             });
 
             sim.$save().then(function(result) {
