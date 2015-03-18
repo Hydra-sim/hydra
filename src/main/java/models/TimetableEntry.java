@@ -36,4 +36,12 @@ public class TimetableEntry {
     public void setPassengers(int passengers) {
         this.passengers = passengers;
     }
+
+    public TimetableEntry() {
+    }
+
+    public TimetableEntry(int time, int passengers) {
+        this.time = time;
+        this.passengers = passengers;
+    }
 }

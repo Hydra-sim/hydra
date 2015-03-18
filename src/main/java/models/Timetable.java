@@ -58,4 +58,16 @@ public class Timetable {
     public int getId() {
         return id;
     }
+
+    public Timetable() {
+    }
+
+    public Timetable(String name) {
+        this.name = name;
+    }
+
+    public Timetable(List<TimetableEntry> arrivals, String name) {
+        this.arrivals = arrivals;
+        this.name = name;
+    }
 }
