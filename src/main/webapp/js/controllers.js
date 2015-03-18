@@ -12,14 +12,14 @@
         $rootScope.menu_field_button = "New Simulation";
         $rootScope.menu_field_button_icon = "fa-plus-circle";
         $rootScope.menu_field_button_click = function() {
-            $location.path('/newsimulation');
+            $location.path('/simulation/new');
         };
 
         $rootScope.menu_field_name = menu_field_name;
         menu_field_name.disable();
     });
 
-    app.controller('SimulationController', function ($scope, Simulation) {
+    app.controller('SimulationController', function ($scope, Simulation, $location) {
         $scope.simulations = Simulation.query({});
 
         $scope.deleteSimulation = function(id) {
@@ -28,6 +28,10 @@
                 $scope.simulations = Simulation.query({});
             });
 
+        };
+
+        $scope.editSimulation = function(id) {
+            $location.path('/simulation/' + id);
         };
     });
 
@@ -88,6 +92,46 @@
             $scope.dataset.nodes.push(
                 {title: "new concept", id: 0, x: 0, y: 0}
             );
+        };
+    });
+
+    app.controller('SimulationEdit', function ($log, $scope, $routeParams, $rootScope, $location, Simulation, SimResult,
+                                               menu_field_name) {
+
+        Simulation.get({}, {"id": $routeParams.id}, function(result) {
+            $scope.id = result.id;
+
+            menu_field_name.setValue(result.name);
+
+            $scope.ticks = result.ticks;
+
+            //TODO: Make lists persistant so that they are reachable in the simulation
+            $scope.ticksToConsumeEntitiesList = [];
+            $scope.entitiesToProduceList = [];
+            $scope.startTickForProducerList = [];
+            $scope.timeBetweenBusesList = [];
+        });
+
+        $rootScope.menu_field_button = "Submit";
+        $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
+        $rootScope.menu_field_button_click = function() {
+            var sim = new Simulation({
+                'name': menu_field_name.value,
+                'ticks': $scope.ticks,
+
+                'ticksToConsumeEntitiesList' : $scope.ticksToConsumeEntitiesList,
+                'entitiesToProduceList' : $scope.entitiesToProduceList,
+                'startTickForProducerList' : $scope.startTickForProducerList,
+                'timeBetweenBusesList' : $scope.timeBetweenBusesList
+
+            });
+
+            sim.$save().then(function(result) {
+                $location.path('/result');
+                $location.replace();
+
+                SimResult.data = result;
+            });
         };
     });
 
@@ -155,7 +199,8 @@
     });
 
     app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,
-                                                  entitiesToProduceList, startTickForProducerList, timeBetweenBusesList) {
+                                                  entitiesToProduceList, startTickForProducerList, timeBetweenBusesList,
+                                                  Timetable) {
 
         $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
 
@@ -166,10 +211,14 @@
             $modalInstance.close();
         };
 
-
         $scope.entitiesToProduceList = entitiesToProduceList;
         $scope.startTickForProducerList = startTickForProducerList;
         $scope.timeBetweenBusesList = timeBetweenBusesList;
+
+        function updateTimetableScope() {
+            $scope.timetables = Timetable.query({});
+        }
+        updateTimetableScope();
 
         $scope.submitProducer = function (entitiesToProduce, startTickForProducer, timeBetweenBuses) {
 
@@ -220,12 +269,10 @@
             { time: 0, passengers: 0 }
         ];
 
-        $scope.totalArrivals = 1;
         $scope.name = "";
 
         $scope.addLine = function() {
             $scope.arrivals.push({ time: 0, passengers: 0 });
-            $scope.totalArrivals = $scope.arrivals.length;
         };
 
         $scope.ok = function () {
@@ -282,7 +329,6 @@
              });
          }
     });
-
 
     app.controller('PresetList', function($scope, $rootScope, Preset) {
         function updatePresetScope() {

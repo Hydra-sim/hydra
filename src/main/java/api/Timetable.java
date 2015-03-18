@@ -38,14 +38,16 @@ public class Timetable {
     @Path("{id}")
     public Response get(@PathParam("id") int id)
     {
-        try {
-            models.Timetable item = entityManager.find(models.Timetable.class, id);
+        models.Timetable item;
 
-            return Response.ok( item ).build();
+        try {
+            item = entityManager.find(models.Timetable.class, id);
         }
         catch (Exception e) {
             return Response.serverError().build();
         }
+
+        return Response.ok( item ).build();
     }
 
     @Transactional

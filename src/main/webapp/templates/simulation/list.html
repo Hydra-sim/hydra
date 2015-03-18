@@ -5,6 +5,7 @@
                 <th>Name</th>
                 <th>Date created</th>
                 <th>Delete</th>
+                <th>Edit</th>
             </tr>
             <tr ng-repeat="simulation in simulations">
                 <td>
@@ -15,6 +16,9 @@
                 </td>
                 <td>
                     <button class="btn btn-danger" ng-click="deleteSimulation(simulation.id)">Delete</button>
+                </td>
+                <td>
+                    <button class="btn btn-default" ng-click="editSimulation(simulation.id)">Edit</button>
                 </td>
             </tr>
         </tbody>

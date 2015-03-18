@@ -51,7 +51,7 @@
                     <tab-heading>
                         <h4>Producer</h4>
                     </tab-heading>
-                    <!-- Create Producer Form -->
+                    <!-- Create Producer Form
                     <br/>
                     <form novalidate>
                         <div class="form-group">
@@ -66,7 +66,29 @@
                             <label for="timeBetweenBuses">Ticks between buses:</label>
                             <input type="number" id="timeBetweenBuses" class="form-control" ng-model="timeBetweenBuses" min="0" />
                         </div>
-                    </form>
+                    </form>-->
+
+                    <br/>
+
+                    <h5 class="text-center">Choose timetable</h5>
+
+                    <tabset vertical="true" class="split-tabs clearfix" type="pills">
+                        <tab ng-repeat="timetable in timetables" heading="{{timetable.name}}" active="false">
+                            <table class="vertical-scrollable table-equal-width table table-striped">
+                                <thead>
+                                    <th>Arrival</th>
+                                    <th>Passengers</th>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="arrival in timetable.arrivals">
+                                        <td><span>{{ arrival.time }}</span></td>
+                                        <td><span>{{ arrival.passengers }}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </tab>
+                    </tabset>
+
                     <div class="modal-footer">
                         <button class="btn btn-primary" ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit</button>
                         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>

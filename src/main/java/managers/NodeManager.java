@@ -10,13 +10,6 @@ import java.util.List;
  */
 public class NodeManager {
 
-    public void addRelationship(Node node, Relationship relationship) {
-
-        List<Relationship> relationships = node.getRelationships();
-        relationships.add(relationship);
-        node.setRelationships(relationships);
-    }
-
     public void distributeWeightIfNotSpecified(Node node) {
 
         List<Relationship> relationships = node.getRelationships();
