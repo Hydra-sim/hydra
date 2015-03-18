@@ -32,7 +32,7 @@ public class Simulation {
     public Response list()
     {
         TypedQuery<models.Simulation> query = entityManager.createNamedQuery(
-            "Simulation.findNotPreset",
+            "Simulation.findAll",
             models.Simulation.class
         );
 

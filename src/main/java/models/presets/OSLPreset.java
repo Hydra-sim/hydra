@@ -4,6 +4,7 @@ import managers.NodeManager;
 import models.Consumer;
 import models.Relationship;
 import models.Simulation;
+import models.SimulationResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +91,7 @@ public class OSLPreset {
         simulation.setConsumers(consumers);
         simulation.setTicks(100);
         simulation.setPreset(true);
+        simulation.setResult(new SimulationResult());
         //simulation.setBusStops(busStops);
 
         return simulation;
