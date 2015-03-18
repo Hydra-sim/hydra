@@ -1,7 +1,9 @@
 package startup;
 
+import models.Simulation;
 import models.Timetable;
 import models.TimetableEntry;
+import models.presets.OSLPreset;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -29,5 +31,8 @@ public class StartupBean {
         }});
 
         entityManager.persist(test1);
+
+        Simulation simulation = new OSLPreset().createOSLPreset();
+        entityManager.persist(simulation);
     }
 }

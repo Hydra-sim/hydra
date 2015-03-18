@@ -26,7 +26,74 @@ import java.util.List;
  *
  * @return preset for OSL airport
  */
-public class OSLPreset extends Simulation {
+public class OSLPreset {
+
+    public Simulation createOSLPreset() {
+        List<Consumer> consumers = new ArrayList<>();
+
+        List<Consumer> busStops;
+        List<Consumer> doors;
+        List<Consumer> terminals;
+        List<Consumer> bagDrops;
+        List<Consumer> toilets;
+        List<Consumer> cafes;
+        List<Consumer> securityChecks;
+
+        // Number of each consumer
+        final int BUS_STOP_QUANTITY       = 5;
+        final int DOOR_QUANTITY           = 5;
+        final int TERMINAL_QUANTITY       = 39;
+        final int BAG_DROP_QUANTITY       = 26;
+        final int TOILET_QUANTITY         = 2;
+        final int CAFE_QUANTITY           = 1;
+        final int SECURITY_CHECK_QUANTITY = 1;
+
+
+        // Consumption time in ticks
+        final int BUS_STOP_CONSUMPTION_TIME       = 60;
+        final int DOOR_CONSUMPTION_TIME           = 10;
+        final int TERMINAL_CONSUMPTION_TIME       = 60 * 2;
+        final int BAG_DROP_CONSUMPTION_TIME       = 60 * 2;
+        final int TOILET_CONSUMPTION_TIME         = 60 * 5;
+        final int CAFE_CONSUMPTION_TIME           = 60 * 30;
+        final int SECURITY_CHECK_CONSUMPTION_TIME = 60 * 10;
+
+
+        busStops       = createConsumers(BUS_STOP_QUANTITY,       BUS_STOP_CONSUMPTION_TIME,        "Bus stop");
+        doors          = createConsumers(DOOR_QUANTITY,           DOOR_CONSUMPTION_TIME,            "Door");
+        terminals      = createConsumers(TERMINAL_QUANTITY,       TERMINAL_CONSUMPTION_TIME,        "Terminal");
+        bagDrops       = createConsumers(BAG_DROP_QUANTITY,       BAG_DROP_CONSUMPTION_TIME,        "Bag drop");
+        toilets        = createConsumers(TOILET_QUANTITY,         TOILET_CONSUMPTION_TIME,          "Toilet");
+        cafes          = createConsumers(CAFE_QUANTITY,           CAFE_CONSUMPTION_TIME,            "Café");
+        securityChecks = createConsumers(SECURITY_CHECK_QUANTITY, SECURITY_CHECK_CONSUMPTION_TIME,  "Security check");
+
+        busStops = setRelationshipsBusStops(busStops, doors);
+        doors = setRelationships(doors, terminals);
+        terminals = setRelationships(terminals, bagDrops);
+        bagDrops = setRelationshipBagDrops(bagDrops, securityChecks, toilets, cafes);
+        toilets = setRelationships(toilets, securityChecks);
+        cafes = setRelationships(cafes, securityChecks);
+
+        Relationship relationship = new Relationship(doors.get(1), 1.0);
+        List<Relationship> relationships = new ArrayList<>();
+        relationships.add(relationship);
+        doors.get(0).setRelationships(relationships);
+
+        consumers = addConsumers(consumers, doors);
+        consumers = addConsumers(consumers, terminals);
+        consumers = addConsumers(consumers, bagDrops);
+        consumers = addConsumers(consumers, toilets);
+        consumers = addConsumers(consumers, cafes);
+        consumers = addConsumers(consumers, securityChecks);
+
+        Simulation simulation = new Simulation("OSL Preset");
+        simulation.setConsumers(consumers);
+        simulation.setTicks(100);
+        simulation.setPreset(true);
+        //simulation.setBusStops(busStops);
+
+        return simulation;
+    }
 
     // Weights specified
     // Weights based on comment at the top of the method
@@ -98,12 +165,14 @@ public class OSLPreset extends Simulation {
         return parents;
     }
 
-    private List<Consumer> createConsumers(int quantity, int consumptionTime) {
+    private List<Consumer> createConsumers(int quantity, int consumptionTime, String name) {
 
         List<Consumer> consumers = new ArrayList<>();
 
         for(int i = 0; i < quantity; i++) {
-            consumers.add(new Consumer(consumptionTime));
+            Consumer consumer = new Consumer(consumptionTime);
+            consumer.name = name;
+            consumers.add(consumer);
         }
 
         return consumers;

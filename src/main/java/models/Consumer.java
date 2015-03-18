@@ -17,6 +17,8 @@ public class Consumer extends Node{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
+    public String name;
+
     private int ticksToConsumeEntities;
 
     @Transient
