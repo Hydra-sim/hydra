@@ -109,12 +109,8 @@
             $scope.timetableIds = [];
 
             for(var i = 0; i < result.producers.length; i++) {
-                $scope.timetableIds.push( result.producers[i].timetable.id );
+                $scope.timetableIds.push(result.producers[i].timetable.id);
             }
-
-            $log.info(result.consumers);
-            $log.info("Lenght: " + result.consumers.length);
-
         });
 
         $rootScope.menu_field_button = "Submit";

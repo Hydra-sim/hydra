@@ -68,6 +68,7 @@ public class OSLPreset {
         cafes          = createConsumers(CAFE_QUANTITY,           CAFE_CONSUMPTION_TIME,            "Café");
         securityChecks = createConsumers(SECURITY_CHECK_QUANTITY, SECURITY_CHECK_CONSUMPTION_TIME,  "Security check");
 
+        /*
         busStops = setRelationshipsBusStops(busStops, doors);
         doors = setRelationships(doors, terminals);
         terminals = setRelationships(terminals, bagDrops);
@@ -79,6 +80,7 @@ public class OSLPreset {
         List<Relationship> relationships = new ArrayList<>();
         relationships.add(relationship);
         doors.get(0).setRelationships(relationships);
+        */
 
         consumers = addConsumers(consumers, doors);
         consumers = addConsumers(consumers, terminals);
