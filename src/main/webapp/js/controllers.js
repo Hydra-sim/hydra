@@ -218,7 +218,6 @@
             };
 
             $scope.timetableIds.push( $scope.active().id );
-            $log.info($scope.timetableIds[0]);
 
             $modalInstance.close();
 
