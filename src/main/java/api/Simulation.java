@@ -82,14 +82,10 @@ public class Simulation {
         // Producer
         List<Producer> producers = new ArrayList<>();
 
-        for(int i = 0; i < input.entitiesToProduceList.length; i++) {
+        for(int i = 0; i < input.timetableIds.length; i++) {
 
-            if(input.timeBetweenBusesList[i] < 1) input.timeBetweenBusesList[i] = 1;
-
-            Producer producer = new Producer(input.entitiesToProduceList[i], null);
-            new ProducerManager().generateTimetable(producer, input.startTickForProducerList[i],
-                    input.timeBetweenBusesList[i], input.ticks / input.timeBetweenBusesList[i]);
-
+            models.Timetable timetable = entityManager.find(models.Timetable.class, input.timetableIds[i]);
+            Producer producer = new Producer(timetable);
             producers.add(producer);
         }
 

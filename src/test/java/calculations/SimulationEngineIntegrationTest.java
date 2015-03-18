@@ -95,7 +95,7 @@ public class SimulationEngineIntegrationTest {
                                                                       int tickBetweenArrivals, int ticks,
                                                                       double consumerWeight1, double consumerWeight2) {
 
-        Producer producer = new Producer(entitiesToProduce, null);
+        Producer producer = new Producer();
         Consumer consumer1 = new Consumer(ticksToConsumeEntities);
         Consumer consumer2 = new Consumer(ticksToConsumeEntities);
 
@@ -107,7 +107,7 @@ public class SimulationEngineIntegrationTest {
         relationships.add(relationship2);
 
         producer.setRelationships(relationships);
-        producerManager.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals);
+        producerManager.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals, entitiesToProduce);
 
         List<Producer> producers = new ArrayList<>();
         List<Consumer> consumers = new ArrayList<>();
@@ -124,14 +124,14 @@ public class SimulationEngineIntegrationTest {
                                                                      int ticks) {
 
         Consumer consumer = new Consumer(ticksToConsumeEntities);
-        Producer producer = new Producer(entitiesToProduce, null);
+        Producer producer = new Producer();
         Relationship relationship = new Relationship(consumer, 1.0);
 
         List<Relationship> relationshipList = new ArrayList<>();
         relationshipList.add(relationship);
 
         producer.setRelationships(relationshipList);
-        producerManager.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals);
+        producerManager.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals, entitiesToProduce);
 
         List<Consumer> consumerList = new ArrayList<>();
         List<Producer> producerList = new ArrayList<>();

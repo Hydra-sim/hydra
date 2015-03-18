@@ -44,10 +44,8 @@
         $scope.ticks = 60;
 
         $scope.ticksToConsumeEntitiesList = [];
-        $scope.entitiesToProduceList = [];
-        $scope.startTickForProducerList = [];
-        $scope.timeBetweenBusesList = [];
 
+        $scope.timetableIds = [];
 
         menu_field_name.setValue("Untitled simulation");
 
@@ -59,10 +57,7 @@
                 'ticks': $scope.ticks,
 
                 'ticksToConsumeEntitiesList' : $scope.ticksToConsumeEntitiesList,
-                'entitiesToProduceList' : $scope.entitiesToProduceList,
-                'startTickForProducerList' : $scope.startTickForProducerList,
-                'timeBetweenBusesList' : $scope.timeBetweenBusesList
-
+                'timetableIds' : $scope.timetableIds
             });
 
             sim.$save().then(function(result) {
@@ -171,14 +166,8 @@
                     ticksToConsumeEntitiesList: function () {
                         return $scope.ticksToConsumeEntitiesList;
                     },
-                    entitiesToProduceList: function () {
-                        return $scope.entitiesToProduceList;
-                    },
-                    startTickForProducerList: function () {
-                        return $scope.startTickForProducerList;
-                    },
-                    timeBetweenBusesList: function () {
-                        return $scope.timeBetweenBusesList;
+                    timetableIds: function () {
+                        return $scope.timetableIds;
                     }
                 }
             });
@@ -199,8 +188,7 @@
     });
 
     app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,
-                                                  entitiesToProduceList, startTickForProducerList, timeBetweenBusesList,
-                                                  Timetable) {
+                                                  Timetable, timetableIds) {
 
         $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
 
@@ -211,21 +199,23 @@
             $modalInstance.close();
         };
 
-        $scope.entitiesToProduceList = entitiesToProduceList;
-        $scope.startTickForProducerList = startTickForProducerList;
-        $scope.timeBetweenBusesList = timeBetweenBusesList;
+        $scope.timetableIds = timetableIds;
 
         function updateTimetableScope() {
             $scope.timetables = Timetable.query({});
         }
         updateTimetableScope();
 
-        $scope.submitProducer = function (entitiesToProduce, startTickForProducer, timeBetweenBuses) {
+        $scope.submitProducer = function () {
 
-            $scope.entitiesToProduceList.push( entitiesToProduce );
-            $scope.startTickForProducerList.push( startTickForProducer );
-            $scope.timeBetweenBusesList.push( timeBetweenBuses );
+            $scope.active = function() {
+                return $scope.timetables.filter(function(timetable){
+                    return timetable.active;
+                })[0];
+            };
 
+            $scope.timetableIds.push( $scope.active().id );
+            $log.info($scope.timetableIds[0]);
 
             $modalInstance.close();
 

@@ -11,4 +11,6 @@ class InputValue {
     public int[] entitiesToProduceList;
     public int[] startTickForProducerList;
     public int[] timeBetweenBusesList;
+
+    public int[] timetableIds;
 }

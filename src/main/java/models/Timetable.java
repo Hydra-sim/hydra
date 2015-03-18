@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.persistence.criteria.Fetch;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -60,10 +61,11 @@ public class Timetable {
     }
 
     public Timetable() {
+        this(new ArrayList<>(), "Undefined");
     }
 
     public Timetable(String name) {
-        this.name = name;
+        this(new ArrayList<>(), name);
     }
 
     public Timetable(List<TimetableEntry> arrivals, String name) {

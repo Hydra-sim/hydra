@@ -1,8 +1,8 @@
 package models;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by kristinesundtlorentzen on 4/2/15.
@@ -10,54 +10,42 @@ import java.util.List;
 @javax.persistence.Entity
 public class Producer extends Node{
 
+    /**
     private int entitiesToProduce;
 
     /**
      * Simulation123 starts at tick = 0. The ints in this list represent the number of ticks after 0 it should produce its
      * entities.
-     */
+
     @Transient
     @ElementCollection
     private List<Integer> timetable;
+    */
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    Timetable timetable;
 
     //region constructors
-    public Producer() {
 
-        this(0, new ArrayList<>());
+    public Producer(Timetable timetable) {
+        this.timetable = timetable;
     }
 
-    public Producer(int entitiesToProduce, List<Integer> timetable) {
-        setEntitiesToProduce(entitiesToProduce);
 
+    public Producer() {
+        this(new Timetable());
     }
 
     //endregion
 
     //region getters and setters
 
-    public int getEntitiesToProduce() {
-        return entitiesToProduce;
-    }
-
-    public void setEntitiesToProduce(int entitiesToProduce) {
-
-        if(entitiesToProduce == 0) this.entitiesToProduce = 1;
-        else this.entitiesToProduce = entitiesToProduce;
-    }
-
-    public List<Integer> getTimetable() {
+    public Timetable getTimetable() {
         return timetable;
     }
 
-    public void setTimetable(List<Integer> timetable) {
+    public void setTimetable(Timetable timetable) {
         this.timetable = timetable;
     }
 
     //endregion
-
-    public String toString() {
-
-        return "Entities to produce: " + entitiesToProduce +
-                "\nNumber of producers:" + timetable.size();
-    }
 }

@@ -25,13 +25,27 @@ public class StartupBean {
     @PostConstruct
     public void startup() {
         // Creating a test timetable and saving it to the database
-        Timetable test1 = new Timetable("test1");
-        test1.setArrivals(new ArrayList<TimetableEntry>() {{
+        Timetable timetable1 = new Timetable("Timetable 1");
+        timetable1.setArrivals(new ArrayList<TimetableEntry>() {{
             add(new TimetableEntry(10, 10));
             add(new TimetableEntry(10, 20));
         }});
 
-        entityManager.persist(test1);
+        Timetable timetable2 = new Timetable("Timetable 2");
+        timetable2.setArrivals(new ArrayList<TimetableEntry>() {{
+            add(new TimetableEntry(10, 30));
+            add(new TimetableEntry(10, 40));
+        }});
+
+        Timetable timetable3 = new Timetable("Timetable 3");
+        timetable3.setArrivals(new ArrayList<TimetableEntry>() {{
+            add(new TimetableEntry(10, 50));
+            add(new TimetableEntry(10, 60));
+        }});
+
+        entityManager.persist(timetable1);
+        entityManager.persist(timetable2);
+        entityManager.persist(timetable3);
 
         // Creating the OSL preset and saving it to the database
         Simulation simulation = new OSLPreset().createOSLPreset();

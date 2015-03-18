@@ -1,5 +1,6 @@
 package models;
 
+import api.*;
 import managers.ConsumerManager;
 import managers.NodeManager;
 import org.hibernate.validator.constraints.Length;
@@ -251,24 +252,29 @@ public class Simulation
 
         for(Producer producer : producers) {
 
-            if(producer.getTimetable().contains(currentTick)) {
+            models.Timetable timetable = producer.getTimetable();
 
-                if(producer.getRelationships().size() != 0) {
+            for(int i = 0; i < timetable.getArrivals().size(); i++) {
 
-                    List<Relationship> relationships = producer.getRelationships();
+                if(timetable.getArrivals().get(i).getTime() == currentTick) {
 
-                    for(int i = 0; i < producer.getEntitiesToProduce(); i++) {
+                    if (producer.getRelationships().size() != 0) {
 
-                        for(Relationship relationship : relationships) {
+                        List<Relationship> relationships = producer.getRelationships();
 
-                            int recieved = consumerManager.getTotalSentToConsumer(relationship.getChild());
-                            double currentWeight = (double) recieved / producer.getEntitiesTransfered();
+                        for (int j = 0; j < timetable.getArrivals().get(i).getPassengers(); j++) {
 
-                            if(currentWeight <= relationship.getWeight() || producer.getEntitiesTransfered() == 0){
+                            for (Relationship relationship : relationships) {
 
-                                consumerManager.addEntity(relationship.getChild(), new Entity());
-                                producer.setEntitiesTransfered(producer.getEntitiesTransfered() + 1);
-                                break;
+                                int recieved = consumerManager.getTotalSentToConsumer(relationship.getChild());
+                                double currentWeight = (double) recieved / producer.getEntitiesTransfered();
+
+                                if (currentWeight <= relationship.getWeight() || producer.getEntitiesTransfered() == 0) {
+
+                                    consumerManager.addEntity(relationship.getChild(), new Entity());
+                                    producer.setEntitiesTransfered(producer.getEntitiesTransfered() + 1);
+                                    break;
+                                }
                             }
                         }
                     }
