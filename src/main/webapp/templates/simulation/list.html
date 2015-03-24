@@ -4,21 +4,20 @@
             <tr>
                 <th>Name</th>
                 <th>Date created</th>
-                <th>Delete</th>
-                <th>Edit</th>
+                <th></th>
             </tr>
             <tr ng-repeat="simulation in simulations">
                 <td>
-                    <a ng-href="#/show/{{simulation.id}}">{{simulation.name}}</a>
+                    <a ng-href="#/show/{{simulation.id}}" ng-click="editSimulation(simulation.id)">{{simulation.name}}</a>
                 </td>
                 <td>
                     {{simulation.date | date}}
                 </td>
                 <td>
+                    <button class="btn btn-default">Share</button>
+                    <button class="btn btn-default">Compare</button>
                     <button class="btn btn-danger" ng-click="deleteSimulation(simulation.id)">Delete</button>
-                </td>
-                <td>
-                    <button class="btn btn-default" ng-click="editSimulation(simulation.id)">Edit</button>
+                    <a href="" class="fa fa-2x fa-lock"></a>
                 </td>
             </tr>
         </tbody>

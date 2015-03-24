@@ -22,6 +22,43 @@ header {
   padding: 25px;
 }
 
+.logo img {
+  height: 50px;
+}
+
+#tabMenu{
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid #000;
+  margin-top: 20px;
+}
+
+#tabMenu ul{
+  height: 100%;
+  list-style: none;
+  padding: 0;
+  margin:10px 0px 0px 0px;
+}
+
+#tabMenu ul li{
+  width: 180px;
+  height: 100%;
+  display: inline-block;
+  padding: 10px 0px 10px 0px;
+  margin: 0px 10px 0px 0px;
+  background-color: #c6c8ca;
+}
+
+#tabMenu ul li a{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: block;
+  font-family: "Avinor";
+  font-size: 1.5em;
+  color: #000000;
+}
+
 
 footer {
   position: fixed;
@@ -39,9 +76,7 @@ footer p{
   color: #c6c8ca;
 }
 
-.logo img {
-  height: 50px;
-}
+
 
 .menu-field-name, .menu-field-button {
   font-size: 1.8em;
@@ -70,6 +105,7 @@ footer p{
 .menu-field-button {
   cursor: pointer;
   color: #c6c8ca;
+  margin-top: 10px;
 
   .fa {
     opacity: 0.5;
@@ -132,4 +168,25 @@ footer p{
       border-left: none;
     }
   }
+}
+
+.table td:first-child a{
+  color:#84216b;
+  text-decoration: underline;
+}
+
+/*BUTTON STYLES*/
+
+.btn-default{
+  background-color: #c6c8ca;
+  text-align: center;
+  font-family: "Avinor";
+  font-size: 14px;
+  height: 40px;
+  color:#000;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -o-border-radius: 0px;
+  -ms-border-radius: 0px;
 }

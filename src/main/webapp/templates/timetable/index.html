@@ -1,3 +1,15 @@
-<h1>Timetables</h1>
+    <nav id="tabMenu">
+        <ul>
+            <li>
+                <a ng-href="#/">SIMULATIONS</a>
+            </li>
+            <li>
+                <a ng-href="#/timetable">TIMETABLES</a>
+            </li>
+            <li>
+                <a ng-href="#/preset">PRESETS</a>
+            </li>
+        </ul>
+    </nav>
 <div ng-include src="'templates/timetable/list.html'"></div>
 <button class="btn" ng-click="newTimetable()">New</button>
