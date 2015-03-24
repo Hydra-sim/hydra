@@ -12,39 +12,79 @@
                 template: '<div class="graph"></div>',
                 replace: true,
 
+                scope: {
+                    nodes: '=',
+                    edges: '='
+                },
+
                 // observe and manipulate the DOM
                 link : function(scope, element, attrs) {
                     var width  = 960,
                         height = 500;
 
-                    var nodes_exp = $parse(attrs.nodes);
-                    var nodes = nodes_exp(scope);
+                    var consts =  {
+                        selectedClass: "selected",
+                        connectClass: "connect-node",
+                        circleGClass: "node",
+                        activeEditId: "active-editing",
+                        BACKSPACE_KEY: 8,
+                        DELETE_KEY: 46,
+                        ENTER_KEY: 13,
+                        nodeRadius: 20
+                    };
 
-                    var edges_exp = $parse(attrs.edges);
-                    var edges = edges_exp(scope);
+                    var selectedCircle = null;
 
                     var svg = d3.select(element[0])
                         .append("svg")
                         .attr("width", width)
                         .attr("height", height);
 
-                    scope.$watchCollection(nodes_exp, function(newVal, oldVal){
-                        //nodes = newVal;
-                        update();
-                    });
+                    scope.$watch('nodes', update, true);
+                    scope.$watch('edges', update, true);
 
-                    scope.$watchCollection(edges_exp, function(newVal, oldVal){
-                        //edges = newVal;
-                        update();
-                    });
+                    // svg nodes and edges
+                    var paths = svg.append("g").selectAll("g");
+                    var circles = svg.append("g").selectAll("g");
 
-                    var graph = new GraphCreator(svg, nodes, edges);
-                    graph.setIdCt(2);
-                    graph.updateGraph();
+                    svg
+                        .on("mousemove", function() {
+                            if(selectedCircle != null ) {
+                                console.log(selectedCircle);
+                            }
+                        });
 
                     function update() {
-                        graph.updateGraph();
+
+                        // update existing nodes
+                        circles = circles.data(scope.nodes, function(d){ return d.id;});
+                        circles.attr("transform", function(d){return "translate(" + d.x + "," + d.y + ")";});
+
+                        // add new nodes
+                        var newGs= circles
+                            .enter()
+                            .append("g");
+
+                        newGs
+                            .attr('class', function(d) { return d.type + " " + consts.circleGClass; })
+                            .attr("transform", function(d){return "translate(" + d.x + "," + d.y + ")";})
+                            .on("mousedown", function(d){
+                                selectedCircle = d3.select(this);
+                                selectedCircle.classed(consts.selectedClass, true);
+                            })
+                            .on("mouseup", function(d){
+                                selectedCircle.classed(consts.selectedClass, false);
+                                selectedCircle = null;
+                            });
+
+                        newGs
+                            .append("circle")
+                            .attr("r", String(consts.nodeRadius));
+
+                        // remove old nodes
+                        circles.exit().remove();
                     }
+                    update();
                 }
             }
         }]);

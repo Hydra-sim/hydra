@@ -22,6 +22,7 @@ header {
   padding: 25px;
 }
 
+
 footer {
   position: fixed;
   background: $header_bg;
@@ -31,6 +32,11 @@ footer {
   color: white;
   padding: 10px 25px;
   z-index: 100;
+}
+
+footer p{
+  padding-top: 10px;
+  color: #c6c8ca;
 }
 
 .logo img {
@@ -48,6 +54,8 @@ footer {
   background: none;
   border: 0;
   text-align: center;
+  color: #c6c8ca;
+  border-bottom: 1px dashed #c6c8ca;
 }
 
 .menu-field-name > *.disabled {
@@ -55,24 +63,29 @@ footer {
 }
 
 .menu-field-name:hover > *, .menu-field-name > *:focus {
-  border-bottom: 1px dashed #999;
+  border-bottom: 1px dashed #ffffff;
+  color: #ffffff;
 }
 
 .menu-field-button {
   cursor: pointer;
+  color: #c6c8ca;
 
   .fa {
     opacity: 0.5;
     @include transition(opacity, 0.2s, ease-in-out);
+    color: #c6c8ca;
   }
 
   &:hover .fa {
     opacity: 1;
     @include transition(opacity, 0.2s, ease-in-out);
+    color: #ffffff;
   }
 
   &:hover span:first-child {
     text-decoration: underline;
+    color: #ffffff;
   }
 }
 
