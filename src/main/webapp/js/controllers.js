@@ -336,4 +336,28 @@
         };
     });
 
+    app.controller("tabMenuController", function($scope){
+        $scope.tabs = [{
+            title: 'SIMULATIONS',
+            url: '#'
+        }, {
+            title: 'TIMETABLES',
+            url: '#/timetable'
+        }, {
+            title: 'PRESETS',
+            url: '#/preset'
+        }];
+
+        $scope.currentTab = '#';
+
+        $scope.onClickTab = function (tab) {
+            $scope.currentTab = tab.url;
+        }
+
+        $scope.isActiveTab = function(tabUrl) {
+            return tabUrl == $scope.currentTab;
+        }
+
+    });
+
 })();
