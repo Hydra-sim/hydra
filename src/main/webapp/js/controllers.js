@@ -74,9 +74,11 @@
 
         $scope.dataset = {
             nodes: [
-                {title: "new concept", id: 0, x: 100, y: 100, children: []},
-                {title: "new concept", id: 1, x: 100, y: 300, children: []}
+                {type: "producer", id: 0, x: 100, y: 100, children: []},
+                {type: "producer", id: 1, x: 100, y: 300, children: []},
+                {type: "consumer", id: 2, x: 300, y: 300, children: []}
             ],
+            maxid: 2,
             edges: []
         };
 
@@ -84,8 +86,9 @@
         $scope.dataset.nodes[ 1 ].children.push( 0 );
 
         $scope.addData = function() {
+            $scope.dataset.maxid += 1;
             $scope.dataset.nodes.push(
-                {title: "new concept", id: 0, x: 0, y: 0}
+                {type: "consumer", id: $scope.dataset.maxid, x: 400, y: 100}
             );
         };
     });

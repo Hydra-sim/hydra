@@ -4,8 +4,8 @@ var GraphCreator = function(svg, nodes, edges){
     var thisGraph = this;
     thisGraph.idct = 0;
 
-    thisGraph.nodes = nodes || [];
-    thisGraph.edges = edges || [];
+    thisGraph.nodes = nodes;
+    thisGraph.edges = edges;
 
     thisGraph.state = {
         selectedNode: null,
