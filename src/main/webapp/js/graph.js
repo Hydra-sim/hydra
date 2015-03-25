@@ -1,6 +1,7 @@
 (function() {
     'use strict';
 
+    // Dependent on angular, D3 an underscore.js
     angular
         .module('graph', [])
         .directive('graph', ['$parse', function($parse) {
@@ -36,7 +37,6 @@
 
                     function removeNodeWithId(id) {
                         scope.nodes = _.reject(scope.nodes, function(obj) { return obj.id == id; });
-                        console.log(scope.nodes);
                         update();
                     }
 
@@ -61,11 +61,9 @@
                     }
 
                     function deleteSelectedCircle() {
-                        // Keep a copy of the circle to delete before unselecting it
-                        var circleToDelete = selectedCircle;
+                        // Keep a copy of the circle data to delete before unselecting it
+                        var data = selectedCircle[0][0].__data__;
                         unselectCircle();
-
-                        var data = circleToDelete[0][0].__data__;
                         removeNodeWithId(data.id);
                     }
 
