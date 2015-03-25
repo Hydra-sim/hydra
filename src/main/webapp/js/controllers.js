@@ -340,7 +340,7 @@
     app.controller('UploadMap', function($scope, $rootScope, $log, Map){
 
         $scope.image = { visible: true, id: 86, exists: true, zoom: 0};
-        $scope.image2 = {scale: 1};
+        $scope.image2 = {scale: 1, zoom: 0};
 
         $scope.toggleImage = function() {
             $scope.image.visible = !$scope.image.visible;
@@ -362,6 +362,7 @@
         $scope.$watch("image2.scale", function() {
             $scope.transform = "scale("+$scope.image2.scale+")";
         });
+
     });
 
     app.controller('MyUploadCtrl', function($scope, $upload) {
@@ -409,19 +410,24 @@
         }
     });
 
-    app.controller('MapModalInstanceCtrl', function($scope, $log, $modalInstance, image, image2) {
+    app.controller('MapModalInstanceCtrl', function($scope, $log, $modalInstance, $timeout, image, image2) {
 
         $scope.image = image;
         $scope.image2 = image2;
+        $scope.image.scale = $scope.image2.scale;
+        $scope.image.zoom = $scope.image2.zoom;
 
         $scope.submitMap = function() {
             $scope.image2.scale = $scope.image.scale;
+            $scope.image2.zoom = $scope.image.zoom;
+
             $modalInstance.close();
         };
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
+
     });
 
     app.controller("tabMenuController", function($scope){

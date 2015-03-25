@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
     bower = require('gulp-bower'),
-    sass = require('gulp-sass'),
+    sass = require('gulp-ruby-sass'),
     connect = require('gulp-connect');
 
 var rootWebDir = './src/main/webapp/';
@@ -21,10 +21,12 @@ gulp.task('bower', function() {
 });
 
 gulp.task('sass', ['bower'], function () {
-    return gulp.src(config.sassInputFile)
-        .pipe(sass())
-        .pipe(gulp.dest(config.cssOutputDir))
-        .pipe(connect.reload());
+    return sass(config.sassInputFile)
+        .on('error', function (err) {
+            console.error('Error!', err.message);
+        })
+        .pipe(connect.reload())
+        .pipe(gulp.dest(config.cssOutputDir));
 });
 
 gulp.task('html', function () {

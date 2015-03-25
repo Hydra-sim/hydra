@@ -6,7 +6,12 @@
 @import 'graph';
 @import 'slider';
 
+html {
+  height: 100%;
+}
+
 body {
+  min-height: 100%;
   margin-top: $header_height;
   margin-bottom: 50px;
   font-family: Avinor, sans-serif;
@@ -22,6 +27,11 @@ header {
   height: $header_height;
   color: white;
   padding: 25px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  bottom: 0;
 }
 
 .logo img {
@@ -212,7 +222,7 @@ footer p{
 }
 
 .mapImageWrapper {
-  width: 565px;
+  position: relative;
   overflow: hidden;
 }
 
@@ -224,6 +234,24 @@ footer p{
   img {
     transform-origin: top left;
   }
+}
+
+.modal-header h3 {
+  margin-top: 10px;
+}
+
+.close-icon {
+  color: black;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.focused-form-wrapper {
+  background: #1d1d1d;
+  padding: 10px 10px 0;
+  border-radius: 4px;
 }
 
 .mapNode {
