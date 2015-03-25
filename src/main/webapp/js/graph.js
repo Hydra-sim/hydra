@@ -20,7 +20,7 @@
                     nodeRadius: '=',
                     selectedClass: '=',
                     connectClass: '=',
-                    circleGClass: '='
+                    circleWrapperClass: '='
                 },
 
                 // observe and manipulate the DOM
@@ -29,7 +29,7 @@
                     var consts =  {
                         selectedClass: scope.selectedClass || "selected",
                         connectClass: scope.connectClass || "connect-node",
-                        circleGClass: scope.circleGClass || "node",
+                        circleWrapperClass: scope.circleWrapperClass || "node",
                         nodeRadius: scope.nodeRadius || 20,
                         DELETE_KEY: 8
                     };
@@ -124,12 +124,12 @@
                         circles.attr("transform", transformFunction);
 
                         // add new nodes
-                        var newGs= circles
+                        var newCircleWrappers = circles
                             .enter()
                             .append("g");
 
-                        newGs
-                            .attr('class', function(d) { return d.type + " " + consts.circleGClass; })
+                        newCircleWrappers
+                            .attr('class', function(d) { return d.type + " " + consts.circleWrapperClass; })
                             .attr("transform", transformFunction)
                             .on("mousedown", setCircleToMove)
                             .on("mouseup", function(){
@@ -138,7 +138,7 @@
                                 selectCircle(d3.select(this));
                             });
 
-                        newGs
+                        newCircleWrappers
                             .append("circle")
                             .attr("r", String(consts.nodeRadius));
 
