@@ -31,7 +31,7 @@
                         connectClass: scope.connectClass || "connect-node",
                         circleGClass: scope.circleGClass || "node",
                         nodeRadius: scope.nodeRadius || 20,
-                        DELETE_KEY: 46
+                        DELETE_KEY: 8
                     };
 
                     // Circle to move, and selected circle
@@ -65,12 +65,26 @@
                         }
                     });
 
-                    // If someone tries to delete something
-                    svg.on("keyup", function(d) {
-                       if(selectedCircle != undefined && selectedCircle != null) {
+                    svg.on("mouseup", unselectCircle);
 
-                       }
+                    // If someone tries to delete something
+                    d3.select("body").on("keydown", function(d) {
+                        if(selectedCircle != undefined && selectedCircle != null) {
+                            if (d3.event.keyCode == consts.DELETE_KEY) {
+                                d3.event.preventDefault();
+
+                                // TODO: delete nodeg
+                            }
+                        }
                     });
+
+                    function unselectCircle() {
+                        // Remove class from old selection if any
+                        if(selectedCircle != undefined && selectedCircle != null)
+                            selectedCircle.classed(consts.selectedClass, false);
+
+                        selectedCircle = null;
+                    }
 
                     // Update function, updating nodes and edges
                     function update() {
@@ -90,11 +104,10 @@
                                 circleToMoveData = d;
                             })
                             .on("mouseup", function(){
+                                d3.event.stopPropagation();
                                 circleToMoveData = null;
 
-                                // Remove class from old selection if any
-                                if(selectedCircle != undefined && selectedCircle != null)
-                                    selectedCircle.classed(consts.selectedClass, false);
+                                unselectCircle();
 
                                 // Set the selected circle
                                 selectedCircle = d3.select(this);
