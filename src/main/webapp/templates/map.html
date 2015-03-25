@@ -1,0 +1,27 @@
+<div ng-controller="MapModalCtrl">
+
+    <script type="text/ng-template" id="mapModal.html">
+
+        <div class="modal-header">
+            <h3>Resize map</h3>
+        </div>
+        <div class="modal-body">
+            <img src="http://localhost:8080/hydra/api/map/{{image.id}}" alt="Map" width="565">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="submitMap()" type="submit">Submit</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+    <button class="btn btn-primary" ng-click="openMapModal()">Open modal</button>
+</div>
+<div ng-controller="MyUploadCtrl">
+    <div class="btn btn-primary" ng-file-select ng-model="files">Upload picture</div>
+</div>
+
+<br/>
+<h4>Image visible: {{image.visible}}</h4>
+<button class="btn btn-primary" ng-click="toggleImage()" type="button" ng-disabled="!image.exists">Toggle image</button>
+<button class="btn btn-danger" ng-click="deleteImage(image.id)" type="button" ng-disabled="!image.exists">Delete image</button>
+<br/>
+<img src="http://localhost:8080/hydra/api/map/{{image.id}}" alt="Map" width="500px" ng-show="image.visible">

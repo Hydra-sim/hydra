@@ -5,7 +5,8 @@
     var app = angular.module('unit.controllers', [
         'ngRoute',
         'services',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'angularFileUpload'
     ]);
 
     app.controller('ApplicationController', function($scope, $rootScope, $location, menu_field_name) {
@@ -160,7 +161,7 @@
         $rootScope.menu_field_button_click = function() {};
     });
 
-    app.controller('ModalCtrl', function ($scope, $modal, $log) {
+    app.controller('ModalCtrl', function ($scope, $modal) {
 
         $scope.openModal = function (size) {
 
@@ -333,6 +334,77 @@
 
         $scope.deletePreset = function(id) {
             Preset.delete({}, {"id": id}, updatePresetScope);
+        };
+    });
+
+    app.controller('UploadMap', function($scope, $rootScope, $log, Map){
+
+        $scope.image = { visible: true, id: 86, exists: true };
+
+        $scope.toggleImage = function() {
+            $scope.image.visible = !$scope.image.visible;
+        };
+
+        $scope.deleteImage = function(id) {
+            $scope.image.visible = $scope.image.exists = false;
+            Map.delete({}, {"id" : id});
+        };
+
+    });
+
+    app.controller('MyUploadCtrl', ['$scope', '$upload', function ($scope, $upload) {
+
+        $scope.$watch('files', function () {
+            $scope.upload($scope.files);
+        });
+
+        $scope.upload = function (files) {
+            if (files && files.length) {
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    $upload.upload({
+                        url: 'upload/url',
+                        fields: {'username': $scope.username},
+                        file: file
+                    }).progress(function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                    }).success(function (data, status, headers, config) {
+                        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    });
+                }
+            }
+        };
+    }]);
+
+    app.controller('MapModalCtrl', function($scope, $modal) {
+
+        $scope.openMapModal = function(size) {
+
+            $modal.open({
+                templateUrl: 'mapModal.html',
+                controller: 'MapModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    image: function () {
+                        return $scope.image;
+                    }
+                }
+            });
+        }
+    });
+
+    app.controller('MapModalInstanceCtrl', function($scope, $log, $modalInstance, image) {
+
+        $scope.image = image;
+
+        $scope.submitMap = function() {
+            $log.info('Submitting');
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
         };
     });
 
