@@ -34,6 +34,12 @@
                         DELETE_KEY: 8
                     };
 
+                    function removeNodeWithId(id) {
+                        scope.nodes = _.reject(scope.nodes, function(obj) { return obj.id == id; });
+                        console.log(scope.nodes);
+                        update();
+                    }
+
                     // Selected circle
                     var selectedCircle = null;
 
@@ -59,7 +65,8 @@
                         var circleToDelete = selectedCircle;
                         unselectCircle();
 
-                        // TODO: delete selected node
+                        var data = circleToDelete[0][0].__data__;
+                        removeNodeWithId(data.id);
                     }
 
                     function circleIsSelected() {
