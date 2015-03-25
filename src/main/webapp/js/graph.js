@@ -14,33 +14,38 @@
 
                 scope: {
                     nodes: '=',
-                    edges: '='
+                    edges: '=',
+                    width: '=',
+                    height: '=',
+                    nodeRadius: '=',
+                    selectedClass: '=',
+                    connectClass: '=',
+                    circleGClass: '='
                 },
 
                 // observe and manipulate the DOM
                 link : function(scope, element, attrs) {
-                    var width  = 960,
-                        height = 500;
-
+                    // Constants like classes and similar
                     var consts =  {
-                        selectedClass: "selected",
-                        connectClass: "connect-node",
-                        circleGClass: "node",
-                        activeEditId: "active-editing",
-                        BACKSPACE_KEY: 8,
-                        DELETE_KEY: 46,
-                        ENTER_KEY: 13,
-                        nodeRadius: 20
+                        selectedClass: scope.selectedClass || "selected",
+                        connectClass: scope.connectClass || "connect-node",
+                        circleGClass: scope.circleGClass || "node",
+                        nodeRadius: scope.nodeRadius || 20,
+                        DELETE_KEY: 46
                     };
 
+                    // Circle to move, and selected circle
                     var selectedCircle = null;
-                    var selecetdCircleData = null;
+                    var circleToMoveData = null;
 
+                    // Create the svg element
                     var svg = d3.select(element[0])
                         .append("svg")
-                        .attr("width", width)
-                        .attr("height", height);
+                        .attr("width", scope.width || 960)
+                        .attr("height", scope.height || 500);
 
+                    // Watch angular properties for changes
+                    // trigger an update if they do change
                     scope.$watch('nodes', update, true);
                     scope.$watch('edges', update, true);
 
@@ -48,20 +53,27 @@
                     var paths = svg.append("g").selectAll("g");
                     var circles = svg.append("g").selectAll("g");
 
-                    svg
-                        .on("mousemove", function() {
+                    // If something is selected and you move the mouse
+                    svg.on("mousemove", function() {
+                        // If a circle is selected lets move it
+                        if(circleToMoveData != null) {
                             var mouse = d3.mouse(this);
+                            console.log(circleToMoveData);
+                            circleToMoveData.x = mouse[0];
+                            circleToMoveData.y = mouse[1];
+                            update();
+                        }
+                    });
 
-                            if(selectedCircle != null ) {
-                                console.log(selecetdCircleData);
-                                selecetdCircleData.x = mouse[0];
-                                selecetdCircleData.y = mouse[1];
-                                update();
-                            }
-                        });
+                    // If someone tries to delete something
+                    svg.on("keyup", function(d) {
+                       if(selectedCircle != undefined && selectedCircle != null) {
 
+                       }
+                    });
+
+                    // Update function, updating nodes and edges
                     function update() {
-
                         // update existing nodes
                         circles = circles.data(scope.nodes, function(d){ return d.id;});
                         circles.attr("transform", function(d){return "translate(" + d.x + "," + d.y + ")";});
@@ -75,14 +87,18 @@
                             .attr('class', function(d) { return d.type + " " + consts.circleGClass; })
                             .attr("transform", function(d){return "translate(" + d.x + "," + d.y + ")";})
                             .on("mousedown", function(d){
-                                selectedCircle = d3.select(this);
-                                selecetdCircleData = d;
-                                selectedCircle.classed(consts.selectedClass, true);
+                                circleToMoveData = d;
                             })
-                            .on("mouseup", function(d){
-                                selectedCircle.classed(consts.selectedClass, false);
-                                selectedCircle = null;
-                                selecetdCircleData = null;
+                            .on("mouseup", function(){
+                                circleToMoveData = null;
+
+                                // Remove class from old selection if any
+                                if(selectedCircle != undefined && selectedCircle != null)
+                                    selectedCircle.classed(consts.selectedClass, false);
+
+                                // Set the selected circle
+                                selectedCircle = d3.select(this);
+                                selectedCircle.classed(consts.selectedClass, true);
                             });
 
                         newGs

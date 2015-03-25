@@ -1,36 +1,26 @@
+@import 'common';
+
 .graph {
   margin: 0;
   padding: 0;
   overflow:hidden;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  @include user-select(none);
   background-color: rgb(248, 248, 248);
 
   $consumer_color: green;
   $producer_color: blue;
-  $node_hover_color: black;
-
-  .conceptG text{
-    pointer-events: none;
-  }
+  $node_hover_color: grey;
+  $node_selected: black;
 
   marker{
     fill: #333;
   }
 
-  g.node circle{  fill: red;  }
-  g.node.producer circle { fill: $producer_color; }
-  g.node.consumer circle { fill: $consumer_color; }
-
-  g.node:hover circle{  fill: $node_hover_color; }
-
-  g.selected circle{
-    fill: rgb(250, 232, 255) !important;
-  }
+  g.node circle           {  fill: red;  }
+  g.node.producer circle  {  fill: $producer_color; }
+  g.node.consumer circle  {  fill: $consumer_color; }
+  g.node:hover circle     {  fill: $node_hover_color; }
+  g.node.selected circle  {  stroke: $node_selected; stroke-width: 3px;  }
 
   path.link {
     fill: none;
