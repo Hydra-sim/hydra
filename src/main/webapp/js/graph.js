@@ -34,6 +34,7 @@
                     };
 
                     var selectedCircle = null;
+                    var selecetdCircleData = null;
 
                     var svg = d3.select(element[0])
                         .append("svg")
@@ -49,8 +50,13 @@
 
                     svg
                         .on("mousemove", function() {
+                            var mouse = d3.mouse(this);
+
                             if(selectedCircle != null ) {
-                                console.log(selectedCircle);
+                                console.log(selecetdCircleData);
+                                selecetdCircleData.x = mouse[0];
+                                selecetdCircleData.y = mouse[1];
+                                update();
                             }
                         });
 
@@ -70,11 +76,13 @@
                             .attr("transform", function(d){return "translate(" + d.x + "," + d.y + ")";})
                             .on("mousedown", function(d){
                                 selectedCircle = d3.select(this);
+                                selecetdCircleData = d;
                                 selectedCircle.classed(consts.selectedClass, true);
                             })
                             .on("mouseup", function(d){
                                 selectedCircle.classed(consts.selectedClass, false);
                                 selectedCircle = null;
+                                selecetdCircleData = null;
                             });
 
                         newGs
