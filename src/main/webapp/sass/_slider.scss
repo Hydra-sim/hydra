@@ -51,12 +51,16 @@ $input-h: 5em;
 
 html { background: $theme-bg; }
 
+
 input[type='range'] {
+
   &,
   &::-webkit-slider-runnable-track,
   &::-webkit-slider-thumb {
     -webkit-appearance: none
   }
+
+
   width: 100%;
   padding: 0;
   height: $input-h;
@@ -64,6 +68,8 @@ input[type='range'] {
   background: transparent;
   font-size: 16px;
   cursor: pointer;
+
+
 
   &::-webkit-slider-runnable-track {
     margin: 0 $thumb-d/2;
@@ -95,7 +101,7 @@ input[type='range'] {
     background: transparent;
   }
 
-  .js & /deep/ #thumb {
+  .js & #thumb {
     position: relative;
 
     &:before, &:after {
@@ -146,7 +152,7 @@ input[type='range'] {
       @include thumb-focus();
     }
 
-    .js & /deep/ #thumb {
+    .js & #thumb {
       &:before {
         transform: translate(-50%, -3*$thumb-d) rotate(45deg) scale(1);
         opacity: .99;
