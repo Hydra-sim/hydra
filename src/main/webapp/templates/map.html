@@ -6,11 +6,20 @@
             <h3>Resize map</h3>
         </div>
         <div class="modal-body">
-            <img src="http://localhost:8080/hydra/api/map/{{image.id}}" alt="Map" width="565">
+            <h4>Resize the map according to the size of the node</h4>
+            <div class="mapImageWrapper">
+                <img src="http://1.bp.blogspot.com/_au17kecZ280/TNwGt8PiP6I/AAAAAAAAFP8/lK-_VjYudzw/s1600/AvinorFlights_app.png"
+                     alt="Map" width="565" ng-style="{
+                     'transform': 'scale('+image.scale+')',
+                     '-webkit-transform': 'scale('+image.scale+')',
+                     '-ms-transform': 'scale('+image.scale+')'}">
+                <div class="mapNode"></div>
+            </div>
+            <input type='range' min='0' max='100' value='{{image.zoom}})' ng-model="image.zoom"/>
+            <h5>Zoom: {{image.zoom}}%</h5>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="submitMap()" type="submit">Submit</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </script>
     <button class="btn btn-primary" ng-click="openMapModal()">Open modal</button>
@@ -25,3 +34,10 @@
 <button class="btn btn-danger" ng-click="deleteImage(image.id)" type="button" ng-disabled="!image.exists">Delete image</button>
 <br/>
 <img src="http://localhost:8080/hydra/api/map/{{image.id}}" alt="Map" width="500px" ng-show="image.visible">
+<div class="mapImageWrapperFull">
+    <img src="http://1.bp.blogspot.com/_au17kecZ280/TNwGt8PiP6I/AAAAAAAAFP8/lK-_VjYudzw/s1600/AvinorFlights_app.png"
+         alt="Map" ng-style="{
+                         'transform': 'scale('+image2.scale+')',
+                         '-webkit-transform': 'scale('+image2.scale+')',
+                         '-ms-transform': 'scale('+image2.scale+')'}">
+</div>

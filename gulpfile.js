@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
     bower = require('gulp-bower'),
-    sass = require('gulp-sass')
+    sass = require('gulp-sass'),
     connect = require('gulp-connect');
 
 var rootWebDir = './src/main/webapp/';

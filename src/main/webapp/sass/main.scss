@@ -4,6 +4,7 @@
 @import 'variables';
 @import '../vendor/fontawesome/scss/font-awesome';
 @import 'graph';
+@import 'slider';
 
 body {
   margin-top: $header_height;
@@ -208,6 +209,34 @@ footer p{
 .table td:first-child a{
   color:#84216b;
   text-decoration: underline;
+}
+
+.mapImageWrapper {
+  width: 565px;
+  overflow: hidden;
+}
+
+.mapImageWrapperFull {
+  width: 1100px;
+  min-height: 800px;
+  overflow: hidden;
+
+  img {
+    transform-origin: top left;
+  }
+}
+
+.mapNode {
+  width: $map_node_size;
+  height: $map_node_size;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #842168;
+  top: 50%;
+  left: 50%;
+  margin-top: $map_node_size * -0.5;
+  margin-left: $map_node_size * -0.5;
+  border: 3px solid rgba(white, 0.6);
 }
 
 /*BUTTON STYLES*/
