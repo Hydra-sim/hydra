@@ -331,12 +331,14 @@
         };
     });
 
-    app.controller("tabController", function($scope){
-        $scope.tabs =[
-            { title:'SIMULATIONS', content: '', active: true },
-            { title:'TIMETABLES', content:''},
-            { title:'PRESETS', content:''}
+    app.controller("tabController", function($scope) {
+        $scope.tabs = [
+            {title: 'SIMULATIONS', content: '', active: true},
+            {title: 'TIMETABLES', content: ''},
+            {title: 'PRESETS', content: ''}
         ]
+    });
+
     app.controller('UploadMap', function($scope, $rootScope, $log, Map){
 
         $scope.image = { visible: true, id: 86, exists: true, zoom: 0};
@@ -437,28 +439,6 @@
 
     });
 
-    app.controller("tabMenuController", function($scope){
-        $scope.tabs = [{
-            title: 'SIMULATIONS',
-            url: '#'
-        }, {
-            title: 'TIMETABLES',
-            url: '#/timetable'
-        }, {
-            title: 'PRESETS',
-            url: '#/preset'
-        }];
 
-        $scope.currentTab = '#';
-
-        $scope.onClickTab = function (tab) {
-            $scope.currentTab = tab.url;
-        }
-
-        $scope.isActiveTab = function(tabUrl) {
-            return tabUrl == $scope.currentTab;
-        }
-
-    });
 
 })();
