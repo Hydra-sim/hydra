@@ -32,7 +32,7 @@
                         connectClass: scope.connectClass || "connect-node",
                         circleWrapperClass: scope.circleWrapperClass || "node",
                         nodeRadius: scope.nodeRadius || 20,
-                        DELETE_KEY: 8
+                        BACKSPACE_KEY: 8
                     };
 
                     function removeNodeWithId(id) {
@@ -143,7 +143,7 @@
 
                     // If someone tries to delete something
                     d3.select("body").on("keydown", function(d) {
-                        if (d3.event.keyCode == consts.DELETE_KEY) {
+                        if (d3.event.keyCode == consts.BACKSPACE_KEY) {
                             d3.event.preventDefault();
 
                             if(circleIsSelected())
