@@ -28,9 +28,12 @@
     </script>
     <button class="btn btn-primary" ng-click="openMapModal()">Open modal</button>
 </div>
-<div ng-controller="MyUploadCtrl">
-    <div class="btn btn-primary" ng-file-select ng-model="files">Upload picture</div>
-</div>
+
+<form enctype="multipart/form-data"ng-controller="MyUploadCtrl">
+    <div>
+        <div class="btn btn-primary" ng-file-select ng-model="files">Upload picture</div>
+    </div>
+</form>
 
 <br/>
 <h4>Image visible: {{image.visible}}</h4>

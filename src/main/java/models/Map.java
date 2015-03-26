@@ -15,10 +15,9 @@ public class Map {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @Lob
-    @Basic(fetch=FetchType.LAZY)
-    @Column(name="EMP_PIC", columnDefinition="BLOB NOT NULL")
-    private byte[] image;
+    private String url;
+    private double scale;
+    private int zoom;
 
     public int getId() {
         return id;
@@ -28,20 +27,43 @@ public class Map {
         this.id = id;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getUrl() {
+        return url;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public Map(byte[] image) {
-
-        this.image = image;
+    public double getScale() {
+        return scale;
     }
+
+    public void setScale(double scale) {
+        this.scale = scale;
+    }
+
+    public int getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(int zoom) {
+        this.zoom = zoom;
+    }
+
+    public Map(String url, double scale, int zoom) {
+        this.url = url;
+        this.scale = scale;
+        this.zoom = zoom;
+    }
+
+    public Map(String url) {
+
+        this("", 1.0, 0);
+    }
+
 
     public Map() {
-        this(new byte[0]);
+        this("");
     }
 }
