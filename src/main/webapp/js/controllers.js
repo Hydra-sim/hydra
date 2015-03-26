@@ -69,25 +69,20 @@
             });
         };
 
-        $scope.log = function(data) {
-            console.log(data);
-        };
-
         $scope.dataset = {
             nodes: [
-                {type: "producer", id: 0, x: 100, y: 100, children: []},
-                {type: "producer", id: 1, x: 100, y: 300, children: []},
-                {type: "consumer", id: 2, x: 300, y: 300, children: []}
+                {type: "producer", id: 0, x: 100, y: 100},
+                {type: "producer", id: 1, x: 100, y: 300},
+                {type: "consumer", id: 2, x: 300, y: 300}
             ],
             maxid: 2,
-            edges: []
+            edges: [
+                {source: 1, target: 0}
+            ]
         };
 
-        $scope.dataset.edges.push({source: $scope.dataset.nodes[1], target: $scope.dataset.nodes[0]});
-        $scope.dataset.nodes[ 1 ].children.push( 0 );
-
         $scope.addData = function() {
-            $scope.dataset.maxid += 1;
+            $scope.dataset.maxid++;
             $scope.dataset.nodes.push(
                 {type: "consumer", id: $scope.dataset.maxid, x: 400, y: 100}
             );

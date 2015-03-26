@@ -36,7 +36,15 @@
                     };
 
                     function removeNodeWithId(id) {
+                        removeEdgeWithSourceOrTargetId(id);
                         scope.nodes = _.reject(scope.nodes, function(obj) { return obj.id == id; });
+                        update();
+                    }
+
+                    function removeEdgeWithSourceOrTargetId(id) {
+                        scope.edges = _.reject(scope.edges, function(obj) {
+                            return obj.source == id || obj.target == id;
+                        });
                         update();
                     }
 
@@ -99,6 +107,29 @@
                     var paths = svg.append("g").selectAll("g");
                     var circles = svg.append("g").selectAll("g");
 
+                    // define arrow markers for graph links
+                    var defs = svg.append('svg:defs');
+                    defs.append('svg:marker')
+                        .attr('id', 'end-arrow')
+                        .attr('viewBox', '0 -5 10 10')
+                        .attr('refX', "32")
+                        .attr('markerWidth', 3.5)
+                        .attr('markerHeight', 3.5)
+                        .attr('orient', 'auto')
+                        .append('svg:path')
+                        .attr('d', 'M0,-5L10,0L0,5');
+
+                    // define arrow markers for leading arrow
+                    defs.append('svg:marker')
+                        .attr('id', 'mark-end-arrow')
+                        .attr('viewBox', '0 -5 10 10')
+                        .attr('refX', 7)
+                        .attr('markerWidth', 3.5)
+                        .attr('markerHeight', 3.5)
+                        .attr('orient', 'auto')
+                        .append('svg:path')
+                        .attr('d', 'M0,-5L10,0L0,5');
+
                     // If something is selected and you move the mouse
                     svg.on("mousemove", function() {
                         // If a circle is selected lets move it
@@ -123,6 +154,28 @@
                     // Update function, updating nodes and edges
                     function update() {
                         function transformFunction(d){return "translate(" + d.x + "," + d.y + ")";}
+
+                        // Paths
+                        paths = paths.data(scope.edges, function(d){ return "" + d.source + "+" + d.target; });
+
+                        function d(d) {
+                            var source = _.findWhere(scope.nodes, { id: d.source });
+                            var target = _.findWhere(scope.nodes, { id: d.target });
+                            return "M" + source.x + "," + source.y + "L" + target.x + "," + target.y;
+                        }
+
+                        paths.style('marker-end', 'url(#end-arrow)')
+                            .attr("d", d);
+
+                        // add new paths
+                        paths.enter()
+                            .append("path")
+                            .style('marker-end','url(#end-arrow)')
+                            .classed("link", true)
+                            .attr("d", d);
+
+                        // remove old links
+                        paths.exit().remove();
 
                         // update existing nodes
                         circles = circles.data(scope.nodes, function(d){ return d.id; });
