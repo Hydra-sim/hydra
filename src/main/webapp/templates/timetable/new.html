@@ -1,9 +1,9 @@
-<div class="modal-header">
+<div class="modal-header" id="timetableHeader">
     <h3 class="modal-title">
         <input type="text" placeholder="name" ng-model="name" />
     </h3>
 </div>
-<div class="modal-body">
+<div class="modal-body" id="timetableBody">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6"><span>Arrival</span></div>
@@ -11,17 +11,21 @@
         </div>
         <div class="vertical-scrollable">
             <div class="row" ng-repeat="arrival in arrivals">
-                <div class="col-md-6"><input type="text" ng-model="arrival.time" /></div>
-                <div class="col-md-6"><input type="text" ng-model="arrival.passengers" /></div>
+                <div class="col-md-6">
+                    <input type="text" ng-model="arrival.time" />
+                </div>
+                <div class="col-md-6">
+                    <input type="number" ng-model="arrival.passengers" />
+                </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row timetableInfo">
             <div class="col-md-6">{{arrivals.length}}</span></div>
             <div class="col-md-6"><a href="" ng-click="addLine()">New line</a></div>
         </div>
     </div>
 </div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()" type="submit">Add timetable</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+<div class="modal-footer" id="timetableFooter">
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-default" ng-click="ok()" type="submit">Add</button>
 </div>
