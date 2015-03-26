@@ -27,6 +27,13 @@
         }
     });
 
+    app.factory('Map', ['$resource', function($resource) {
+        return $resource('api/map/:mapId', {mapId: '@id'},
+            {
+                'update': { method:'PUT' }
+            });
+    }]);
+
     app.factory('menu_field_name', function() {
         return {
             value: '',

@@ -28,6 +28,8 @@
             .when('/preset/new',        {templateUrl: 'templates/preset/new.html'})
             .when('/preset/:id/',       {templateUrl: 'templates/preset/show.html'})
 
+            .when('/map',               {controller: 'UploadMap',                templateUrl: "templates/map.html"})
+
             .otherwise({redirectTo : '/'})
     });
 

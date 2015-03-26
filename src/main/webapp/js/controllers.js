@@ -5,7 +5,8 @@
     var app = angular.module('unit.controllers', [
         'ngRoute',
         'services',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'angularFileUpload'
     ]);
 
     app.controller('ApplicationController', function($scope, $rootScope, $location, menu_field_name) {
@@ -68,27 +69,21 @@
             });
         };
 
-        $scope.log = function(data) {
-            console.log(data);
-        };
-
         $scope.dataset = {
             nodes: [
-                {type: "producer", id: 0, x: 100, y: 100, children: []},
-                {type: "producer", id: 1, x: 100, y: 300, children: []},
-                {type: "consumer", id: 2, x: 300, y: 300, children: []}
+                {type: "producer", id: 0, x: 100, y: 100},
+                {type: "producer", id: 1, x: 100, y: 300},
+                {type: "consumer", id: 2, x: 300, y: 300}
             ],
-            maxid: 2,
-            edges: []
+            edges: [
+                {source: 1, target: 0}
+            ]
         };
 
-        $scope.dataset.edges.push({source: $scope.dataset.nodes[1], target: $scope.dataset.nodes[0]});
-        $scope.dataset.nodes[ 1 ].children.push( 0 );
-
         $scope.addData = function() {
-            $scope.dataset.maxid += 1;
+            var id = _.max($scope.dataset.nodes, function(node) { return node.id; }).id + 1;
             $scope.dataset.nodes.push(
-                {type: "consumer", id: $scope.dataset.maxid, x: 400, y: 100}
+                {type: "consumer", id: id, x: 400, y: 100}
             );
         };
     });
@@ -160,7 +155,7 @@
         $rootScope.menu_field_button_click = function() {};
     });
 
-    app.controller('ModalCtrl', function ($scope, $modal, $log) {
+    app.controller('ModalCtrl', function ($scope, $modal) {
 
         $scope.openModal = function (size) {
 
@@ -342,6 +337,127 @@
             { title:'TIMETABLES', content:''},
             { title:'PRESETS', content:''}
         ]
+    app.controller('UploadMap', function($scope, $rootScope, $log, Map){
+
+        $scope.image = { visible: true, id: 86, exists: true, zoom: 0};
+        $scope.image2 = {scale: 1, zoom: 0};
+
+        $scope.toggleImage = function() {
+            $scope.image.visible = !$scope.image.visible;
+        };
+
+        $scope.deleteImage = function(id) {
+            $scope.image.visible = $scope.image.exists = false;
+            Map.delete({}, {"id" : id});
+        };
+
+        // Create a variable to store the transform value
+        $scope.transform = "scale(" + $scope.image.zoom + ")";
+        // When the number changes, update the transform string
+        $scope.$watch("image.zoom", function() {
+            $scope.image.scale = ($scope.image.zoom / 50) + 1;
+            $scope.transform = "scale("+$scope.image.scale+")";
+        });
+
+        $scope.$watch("image2.scale", function() {
+            $scope.transform = "scale("+$scope.image2.scale+")";
+        });
+
+    });
+
+    app.controller('MyUploadCtrl', function($scope, $upload, $log, Map) {
+
+        $scope.$watch('files', function () {
+            $scope.upload($scope.files);
+        });
+
+        $scope.upload = function (files) {
+            if (files && files.length) {
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    /*
+                    $upload.upload({
+                        url: 'api/map/upload',
+                        fields: {'username': $scope.username},
+                        file: file
+                    });
+                    */
+
+                    var map = new Map();
+                    map.$save();
+                        /*.progress(function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                    }).success(function (data, status, headers, config) {
+                        $log.info(data);
+                        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    });*/
+                }
+            }
+        };
+    });
+
+    app.controller('MapModalCtrl', function($scope, $modal) {
+
+        $scope.openMapModal = function(size) {
+
+            $modal.open({
+                templateUrl: 'mapModal.html',
+                controller: 'MapModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    image: function () {
+                        return $scope.image;
+                    },
+                    image2: function() {
+                        return $scope.image2;
+                    }
+                }
+            });
+        }
+    });
+
+    app.controller('MapModalInstanceCtrl', function($scope, $log, $modalInstance, $timeout, image, image2) {
+
+        $scope.image = image;
+        $scope.image2 = image2;
+        $scope.image.scale = $scope.image2.scale;
+        $scope.image.zoom = $scope.image2.zoom;
+
+        $scope.submitMap = function() {
+            $scope.image2.scale = $scope.image.scale;
+            $scope.image2.zoom = $scope.image.zoom;
+
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+
+    });
+
+    app.controller("tabMenuController", function($scope){
+        $scope.tabs = [{
+            title: 'SIMULATIONS',
+            url: '#'
+        }, {
+            title: 'TIMETABLES',
+            url: '#/timetable'
+        }, {
+            title: 'PRESETS',
+            url: '#/preset'
+        }];
+
+        $scope.currentTab = '#';
+
+        $scope.onClickTab = function (tab) {
+            $scope.currentTab = tab.url;
+        }
+
+        $scope.isActiveTab = function(tabUrl) {
+            return tabUrl == $scope.currentTab;
+        }
 
     });
 

@@ -4,9 +4,11 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.persistence.criteria.Fetch;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 /**
@@ -19,6 +21,7 @@ import java.util.List;
  */
 @javax.persistence.Entity
 public class Timetable {
+    //region attributes
     /**
      * An automatically generated id
      */
@@ -39,7 +42,9 @@ public class Timetable {
      */
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<TimetableEntry> arrivals;
+    //endregion
 
+    //region getters and setters
     public String getName() {
         return name;
     }
@@ -59,7 +64,9 @@ public class Timetable {
     public int getId() {
         return id;
     }
+    //endregion
 
+    //region constructors
     public Timetable() {
         this(new ArrayList<>(), "Undefined");
     }
@@ -71,5 +78,37 @@ public class Timetable {
     public Timetable(List<TimetableEntry> arrivals, String name) {
         this.arrivals = arrivals;
         this.name = name;
+    }
+    //endregion
+
+    public static Timetable getTimetableFromCsv(String path) {
+
+        Timetable timetable = new Timetable();
+
+        try (Scanner scanner = new Scanner(new File(path))) {
+
+            scanner.nextLine(); //Column names
+
+            while(scanner.hasNextLine()) {
+
+                String[] data = scanner.nextLine().split(",");
+
+                String[] times = data[0].split(":");
+
+                int hours = Integer.parseInt(times[0]);
+                int minutes = Integer.parseInt(times[1]);
+                int seconds = Integer.parseInt(times[2]);
+                int tick = (hours * 60 * 60) + (minutes * 60) + seconds;
+
+                int passengers = Integer.parseInt(data[1]);
+                timetable.getArrivals().add(new TimetableEntry(tick, passengers));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(timetable.getArrivals().get(0).getTime());
+        return timetable;
     }
 }
