@@ -75,16 +75,15 @@
                 {type: "producer", id: 1, x: 100, y: 300},
                 {type: "consumer", id: 2, x: 300, y: 300}
             ],
-            maxid: 2,
             edges: [
                 {source: 1, target: 0}
             ]
         };
 
         $scope.addData = function() {
-            $scope.dataset.maxid++;
+            var id = _.max($scope.dataset.nodes, function(node) { return node.id; }).id + 1;
             $scope.dataset.nodes.push(
-                {type: "consumer", id: $scope.dataset.maxid, x: 400, y: 100}
+                {type: "consumer", id: id, x: 400, y: 100}
             );
         };
     });

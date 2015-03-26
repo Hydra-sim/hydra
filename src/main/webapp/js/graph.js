@@ -155,7 +155,7 @@
                     function update() {
                         function transformFunction(d){return "translate(" + d.x + "," + d.y + ")";}
 
-                        // Paths
+                        // update existing paths
                         paths = paths.data(scope.edges, function(d){ return "" + d.source + "+" + d.target; });
 
                         function d(d) {
