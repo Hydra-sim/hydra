@@ -1,8 +1,2 @@
-<div class="tabMenu" ng-controller="tabController">
-<tabset class="tableTabs">
-    <tab class="tableTab" ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
-        {{tab.content}}
-    </tab>
-</tabset>
-</div>
+<div ng-include src="tabs.html"></div>
 <div ng-include src="'templates/simulation/list.html'"></div>
