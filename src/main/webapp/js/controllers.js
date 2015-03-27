@@ -322,11 +322,28 @@
     });
 
     app.controller("tabController", function($scope) {
-        $scope.tabs = [
-            {title: 'SIMULATIONS', content: '', active: true},
-            {title: 'TIMETABLES', content: ''},
-            {title: 'PRESETS', content: ''}
-        ]
+       $scope.tabs = [{
+            title: 'SIMULATIONS',
+            url: '#',
+            active: true
+        }, {
+            title: 'TIMETABLES',
+            url: '#/timetable'
+        }, {
+            title: 'PRESETS',
+            url: '#/preset'
+        }];
+
+        $scope.currentTab = '#';
+
+        $scope.onClickTab = function (tab) {
+            console.log("test");
+            $scope.currentTab = tab.url;
+        }
+
+        $scope.isActiveTab = function(tabUrl) {
+            return tabUrl == $scope.currentTab;
+        }
     });
 
     app.controller('UploadMap', function($scope, $rootScope, $log, Map){
