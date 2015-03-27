@@ -235,9 +235,6 @@ footer p{
   }
 }
 
-.modal-header h3 {
-  margin-top: 10px;
-}
 
 .close-icon {
   color: black;
@@ -352,11 +349,11 @@ a:hover{
   text-align: center;
 }
 
-#timetable{
-  width:350px;
+.modal-header .modal-title {
+  margin-top: 10px;
 }
 
-#timetableHeader input{
+.modal-header .modal-title input{
   font-family: "Avinor-bold";
   font-size: 24px;
   text-align: center;
@@ -366,19 +363,19 @@ a:hover{
   border-bottom: 1px dashed #1d1d1d ;
 }
 
-#timetableBody span{
+.modal-body span{
   text-align: center;
   margin: auto;
   display:block;
 }
 
-.vertical-scrollable{
+.modal-body .vertical-scrollable{
   max-height: 150px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
-#timetableBody input{
+.modal-body .vertical-scrollable input{
   width: 100%;
   height: 40px;
   text-align: center;
@@ -388,19 +385,17 @@ a:hover{
   border: none;
 }
 
-#timetableBody a{
+.modal-body .container-fluid a{
   float: right;
+  margin-right: 20px;
 }
 
-.timetableInfo{
-  margin-top: 10px;
+
+.modal-body .container-fluid a:hover{
+  text-decoration: underline;
+  color: #84216b;
 }
 
-.timetableInfo a{
-  margin-right: 20px ;
-}
-
-#timetableFooter{
-  margin: auto;
+.modal-footer{
   text-align: center;
 }

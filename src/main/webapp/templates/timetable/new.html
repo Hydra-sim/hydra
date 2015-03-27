@@ -1,9 +1,9 @@
-<div class="modal-header" id="timetableHeader">
+<div class="modal-header">
     <h3 class="modal-title">
         <input type="text" placeholder="name" ng-model="name" />
     </h3>
 </div>
-<div class="modal-body" id="timetableBody">
+<div class="modal-body">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6"><span>Arrival</span></div>
@@ -19,13 +19,13 @@
                 </div>
             </div>
         </div>
-        <div class="row timetableInfo">
-            <div class="col-md-6">{{arrivals.length}}</span></div>
+        <div class="row">
+            <div class="col-md-6">Arrivals: {{arrivals.length}}</span></div>
             <div class="col-md-6"><a href="" ng-click="addLine()">New line</a></div>
         </div>
     </div>
 </div>
-<div class="modal-footer" id="timetableFooter">
+<div class="modal-footer">
     <button class="btn btn-default" ng-click="cancel()">Cancel</button>
     <button class="btn btn-default" ng-click="ok()" type="submit">Add</button>
 </div>

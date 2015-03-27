@@ -25,6 +25,7 @@ public class Map {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+
     public Response list()
     {
         TypedQuery<models.Map> query = entityManager.createNamedQuery(
@@ -34,6 +35,7 @@ public class Map {
 
         return Response.ok( query.getResultList() ).build();
     }
+
 
     @GET
     @Produces({"image/jpeg,image/png"})
