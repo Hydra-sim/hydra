@@ -1,6 +1,7 @@
 package models;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,6 +16,7 @@ public class TimetableTest {
         timetable = new Timetable();
     }
 
+    @Ignore
     @Test
     public void testTimetableFromCsv() {
 
