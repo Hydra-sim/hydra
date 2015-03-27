@@ -36,16 +36,10 @@
         };
     });
 
-    app.controller('SimulationNew', function ($scope, $location, $rootScope, Simulation, SimResult, menu_field_name) {
+    app.controller('SimulationNew', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
         //Default values
-        $scope.days = 0;
-        $scope.hours = 0;
-        $scope.minutes = 0;
-
         $scope.ticks = 60;
-
         $scope.ticksToConsumeEntitiesList = [];
-
         $scope.timetableIds = [];
 
         menu_field_name.setValue("Untitled simulation");
@@ -56,7 +50,6 @@
             var sim = new Simulation({
                 'name': menu_field_name.value,
                 'ticks': $scope.ticks,
-
                 'ticksToConsumeEntitiesList' : $scope.ticksToConsumeEntitiesList,
                 'timetableIds' : $scope.timetableIds
             });
@@ -86,6 +79,36 @@
                 {type: "consumer", id: id, x: 400, y: 100}
             );
         };
+
+        $scope.openModal = function (size) {
+
+            $modal.open({
+                templateUrl: 'modal.html',
+                controller: 'ModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    ticksToConsumeEntitiesList: function () {
+                        return $scope.ticksToConsumeEntitiesList;
+                    },
+                    timetableIds: function () {
+                        return $scope.timetableIds;
+                    }
+                }
+            });
+        };
+
+        $scope.openConfigModal = function(size) {
+
+            var configModal = $modal.open({
+                templateUrl: 'configModal.html',
+                controller: 'ConfigModalInstanceCtrl',
+                size: size
+            });
+
+            configModal.result.then(function (ticks) {
+                $scope.ticks = ticks;
+            });
+        }
     });
 
     app.controller('SimulationEdit', function ($log, $scope, $routeParams, $rootScope, $location, Simulation, SimResult,
@@ -153,39 +176,6 @@
         $rootScope.menu_field_button = "";
         $rootScope.menu_field_button_icon = "";
         $rootScope.menu_field_button_click = function() {};
-    });
-
-    app.controller('ModalCtrl', function ($scope, $modal) {
-
-        $scope.openModal = function (size) {
-
-            $modal.open({
-                templateUrl: 'modal.html',
-                controller: 'ModalInstanceCtrl',
-                size: size,
-                resolve: {
-                    ticksToConsumeEntitiesList: function () {
-                        return $scope.ticksToConsumeEntitiesList;
-                    },
-                    timetableIds: function () {
-                        return $scope.timetableIds;
-                    }
-                }
-            });
-        };
-
-        $scope.openConfigModal = function(size) {
-
-            var configModal = $modal.open({
-                templateUrl: 'configModal.html',
-                controller: 'ConfigModalInstanceCtrl',
-                size: size
-            });
-
-            configModal.result.then(function (ticks) {
-                $scope.ticks = ticks;
-            });
-        }
     });
 
     app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,

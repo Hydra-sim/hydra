@@ -48,35 +48,55 @@
                         update();
                     }
 
-                    // Selected circle
-                    var selectedCircle = null;
+                    function removeEdge(targetAndSourceID) {
+                        scope.edges = _.reject(scope.edges, function(obj) {
+                            return obj.source == targetAndSourceID.source && obj.target == targetAndSourceID.target;
+                        })
+                        update();
+                    }
 
-                    function selectCircle(circleToSelect) {
+                    // Selected circle
+                    var selectedItem = null;
+                    var selectedItemType = "circle";
+
+                    function selectItem(itemToSelect, type) {
                         // Unselect old circle
-                        unselectCircle();
+                        unselectItem();
 
                         // Set the selected circle
-                        selectedCircle = circleToSelect;
-                        selectedCircle.classed(consts.selectedClass, true);
+                        selectedItem = itemToSelect;
+                        selectedItemType = type || "circle";
+                        selectedItem.classed(consts.selectedClass, true);
                     }
 
-                    function unselectCircle() {
+                    function unselectItem() {
                         // Remove class from old selection if any
-                        if(circleIsSelected())
-                            selectedCircle.classed(consts.selectedClass, false);
+                        if(itemIsSelected())
+                            selectedItem.classed(consts.selectedClass, false);
 
-                        selectedCircle = null;
+                        selectedItem = null;
+                        selectedItemType = null;
                     }
 
-                    function deleteSelectedCircle() {
+                    function deleteSelectedItem() {
                         // Keep a copy of the circle data to delete before unselecting it
-                        var data = selectedCircle[0][0].__data__;
-                        unselectCircle();
-                        removeNodeWithId(data.id);
+                        var data = selectedItem[0][0].__data__;
+
+                        if(selectedItemType == "edge")
+                        {
+                            unselectItem();
+                            removeEdge(data);
+                        }
+                        else
+                        {
+                            unselectItem();
+                            removeNodeWithId(data.id);
+                        }
+
                     }
 
-                    function circleIsSelected() {
-                        return selectedCircle != undefined && selectedCircle != null;
+                    function itemIsSelected() {
+                        return selectedItem != undefined && selectedItem != null;
                     }
 
                     // Circle to move
@@ -112,7 +132,7 @@
                     defs.append('svg:marker')
                         .attr('id', 'end-arrow')
                         .attr('viewBox', '0 -5 10 10')
-                        .attr('refX', "32")
+                        .attr('refX', "17")
                         .attr('markerWidth', 3.5)
                         .attr('markerHeight', 3.5)
                         .attr('orient', 'auto')
@@ -139,15 +159,15 @@
                         }
                     });
 
-                    svg.on("mouseup", unselectCircle);
+                    svg.on("mouseup", unselectItem);
 
                     // If someone tries to delete something
                     d3.select("body").on("keydown", function(d) {
                         if (d3.event.keyCode == consts.BACKSPACE_KEY) {
                             d3.event.preventDefault();
 
-                            if(circleIsSelected())
-                                deleteSelectedCircle();
+                            if(itemIsSelected())
+                                deleteSelectedItem();
                         }
                     });
 
@@ -172,7 +192,11 @@
                             .append("path")
                             .style('marker-end','url(#end-arrow)')
                             .classed("link", true)
-                            .attr("d", d);
+                            .attr("d", d)
+                            .on("mouseup", function() {
+                                d3.event.stopPropagation();
+                                selectItem(d3.select(this), "edge");
+                            });
 
                         // remove old links
                         paths.exit().remove();
@@ -193,7 +217,7 @@
                             .on("mouseup", function(){
                                 d3.event.stopPropagation();
                                 resetCricleToMove();
-                                selectCircle(d3.select(this));
+                                selectItem(d3.select(this), "circle");
                             });
 
                         newCircleWrappers

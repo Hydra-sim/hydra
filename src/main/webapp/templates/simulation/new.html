@@ -1,91 +1,87 @@
-<div ng-controller="ModalCtrl">
-    <script type="text/ng-template" id="configModal.html">
+<script type="text/ng-template" id="configModal.html">
 
-        <div class="modal-body">
-            <form novalidate>
-                <div class="form-group">
-                    <h3>Simulation Duration</h3>
-                    <br/>
-                    <label for="days">Days</label>
-                    <input type="number" id="days" class="form-control" ng-model="days" min="0" />
-                    <label for="hours">Hours</label>
-                    <input type="number" id="hours" class="form-control" ng-model="hours" min="0" />
-                    <label for="minutes">Minutes</label>
-                    <input type="number" id="minutes" class="form-control" ng-model="minutes" min="0" />
-                </div>
-            </form>
-
-            <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="submitConfig(days, hours, minutes)" type="submit">Submit</button>
-                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    <div class="modal-body">
+        <form novalidate>
+            <div class="form-group">
+                <h3>Simulation Duration</h3>
+                <br/>
+                <label for="days">Days</label>
+                <input type="number" id="days" class="form-control" ng-model="days" min="0" />
+                <label for="hours">Hours</label>
+                <input type="number" id="hours" class="form-control" ng-model="hours" min="0" />
+                <label for="minutes">Minutes</label>
+                <input type="number" id="minutes" class="form-control" ng-model="minutes" min="0" />
             </div>
+        </form>
 
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="submitConfig(days, hours, minutes)" type="submit">Submit</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
-    </script>
 
-    <button class="btn btn-default" ng-click="openConfigModal()">Configure simulation</button>
+    </div>
+</script>
+<script type="text/ng-template" id="modal.html">
 
-    <script type="text/ng-template" id="modal.html">
+    <div class="modal-body">
 
-        <div class="modal-body">
-
-            <tabset justified="true">
-                <tab>
-                    <tab-heading>
-                        <h4>Consumer</h4>
-                    </tab-heading>
-                    <!-- Create Consumer Form -->
-                    <br/>
-                    <form novalidate>
-                        <div class="form-group">
-                            <label for="ticksToConsumeEntities">Number of entities consumed per tick:</label>
-                            <input type="number" id="ticksToConsumeEntities" class="form-control" ng-model="ticksToConsumeEntities" min="0" />
-                        </div>
-                    </form>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" ng-click="submitConsumer(ticksToConsumeEntities)" type="submit">Submit</button>
-                        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        <tabset justified="true">
+            <tab>
+                <tab-heading>
+                    <h4>Consumer</h4>
+                </tab-heading>
+                <!-- Create Consumer Form -->
+                <br/>
+                <form novalidate>
+                    <div class="form-group">
+                        <label for="ticksToConsumeEntities">Number of entities consumed per tick:</label>
+                        <input type="number" id="ticksToConsumeEntities" class="form-control" ng-model="ticksToConsumeEntities" min="0" />
                     </div>
-                </tab>
-                <tab>
-                    <tab-heading>
-                        <h4>Producer</h4>
-                    </tab-heading>
+                </form>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="submitConsumer(ticksToConsumeEntities)" type="submit">Submit</button>
+                    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                </div>
+            </tab>
+            <tab>
+                <tab-heading>
+                    <h4>Producer</h4>
+                </tab-heading>
 
-                    <br/>
+                <br/>
 
-                    <h5 class="text-center">Choose timetable</h5>
+                <h5 class="text-center">Choose timetable</h5>
 
-                    <tabset vertical="true" class="split-tabs clearfix" type="pills">
-                        <tab ng-repeat="timetable in timetables" heading="{{timetable.name}}" active="timetable.active">
-                            <table class="vertical-scrollable table-equal-width table table-striped">
-                                <thead>
-                                    <th>Arrival</th>
-                                    <th>Passengers</th>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="arrival in timetable.arrivals">
-                                        <td><span>{{ arrival.time }}</span></td>
-                                        <td><span>{{ arrival.passengers }}</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </tab>
-                    </tabset>
+                <tabset vertical="true" class="split-tabs clearfix" type="pills">
+                    <tab ng-repeat="timetable in timetables" heading="{{timetable.name}}" active="timetable.active">
+                        <table class="vertical-scrollable table-equal-width table table-striped">
+                            <thead>
+                            <th>Arrival</th>
+                            <th>Passengers</th>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="arrival in timetable.arrivals">
+                                <td><span>{{ arrival.time }}</span></td>
+                                <td><span>{{ arrival.passengers }}</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </tab>
+                </tabset>
 
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit</button>
-                        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-                    </div>
-                </tab>
-            </tabset>
-        </div>
-    </script>
-    <button class="btn btn-default" ng-click="openModal()">Add Node</button>
-    <p>{{ticksToConsumeEntitiesList.length}} consumers, {{timetableIds.length}} producers, {{ticks}} ticks</p>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit</button>
+                    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+</script>
 
-</div>
-
+<button class="btn btn-default" ng-click="openConfigModal()">Configure simulation</button>
+<button class="btn btn-default" ng-click="openModal()">Add Node</button>
 <button class="btn btn-default" ng-click="addData()">add</button>
+
+<p>{{ticksToConsumeEntitiesList.length}} consumers, {{timetableIds.length}} producers, {{ticks}} ticks</p>
 
 <graph nodes="dataset.nodes" edges="dataset.edges"></graph>
