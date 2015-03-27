@@ -1,7 +1,6 @@
 package startup;
 
 import models.Simulation;
-import models.Timetable;
 import models.presets.OSLPreset;
 
 import javax.annotation.PostConstruct;
@@ -23,9 +22,11 @@ public class StartupBean {
     @PostConstruct
     public void startup() {
         // Creating a test timetable and saving it to the database
+        /*
         Timetable timetable = Timetable.getTimetableFromCsv("/Users/kristinesundtlorentzen/Dropbox/School/2015/hydra/src/main/resources/timetable.csv");
         timetable.setName("Persisted timetable");
         entityManager.persist(timetable);
+        */
 
         // Creating the OSL preset and saving it to the database
         Simulation simulation = new OSLPreset().createOSLPreset();
