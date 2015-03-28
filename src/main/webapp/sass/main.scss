@@ -268,7 +268,7 @@ footer p{
 
 /*BUTTON STYLES*/
 
-.btn-default{
+.btn, .btn-default, .btn-danger{
   min-width: 80px;
   background-color: #c6c8ca;
   text-align: center;
@@ -332,6 +332,7 @@ p{
 }
 
 a {
+  font-size: 12px;
   color: #84216b;
   text-decoration: none;
 }
@@ -401,4 +402,100 @@ a:hover{
 
 .modal-footer{
   text-align: center;
+}
+
+/*HELP FUNCTION*/
+
+.helpContainer {
+  position: fixed;
+  bottom: 55px;
+  width:80%;
+}
+
+.helpContainer hr{
+  display: block;
+  margin: 0px;
+  height: 10px;
+  background-color: #ffbb00;
+  border: none;
+  float: left;
+  width: 100%;
+}
+
+
+.helpContainer .btn-warning {
+  background-color: #ffbb00;
+  border: none;
+  border-radius: 0;
+  color: #1d1d1d;
+  width: 50px;
+  margin-right: 40px;
+  float: right;
+}
+
+.collapse.in, .collapse {
+  border: none;
+  border-radius: 0;
+  background-color: #ffbb00;
+  display: block;
+  float: left;
+  width: 100%;
+}
+
+.collapse.in .well-lg, .collapse .well-lg{
+  background-color: transparent;
+  border:none;
+  border-radius: 0;
+  height: 100%;
+  margin: 0;
+}
+
+.helpContainer .row{
+  margin-bottom: 20px;
+}
+
+.helpContainer a{
+  margin-bottom: 10px;
+}
+
+.helpContainer a:hover{
+  color: #84216b;
+  text-decoration: underline;
+}
+
+.helpContainer .row h5{
+  display: inline;
+  margin-left: 10px;
+  font-size:14px;
+}
+
+.helpContainer h2{
+  margin: 0px 0px 10px 0px;
+}
+
+.helpContainer .circle {
+  width:35px;
+  height: 35px;
+  border-radius: 50%;
+  display:inline-block;;
+}
+
+.circle .fa{
+  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2.5;
+}
+
+.purple{
+  background-color: #84216b;
+}
+
+.dark-purple{
+  background-color: #611452;
+}
+
+.azure{
+  background-color: #8ad8c5;
 }

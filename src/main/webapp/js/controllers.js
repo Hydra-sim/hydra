@@ -430,6 +430,9 @@
 
     });
 
+    app.controller("collapseController", function($scope){
+        $scope.isCollapsed = true;
 
+    });
 
 })();
