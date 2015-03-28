@@ -1,7 +1,7 @@
 <div class="tabMenu" ng-controller="tabController">
-    <tabset class="tableTabs">
-        <tab class="tableTab" ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
-            {{tab.content}}
-        </tab>
-    </tabset>
+    <ul>
+        <li ng-repeat="tab in tabs" >
+            <a ng-href="{{tab.link}}" ng-click="select()">{{tab.name}}</a>
+        </li>
+    </ul>
 </div>
