@@ -445,4 +445,31 @@
 
     });
 
+    app.controller("radialMenuController", function($scope, $rootScope, $location){
+
+        var items = document.querySelectorAll('.outer-circle .circle');
+
+        for(var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35*Math.cos(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
+
+            items[i].style.top = (50 + 35*Math.sin(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
+        }
+
+
+
+        document.querySelector('.menu-button').onclick = function(e) {
+            e.preventDefault(); document.querySelector('.outer-circle').classList.toggle('open');
+        }
+
+    });
+
+    document.addEventListener("mousemove", function(e){
+        var menuButton = document.querySelector(".menu-button");
+        menuButton.css({
+            "position": "absoulte",
+            top: e.pageY,
+            left: e.pageX
+        });
+    });
+
 })();
