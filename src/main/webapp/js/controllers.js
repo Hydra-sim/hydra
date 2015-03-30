@@ -302,13 +302,21 @@
         };
     });
 
-    app.controller('TimetableController', function($scope, $modal) {
-         $scope.newTimetable = function() {
-             $modal.open({
-                 templateUrl: 'templates/timetable/new.html',
-                 controller: 'TimetableNew'
-             });
-         }
+    app.controller('TimetableController', function($scope, $modal, $rootScope) {
+        $rootScope.menu_field_button = "New Timetable";
+        $rootScope.menu_field_button_icon = "fa-plus-circle";
+        $rootScope.menu_field_button_click = function() {
+            $modal.open({
+                templateUrl: 'templates/timetable/new.html',
+                controller: 'TimetableNew'
+            });
+        };
+    });
+
+    app.controller('PresetController', function($scope, $rootScope) {
+        $rootScope.menu_field_button = "New Preset";
+        $rootScope.menu_field_button_icon = "fa-plus-circle";
+        $rootScope.menu_field_button_click = function() { alert("Not implemented"); };
     });
 
     app.controller('PresetList', function($scope, $rootScope, Preset) {

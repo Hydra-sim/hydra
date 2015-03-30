@@ -84,7 +84,7 @@
 
 <p>{{ticksToConsumeEntitiesList.length}} consumers, {{timetableIds.length}} producers, {{ticks}} ticks</p>
 
-<graph nodes="dataset.nodes" edges="dataset.edges"></graph>
+<graph nodes="dataset.nodes" edges="dataset.edges" height="500px"></graph>
 
 <nav class="circular-menu" ng-controller="radialMenuController">
     <div class="outer-circle">
@@ -110,4 +110,6 @@
     <a href="" class="menu-button fa fa-bars fa-2x"></a>
 </nav>
 <p>Drag a node to move it. Click on a node and click backspace to delete it and all connected edges. Click on an edge an click backspace to delete it.</p>
+
+<p>Drag a node to move it. Click on a node and click shift+backspace to delete it and all connected edges. Click on an edge and click shif+backspace to delete it.</p>
 <div ng-include src="'templates/help-simulation.html'"></div>

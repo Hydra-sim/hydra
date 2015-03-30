@@ -24,7 +24,7 @@
             .when('/timetable/:id/',    {controller: 'TimetableEdit',           templateUrl: 'templates/timetable/show.html'})
 
             // Preset
-            .when('/preset',            {templateUrl: 'templates/preset/index.html'})
+            .when('/preset',            {controller: 'PresetController',        templateUrl: 'templates/preset/index.html'})
             .when('/preset/new',        {templateUrl: 'templates/preset/new.html'})
             .when('/preset/:id/',       {templateUrl: 'templates/preset/show.html'})
 

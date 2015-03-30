@@ -10,18 +10,18 @@
                 restrict: 'E',
 
                 // replace <graph> with this html
-                template: '<div class="graph"></div>',
+                template: '<div class="graph" style="width: {{width}}; height: {{height}};"></div>',
                 replace: true,
 
                 scope: {
                     nodes: '=',
                     edges: '=',
-                    width: '=',
-                    height: '=',
-                    nodeRadius: '=',
-                    selectedClass: '=',
-                    connectClass: '=',
-                    circleWrapperClass: '='
+                    width: '@',
+                    height: '@',
+                    nodeRadius: '@',
+                    selectedClass: '@',
+                    connectClass: '@',
+                    circleWrapperClass: '@'
                 },
 
                 // observe and manipulate the DOM
@@ -51,7 +51,7 @@
                     function removeEdge(targetAndSourceID) {
                         scope.edges = _.reject(scope.edges, function(obj) {
                             return obj.source == targetAndSourceID.source && obj.target == targetAndSourceID.target;
-                        })
+                        });
                         update();
                     }
 
@@ -115,8 +115,8 @@
                     // Create the svg element
                     var svg = d3.select(element[0])
                         .append("svg")
-                        .attr("width", scope.width || 960)
-                        .attr("height", scope.height || 500);
+                        .attr("width", "100%")
+                        .attr("height", "100%");
 
                     // Watch angular properties for changes
                     // trigger an update if they do change
@@ -163,7 +163,7 @@
 
                     // If someone tries to delete something
                     d3.select("body").on("keydown", function(d) {
-                        if (d3.event.keyCode == consts.BACKSPACE_KEY) {
+                        if (d3.event.keyCode == consts.BACKSPACE_KEY && d3.event.shiftKey) {
                             d3.event.preventDefault();
 
                             if(itemIsSelected())
