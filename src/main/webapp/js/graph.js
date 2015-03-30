@@ -18,10 +18,10 @@
                     edges: '=',
                     width: '@',
                     height: '@',
-                    nodeRadius: '=',
-                    selectedClass: '=',
-                    connectClass: '=',
-                    circleWrapperClass: '='
+                    nodeRadius: '@',
+                    selectedClass: '@',
+                    connectClass: '@',
+                    circleWrapperClass: '@'
                 },
 
                 // observe and manipulate the DOM
@@ -163,7 +163,7 @@
 
                     // If someone tries to delete something
                     d3.select("body").on("keydown", function(d) {
-                        if (d3.event.keyCode == consts.BACKSPACE_KEY) {
+                        if (d3.event.keyCode == consts.BACKSPACE_KEY && d3.event.shiftKey) {
                             d3.event.preventDefault();
 
                             if(itemIsSelected())
