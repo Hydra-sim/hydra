@@ -84,7 +84,24 @@
         $scope.openModal = function (size) {
 
             $modal.open({
-                templateUrl: 'modal.html',
+                templateUrl: 'newProducer.html',
+                controller: 'ModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    ticksToConsumeEntitiesList: function () {
+                        return $scope.ticksToConsumeEntitiesList;
+                    },
+                    timetableIds: function () {
+                        return $scope.timetableIds;
+                    }
+                }
+            });
+        };
+
+        $scope.newConsumer = function (size) {
+
+            $modal.open({
+                templateUrl: 'newConsumer.html',
                 controller: 'ModalInstanceCtrl',
                 size: size,
                 resolve: {
@@ -110,7 +127,9 @@
                 $scope.ticks = ticks;
             });
         }
+
     });
+
 
     app.controller('SimulationEdit', function ($log, $scope, $routeParams, $rootScope, $location, Simulation, SimResult,
                                                menu_field_name) {
@@ -471,13 +490,5 @@
 
     });
 
-    document.addEventListener("mousemove", function(e){
-        var menuButton = document.querySelector(".menu-button");
-        menuButton.css({
-            "position": "absoulte",
-            top: e.pageY,
-            left: e.pageX
-        });
-    });
 
 })();

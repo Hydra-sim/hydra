@@ -21,16 +21,11 @@
 
     </div>
 </script>
-<script type="text/ng-template" id="modal.html">
+<script type="text/ng-template" id="newConsumer.html">
+    <div class="modal-header">
+        <h1>NEW {{modalTitle}}</h1>
+    </div>
     <div class="modal-body">
-
-        <tabset justified="true">
-            <tab>
-                <tab-heading>
-                    <h4>Consumer</h4>
-                </tab-heading>
-                <!-- Create Consumer Form -->
-                <br/>
                 <form novalidate>
                     <div class="form-group">
                         <label for="ticksToConsumeEntities">Number of entities consumed per tick:</label>
@@ -41,45 +36,27 @@
                     <button class="btn btn-primary" ng-click="submitConsumer(ticksToConsumeEntities)" type="submit">Submit</button>
                     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
                 </div>
-            </tab>
-            <tab>
-                <tab-heading>
-                    <h4>Producer</h4>
-                </tab-heading>
-
-                <br/>
-
-                <h5 class="text-center">Choose timetable</h5>
-
-                <tabset vertical="true" class="split-tabs clearfix" type="pills">
-                    <tab ng-repeat="timetable in timetables" heading="{{timetable.name}}" active="timetable.active">
-                        <table class="vertical-scrollable table-equal-width table table-striped">
-                            <thead>
-                            <th>Arrival</th>
-                            <th>Passengers</th>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="arrival in timetable.arrivals">
-                                <td><span>{{ arrival.time }}</span></td>
-                                <td><span>{{ arrival.passengers }}</span></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </tab>
-                </tabset>
-
-                <div class="modal-footer">
-                    <button class="btn btn-primary" ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit</button>
-                    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-                </div>
+    </div>
+</script>
+<script type="text/ng-template" id="newProducer.html">
+        <div class="modal-header">
+            <h1>CHOOSE TIMETABLE</h1>
+        </div>
+        <tabset vertical="true">
+            <tab ng-repeat="timetable in timetables" heading="{{timetable.name}}" active="timetable.active">
             </tab>
         </tabset>
-    </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </tab>
 </script>
 
 
 <button class="btn btn-default" ng-click="openConfigModal()">Configure simulation</button>
-<button class="btn btn-default" ng-click="openModal()">Add Node</button>
+<button class="btn btn-default" ng-click="openModal('sm')">Add Producer</button>
+<button class="btn btn-default" ng-click="newConsumer('sm')">Add Consumer</button>
 <button class="btn btn-default" ng-click="addData()">add</button>
 
 <p>{{ticksToConsumeEntitiesList.length}} consumers, {{timetableIds.length}} producers, {{ticks}} ticks</p>
@@ -89,7 +66,7 @@
 <nav class="circular-menu" ng-controller="radialMenuController">
     <div class="outer-circle">
         <div class="circle purple">
-            <a href="#" class="fa fa-train"></a>
+            <a ng-click="chooseTimetable('sm')" class="fa fa-train"></a>
         </div>
         <div class="circle purple">
             <a href="#" class="fa fa-bus"></a>
