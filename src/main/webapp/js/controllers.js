@@ -10,6 +10,7 @@
     ]);
 
     app.controller('ApplicationController', function($scope, $rootScope, $location, menu_field_name) {
+
         $rootScope.menu_field_button = "New Simulation";
         $rootScope.menu_field_button_icon = "fa-plus-circle";
         $rootScope.menu_field_button_click = function() {
@@ -321,13 +322,22 @@
         };
     });
 
-    app.controller("tabController", function($scope) {
+    app.controller("tabController", function($scope, $rootScope, $location) {
 
         $scope.tabs = [
-            {name: "SIMULATIONS", link: "#/"},
-            {name: "TIMETABLES", link: "#/timetable"},
-            {name: "PRESETS", link: "#/preset"},
-        ]
+            {name: "SIMULATIONS", link: "/"},
+            {name: "TIMETABLES", link: "/timetable"},
+            {name: "PRESETS", link: "/preset"},
+        ];
+
+        $scope.select= function(item) {
+            $location.path(item.link);
+            $location.replace();
+        };
+
+        $scope.itemClass = function(item) {
+            return item.link == $location.path() ? 'active' : '';
+        };
     });
 
     app.controller('UploadMap', function($scope, $rootScope, $log, Map){
