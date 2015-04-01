@@ -61,7 +61,7 @@
 </script>
 <script type="text/ng-template" id="newProducer.html">
         <div class="modal-header">
-            <h1>NEW PRODUCER</h1>
+            <h1 ng-model="modalTitle">{{modalTitle}}</h1>
         </div>
         <div class="modal-body">
             <select class="form-control" ng-model="selectedItem">

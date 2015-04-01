@@ -480,14 +480,21 @@
 
     });
 
-    app.controller("radialMenuController", function($scope, $rootScope, $location){
+    app.controller("radialMenuController", function($scope, $rootScope, $location, $modal){
 
         var items = document.querySelectorAll('.outer-circle .circle');
 
         for(var i = 0, l = items.length; i < l; i++) {
             items[i].style.left = (50 - 35*Math.cos(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
-
             items[i].style.top = (50 + 35*Math.sin(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
+
+            switch (items[i]){
+                case 3:
+                    $scope.modalTitle = "NEW TRAIN";
+                    break;
+            }
+
+
         }
 
         document.querySelector('.menu-button').onclick = function(e) {
