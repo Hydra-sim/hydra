@@ -445,6 +445,18 @@ a:hover{
   color: #84216b;
 }
 
+.modal-body .form-group{
+  margin:10px 0px 0px 0px;
+}
+
+.fullWidth{
+  padding:0px
+}
+
+.fullWidth .col-lg-6, .fullWidth .col-md-6, .fullWidth .col-sm-6 {
+  padding: 0px 5px 0px 0px;
+  }
+
 .modal-footer{
   text-align: center;
 }

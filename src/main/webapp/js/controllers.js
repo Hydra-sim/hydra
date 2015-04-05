@@ -81,10 +81,27 @@
             );
         };
 
-        $scope.openModal = function (size) {
+        $scope.newProducer = function (size) {
 
             $modal.open({
-                templateUrl: 'modal.html',
+                templateUrl: 'newProducer.html',
+                controller: 'ModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    ticksToConsumeEntitiesList: function () {
+                        return $scope.ticksToConsumeEntitiesList;
+                    },
+                    timetableIds: function () {
+                        return $scope.timetableIds;
+                    }
+                }
+            });
+        };
+
+        $scope.newConsumer = function (size) {
+
+            $modal.open({
+                templateUrl: 'newConsumer.html',
                 controller: 'ModalInstanceCtrl',
                 size: size,
                 resolve: {
@@ -110,6 +127,14 @@
                 $scope.ticks = ticks;
             });
         }
+
+        $scope.choosePreset = function(size){
+                $modal.open({
+                templateUrl: 'choosePreset.html',
+                size: size
+            });
+        }
+
     });
 
     app.controller('SimulationEdit', function ($log, $scope, $routeParams, $rootScope, $location, Simulation, SimResult,
@@ -154,7 +179,6 @@
             });
         };
     });
-
     app.controller('SimulationResult', function($scope, $rootScope, SimResult) {
         $scope.entitiesConsumed         = SimResult.data.entitiesConsumed;
         $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;
@@ -202,21 +226,20 @@
 
             $scope.active = function() {
                 return $scope.timetables.filter(function(timetable){
-                    return timetable.active;
+                    return timetable;
                 })[0];
+
+
+
             };
-
             $scope.timetableIds.push( $scope.active().id );
-
             $modalInstance.close();
-
         };
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
     });
-
     app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, $log) {
         $scope.days = 0;
         $scope.hours = 1;
@@ -230,6 +253,10 @@
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
+    });
+
+    app.controller('presetModalInstanceCtrl', function(){
+
     });
 
     app.controller('TimetableList', function($scope, $rootScope, Timetable) {
@@ -453,17 +480,22 @@
 
     });
 
-    app.controller("radialMenuController", function($scope, $rootScope, $location){
+    app.controller("radialMenuController", function($scope, $rootScope, $location, $modal){
 
         var items = document.querySelectorAll('.outer-circle .circle');
 
         for(var i = 0, l = items.length; i < l; i++) {
             items[i].style.left = (50 - 35*Math.cos(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
-
             items[i].style.top = (50 + 35*Math.sin(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
+
+            switch (items[i]){
+                case 3:
+                    $scope.modalTitle = "NEW TRAIN";
+                    break;
+            }
+
+
         }
-
-
 
         document.querySelector('.menu-button').onclick = function(e) {
             e.preventDefault(); document.querySelector('.outer-circle').classList.toggle('open');
@@ -471,13 +503,5 @@
 
     });
 
-    document.addEventListener("mousemove", function(e){
-        var menuButton = document.querySelector(".menu-button");
-        menuButton.css({
-            "position": "absoulte",
-            top: e.pageY,
-            left: e.pageX
-        });
-    });
 
 })();
