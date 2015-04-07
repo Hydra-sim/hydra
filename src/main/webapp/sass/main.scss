@@ -6,6 +6,11 @@
 @import 'graph';
 @import 'slider';
 
+//To remove all outlines from chrome
+*:focus{
+  outline: none !important;
+}
+
 html {
   height: 100%;
 }
