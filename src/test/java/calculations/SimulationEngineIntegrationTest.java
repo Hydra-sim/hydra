@@ -1,15 +1,11 @@
 package calculations;
 
-import api.*;
+import managers.ConsumerManager;
 import managers.ProducerManager;
 import models.*;
-import models.Simulation;
-import models.Timetable;
 import models.presets.OSLPreset;
 import org.junit.Before;
 import org.junit.Test;
-
-import managers.ConsumerManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +14,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by kristinesundtlorentzen on 25/2/15.
+ * Check:
+ * - results
  */
 public class SimulationEngineIntegrationTest {
 
@@ -30,10 +27,102 @@ public class SimulationEngineIntegrationTest {
     }
 
     //region tests
+
+    // NEW TESTS
+    // TODO: Make the rest of the tests like the new tests
+    /**
+     * Tests the queue function on the simulation
+     */
+    @Test
+    public void testQueueing() {
+
+        int numberOfEntitesToProduce = 2;
+        int numberOfEntitiesToConsume = 1;
+
+        // Create simulation
+
+        Producer producer = createProducer(1, numberOfEntitesToProduce);
+        Consumer consumer = new Consumer(numberOfEntitiesToConsume);
+        setRelationship(producer, consumer);
+
+        Simulation simulation = intializeSimulation(producer, consumer, 1);
+
+        simulation.simulate();
+
+        // Assert that there is a queue
+
+        assertTrue(simulation.getResult().getEntitiesInQueue() > 0);
+
+        // Assert that correct amount is left in queue
+
+        assertEquals(numberOfEntitesToProduce - numberOfEntitiesToConsume, simulation.getResult().getEntitiesInQueue());
+    }
+
+    /**
+     * Tests the consume function on the simulation
+     */
+    @Test
+    public void testConsumtion() {
+
+        int numberOfEntitesToProduce = 2;
+        int numberOfEntitiesToConsume = 1;
+
+        // Create simulation
+
+        Producer producer = createProducer(1, numberOfEntitesToProduce);
+        Consumer consumer = new Consumer(numberOfEntitiesToConsume);
+        setRelationship(producer, consumer);
+
+        Simulation simulation = intializeSimulation(producer, consumer, 1);
+
+        simulation.simulate();
+
+        // Assert that entites have been consumed
+
+        assertTrue(simulation.getResult().getEntitiesConsumed() > 0);
+
+        // Assert that correct amount have been consumed
+
+        assertEquals(numberOfEntitiesToConsume, simulation.getResult().getEntitiesConsumed());
+    }
+
+    private Producer createProducer(int numberOfArrivals, int numberOfPassengers) {
+
+        Producer producer = new Producer();
+
+        int startTick = 0;
+        int ticksBetweenArrivals = 1;
+
+        producerManager.generateTimetable(producer, startTick, ticksBetweenArrivals, numberOfArrivals, numberOfPassengers);
+
+        return producer;
+    }
+
+    private void setRelationship(Node parent, Consumer child) {
+
+        List<Relationship> relationships = new ArrayList<>();
+        Relationship relationship = new Relationship(child, 1.0);
+        relationships.add(relationship);
+        parent.setRelationships(relationships);
+    }
+
+    private Simulation intializeSimulation(Producer producer, Consumer consumer, int ticks) {
+
+        List<Producer> producers = new ArrayList<>();
+        producers.add(producer);
+
+        List<Consumer> consumers = new ArrayList<>();
+        consumers.add(consumer);
+
+        return new Simulation("Test", consumers, producers, ticks);
+
+    }
+
+    // OLD TESTS
     @Test
     public void testSimulateEqualAmountProducedAndConsumed() throws Exception{
 
-        Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(1, 1, 0, 1, 1);
+        Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(1, 1, 0, 1, 10);
         simulation.simulate();
         assertEquals(0, simulation.getResult().getEntitiesInQueue());
     }
@@ -41,10 +130,7 @@ public class SimulationEngineIntegrationTest {
     @Test
     public void testSimulateMoreProducedThanConsumed() throws Exception{
 
-        int ticks = 10;
-        int ticksBetweenArrival = 1;
-
-        Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(1, 2, 0, ticksBetweenArrival, ticks);
+        Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(1, 2, 0, 1, 10);
         simulation.simulate();
         assertTrue(simulation.getResult().getEntitiesInQueue() > 0);
     }
@@ -136,6 +222,54 @@ public class SimulationEngineIntegrationTest {
 
         System.out.println((System.currentTimeMillis() - start));
     }
+
+    @Test
+    public void testConsumerGroup() {
+
+        // Making ConsumerGroup
+
+        ConsumerGroup consumerGroup = new ConsumerGroup(10, 1);
+
+        Consumer consumer = new Consumer(10);
+
+        // Making producer
+
+        List<TimetableEntry> timetableEntries = new ArrayList<>();
+        timetableEntries.add(new TimetableEntry(0, 10));
+        Producer producer = new Producer(new Timetable(timetableEntries, "Test"));
+
+        // Establishing relationships
+
+        List<Relationship> producerRelationships = new ArrayList<>();
+        Relationship producerRelationship = new Relationship(consumerGroup, 1.0);
+        producerRelationships.add(producerRelationship);
+        producer.setRelationships(producerRelationships);
+
+        List<Relationship> consumerGroupRelationships = new ArrayList<>();
+        Relationship consumerGroupRelationship = new Relationship(consumer, 1.0);
+        consumerGroupRelationships.add(consumerGroupRelationship);
+        consumerGroup.setRelationships(consumerGroupRelationships);
+
+
+        // Adding the Nodes to Lists
+
+        List<ConsumerGroup> consumerGroups = new ArrayList<>();
+        consumerGroups.add(consumerGroup);
+
+        List<Consumer> consumers = new ArrayList<>();
+        consumers.add(consumer);
+
+        List<Producer> producers = new ArrayList<>();
+        producers.add(producer);
+
+        // Simulation (with no regular consumers)
+
+        Simulation simulation = new Simulation("Test Simulation", consumers, producers, consumerGroups, 10);
+        simulation.simulate();
+
+        assertTrue(simulation.getResult().getEntitiesConsumed() > 0);
+        assertTrue(simulation.getConsumers().get(0).getEntitesConsumed().size() > 0);
+    }
     //endregion
 
     //region helping methods
@@ -199,5 +333,6 @@ public class SimulationEngineIntegrationTest {
 
         return new Simulation("Test", consumerList, producerList, ticks);
     }
+
     //endregion
 }

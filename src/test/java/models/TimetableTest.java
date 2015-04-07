@@ -1,8 +1,6 @@
 package models;
 
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * Created by kristinesundtlorentzen on 26/3/15.
@@ -16,6 +14,7 @@ public class TimetableTest {
         timetable = new Timetable();
     }
 
+    /*
     @Ignore
     @Test
     public void testTimetableFromCsv() {
@@ -24,4 +23,5 @@ public class TimetableTest {
 
         timetable.getTimetableFromCsv(path);
     }
+    */
 }

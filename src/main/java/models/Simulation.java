@@ -59,11 +59,15 @@ public class Simulation
     private List<Consumer> consumers;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ConsumerGroup> consumerGroups;
+
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Producer> producers;
 
     private int ticks;
 
     private boolean preset;
+    // private boolean movementBasedOnQueues; //TODO: HPXIVXXI-188
     //endregion
 
     //region transient attributes
@@ -77,25 +81,32 @@ public class Simulation
     //region constructors
     public Simulation() {
 
-        this("Untitled simulation", new Date(), new ArrayList<>(), new ArrayList<>(), 0);
+        this("Untitled simulation", new Date(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
     }
 
     public Simulation(String name) {
 
-        this(name, new Date(), new ArrayList<>(), new ArrayList<>(), 0);
+        this(name, new Date(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
     }
 
     public Simulation(String name, List<Consumer> consumers, List<Producer> producers, int ticks) {
 
-        this(name, new Date(), consumers, producers, ticks);
+        this(name, new Date(), consumers, new ArrayList<>(), producers, ticks);
     }
 
-    public Simulation(String name, Date date, List<Consumer> consumers, List<Producer> producers, int ticks) {
+    public Simulation(String name, List<Consumer> consumers, List<Producer> producers, List<ConsumerGroup> consumerGroups, int ticks) {
+
+        this(name, new Date(), consumers, consumerGroups, producers, ticks);
+    }
+
+    public Simulation(String name, Date date, List<Consumer> consumers, List<ConsumerGroup> consumerGroups, List<Producer> producers, int ticks) {
         this.name = name;
         this.date = date;
         this.consumers = consumers;
+        this.consumerGroups = consumerGroups;
         this.producers = producers;
         this.ticks = ticks;
+
 
         consumerManager = new ConsumerManager();
         nodeManager = new NodeManager();
@@ -142,6 +153,14 @@ public class Simulation
 
     public void setConsumers(List<Consumer> consumers) {
         this.consumers = consumers;
+    }
+
+    public List<ConsumerGroup> getConsumerGroups() {
+        return consumerGroups;
+    }
+
+    public void setConsumerGroups(List<ConsumerGroup> consumerGroups) {
+        this.consumerGroups = consumerGroups;
     }
 
     public List<Producer> getProducers() {
@@ -235,9 +254,43 @@ public class Simulation
      */
     private void consumeEntities() {
 
+        // Consume entities in queue on Consumer
         for(int i = 0; i < consumers.size(); i++) {
 
             consumerManager.consumeEntity(consumers.get(i));
+        }
+
+        // Consume entities in queue on a ConsumerGroup
+        for(ConsumerGroup consumerGroup : consumerGroups) {
+
+            // Distribute the Entities to the Consumers
+            // All have equal weight, so relationships are not needed (they use the ConsumerGroup relationship)
+
+            // Get the current entites in queue on current ConsumerGroup
+            List<Entity> entitiesToDistribute = consumerGroup.getEntitesInQueue();
+
+            // Take each entity, add it to the queue for a spesific Consumer, and remove it from the list of entities in
+            // queue on the current ConsumerGroup
+            // Continues to iterate though the Entities untill all have been distributed
+            while(!entitiesToDistribute.isEmpty()) {
+
+                for(Consumer consumer : consumerGroup.getConsumers()) {
+
+                    List<Entity> entitiesInQueue = consumer.getEntitesInQueue();
+                    entitiesInQueue.add(entitiesToDistribute.get(0));
+                    entitiesToDistribute.remove(0);
+                    consumer.setEntitesInQueue(entitiesInQueue);
+                }
+            }
+
+            // Loop through the Consumes in the current ConsumerGroup and consume Entities in queue on the current
+            // Consumer
+            for(int i = 0; i < consumerGroup.getConsumers().size(); i++) {
+
+                consumerManager.consumeEntity(consumerGroup.getConsumers().get(i));
+            }
+
+
         }
     }
 
@@ -285,23 +338,54 @@ public class Simulation
 
     private void addEntitiesFromConsumers() {
 
+        // Current consumer sending entities
         for(Consumer consumer : consumers) {
 
             List<Relationship> relationships = consumer.getRelationships();
 
             for(Relationship relationship : relationships) {
 
-                int recieved = consumerManager.getTotalSentToConsumer(relationship.getChild());
-                double currentWeight = (double) recieved / consumer.getEntitiesTransfered();
+                sendEntitiesFromConsumerToConsumerInRelationship(consumer, relationship);
+            }
+        }
 
-                if(currentWeight <= relationship.getWeight() || consumer.getEntitiesTransfered() == 0) {
+        for(ConsumerGroup consumerGroup : consumerGroups) {
 
-                    if(consumer.getEntitesConsumed().size() != 0) {
+            for( Consumer consumer : consumerGroup.getConsumers() ){
 
-                        Entity entity = consumer.getEntitesConsumed().get(0);
-                        consumerManager.addEntity(relationship.getChild(), entity);
-                    }
+                // Uses the relationship given to the consumerGroup
+                List<Relationship> relationships = consumerGroup.getRelationships();
+
+                for(Relationship relationship : relationships) {
+
+                    sendEntitiesFromConsumerToConsumerInRelationship(consumer, relationship);
                 }
+            }
+        }
+    }
+
+    private void sendEntitiesFromConsumerToConsumerInRelationship(Consumer sender, Relationship relationship) {
+
+        // If the consumer has any entities to send
+        if(sender.getEntitesConsumed().size() != 0) {
+
+            // Number of entities already sent to the recieving consumer
+            int recieved = consumerManager.getTotalSentToConsumer(relationship.getChild());
+
+            // The percentage of entites already sent from our sending consumer to the recieving consumer
+            double currentWeight = (double) recieved / sender.getEntitiesTransfered();
+
+            // Checks if the percentage already sent to the recieving consumer is equal or greater to what it should
+            // have, and runs the code if either this is true, or it is the first entity sent from the sending
+            // consumer
+            if(currentWeight <= relationship.getWeight() || sender.getEntitiesTransfered() == 0) {
+
+                // Get the data about the entity that is to be sent
+                Entity entity = sender.getEntitesConsumed().get(0);
+
+                List<Entity> entities = relationship.getChild().getEntitesInQueue();
+                entities.add(entity);
+                relationship.getChild().setEntitesInQueue(entities);
             }
         }
     }
@@ -327,6 +411,11 @@ public class Simulation
             entitiesInQueue += consumer.getEntitesInQueue().size();
         }
 
+        for(ConsumerGroup consumerGroup : consumerGroups) {
+
+            entitiesInQueue += consumerGroup.getEntitesInQueue().size();
+        }
+
         return entitiesInQueue;
     }
 
@@ -337,6 +426,14 @@ public class Simulation
         for(Consumer consumer : consumers) {
 
             entitiesConsumed += consumer.getEntitesConsumed().size();
+        }
+
+        for(ConsumerGroup consumerGroup : consumerGroups) {
+
+            for(Consumer consumer : consumerGroup.getConsumers()) {
+
+                entitiesConsumed += consumer.getEntitesConsumed().size();
+            }
         }
 
         return entitiesConsumed;
