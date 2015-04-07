@@ -517,9 +517,9 @@ a:hover{
   width: 100%;
 }
 
-.collapse.in .well-lg, .collapse .well-lg{
-  background-color: transparent;
-  border:none;
+.collapse.in .helpbox, .collapse .helpbox{
+  background-color: #ffbb00;
+  border: none;
   border-radius: 0;
   height: 100%;
   margin: 0;
@@ -546,6 +546,10 @@ a:hover{
 
 .helpContainer h2{
   margin: 0px 0px 10px 0px;
+}
+
+.helpbox{
+  padding: 20px;
 }
 
 /*CIRCULAR MENU / SIMULATUION ADD ELLEMENT MENU*/
