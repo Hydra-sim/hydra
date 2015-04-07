@@ -477,7 +477,7 @@ a:hover{
 
 .helpContainer {
   position: fixed;
-  bottom: 55px;
+  bottom: 5px;
   left:0px;
   width:100%;
 }
@@ -508,6 +508,10 @@ a:hover{
   outline: none;
 }
 
+.collapse:not(.in){
+  padding-bottom: 40px !important;
+}
+
 .collapse.in, .collapse {
   border: none;
   border-radius: 0;
@@ -517,12 +521,16 @@ a:hover{
   width: 100%;
 }
 
-.collapse.in .helpbox, .collapse .helpbox{
+.collapse.in.helpBox, .collapse.helpBox{
   background-color: #ffbb00;
   border: none;
   border-radius: 0;
   height: 100%;
   margin: 0;
+}
+
+.collapsing.helpBox{
+  background-color: #ffbb00 !important;
 }
 
 .helpContainer .row{
@@ -548,8 +556,9 @@ a:hover{
   margin: 0px 0px 10px 0px;
 }
 
-.helpbox{
-  padding: 20px;
+.helpBox{
+  padding: 20px 40px 60px 40px;
+  width: 100%;
 }
 
 /*CIRCULAR MENU / SIMULATUION ADD ELLEMENT MENU*/
