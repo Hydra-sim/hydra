@@ -1,10 +1,15 @@
 package models;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+@javax.persistence.Entity
 public class ConsumerGroup extends Consumer{
 
+    @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Consumer> consumers;
 
     public ConsumerGroup(int numberOfConsumers, int ticksToConsumeEntities) {
