@@ -9,7 +9,7 @@ import java.util.List;
  */
 @javax.persistence.Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public class Node {
+abstract public class Node {
 
     /**
      * An automatically generated id
