@@ -1,7 +1,11 @@
 package calculations;
 
+import api.*;
 import managers.ProducerManager;
 import models.*;
+import models.Simulation;
+import models.Timetable;
+import models.presets.OSLPreset;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -77,6 +81,60 @@ public class SimulationEngineIntegrationTest {
     public void testSimulateWeightNotEqual() {
 
         testSimulateWeight(0.7, 0.3, 10);
+    }
+
+    @Test
+    public void testSimulationSpeed(){
+
+        Simulation simulation = new Simulation();
+
+        for(int i = 0; i < 1000000; i++) {
+
+            Consumer c = new Consumer(1);
+            simulation.getConsumers().add(c);
+        }
+
+        List<TimetableEntry> tList = new ArrayList<>();
+
+        for(int i = 1; i <= 100; i++) {
+
+            TimetableEntry t = new TimetableEntry(i, 100);
+            tList.add(t);
+        }
+
+        Producer p = new Producer(new Timetable(tList, "Timetable"));
+
+        simulation.getProducers().add(p);
+
+        long start = System.currentTimeMillis();
+
+        simulation.simulate();
+
+        System.out.println((System.currentTimeMillis() - start));
+    }
+
+    @Test
+    public void testPreset() {
+
+        Simulation sim = new OSLPreset().createOSLPreset();
+
+        List<TimetableEntry> tList = new ArrayList<>();
+
+        for(int i = 1; i <= 100; i++) {
+
+            TimetableEntry t = new TimetableEntry(i, 100);
+            tList.add(t);
+        }
+
+        Producer p = new Producer(new Timetable(tList, "Timetable"));
+
+        sim.getProducers().add(p);
+
+        long start = System.currentTimeMillis();
+
+        sim.simulate();
+
+        System.out.println((System.currentTimeMillis() - start));
     }
     //endregion
 
