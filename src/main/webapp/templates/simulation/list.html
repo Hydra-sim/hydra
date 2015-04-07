@@ -8,16 +8,18 @@
             </tr>
             <tr ng-repeat="simulation in simulations">
                 <td>
-                    <a ng-href="#/show/{{simulation.id}}" ng-click="editSimulation(simulation.id)">{{simulation.name}}</a>
+                    <a ng-href="#/show/{{simulation.id}}" ng-click="editSimulation(simulation.id)" class="title_date_tr">{{simulation.name}}</a>
                 </td>
                 <td>
-                    {{simulation.date | date}}
+                    <p class="title_date_tr">{{simulation.date | date}}</p>
                 </td>
-                <td>
+                <td class="text-right">
                     <button class="btn btn-default">Share</button>
                     <button class="btn btn-default">Compare</button>
                     <button class="btn btn-danger" ng-click="deleteSimulation(simulation.id)">Delete</button>
-                    <a href="" class="fa fa-2x fa-lock"></a>
+                    <button class="btn btn-icon">
+                        <span class="fa fa-lock"></span>
+                    </button>
                 </td>
             </tr>
         </tbody>

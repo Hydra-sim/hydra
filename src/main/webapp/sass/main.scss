@@ -134,7 +134,7 @@ footer p{
   cursor: pointer;
   color: #c6c8ca;
   margin-top: 10px;
-  margin-right: 20px;
+  margin-right: 45px;
   position: relative;
 
   .fa {
@@ -194,6 +194,10 @@ footer p{
   }
 }
 
+table{
+  margin-bottom: 55px !important;
+}
+
 .table-equal-width {
   td,
   th {
@@ -205,35 +209,16 @@ footer p{
   }
 }
 
-.table{
+.table th{
   font-size: 14px;
-}
-
-.table td:first-child, .table td:nth-of-type(2){
-  padding-top: 20px;
-}
-
-.table td:last-child{
-  float: right;
-  margin: 0px 10px 0px 0px;
-  padding: 0px;
-}
-
-.table td:last-child .fa{
-  height: 40px;
-  color: #c6c8ca;
-  display: inline-block;
-  font-size: 3em;
-}
-
-.table td:last-child .fa:hover{
+  font-family: "Avinor-bold";
   color: #1d1d1d;
-  text-decoration: none;
+  padding-top: 20px !important;
 }
 
-.table td:first-child a{
-  color:#84216b;
-  text-decoration: underline;
+.title_date_tr{
+  display: inline-block;
+  margin-top: 12px;
 }
 
 .mapImageWrapper {
@@ -288,7 +273,7 @@ footer p{
   font-family: "Avinor";
   font-size: 14px;
   height: 40px;
-  color:#000;
+  color: #000;
   margin: 0px 10px 0px 0px;
   border: none;
   border-radius: 0px;
@@ -297,6 +282,19 @@ footer p{
   -o-border-radius: 0px;
   -ms-border-radius: 0px;
   box-shadow: none;
+}
+
+.btn-icon {
+  background: transparent;
+  font-size: 40px;
+  margin-top: -26px;
+  margin-left: -20px;
+  color: #c6c8ca;
+}
+
+.btn-icon:hover{
+  background: transparent !important;
+  color: #1d1d1d !important;
 }
 
 .btn:hover, .btn-default:hover, .btn-danger:hover, .btn-warning:hover{
