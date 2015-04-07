@@ -134,11 +134,18 @@ footer p{
   cursor: pointer;
   color: #c6c8ca;
   margin-top: 10px;
+  margin-right: 20px;
+  position: relative;
 
   .fa {
     opacity: 0.5;
     @include transition(opacity, 0.2s, ease-in-out);
     color: #c6c8ca;
+    font-size: 40px;
+    display: block;
+    position: absolute;
+    right: -45px;
+    top: 0px;
   }
 
   &:hover .fa {
