@@ -499,6 +499,10 @@ a:hover{
   float: right;
 }
 
+.helpContainer .btn-warning:focus{
+  outline: none;
+}
+
 .collapse.in, .collapse {
   border: none;
   border-radius: 0;
