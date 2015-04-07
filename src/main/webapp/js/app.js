@@ -5,7 +5,10 @@
     var app = angular.module('hydra', [
         'ngRoute',
         'unit.controllers',
-        'graph'
+        'graph',
+        'preset',
+        'timetable',
+        'simulation'
     ]);
 
     app.config(function ($routeProvider) {
