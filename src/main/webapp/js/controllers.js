@@ -59,18 +59,6 @@
         };
     });
 
-    app.controller('ConsumerGroupInstanceCtrl', function($scope, $modalInstance, numberOfConsumersInGroup,
-                                                         ticksToConsumeEntitiesGroup){
-
-        $scope.submitConsumerGroup = function(){
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
-
     app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, $log) {
         $scope.days = 0;
         $scope.hours = 1;
