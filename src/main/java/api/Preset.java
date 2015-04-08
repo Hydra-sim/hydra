@@ -9,14 +9,23 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * Created by knarf on 10/03/15.
+ * This class handles all REST-ful calls for presets located in {@link models.presets}
+ * TODO: Make an update method?
  */
+
 @Path("/preset")
 public class Preset {
+
+    // EntityManager for communications with the database.
 
     @PersistenceContext(unitName = "manager")
     private EntityManager entityManager;
 
+    /**
+     * Gets a list all the presets in the database with a named query defined in {@link models.Simulation}
+     *
+     * @return 200 OK and the list of the simulations found
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -30,6 +39,12 @@ public class Preset {
         return Response.ok( query.getResultList() ).build();
     }
 
+    /**
+     * Gets a single preset
+     *
+     * @param id the id of the preset to be retrieved
+     * @return 200 OK if successfull, 500 SERVER ERROR if not
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -46,6 +61,12 @@ public class Preset {
         }
     }
 
+    /**
+     * Deletes a preset from the database
+     *
+     * @param id the id of the preset to be deleted
+     * @return 200 OK if successfull, 500 SERVER ERROR if not
+     */
     @Transactional
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)

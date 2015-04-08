@@ -10,7 +10,7 @@ import java.util.List;
 @javax.persistence.Entity
 public class Consumer extends Node{
 
-    public String name;
+    private String name;
 
     private int ticksToConsumeEntities;
 
@@ -56,6 +56,14 @@ public class Consumer extends Node{
 
     public void setEntitesInQueue(List<Entity> entitesInQueue) {
         this.entitesInQueue = entitesInQueue;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     //endregion

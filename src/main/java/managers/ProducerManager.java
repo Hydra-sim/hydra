@@ -5,10 +5,19 @@ import models.Timetable;
 import models.TimetableEntry;
 
 /**
- * Created by kristinesundtlorentzen on 2/3/15.
+ * A manager with helper method(s) for {@link models.Producer}
  */
 public class ProducerManager {
 
+    /**
+     * Generates a {@link models.Timetable} for a producer
+     *
+     * @param producer the producer for which we want to generate the timetable
+     * @param startTick the time the first producer arrives
+     * @param tickBetweenArrivals amount of time between arrivals
+     * @param numberOfArrivals amount of arrivals
+     * @param numberOfPassengers the number of entites that the producer produces pr arrival
+     */
     public void generateTimetable(Producer producer, int startTick, int tickBetweenArrivals, int numberOfArrivals,
                                   int numberOfPassengers) {
 
