@@ -10,25 +10,25 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Created by knarf on 18/03/15.
+ * This class contains all the data that is to be persisted at deployment
  */
 @Singleton
 @Startup
 public class StartupBean {
 
+    // EntityManager for communications with the database.
+
     @PersistenceContext(unitName = "manager")
     private EntityManager entityManager;
 
+    /**
+     * This method is run on every deployment
+     */
     @PostConstruct
     public void startup() {
-        // Creating a test timetable and saving it to the database
-        /*
-        Timetable timetable = Timetable.getTimetableFromCsv("/Users/kristinesundtlorentzen/Dropbox/School/2015/hydra/src/main/resources/timetable.csv");
-        timetable.setName("Persisted timetable");
-        entityManager.persist(timetable);
-        */
 
         // Creating the OSL preset and saving it to the database
+
         Simulation simulation = new OSLPreset().createOSLPreset();
         entityManager.persist(simulation);
     }
