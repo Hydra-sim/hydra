@@ -13,7 +13,6 @@ public class ConsumerGroup extends Consumer{
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Consumer> consumers;
-    private String name;
 
     //endregion
 
@@ -21,6 +20,7 @@ public class ConsumerGroup extends Consumer{
 
     public ConsumerGroup(String name, int numberOfConsumers, int ticksToConsumeEntities) {
 
+        setName(name);
         consumers = new ArrayList<>();
 
         for(int i = 0; i < numberOfConsumers; i++) {
@@ -46,14 +46,6 @@ public class ConsumerGroup extends Consumer{
 
     public void setConsumers(List<Consumer> consumers) {
         this.consumers = consumers;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     //endregion

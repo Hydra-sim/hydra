@@ -174,7 +174,7 @@ public class OSLPreset {
 
         for(int i = 0; i < quantity; i++) {
             Consumer consumer = new Consumer(consumptionTime);
-            consumer.name = name;
+            consumer.setName(name);
             consumers.add(consumer);
         }
 
