@@ -153,15 +153,21 @@
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>
 </script>
+
 <button class="btn btn-default" ng-click="openConfigModal()">Configure simulation</button>
 <button class="btn btn-default" ng-click="newProducer('sm')">Add Producer</button>
 <button class="btn btn-default" ng-click="newConsumer('sm')">Add Consumer</button>
 <button class="btn btn-default" ng-click="newConsumerGroup('sm')">Add Consumer-Group</button>
 <button class="btn btn-default" ng-click="addData()">Add</button>
 <button class="btn btn-default" ng-click="choosePreset('sm')">Choose Preset</button>
-<p>{{ticksToConsumeEntitiesList.length}} consumers, {{timetableIds.length}} producers, {{ticks}} ticks</p>
+
+<p>{{ticksToConsumeEntitiesList.length}} consumers, {{consumerGroupNames.length}} consumer-groups,
+    {{timetableIds.length}} producers, {{ticks}} ticks</p>
+
 <graph nodes="dataset.nodes" edges="dataset.edges" height="500px">
+
 </graph>
+
 <p>Drag a node to move it. Click on a node and click shift+backspace to delete it and all connected edges. Click on an
     edge and click shift+backspace to delete it.</p>
 

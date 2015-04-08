@@ -9,10 +9,17 @@ import java.util.List;
 @javax.persistence.Entity
 public class ConsumerGroup extends Consumer{
 
+    //region attributes
+
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Consumer> consumers;
+    private String name;
 
-    public ConsumerGroup(int numberOfConsumers, int ticksToConsumeEntities) {
+    //endregion
+
+    //region constructors
+
+    public ConsumerGroup(String name, int numberOfConsumers, int ticksToConsumeEntities) {
 
         consumers = new ArrayList<>();
 
@@ -24,6 +31,15 @@ public class ConsumerGroup extends Consumer{
         }
     }
 
+    public ConsumerGroup(int numberOfConsumers, int ticksToConsumeEntities) {
+
+        this("Untitled Consumer Group", numberOfConsumers, ticksToConsumeEntities);
+    }
+
+    //endregion
+
+    //region getters and setters
+
     public List<Consumer> getConsumers() {
         return consumers;
     }
@@ -31,4 +47,14 @@ public class ConsumerGroup extends Consumer{
     public void setConsumers(List<Consumer> consumers) {
         this.consumers = consumers;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    //endregion
 }

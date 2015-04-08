@@ -1,7 +1,7 @@
 package api;
 
-import managers.ProducerManager;
 import models.Consumer;
+import models.ConsumerGroup;
 import models.Producer;
 import models.Relationship;
 
@@ -100,12 +100,24 @@ public class Simulation {
             consumers.add(consumer);
         }
 
+        List<ConsumerGroup> consumerGroups = new ArrayList<>();
+
+        for(int i = 0; i < input.consumerGroupNames.length; i++) {
+
+            ConsumerGroup consumerGroup = new ConsumerGroup(input.consumerGroupNames[i],
+                                                            input.numberOfConsumersInGroups[i],
+                                                            input.ticksToConsumeEntitiesGroups[i]);
+            Relationship relationship = new Relationship(consumerGroup, 0.0);
+            relationships.add(relationship);
+            consumerGroups.add(consumerGroup);
+        }
+
         for(int i = 0; i < producers.size(); i++) {
             producers.get(i).setRelationships(relationships);
         }
 
         // Create new object in database
-        models.Simulation sim = new models.Simulation(input.name, consumers, producers, input.ticks);
+        models.Simulation sim = new models.Simulation(input.name, consumers, producers, consumerGroups, input.ticks);
 
         // Run and save to database
         sim.simulate();

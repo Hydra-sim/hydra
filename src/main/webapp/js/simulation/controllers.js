@@ -41,10 +41,13 @@
         $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
         $rootScope.menu_field_button_click = function() {
             var sim = new Simulation({
-                'name': menu_field_name.value,
-                'ticks': $scope.ticks,
-                'ticksToConsumeEntitiesList' : $scope.ticksToConsumeEntitiesList,
-                'timetableIds' : $scope.timetableIds
+                'name':                             menu_field_name.value,
+                'ticks':                            $scope.ticks,
+                'ticksToConsumeEntitiesList' :      $scope.ticksToConsumeEntitiesList,
+                'timetableIds' :                    $scope.timetableIds,
+                'consumerGroupNames' :              $scope.consumerGroupNames,
+                'numberOfConsumersInGroups' :       $scope.numberOfConsumersInGroups,
+                'ticksToConsumeEntitiesGroups' :    $scope.ticksToConsumeEntitiesGroups
             });
 
             sim.$save().then(function(result) {

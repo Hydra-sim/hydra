@@ -8,9 +8,15 @@ class InputValue {
     public int ticks;
 
     public int[] ticksToConsumeEntitiesList;
+
+    public String[] consumerGroupNames;
+    public int[] numberOfConsumersInGroups;
+    public int[] ticksToConsumeEntitiesGroups;
+
     public int[] entitiesToProduceList;
     public int[] startTickForProducerList;
     public int[] timeBetweenBusesList;
 
     public int[] timetableIds;
+
 }
