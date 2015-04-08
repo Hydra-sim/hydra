@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A manager with helper methods for {@link models.Consumer}
+ * A manager with helper method(s) for {@link models.Consumer}
  */
 public class ConsumerManager {
 
@@ -87,7 +87,7 @@ public class ConsumerManager {
     }
 
     /**
-     * Counts both the entites in queue and the consumed entites on a consumer 
+     * Counts both the entites in queue and the consumed entites on a consumer
      *
      * @param consumer the consumer on which we wish to count the entites
      * @return the number of entites sent in total to the consumer

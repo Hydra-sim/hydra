@@ -6,10 +6,14 @@ import models.Relationship;
 import java.util.List;
 
 /**
- * Created by kristinesundtlorentzen on 24/2/15.
+ * A manager with helper method(s) for {@link models.Node}
  */
 public class NodeManager {
 
+    /**
+     * Automatically distributes weight to the {@link models.Relationship relationships} if they are all 0.0
+     * @param node the node we wish to distribute weight on
+     */
     public void distributeWeightIfNotSpecified(Node node) {
 
         List<Relationship> relationships = node.getRelationships();
