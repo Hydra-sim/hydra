@@ -1,7 +1,5 @@
 package api;
 
-import org.hibernate.Hibernate;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -18,8 +16,7 @@ import javax.ws.rs.core.Response;
 @Path("/preset")
 public class Preset {
 
-
-    // EntityManager for communications with the database. Powered by Hibernate.
+    // EntityManager for communications with the database.
 
     @PersistenceContext(unitName = "manager")
     private EntityManager entityManager;

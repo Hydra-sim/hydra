@@ -4,7 +4,6 @@ import models.Consumer;
 import models.ConsumerGroup;
 import models.Producer;
 import models.Relationship;
-import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,15 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class handles all REST-ful calls for Simulation
+ * This class handles all REST-ful calls for {@link models.Simulation}
  * TODO: Make an update method?
  */
 
 @Path("simulation")
 public class Simulation {
 
-
-    // EntityManager for communications with the database. Powered by Hibernate.
+    // EntityManager for communications with the database.
 
     @PersistenceContext(unitName = "manager")
     private EntityManager entityManager;

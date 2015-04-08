@@ -4,7 +4,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 /**
- * Created by knarf on 04/02/15.
+ * The config file for the REST-api
  */
 @ApplicationPath("api")
 public class JAXRSConfiguration extends Application {
