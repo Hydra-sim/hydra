@@ -20,7 +20,7 @@
 </script>
 <script type="text/ng-template" id="newConsumer.html">
     <div class="modal-header">
-        <h1 ng-model="{{modalTitle}}">New {{modalTitle}}</h1>
+        <h1>NEW CONSUMER</h1>
     </div>
     <div class="modal-body">
         <form novalidate>
@@ -31,18 +31,12 @@
             </div>
             <div class="form-group">
                 <label>Time to process</label>
-                <div class="col-lg-12 col-md-12 col-sm-12 fullWidth">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <input class="form-control" ng-model="amountOfTime">
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <select class="form-control" ng-model="timeVarant">
-                            <option value="seconds">Second</option>
-                            <option value="minutes">Minutes</option>
-                            <option value="hours">Hours</option>
-                        </select>
-                    </div>
-                </div>
+                <input type="number" class="form-control" ng-model="amountOfTime" min="0">
+                <select class="form-control" ng-model="timeSelectConsumer">
+                    <option value="seconds">Second</option>
+                    <option value="minutes">Minutes</option>
+                    <option value="hours">Hours</option>
+                </select>
             </div>
             <div class="form-group">
                 <label>Number of {{modalTitle}}</label>
@@ -50,7 +44,9 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="submitConsumer(ticksToConsumeEntities)" type="submit">Submit
+            <button class="btn btn-primary"
+                    ng-click="submitConsumer(ticksToConsumeEntities, amountOfTime, timeSelectConsumer)" type="submit">
+                Submit
             </button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
@@ -58,7 +54,7 @@
 </script>
 <script type="text/ng-template" id="newConsumerGroup.html">
     <div class="modal-header">
-        <h3>Create new Consumer-Group</h3>
+        <h1>NEW CONSUMER GROUP</h1>
     </div>
     <div class="modal-body">
         <form novalidate>
@@ -78,21 +74,24 @@
     </div>
     <div class="modal-footer">
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="submitConsumerGroup(consumerGroupName, numberOfConsumersInGroup, ticksToConsumeEntitiesGroup)" type="submit">Submit</button>
+            <button class="btn btn-primary"
+                    ng-click="submitConsumerGroup(consumerGroupName, numberOfConsumersInGroup, ticksToConsumeEntitiesGroup)"
+                    type="submit">Submit
+            </button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </div>
 </script>
 <script type="text/ng-template" id="newProducer.html">
     <div class="modal-header">
-        <h1 ng-model="modalTitle">{{modalTitle}}</h1>
+        <h1>NEW PRODUCER</h1>
     </div>
     <div class="modal-body">
         <form>
             <label>Timetable</label>
             <select class="form-control" ng-model="selectedItem">
                 <option ng-repeat="timetable in timetables" value="{{timetable.id}}">
-                {{timetable.name}}
+                    {{timetable.name}}
                 </option>
             </select>
         </form>
@@ -115,26 +114,24 @@
                 <input type="number" class="form-control" min="0" ng-modell="numberOfPassengers">
             </div>
             <div class="form-group">
-                <label>Frequency</label>
-                <div class="col-lg-12 col-md-12 col-sm-12 fullWidth">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <input class="form-control">
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <select class="form-control">
-                            <option value="seconds">Second</option>
-                            <option value="minutes">Minutes</option>
-                            <option value="hours">Hours</option>
-                        </select>
-                    </div>
-                </div>
+                <label>Amount of people</label>
+                <input type="number" class="form-control" ng-model="amountOfTimePassengerflow" min="0">
+                <label>Per</label>
+                <select class="form-control" ng-model="timeSelectPassengerflow">
+                    <option value="seconds">Second</option>
+                    <option value="minutes">Minutes</option>
+                    <option value="hours">Hours</option>
+                </select>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary"  type="submit">Submit</button>
-                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-            </div>
-
         </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary"
+                ng-click="submitPassengerflow(numberOfPassengers, amountOfTimePassengerflow, timeSelectPassengerflow)"
+                type="submit">Submit
+        </button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
     </div>
 </script>
 <script type="text/ng-template" id="choosePreset.html">
@@ -153,9 +150,9 @@
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>
 </script>
+
+
 <button class="btn btn-default" ng-click="openConfigModal()">Configure simulation</button>
-<button class="btn btn-default" ng-click="newProducer('sm')">Add Producer</button>
-<button class="btn btn-default" ng-click="newConsumer('sm')">Add Consumer</button>
 <button class="btn btn-default" ng-click="newConsumerGroup('sm')">Add Consumer-Group</button>
 <button class="btn btn-default" ng-click="addData()">Add</button>
 <button class="btn btn-default" ng-click="choosePreset('sm')">Choose Preset</button>
@@ -168,24 +165,24 @@
 <nav class="circular-menu" ng-controller="radialMenuController">
     <div class="outer-circle">
         <div class="circle purple">
-            <a ng-click="newProducer('sm')" class="fa fa-train"></a>
+            <a ng-click="newProducer('sm')" class="fa fa-2x fa-train"></a>
         </div>
         <div class="circle purple">
-            <a ng-click="newProducer('sm')" class="fa fa-bus"></a>
+            <a ng-click="newProducer('sm')" class="fa fa-2x fa-bus"></a>
         </div>
         <div class="circle dark-purple">
-            <a ng-click="newConsumer('sm')" class="fa fa-desktop"></a>
+            <a ng-click="newConsumer('sm')" class="fa fa-2x fa-desktop"></a>
         </div>
         <div class="circle dark-purple">
-            <a ng-click="newConsumer('sm')" class="fa fa-arrows-h"></a>
+            <a ng-click="newConsumer('sm')" class="fa fa-2x fa-arrows-h"></a>
         </div>
         <div class="circle black">
-            <a ng-click="newPassengerflow('sm')" class="fa fa-users"></a>
+            <a ng-click="newPassengerflow('sm')" class="fa fa-2x fa-users"></a>
         </div>
         <div class="circle azure">
-            <a href="#"><h3>P</h3></a>
+            <a href="#"><i class="fa fa-2x i">P</i></a>
         </div>
     </div>
-    <a href="" class="menu-button fa fa-close fa-2x"></a>
+    <a href="" class="menu-button fa fa-close fa-4x"></a>
 </nav>
 <div ng-include src="'templates/help-simulation.html'"></div>

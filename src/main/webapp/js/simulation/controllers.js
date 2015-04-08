@@ -35,6 +35,7 @@
         $scope.numberOfConsumersInGroups = [];
         $scope.ticksToConsumeEntitiesGroups = [];
 
+
         menu_field_name.setValue("Untitled simulation");
 
         $rootScope.menu_field_button = "Submit";
@@ -128,10 +129,9 @@
             });
         };
 
-        $scope.newPassenerflow = function(size){
+        $scope.newPassengerflow = function(size){
             $modal.open({
                 templateUrl: 'newPassengerflow.html',
-                controller: 'newPassengerflowInstanceCtrl',
                 size: size
             });
         }
@@ -161,14 +161,17 @@
 
     app.controller('choosePresetInstanceCtrl', function($scope, $modalInstance){
 
-        $scope.loadPreset = function(){
+        $scope.loadPreset = function(presetId){
+            $modalInstance.close();
+        };
 
-        }
+        $scope.close = function(){
+            $modalInstance.dismiss('cancel');
+        };
 
 
 
     });
-
 
     app.controller('ConsumerGroupInstanceCtrl', function($scope, $modalInstance, consumerGroupNames, numberOfConsumersInGroups,
                                                 ticksToConsumeEntitiesGroups) {
@@ -188,8 +191,6 @@
             $modalInstance.dismiss('cancel');
         };
     });
-
-
 
     app.controller('SimulationEdit', function ($log, $scope, $routeParams, $rootScope, $location, Simulation, SimResult,
                                                menu_field_name) {
