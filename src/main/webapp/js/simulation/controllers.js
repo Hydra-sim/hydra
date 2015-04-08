@@ -31,6 +31,10 @@
         $scope.ticksToConsumeEntitiesList = [];
         $scope.timetableIds = [];
 
+        $scope.consumerGroupNames = [];
+        $scope.numberOfConsumersInGroups = [];
+        $scope.ticksToConsumeEntitiesGroups = [];
+
         menu_field_name.setValue("Untitled simulation");
 
         $rootScope.menu_field_button = "Submit";
@@ -91,7 +95,15 @@
             $modal.open({
                 templateUrl: 'newConsumer.html',
                 controller: 'ModalInstanceCtrl',
-                size: size
+                size: size,
+                resolve: {
+                    ticksToConsumeEntitiesList: function () {
+                        return $scope.ticksToConsumeEntitiesList;
+                    },
+                    timetableIds: function () {
+                        return $scope.timetableIds;
+                    }
+                }
             });
         };
 
@@ -102,13 +114,17 @@
                 controller: 'ConsumerGroupInstanceCtrl',
                 size: size,
                 resolve: {
-                    numberOfConsumersInGroup: function() {
-                        return $scope.numberOfConsumersInGroup;
+                    consumerGroupNames: function () {
+                        return $scope.consumerGroupNames;
                     },
-                    ticksToConsumeEntitiesGroup: function() {
-                        return $scope.ticksToConsumeEntitiesGroup;
+                    numberOfConsumersInGroups: function () {
+                        return $scope.numberOfConsumersInGroups;
+                    },
+                    ticksToConsumeEntitiesGroups: function() {
+                        return $scope.ticksToConsumeEntitiesGroups;
                     }
                 }
+
             });
         };
 
@@ -152,6 +168,28 @@
 
 
     });
+
+
+    app.controller('ConsumerGroupInstanceCtrl', function($scope, $modalInstance, consumerGroupNames, numberOfConsumersInGroups,
+                                                ticksToConsumeEntitiesGroups) {
+
+        $scope.consumerGroupNames = consumerGroupNames;
+        $scope.numberOfConsumersInGroups = numberOfConsumersInGroups;
+        $scope.ticksToConsumeEntitiesGroups = ticksToConsumeEntitiesGroups;
+
+        $scope.submitConsumerGroup = function(consumerGroupName, numberOfConsumersInGroup, ticksToConsumeEntitiesGroup){
+            consumerGroupNames.push( consumerGroupName );
+            numberOfConsumersInGroups.push( numberOfConsumersInGroup );
+            ticksToConsumeEntitiesGroups.push( ticksToConsumeEntitiesGroup );
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+
 
     app.controller('SimulationEdit', function ($log, $scope, $routeParams, $rootScope, $location, Simulation, SimResult,
                                                menu_field_name) {
