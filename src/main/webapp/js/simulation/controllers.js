@@ -9,7 +9,7 @@
         'angularFileUpload'
     ]);
 
-    app.controller('SimulationController', function ($scope, Simulation, $location) {
+    app.controller('SimulationController', function ($scope, Simulation, $location, $modal) {
         $scope.simulations = Simulation.query({});
 
         $scope.deleteSimulation = function(id) {
@@ -21,6 +21,13 @@
         };
 
         $scope.editSimulation = function(id) {
+
+            $modal.open({
+                templateUrl: 'passwordAuth.html',
+                //controller: 'ConsumerGroupInstanceCtrl',
+                size: size
+            });
+
             $location.path('/simulation/' + id);
         };
     });

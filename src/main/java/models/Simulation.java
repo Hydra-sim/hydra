@@ -1,14 +1,11 @@
 package models;
 
-import api.*;
 import managers.ConsumerManager;
 import managers.NodeManager;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.inject.Named;
 import javax.persistence.*;
-import java.lang.annotation.Repeatable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +46,7 @@ public class Simulation
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
+
     /**
      * Result of the simulation
      */
@@ -65,8 +63,9 @@ public class Simulation
     private List<Producer> producers;
 
     private int ticks;
-
     private boolean preset;
+    private boolean passwordProtected;
+    private String password;
     // private boolean movementBasedOnQueues; //TODO: HPXIVXXI-188
     //endregion
 
@@ -115,6 +114,8 @@ public class Simulation
         distributeWeightProducers();
 
         preset = false;
+        passwordProtected = true;
+        password = "pass";
     }
     //endregion
 
