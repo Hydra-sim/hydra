@@ -112,6 +112,14 @@
             });
         };
 
+        $scope.newPassenerflow = function(size){
+            $modal.open({
+                templateUrl: 'newPassengerflow.html',
+                controller: 'newPassengerflowInstanceCtrl',
+                size: size
+            });
+        }
+
         $scope.openConfigModal = function(size) {
 
             var configModal = $modal.open({
@@ -128,9 +136,20 @@
         $scope.choosePreset = function(size){
             $modal.open({
                 templateUrl: 'choosePreset.html',
+                controller:  'choosePresetInstanceCtrl',
                 size: size
             });
         };
+
+    });
+
+    app.controller('choosePresetInstanceCtrl', function($scope, $modalInstance){
+
+        $scope.loadPreset = function(){
+
+        }
+
+
 
     });
 
@@ -176,7 +195,6 @@
             });
         };
     });
-
     app.controller('SimulationResult', function($scope, $rootScope, SimResult) {
         $scope.entitiesConsumed         = SimResult.data.entitiesConsumed;
         $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;

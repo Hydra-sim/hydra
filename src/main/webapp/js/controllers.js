@@ -209,7 +209,7 @@
 
     });
 
-    app.controller("radialMenuController", function($scope, $rootScope, $location, $modal){
+    app.controller("radialMenuController", function($scope){
 
         var items = document.querySelectorAll('.outer-circle .circle');
 
@@ -231,6 +231,8 @@
         }
 
     });
+
+
 
 
 })();

@@ -6,11 +6,11 @@
                 <h3>Simulation Duration</h3>
                 <br/>
                 <label for="days">Days</label>
-                <input type="number" id="days" class="form-control" ng-model="days" min="0" />
+                <input type="number" id="days" class="form-control" ng-model="days" min="0"/>
                 <label for="hours">Hours</label>
-                <input type="number" id="hours" class="form-control" ng-model="hours" min="0" />
+                <input type="number" id="hours" class="form-control" ng-model="hours" min="0"/>
                 <label for="minutes">Minutes</label>
-                <input type="number" id="minutes" class="form-control" ng-model="minutes" min="0" />
+                <input type="number" id="minutes" class="form-control" ng-model="minutes" min="0"/>
             </div>
         </form>
 
@@ -29,22 +29,23 @@
         <form novalidate>
             <div class="form-group">
                 <label for="ticksToConsumeEntities">Persons processed</label>
-                <input type="number" id="ticksToConsumeEntities" class="form-control" ng-model="ticksToConsumeEntities" min="0" />
+                <input type="number" id="ticksToConsumeEntities" class="form-control" ng-model="ticksToConsumeEntities"
+                       min="0"/>
             </div>
             <div class="form-group">
                 <label>Time to process</label>
-               <div class="col-lg-12 col-md-12 col-sm-12 fullWidth">
-                   <div class="col-lg-6 col-md-6 col-sm-6">
-                       <input class="form-control" ng-model="amountOfTime">
-                   </div>
-                   <div class="col-lg-6 col-md-6 col-sm-6">
-                       <select class="form-control" ng-model="timeVarant">
-                           <option value="seconds">Second</option>
-                           <option value="minutes">Minutes</option>
-                           <option value="hours">Hours</option>
-                       </select>
-                   </div>
-               </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 fullWidth">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <input class="form-control" ng-model="amountOfTime">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <select class="form-control" ng-model="timeVarant">
+                            <option value="seconds">Second</option>
+                            <option value="minutes">Minutes</option>
+                            <option value="hours">Hours</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label>Number of {{modalTitle}}</label>
@@ -52,7 +53,8 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="submitConsumer(ticksToConsumeEntities)" type="submit">Submit</button>
+            <button class="btn btn-primary" ng-click="submitConsumer(ticksToConsumeEntities)" type="submit">Submit
+            </button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </div>
@@ -67,7 +69,7 @@
 
             <div class="form-group">
                 <label for="consumerGroupName">Group name:</label>
-                <input id="consumerGroupName" class="form-control" ng-model="consumerGroupName" />
+                <input id="consumerGroupName" class="form-control" ng-model="consumerGroupName"/>
             </div>
 
             <div class="form-group">
@@ -84,31 +86,73 @@
     </div>
     <div class="modal-footer">
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="submitConsumerGroup(numberOfConsumersInGroup, ticksToConsumeEntitiesGroup)" type="submit">Submit</button>
+            <button class="btn btn-primary"
+                    ng-click="submitConsumerGroup(numberOfConsumersInGroup, ticksToConsumeEntitiesGroup)" type="submit">
+                Submit
+            </button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </div>
 </script>
 <script type="text/ng-template" id="newProducer.html">
-        <div class="modal-header">
-            <h1 ng-model="modalTitle">{{modalTitle}}</h1>
-        </div>
-        <div class="modal-body">
+    <div class="modal-header">
+        <h1 ng-model="modalTitle">{{modalTitle}}</h1>
+    </div>
+    <div class="modal-body">
+        <form>
+            <label>Timetable</label>
             <select class="form-control" ng-model="selectedItem">
                 <option ng-repeat="timetable in timetables" value="{{timetable.id}}">
-                    {{timetable.name}}
+                {{timetable.name}}
                 </option>
             </select>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary"
+                ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit
+        </button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+<script type="text/ng-template" id="newPassengerflow.html">
+    <div class="modal-header">
+        <h1>NEW PASSENGERFLOW</h1>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label>Number of passengers</label>
+                <input type="number" class="form-control" min="0" ng-modell="numberOfPassengers">
+            </div>
+            <div class="form-group">
+                <label>Frequency</label>
+                <div class="col-lg-12 col-md-12 col-sm-12 fullWidth">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <input class="form-control">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <select class="form-control">
+                            <option value="seconds">Second</option>
+                            <option value="minutes">Minutes</option>
+                            <option value="hours">Hours</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary"  type="submit">Submit</button>
+                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            </div>
+
+        </form>
+    </div>
 </script>
 <script type="text/ng-template" id="choosePreset.html">
     <div class="modal-header">
         <h1>CHOOSE PRESET</h1>
-        <p>A preset is a pre defined simulation location theat can be run as is or modified to your liking.</p>
+
+        <p>A preset is a predefined simulation that can be run as is or modified to your liking.</p>
     </div>
     <div class="modal-body">
         <tabset vertical="true" type=pills>
@@ -130,14 +174,9 @@
 <p>{{ticksToConsumeEntitiesList.length}} consumers, {{timetableIds.length}} producers, {{ticks}} ticks</p>
 
 <graph nodes="dataset.nodes" edges="dataset.edges" height="500px">
-    <nav class="mapControls">
-        <ul>
-            <li></li>
-            <li></li>
-        </ul>
-    </nav>
 </graph>
-<p>Drag a node to move it. Click on a node and click shift+backspace to delete it and all connected edges. Click on an edge and click shift+backspace to delete it.</p>
+<p>Drag a node to move it. Click on a node and click shift+backspace to delete it and all connected edges. Click on an
+    edge and click shift+backspace to delete it.</p>
 
 <nav class="circular-menu" ng-controller="radialMenuController">
     <div class="outer-circle">
