@@ -21,59 +21,6 @@
         menu_field_name.disable();
     });
 
-    app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,
-                                                  Timetable, timetableIds) {
-
-        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
-
-        $scope.submitConsumer = function (ticksToConsumeEntities) {
-
-            $scope.ticksToConsumeEntitiesList.push( ticksToConsumeEntities );
-
-            $modalInstance.close();
-        };
-
-        $scope.timetableIds = timetableIds;
-
-        function updateTimetableScope() {
-            $scope.timetables = Timetable.query({});
-        }
-        updateTimetableScope();
-
-        $scope.submitProducer = function () {
-
-            $scope.active = function() {
-                return $scope.timetables.filter(function(timetable){
-                    return timetable;
-                })[0];
-
-
-
-            };
-            $scope.timetableIds.push( $scope.active().id );
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
-
-    app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, $log) {
-        $scope.days = 0;
-        $scope.hours = 1;
-        $scope.minutes = 0;
-
-        $scope.submitConfig = function (days, hours, minutes) {
-            var ticks = ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60));
-            $modalInstance.close(ticks);
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
-
     app.controller("tabController", function($scope, $rootScope, $location) {
 
         $scope.tabs = [
