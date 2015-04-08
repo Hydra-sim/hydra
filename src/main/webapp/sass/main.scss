@@ -417,9 +417,6 @@ a:hover{
   text-align: center;
 }
 
-
-/* TIMETABLE MODAL SPESIFICS */
-
 .modal-header .modal-title {
   margin-top: 10px;
 }
@@ -446,7 +443,7 @@ a:hover{
   overflow-x: hidden;
 }
 
-.modal-body .vertical-scrollable .form-control{
+.modal-body .vertical-scrollable input{
   width: 100%;
   height: 40px;
   text-align: center;
