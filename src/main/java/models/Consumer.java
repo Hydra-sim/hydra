@@ -26,6 +26,13 @@ public class Consumer extends Node{
     }
 
     public Consumer(int ticksToConsumeEntities) {
+
+        this("Untitled", ticksToConsumeEntities);
+    }
+
+    public Consumer(String name, int ticksToConsumeEntities) {
+
+        this.name = name;
         this.ticksToConsumeEntities = ticksToConsumeEntities;
         this.entitesConsumed = new ArrayList<>();
         this.entitesInQueue = new ArrayList<>();
