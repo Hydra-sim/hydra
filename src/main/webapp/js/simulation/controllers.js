@@ -199,15 +199,30 @@
             $modalInstance.dismiss('cancel');
         };
     });
-    app.controller('newProducerInstanceCtrl', function(){
+    app.controller('newProducerInstanceCtrl', function($scope, $modalInstance, timetable, timetableIds){
 
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
     });
 
-    app.controller('newConsumerInstanceCtrl', function(){
+    app.controller('newConsumerInstanceCtrl', function($scope, $modalInstance){
 
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
     });
 
-    app.controller('newPassengerflowInstqanceCtrl', function(){
+
+    app.controller('newPassengerflowInstanceCtrl', function($scope, $modelInstance){
+
+        $scope.submitPassengerflow = function(){
+            $modelInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modelInstance.dismiss('cancel');
+        };
 
     });
 
