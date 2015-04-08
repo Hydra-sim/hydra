@@ -29,6 +29,7 @@
         $scope.deletePreset = function(id) {
             Preset.delete({}, {"id": id}, updatePresetScope);
         };
-    });
 
+        $rootScope.menu_field_name.disable();
+    });
 })();
