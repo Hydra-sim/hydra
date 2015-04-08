@@ -1,4 +1,5 @@
 <script type="text/ng-template" id="configModal.html">
+
     <div class="modal-body">
         <form novalidate>
             <div class="form-group">
@@ -12,10 +13,12 @@
                 <input type="number" id="minutes" class="form-control" ng-model="minutes" min="0" />
             </div>
         </form>
+
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="submitConfig(days, hours, minutes)" type="submit">Submit</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
+
     </div>
 </script>
 <script type="text/ng-template" id="newConsumer.html">
@@ -54,21 +57,53 @@
         </div>
     </div>
 </script>
-<script type="text/ng-template" id="newProducer.html">
+<script type="text/ng-template" id="newConsumerGroup.html">
+
     <div class="modal-header">
-        <h1 ng-model="modalTitle">{{modalTitle}}</h1>
+        <h3>Create new Consumer-Group</h3>
     </div>
     <div class="modal-body">
-        <select class="form-control" ng-model="selectedItem">
-            <option ng-repeat="timetable in timetables" value="{{timetable.id}}">
-                {{timetable.name}}
-            </option>
-        </select>
+        <form novalidate>
+
+            <div class="form-group">
+                <label for="consumerGroupName">Group name:</label>
+                <input id="consumerGroupName" class="form-control" ng-model="consumerGroupName" />
+            </div>
+
+            <div class="form-group">
+                <label for="numberOfConsumersInGroup">Number of consumers</label>
+                <input id="numberOfConsumersInGroup" class="form-control" ng-model="numberOfConsumersInGroup">
+            </div>
+
+            <div class="form-group">
+                <label for="ticksToConsumeEntitiesGroup">Number of ticks to consume entities</label>
+                <input id="ticksToConsumeEntitiesGroup" class="form-control" ng-model="ticksToConsumeEntitiesGroup">
+            </div>
+
+        </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="submitConsumerGroup(numberOfConsumersInGroup, ticksToConsumeEntitiesGroup)" type="submit">Submit</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
     </div>
+</script>
+<script type="text/ng-template" id="newProducer.html">
+        <div class="modal-header">
+            <h1 ng-model="modalTitle">{{modalTitle}}</h1>
+        </div>
+        <div class="modal-body">
+            <select class="form-control" ng-model="selectedItem">
+                <option ng-repeat="timetable in timetables" value="{{timetable.id}}">
+                    {{timetable.name}}
+                </option>
+            </select>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
 </script>
 <script type="text/ng-template" id="choosePreset.html">
     <div class="modal-header">
@@ -85,14 +120,25 @@
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>
 </script>
+
 <button class="btn btn-default" ng-click="openConfigModal()">Configure simulation</button>
 <button class="btn btn-default" ng-click="newProducer('sm')">Add Producer</button>
 <button class="btn btn-default" ng-click="newConsumer('sm')">Add Consumer</button>
+<button class="btn btn-default" ng-click="newConsumerGroup('sm')">Add Consumer-Group</button>
 <button class="btn btn-default" ng-click="addData()">Add</button>
 <button class="btn btn-default" ng-click="choosePreset('sm')">Choose Preset</button>
 <p>{{ticksToConsumeEntitiesList.length}} consumers, {{timetableIds.length}} producers, {{ticks}} ticks</p>
-<graph nodes="dataset.nodes" edges="dataset.edges" height="500px"></graph>
+
+<graph nodes="dataset.nodes" edges="dataset.edges" height="500px">
+    <nav class="mapControls">
+        <ul>
+            <li></li>
+            <li></li>
+        </ul>
+    </nav>
+</graph>
 <p>Drag a node to move it. Click on a node and click shift+backspace to delete it and all connected edges. Click on an edge and click shift+backspace to delete it.</p>
+
 <nav class="circular-menu" ng-controller="radialMenuController">
     <div class="outer-circle">
         <div class="circle purple">

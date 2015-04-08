@@ -91,13 +91,22 @@
             $modal.open({
                 templateUrl: 'newConsumer.html',
                 controller: 'ModalInstanceCtrl',
+                size: size
+            });
+        };
+
+        $scope.newConsumerGroup = function(size) {
+
+            $modal.open({
+                templateUrl: 'newConsumerGroup.html',
+                controller: 'ConsumerGroupInstanceCtrl',
                 size: size,
                 resolve: {
-                    ticksToConsumeEntitiesList: function () {
-                        return $scope.ticksToConsumeEntitiesList;
+                    numberOfConsumersInGroup: function() {
+                        return $scope.numberOfConsumersInGroup;
                     },
-                    timetableIds: function () {
-                        return $scope.timetableIds;
+                    ticksToConsumeEntitiesGroup: function() {
+                        return $scope.ticksToConsumeEntitiesGroup;
                     }
                 }
             });
@@ -114,14 +123,14 @@
             configModal.result.then(function (ticks) {
                 $scope.ticks = ticks;
             });
-        }
+        };
 
         $scope.choosePreset = function(size){
             $modal.open({
                 templateUrl: 'choosePreset.html',
                 size: size
             });
-        }
+        };
 
     });
 
