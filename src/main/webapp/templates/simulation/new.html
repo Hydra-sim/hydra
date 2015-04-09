@@ -147,7 +147,7 @@
 <button class="btn btn-default" ng-click="newConsumerGroup('sm')">Add Consumer-Group</button>
 <button class="btn btn-default" ng-click="addData()">Add</button>
 <button class="btn btn-default" ng-click="choosePreset('sm')">Choose Preset</button>
-
+<button class="btn btn-default" ng-click="openRadialmenu('sm')">Open Menu</button>
 <p>{{ticksToConsumeEntitiesList.length}} consumers, {{consumerGroupNames.length}} consumer-groups,
     {{timetableIds.length}} producers, {{ticks}} ticks</p>
 
@@ -158,27 +158,27 @@
 <p>Drag a node to move it. Click on a node and click shift+backspace to delete it and all connected edges. Click on an
     edge and click shift+backspace to delete it.</p>
 
-<nav class="circular-menu" ng-controller="radialMenuController">
-    <div class="outer-circle">
-        <div class="circle purple">
-            <a ng-click="newProducer('sm','train')" class="fa fa-2x fa-train"></a>
+    <nav class="circular-menu" ng-controller="radialMenuController">
+        <div class="outer-circle">
+            <div class="circle purple">
+                <a ng-click="newProducer('sm','train')" class="fa fa-2x fa-train"></a>
+            </div>
+            <div class="circle purple">
+                <a ng-click="newProducer('sm','bus')" class="fa fa-2x fa-bus"></a>
+            </div>
+            <div class="circle dark-purple">
+                <a ng-click="newConsumer('sm','terminal')" class="fa fa-2x fa-desktop"></a>
+            </div>
+            <div class="circle dark-purple">
+                <a ng-click="newConsumer('sm','door')" class="fa fa-2x fa-arrows-h"></a>
+            </div>
+            <div class="circle black">
+                <a ng-click="newPassengerflow('sm')" class="fa fa-2x fa-users"></a>
+            </div>
+            <div class="circle azure">
+                <a href="#"><i class="fa fa-2x i">P</i></a>
+            </div>
         </div>
-        <div class="circle purple">
-            <a ng-click="newProducer('sm','bus')" class="fa fa-2x fa-bus"></a>
-        </div>
-        <div class="circle dark-purple">
-            <a ng-click="newConsumer('sm','terminal')" class="fa fa-2x fa-desktop"></a>
-        </div>
-        <div class="circle dark-purple">
-            <a ng-click="newConsumer('sm','door')" class="fa fa-2x fa-arrows-h"></a>
-        </div>
-        <div class="circle black">
-            <a ng-click="newPassengerflow('sm')" class="fa fa-2x fa-users"></a>
-        </div>
-        <div class="circle azure">
-            <a href="#"><i class="fa fa-2x i">P</i></a>
-        </div>
-    </div>
-    <a href="" class="menu-button fa fa-close fa-4x"></a>
-</nav>
+        <a class="menu-button fa fa-close fa-4x"></a>
+    </nav>
 <div ng-include src="'templates/help-simulation.html'"></div>

@@ -101,10 +101,10 @@
                     },
                     type: function(){
                         if(type == "train"){
-                            $scope.type = "TRAIN";
+                            $scope.type = "NEW TRAIN";
                         }
                         if(type == "bus"){
-                            $scope.type = "BUS";
+                            $scope.type = "NEW BUS";
                         }
                         return $scope.type;
                     }
@@ -128,10 +128,10 @@
                     },
                     type: function(){
                         if(type == "terminal"){
-                            $scope.type = "TERMINAL";
+                            $scope.type = "NEW TERMINAL";
                         }
                         if(type == "door"){
-                            $scope.type = "DOOR";
+                            $scope.type = "NEW DOOR";
                         }
                         return $scope.type;
                     }
@@ -188,6 +188,31 @@
                 size: size
             });
         };
+    });
+
+    app.controller("radialMenuController", function(){
+
+        var circularMenu = document.querySelector('.circular-menu');
+
+        var items = document.querySelectorAll('.outer-circle .circle');
+
+        for(var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35*Math.cos(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35*Math.sin(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
+        }
+
+        document.querySelector('.graph').onclick = function(e) {
+            e.preventDefault(); document.querySelector('.outer-circle').classList.toggle('open');
+
+
+            var xPosition = e.clientX  - (circularMenu.clientWidth / 2);
+            var yPosition = e.clientY  - (circularMenu.clientHeight / 2);
+
+            circularMenu.style.position = "absolute";
+            circularMenu.style.left = xPosition + "px";
+            circularMenu.style.top = yPosition + "px";
+
+        }
 
     });
 
