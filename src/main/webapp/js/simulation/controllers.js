@@ -101,10 +101,10 @@
                     },
                     type: function(){
                         if(type == "train"){
-                            $scope.type = "Train";
+                            $scope.type = "TRAIN";
                         }
                         if(type == "bus"){
-                            $scope.type = "Bus";
+                            $scope.type = "BUS";
                         }
                         return $scope.type;
                     }
@@ -128,10 +128,10 @@
                     },
                     type: function(){
                         if(type == "terminal"){
-                            $scope.type = "Terminal";
+                            $scope.type = "TERMINAL";
                         }
                         if(type == "door"){
-                            $scope.type = "Door";
+                            $scope.type = "DOOR";
                         }
                         return $scope.type;
                     }
