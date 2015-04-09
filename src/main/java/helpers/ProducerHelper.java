@@ -1,4 +1,4 @@
-package managers;
+package helpers;
 
 import models.Producer;
 import models.Timetable;
@@ -7,7 +7,7 @@ import models.TimetableEntry;
 /**
  * A manager with helper method(s) for {@link models.Producer}
  */
-public class ProducerManager {
+public class ProducerHelper {
 
     /**
      * Generates a {@link models.Timetable} for a producer
