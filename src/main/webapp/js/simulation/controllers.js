@@ -102,7 +102,7 @@
                         return $scope.timetableIds;
                     },
                     type: function(){
-                        return $scope.type;
+                        return type;
                     }
                 }
             });
@@ -123,6 +123,7 @@
                         return $scope.timetableIds;
                     },
                     type: function(){
+                        $scope.type = type;
                         return $scope.type;
                     }
                 }

@@ -1,30 +1,28 @@
-<script type="text/ng-template" id="newConsumer.html">
-    <div class="modal-header">
-        <h1 class="modal-title" ng-controller="SimulationNew"> {{ modalTitle }} </h1>
-    </div>
-    <div class="modal-body">
-        <form novalidate>
-            <div class="form-group">
-                <label for="ticksToConsumeEntities">Persons processed</label>
-                <input type="number" id="ticksToConsumeEntities" class="form-control" ng-model="ticksToConsumeEntities"
-                       min="0"/>
-            </div>
-            <div class="form-group">
-                <label>Time to process</label>
-                <input type="number" class="form-control" ng-model="amountOfTime" min="0">
-                <select class="form-control" ng-model="timeSelectConsumer" ng-options="opt as opt.label for opt in options"></select>
-            </div>
-            <div class="form-group">
-                <label>Number of consumers</label>
-                <input type="number" class="form-control" ng-model="numberOfConsumers">
-            </div>
-        </form>
-        <div class="modal-footer">
-            <button class="btn btn-primary"
-                    ng-click="submitConsumer(ticksToConsumeEntities, amountOfTime, timeSelectConsumer, numberOfConsumers)" type="submit">
-                Submit
-            </button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+<div class="modal-header">
+    <h1 class="modal-title" ng-controller="SimulationNew"> {{ modalTitle }} </h1>
+</div>
+<div class="modal-body">
+    <form novalidate>
+        <div class="form-group">
+            <label for="ticksToConsumeEntities">Persons processed</label>
+            <input type="number" id="ticksToConsumeEntities" class="form-control" ng-model="ticksToConsumeEntities"
+                   min="0"/>
         </div>
+        <div class="form-group">
+            <label>Time to process</label>
+            <input type="number" class="form-control" ng-model="amountOfTime" min="0">
+            <select class="form-control" ng-model="timeSelectConsumer" ng-options="opt as opt.label for opt in options"></select>
+        </div>
+        <div class="form-group">
+            <label>Number of consumers</label>
+            <input type="number" class="form-control" ng-model="numberOfConsumers">
+        </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn btn-primary"
+                ng-click="submitConsumer(ticksToConsumeEntities, amountOfTime, timeSelectConsumer, numberOfConsumers)" type="submit">
+            Submit
+        </button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>
-</script>
+</div>
