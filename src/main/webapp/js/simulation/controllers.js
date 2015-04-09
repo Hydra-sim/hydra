@@ -193,7 +193,7 @@
     app.controller("radialMenuController", function(){
 
         var circularMenu = document.querySelector('.circular-menu');
-
+        var openBtn = document.querySelector('.menu-button');
         var items = document.querySelectorAll('.outer-circle .circle');
 
         for(var i = 0, l = items.length; i < l; i++) {
@@ -202,17 +202,24 @@
         }
 
         document.querySelector('.graph').onclick = function(e) {
-            e.preventDefault(); document.querySelector('.outer-circle').classList.toggle('open');
+            e.preventDefault();
 
+            openBtn.style.display = "block";
+            document.querySelector('.outer-circle').classList.add('open');
 
             var xPosition = e.clientX  - (circularMenu.clientWidth / 2);
             var yPosition = e.clientY  - (circularMenu.clientHeight / 2);
 
-            circularMenu.style.position = "absolute";
             circularMenu.style.left = xPosition + "px";
-            circularMenu.style.top = yPosition + "px";
+            circularMenu.style.top = yPosition  + "px";
+        };
 
+        openBtn.onclick = function(e){
+            document.querySelector('.outer-circle').classList.remove('open');
+            openBtn.style.display = "none";
         }
+
+
 
     });
 
