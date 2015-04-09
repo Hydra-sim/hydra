@@ -27,7 +27,6 @@ public class Simulation {
         entityManager.persist(item);
     }
 
-
     /**
      * Gets a list all the simulations in the database with a named query defined in {@link models.Simulation}
      *
