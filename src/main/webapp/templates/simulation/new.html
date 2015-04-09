@@ -21,7 +21,7 @@
 </script>
 <script type="text/ng-template" id="newConsumer.html">
     <div class="modal-header">
-        <h1 class="modal-title">NEW CONSUMER</h1>
+        <h1 class="modal-title" ng-controller="SimulationNew"> {{ modalTitle }} </h1>
     </div>
     <div class="modal-body">
         <form novalidate>
@@ -79,7 +79,7 @@
 </script>
 <script type="text/ng-template" id="newProducer.html">
     <div class="modal-header">
-        <h1 class="modal-title">NEW PRODUCER</h1>
+        <h1 class="modal-title" ng-controller="SimulationNew"> {{ modalTitle }} </h1>
     </div>
     <div class="modal-body">
         <form>
@@ -161,16 +161,16 @@
 <nav class="circular-menu" ng-controller="radialMenuController">
     <div class="outer-circle">
         <div class="circle purple">
-            <a ng-click="newProducer('sm')" class="fa fa-2x fa-train"></a>
+            <a ng-click="newProducer('sm','train')" class="fa fa-2x fa-train"></a>
         </div>
         <div class="circle purple">
-            <a ng-click="newProducer('sm')" class="fa fa-2x fa-bus"></a>
+            <a ng-click="newProducer('sm','bus')" class="fa fa-2x fa-bus"></a>
         </div>
         <div class="circle dark-purple">
-            <a ng-click="newConsumer('sm')" class="fa fa-2x fa-desktop"></a>
+            <a ng-click="newConsumer('sm','terminal')" class="fa fa-2x fa-desktop"></a>
         </div>
         <div class="circle dark-purple">
-            <a ng-click="newConsumer('sm')" class="fa fa-2x fa-arrows-h"></a>
+            <a ng-click="newConsumer('sm','door')" class="fa fa-2x fa-arrows-h"></a>
         </div>
         <div class="circle black">
             <a ng-click="newPassengerflow('sm')" class="fa fa-2x fa-users"></a>
