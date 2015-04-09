@@ -86,7 +86,7 @@
             );
         };
 
-        $scope.newProducer = function (size) {
+        $scope.newProducer = function (size, type) {
 
             $modal.open({
                 templateUrl: 'newProducer.html',
@@ -98,12 +98,21 @@
                     },
                     timetableIds: function () {
                         return $scope.timetableIds;
+                    },
+                    type: function(){
+                        if(type == "train"){
+                            $scope.type = "TRAIN";
+                        }
+                        if(type == "bus"){
+                            $scope.type = "BUS";
+                        }
+                        return $scope.type;
                     }
                 }
             });
         };
 
-        $scope.newConsumer = function (size) {
+        $scope.newConsumer = function (size, type) {
 
             $modal.open({
                 templateUrl: 'newConsumer.html',
@@ -116,6 +125,15 @@
                     },
                     timetableIds: function () {
                         return $scope.timetableIds;
+                    },
+                    type: function(){
+                        if(type == "terminal"){
+                            $scope.type = "TERMINAL";
+                        }
+                        if(type == "door"){
+                            $scope.type = "DOOR";
+                        }
+                        return $scope.type;
                     }
                 }
             });
@@ -250,8 +268,7 @@
     });
 
     app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,
-                                                  Timetable, timetableIds) {
-
+                                                  Timetable, timetableIds, type) {
         $scope.options = [
             {label: "Seconds", value: "1"},
             {label: "Minutes", value: "2"},
@@ -259,6 +276,8 @@
         ];
 
         $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
+
+        $scope.modalTitle = type;
 
         $scope.submitConsumer = function (ticksToConsumeEntities) {
 
