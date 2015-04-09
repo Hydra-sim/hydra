@@ -5,6 +5,7 @@ import models.ConsumerGroup;
 import models.Producer;
 import models.Relationship;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -23,10 +24,11 @@ import java.util.List;
 @Path("simulation")
 public class Simulation {
 
-    // EntityManager for communications with the database.
+    @EJB
+    private dao.Simulation simulationDao;
 
-    @PersistenceContext(unitName = "manager")
-    private EntityManager entityManager;
+    @EJB
+    private dao.Timetable timetableDao;
 
     /**
      * Creates and persists a new simulation
@@ -41,8 +43,14 @@ public class Simulation {
     public Response add(InputValue input)
     {
         List<Relationship> relationships =      new ArrayList<>();
+        List<Producer> producers;
 
-        List<Producer> producers =              initProducers(input);
+        try {
+            producers = initProducers(input);
+        }
+        catch(Exception e) {
+            return Response.serverError().build();
+        }
 
         List<Consumer> consumers =              initConsumers(input, relationships);
 
@@ -62,7 +70,7 @@ public class Simulation {
         sim.simulate();
 
         // Persist the simulation, with results, to the database
-        entityManager.persist(sim);
+        simulationDao.add(sim);
 
         return Response.ok(sim.getResult()).build();
 
@@ -127,13 +135,16 @@ public class Simulation {
      *
      * @param input the data from which the producers are built
      * @return a list of producers
-     * */
-    private List<Producer> initProducers(InputValue input) {
+     */
+     @SuppressWarnings("unchecked")
+     private List<Producer> initProducers(InputValue input) throws Exception
+     {
         List<Producer> producers = new ArrayList<>();
 
         for(int i = 0; i < input.timetableIds.length; i++) {
 
-            models.Timetable timetable = entityManager.find(models.Timetable.class, input.timetableIds[i]);
+
+            models.Timetable timetable = timetableDao.get(input.timetableIds[i]);
 
             Producer producer = new Producer(timetable);
 
@@ -153,13 +164,7 @@ public class Simulation {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response list()
     {
-        TypedQuery<models.Simulation> query = entityManager.createNamedQuery(
-
-            "Simulation.findNotPreset", // Uses one of three available queries for Simulation
-            models.Simulation.class
-        );
-
-        return Response.ok( query.getResultList() ).build();
+        return Response.ok( simulationDao.list() ).build();
     }
 
     /**
@@ -174,15 +179,15 @@ public class Simulation {
     @Path("{id}")
     public Response get(@PathParam("id") int id)
     {
+        models.Simulation item;
+
         try {
-
-            models.Simulation item = entityManager.find(models.Simulation.class, id);
-            return Response.ok( item ).build();
-
+            item = simulationDao.get(id);
         } catch (Exception e) {
-
             return Response.serverError().build();
         }
+
+        return Response.ok(item).build();
     }
 
     /**
@@ -199,10 +204,7 @@ public class Simulation {
     public Response delete(@PathParam("id") int id)
     {
         try {
-
-            models.Simulation item = entityManager.find(models.Simulation.class, id);
-            entityManager.remove(item);
-
+            simulationDao.delete(id);
         } catch (Exception e) {
 
             return Response.serverError().build();
