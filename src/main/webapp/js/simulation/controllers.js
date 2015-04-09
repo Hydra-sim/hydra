@@ -196,18 +196,21 @@
 
         var circularMenu = document.querySelector('.circular-menu');
         var openBtn = document.querySelector('.menu-button');
+        var outerCircle = document.querySelector('.outer-circle');
         var items = document.querySelectorAll('.outer-circle .circle');
+
 
         for(var i = 0, l = items.length; i < l; i++) {
             items[i].style.left = (50 - 35*Math.cos(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
             items[i].style.top = (50 + 35*Math.sin(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
         }
 
-        document.querySelector('.graph').onclick = function(e) {
+        document.querySelector('.graph').oncontextmenu = function(e) {
             e.preventDefault();
 
+            circularMenu.style.visibility = "visible";
             openBtn.style.display = "block";
-            document.querySelector('.outer-circle').classList.add('open');
+            outerCircle.classList.add('open');
 
             var xPosition = e.clientX  - (circularMenu.clientWidth / 2);
             var yPosition = e.clientY  - (circularMenu.clientHeight / 2);
@@ -217,11 +220,18 @@
         };
 
         openBtn.onclick = function(e){
+            e.preventDefault();
             document.querySelector('.outer-circle').classList.remove('open');
             openBtn.style.display = "none";
+            circularMenu.style.visibility = "hidden";
         }
 
-
+        document.querySelector('.graph').onclick = function(e) {
+            e.preventDefault();
+            openBtn.style.display = "none";
+            outerCircle.classList.remove('open');
+            circularMenu.style.visability = "hidden";
+        }
 
     });
 

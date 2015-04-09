@@ -559,6 +559,8 @@ a:hover{
   height: 300px;
   margin: 0 auto;
   position: absolute;
+  display: block;
+  visibility: hidden;
 }
 
 .outer-circle {
@@ -618,7 +620,7 @@ a:hover{
   text-align: center;
   color: #1d1d1d;
   border-radius: 50%;
-  display: none;
+  display: block;
   height: 80px;
   width: 80px;
   line-height: 75px;
