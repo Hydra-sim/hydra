@@ -1,0 +1,21 @@
+<script type="text/ng-template" id="newProducer.html">
+    <div class="modal-header">
+        <h1 class="modal-title" ng-controller="SimulationNew"> {{ modalTitle }} </h1>
+    </div>
+    <div class="modal-body">
+        <form>
+            <label>Timetable</label>
+            <select class="form-control" ng-model="selectedItem" ng-options="timetable.id as timetable.name for timetable in timetables">
+                <!-- <option ng-repeat="timetable in timetables" value="{{timetable.id}}">
+                     {{timetable.name}}
+                 </option> -->
+            </select>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary"
+                ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit
+        </button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

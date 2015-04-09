@@ -1,0 +1,21 @@
+<script type="text/ng-template" id="configModal.html">
+    <div class="modal-header">
+        <h1 class="modal-title">CONFIGURE SIMULATION</h1>
+    </div>
+    <div class="modal-body">
+        <form novalidate>
+            <div class="form-group">
+                <label for="days">Days</label>
+                <input type="number" id="days" class="form-control" ng-model="days" min="0"/>
+                <label for="hours">Hours</label>
+                <input type="number" id="hours" class="form-control" ng-model="hours" min="0"/>
+                <label for="minutes">Minutes</label>
+                <input type="number" id="minutes" class="form-control" ng-model="minutes" min="0"/>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="submitConfig(days, hours, minutes)" type="submit">Submit</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</script>

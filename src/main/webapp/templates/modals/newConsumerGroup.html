@@ -1,0 +1,28 @@
+<script type="text/ng-template" id="newConsumerGroup.html">
+    <div class="modal-header">
+        <h1 class="modal-title">NEW CONSUMER GROUP</h1>
+    </div>
+    <div class="modal-body">
+        <form novalidate>
+            <div class="form-group">
+                <label for="consumerGroupName">Group name:</label>
+                <input id="consumerGroupName" class="form-control" ng-model="consumerGroupName"/>
+            </div>
+            <div class="form-group">
+                <label for="numberOfConsumersInGroup">Number of consumers</label>
+                <input id="numberOfConsumersInGroup" class="form-control" ng-model="numberOfConsumersInGroup">
+            </div>
+            <div class="form-group">
+                <label for="ticksToConsumeEntitiesGroup">Number of ticks to consume entities</label>
+                <input id="ticksToConsumeEntitiesGroup" class="form-control" ng-model="ticksToConsumeEntitiesGroup">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary"
+                ng-click="submitConsumerGroup(consumerGroupName, numberOfConsumersInGroup, ticksToConsumeEntitiesGroup)"
+                type="submit">Submit
+        </button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

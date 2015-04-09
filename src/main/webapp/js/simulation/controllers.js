@@ -45,7 +45,7 @@
         // For dropdown in add consumer/passengerflow
         $scope.options = [];
 
-        //Consumer varibles
+
 
         menu_field_name.setValue("Untitled simulation");
 
@@ -88,12 +88,12 @@
             );
         };
 
-        $scope.newProducer = function (size, type) {
+        $scope.newProducer = function (type) {
 
             $modal.open({
-                templateUrl: 'newProducer.html',
+                templateUrl: 'templates/modals/newProducer.html',
                 controller: 'ModalInstanceCtrl',
-                size: size,
+                size: 'sm',
                 resolve: {
                     ticksToConsumeEntitiesList: function () {
                         return $scope.ticksToConsumeEntitiesList;
@@ -114,12 +114,12 @@
             });
         };
 
-        $scope.newConsumer = function (size, type) {
+        $scope.newConsumer = function (type) {
 
             $modal.open({
-                templateUrl: 'newConsumer.html',
+                templateUrl: 'templates/modals/newConsumer.html',
                 controller: 'ModalInstanceCtrl',
-                size: size,
+                size: 'sm',
                 resolve: {
 
                     ticksToConsumeEntitiesList: function () {
@@ -141,12 +141,12 @@
             });
         };
 
-        $scope.newConsumerGroup = function(size) {
+        $scope.newConsumerGroup = function() {
 
             $modal.open({
-                templateUrl: 'newConsumerGroup.html',
+                templateUrl: 'templates/modals/newConsumerGroup.html',
                 controller: 'ConsumerGroupInstanceCtrl',
-                size: size,
+                size: 'sm',
                 resolve: {
                     consumerGroupNames: function () {
                         return $scope.consumerGroupNames;
@@ -162,20 +162,20 @@
             });
         };
 
-        $scope.newPassengerflow = function(size){
+        $scope.newPassengerflow = function(){
             $modal.open({
-                templateUrl: 'newPassengerflow.html',
-                controller: 'newPassengerflowInstanceCtrl',
-                size: size
+                templateUrl: 'templates/modals/newPassengerflow.html',
+                controller: 'NewPassengerflowInstanceCtrl',
+                size: 'sm'
             });
         };
 
-        $scope.openConfigModal = function(size) {
+        $scope.openConfigModal = function() {
 
             var configModal = $modal.open({
-                templateUrl: 'configModal.html',
+                templateUrl: 'templates/modals/configModal.html',
                 controller: 'ConfigModalInstanceCtrl',
-                size: size
+                size: 'sm'
             });
 
             configModal.result.then(function (ticks) {
@@ -183,16 +183,16 @@
             });
         };
 
-        $scope.choosePreset = function(size){
+        $scope.choosePreset = function(){
             $modal.open({
-                templateUrl: 'choosePreset.html',
-                controller:  'choosePresetInstanceCtrl',
-                size: size
+                templateUrl: 'templates/modals/choosePreset.html',
+                controller:  'ChoosePresetInstanceCtrl',
+                size: 'sm'
             });
         };
     });
 
-    app.controller("radialMenuController", function(){
+    app.controller("RadialMenuController", function(){
 
         var circularMenu = document.querySelector('.circular-menu');
         var openBtn = document.querySelector('.menu-button');
@@ -225,7 +225,7 @@
 
     });
 
-    app.controller('choosePresetInstanceCtrl', function($scope, $modalInstance){
+    app.controller('ChoosePresetInstanceCtrl', function($scope, $modalInstance){
 
         $scope.loadPreset = function(){
             $modalInstance.close();
@@ -254,7 +254,7 @@
             $modalInstance.dismiss('cancel');
         };
     });
-    app.controller('newProducerInstanceCtrl', function($scope, $modalInstance, timetable, timetableIds, selectedItem){
+    app.controller('NewProducerInstanceCtrl', function($scope, $modalInstance, timetable, timetableIds){
 
        $scope.timetableIds = timetableIds;
 
@@ -275,7 +275,7 @@
         };
     });
 
-    app.controller('newConsumerInstanceCtrl', function($scope, $modalInstance, ticksToConsumeEntitiesList, type){
+    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, ticksToConsumeEntitiesList, type){
 
         $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
         $scope.modalTitle = type;
@@ -297,8 +297,7 @@
         };
     });
 
-
-    app.controller('newPassengerflowInstanceCtrl', function($scope, $modelInstance){
+    app.controller('NewPassengerflowInstanceCtrl', function($scope, $modelInstance){
 
         $scope.options = [
             {label: "Seconds", value: "1"},
@@ -359,7 +358,6 @@
             $modalInstance.dismiss('cancel');
         };
     });
-
     app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, $log) {
         $scope.days = 0;
         $scope.hours = 1;
