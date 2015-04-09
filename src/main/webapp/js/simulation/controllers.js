@@ -197,16 +197,15 @@
         document.querySelector('.graph').oncontextmenu = function(e) {
             e.preventDefault();
 
-            circularMenu.style.visibility = "visible";
-            openBtn.style.display = "block";
-            outerCircle.classList.add('open');
-
+            outerCircle.classList.toggle('open');
             var xPosition = e.clientX  - (circularMenu.clientWidth / 2);
             var yPosition = e.clientY  - (circularMenu.clientHeight / 2);
 
-            circularMenu.style.left = xPosition + "px";
-            circularMenu.style.top = yPosition  + "px";
-        };
+                circularMenu.style.left = xPosition + "px";
+                circularMenu.style.top = yPosition  + "px";
+                circularMenu.style.visibility = "visible";
+                openBtn.style.display = "block";
+        }
 
         openBtn.onclick = function(e){
             e.preventDefault();
@@ -217,9 +216,9 @@
 
         document.querySelector('.graph').onclick = function(e) {
             e.preventDefault();
+            document.querySelector('.outer-circle').classList.remove('open');
             openBtn.style.display = "none";
-            outerCircle.classList.remove('open');
-            circularMenu.style.visability = "hidden";
+            circularMenu.style.visibility = "hidden";
         }
 
     });
