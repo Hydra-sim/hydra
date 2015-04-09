@@ -202,9 +202,19 @@
             $modalInstance.dismiss('cancel');
         };
     });
-    app.controller('newProducerInstanceCtrl', function($scope, $modalInstance, timetable, timetableIds){
+    app.controller('newProducerInstanceCtrl', function($scope, $modalInstance, timetable, timetableIds, selectedItem){
+
+       $scope.timetableIds = timetableIds;
+
+        function updateTimetables(){
+            $scope.timetables = timetable.query({});
+        }
+
+        updateTimetables()
 
         $scope.submitProducer = function(){
+
+
             $modalInstance.close();
         };
 
@@ -265,7 +275,6 @@
         updateTimetableScope();
 
         $scope.submitProducer = function () {
-
             $scope.active = function() {
                 return $scope.timetables.filter(function(timetable){
                     return timetable;

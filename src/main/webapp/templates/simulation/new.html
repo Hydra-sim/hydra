@@ -21,7 +21,7 @@
 </script>
 <script type="text/ng-template" id="newConsumer.html">
     <div class="modal-header">
-        <h1 class="modal-title">NEW CONSUMER</h1>
+        <h1 class="modal-title">{{modalTitle}}</h1>
     </div>
     <div class="modal-body">
         <form novalidate>
@@ -38,7 +38,7 @@
             <div class="form-group">
                 <label>Number of consumers</label>
                 <input type="number" class="form-control" ng-model="numberOfConsumers">
-            </div>
+    </div>
         </form>
         <div class="modal-footer">
             <button class="btn btn-primary"
@@ -84,11 +84,7 @@
     <div class="modal-body">
         <form>
             <label>Timetable</label>
-            <select class="form-control" ng-model="selectedItem" ng-options="timetables as timetable.name for timetable in timetables ">
-               <!-- <option ng-repeat="timetable in timetables" value="{{timetable.id}}">
-                    {{timetable.name}}
-                </option> -->
-            </select>
+            <select class="form-control" ng-model="selectedItem" ng-options="timetable.id as timetable.name for timetable in timetables"></select>
         </form>
     </div>
     <div class="modal-footer">
@@ -112,8 +108,7 @@
                 <label>Amount of people</label>
                 <input type="number" class="form-control" ng-model="amountOfTimePassengerflow" min="0">
                 <label>Per</label>
-                <select class="form-control" ng-model="timeSelectPassengerflow" ng-options="opt as opt.label for opt in options">
-                </select>
+                <select class="form-control" ng-model="timeSelectPassengerflow" ng-options="opt as opt.label for opt in options"></select>
             </div>
         </form>
     </div>
@@ -181,4 +176,4 @@
     </div>
     <a href="" class="menu-button fa fa-close fa-4x"></a>
 </nav>
-<div ng-include src="'templates/help-simulation.html'"></div>
+<div ng-include src="'templates/help-simulation.html'"></div>                                                                                           
