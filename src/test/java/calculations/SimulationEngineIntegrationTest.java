@@ -3,7 +3,7 @@ package calculations;
 import managers.ConsumerManager;
 import managers.ProducerManager;
 import models.*;
-import models.presets.OSLPreset;
+import presets.OSLPreset;
 import org.junit.Before;
 import org.junit.Test;
 
