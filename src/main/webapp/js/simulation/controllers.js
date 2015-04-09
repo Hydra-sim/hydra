@@ -197,7 +197,7 @@
         document.querySelector('.graph').oncontextmenu = function(e) {
             e.preventDefault();
 
-            outerCircle.classList.toggle('open');
+            outerCircle.classList.add('open');
             var xPosition = e.clientX  - (circularMenu.clientWidth / 2);
             var yPosition = e.clientY  - (circularMenu.clientHeight / 2);
 
