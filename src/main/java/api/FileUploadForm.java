@@ -3,6 +3,7 @@ package api;
 /**
  * Created by knarf on 09/04/15.
  */
+/*
 import javax.ws.rs.FormParam;
 import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
@@ -33,3 +34,4 @@ public class FileUploadForm {
         this.fileData = fileData;
     }
 }
+*/

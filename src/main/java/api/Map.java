@@ -1,6 +1,6 @@
 package api;
 
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+//import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -51,6 +51,7 @@ public class Map {
         return Response.ok( item.getUrl() ).build();
     }
 
+    /*
     @POST
     @Path("/upload-file")
     @Consumes("multipart/form-data")
@@ -83,4 +84,5 @@ public class Map {
         return Response.status(200)
             .entity("uploadFile is called, Uploaded file name : " + fileName).build();
     }
+    */
 }
