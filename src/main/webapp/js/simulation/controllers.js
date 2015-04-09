@@ -102,12 +102,6 @@
                         return $scope.timetableIds;
                     },
                     type: function(){
-                        if(type == "train"){
-                            $scope.type = "NEW TRAIN";
-                        }
-                        else if(type == "bus"){
-                            $scope.type = "NEW BUS";
-                        }
                         return $scope.type;
                     }
                 }
@@ -129,12 +123,6 @@
                         return $scope.timetableIds;
                     },
                     type: function(){
-                        if(type == "terminal"){
-                            $scope.type = "NEW TERMINAL";
-                        }
-                        else if(type == "door"){
-                            $scope.type = "NEW DOOR";
-                        }
                         return $scope.type;
                     }
                 }
