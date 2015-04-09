@@ -1,11 +1,7 @@
 package api;
 
-import javax.naming.InitialContext;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.ejb.EJB;
 import javax.transaction.Transactional;
-import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -16,10 +12,8 @@ import javax.ws.rs.core.Response;
 @Path("/timetable")
 public class Timetable {
 
-    // EntityManager for communications with the database.
-
-    @PersistenceContext(unitName = "manager")
-    private EntityManager entityManager;
+    @EJB
+    private dao.Timetable timetableDao;
 
     /**
      * Creates and persists a new timetable
@@ -33,7 +27,7 @@ public class Timetable {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(models.Timetable timetable)
     {
-        entityManager.persist(timetable);
+        timetableDao.add(timetable);
         return Response.ok().build();
     }
 
@@ -47,12 +41,9 @@ public class Timetable {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response list()
     {
-        TypedQuery<models.Timetable> query = entityManager.createNamedQuery(
-                "Timetable.findAll",
-                models.Timetable.class
-        );
-
-        return Response.ok( query.getResultList() ).build();
+        return Response.ok(
+            timetableDao.list()
+        ).build();
     }
 
     /**
@@ -70,7 +61,7 @@ public class Timetable {
         models.Timetable item;
 
         try {
-            item = entityManager.find(models.Timetable.class, id);
+            item = timetableDao.get(id);
         }
         catch (Exception e) {
             return Response.serverError().build();
@@ -94,7 +85,7 @@ public class Timetable {
     public Response edit(@PathParam("id") int id, models.Timetable timetable)
     {
         try {
-            entityManager.merge(timetable);
+            timetableDao.edit(timetable);
         }
         catch (Exception e) {
             return Response.serverError().build();
@@ -117,8 +108,7 @@ public class Timetable {
     public Response delete(@PathParam("id") int id)
     {
         try {
-            models.Timetable item = entityManager.find(models.Timetable.class, id);
-            entityManager.remove(item);
+            timetableDao.delete(id);
         }
         catch (Exception e) {
             return Response.serverError().build();
