@@ -45,6 +45,8 @@
         // For dropdown in add consumer/passengerflow
         $scope.options = [];
 
+        //Consumer varibles
+
         menu_field_name.setValue("Untitled simulation");
 
         $rootScope.menu_field_button = "Submit";
@@ -103,7 +105,7 @@
                         if(type == "train"){
                             $scope.type = "NEW TRAIN";
                         }
-                        if(type == "bus"){
+                        else if(type == "bus"){
                             $scope.type = "NEW BUS";
                         }
                         return $scope.type;
@@ -130,7 +132,7 @@
                         if(type == "terminal"){
                             $scope.type = "NEW TERMINAL";
                         }
-                        if(type == "door"){
+                        else if(type == "door"){
                             $scope.type = "NEW DOOR";
                         }
                         return $scope.type;
@@ -273,7 +275,22 @@
         };
     });
 
-    app.controller('newConsumerInstanceCtrl', function($scope, $modalInstance){
+    app.controller('newConsumerInstanceCtrl', function($scope, $modalInstance, ticksToConsumeEntitiesList, type){
+
+        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
+        $scope.modalTitle = type;
+        $scope.options = [
+            {label: "Seconds", value: "1"},
+            {label: "Minutes", value: "2"},
+            {label: "Hours", value: "3"}
+        ];
+
+        $scope.submitConsumer = function(ticksToConsumeEntities, amountOfTime, numberOfConsumers){
+
+            $modalInstance.close();
+
+        };
+
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
