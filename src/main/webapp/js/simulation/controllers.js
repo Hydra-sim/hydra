@@ -42,6 +42,8 @@
         $scope.numberOfConsumersInGroups = [];
         $scope.ticksToConsumeEntitiesGroups = [];
 
+        // For dropdown in add consumer/passengerflow
+        $scope.options = [];
 
         menu_field_name.setValue("Untitled simulation");
 
@@ -108,6 +110,7 @@
                 controller: 'ModalInstanceCtrl',
                 size: size,
                 resolve: {
+
                     ticksToConsumeEntitiesList: function () {
                         return $scope.ticksToConsumeEntitiesList;
                     },
@@ -201,6 +204,10 @@
     });
     app.controller('newProducerInstanceCtrl', function($scope, $modalInstance, timetable, timetableIds){
 
+        $scope.submitProducer = function(){
+            $modalInstance.close();
+        };
+
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
@@ -216,6 +223,12 @@
 
     app.controller('newPassengerflowInstanceCtrl', function($scope, $modelInstance){
 
+        $scope.options = [
+            {label: "Seconds", value: "1"},
+            {label: "Minutes", value: "2"},
+            {label: "Hours", value: "3"}
+        ];
+
         $scope.submitPassengerflow = function(){
             $modelInstance.close();
         };
@@ -228,6 +241,12 @@
 
     app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,
                                                   Timetable, timetableIds) {
+
+        $scope.options = [
+            {label: "Seconds", value: "1"},
+            {label: "Minutes", value: "2"},
+            {label: "Hours", value: "3"}
+        ];
 
         $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
 

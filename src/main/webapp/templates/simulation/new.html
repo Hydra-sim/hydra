@@ -33,11 +33,7 @@
             <div class="form-group">
                 <label>Time to process</label>
                 <input type="number" class="form-control" ng-model="amountOfTime" min="0">
-                <select class="form-control" ng-model="timeSelectConsumer">
-                    <option value="seconds">Second</option>
-                    <option value="minutes">Minutes</option>
-                    <option value="hours">Hours</option>
-                </select>
+                <select class="form-control" ng-model="timeSelectConsumer" ng-options="opt as opt.label for opt in options"></select>
             </div>
             <div class="form-group">
                 <label>Number of consumers</label>
@@ -88,10 +84,10 @@
     <div class="modal-body">
         <form>
             <label>Timetable</label>
-            <select class="form-control" ng-model="selectedItem">
-                <option ng-repeat="timetable in timetables" value="{{timetable.id}}">
+            <select class="form-control" ng-model="selectedItem" ng-options="timetables as timetable.name for timetable in timetables ">
+               <!-- <option ng-repeat="timetable in timetables" value="{{timetable.id}}">
                     {{timetable.name}}
-                </option>
+                </option> -->
             </select>
         </form>
     </div>
@@ -116,10 +112,7 @@
                 <label>Amount of people</label>
                 <input type="number" class="form-control" ng-model="amountOfTimePassengerflow" min="0">
                 <label>Per</label>
-                <select class="form-control" ng-model="timeSelectPassengerflow">
-                    <option value="seconds">Second</option>
-                    <option value="minutes">Minutes</option>
-                    <option value="hours">Hours</option>
+                <select class="form-control" ng-model="timeSelectPassengerflow" ng-options="opt as opt.label for opt in options">
                 </select>
             </div>
         </form>
