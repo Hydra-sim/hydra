@@ -8,7 +8,7 @@
             </tr>
             <tr ng-repeat="simulation in simulations">
                 <td>
-                    <a ng-href="#/show/{{simulation.id}}" ng-click="editSimulation(simulation.id)" class="title_date_tr">{{simulation.name}}</a>
+                    <a ng-click="editSimulation(simulation.id, 'sm')" class="title_date_tr">{{simulation.name}}</a>
                 </td>
                 <td>
                     <p class="title_date_tr">{{simulation.date | date}}</p>
@@ -36,13 +36,14 @@
                 <label for="simulationPassword">This simulation is protected by a password. To access the simulation,
                                                 please enter the password below.</label>
                 <input type='password' id="simulationPassword" class="form-control" ng-model="simulationPassword"/>
+                <div class="alert alert-danger" ng-show="wrongPassword">
+                    Password not valid
+                </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="submitConsumerGroup(consumerGroupName, numberOfConsumersInGroup, ticksToConsumeEntitiesGroup)" type="submit">Submit</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
+        <button class="btn btn-primary" ng-click="submitPassword(simulationPassword)" type="submit">Submit</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>
 </script>

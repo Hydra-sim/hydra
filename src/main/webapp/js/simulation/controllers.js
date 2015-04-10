@@ -20,15 +20,50 @@
 
         };
 
-        $scope.editSimulation = function(id) {
+        $scope.editSimulation = function(id, size) {
 
             $modal.open({
                 templateUrl: 'passwordAuth.html',
-                //controller: 'ConsumerGroupInstanceCtrl',
-                size: size
+                controller: 'PasswordInstanceCtrl',
+                size: size,
+                resolve: {
+                    id: function() {
+                        return id;
+                    }
+                }
+            });
+        };
+    });
+
+    app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, $location, $log, $resource, Simulation, $http, id) {
+
+        $scope.id = id;
+
+        $scope.wrongPassword = false;
+
+        $scope.submitPassword = function(password){
+
+            var Sim = $resource('api/simulation/auth');
+            var auth = Sim.save({}, {"password": password}, function() {
+
+                $log.info(auth);
             });
 
-            $location.path('/simulation/' + id);
+            /*
+            $http.post('/api/simulation/auth', {"password": password})
+                .success(function(data, status, headers, config) {
+                    if(data) {
+                        //$location.path('/simulation/' + id);
+                        $modalInstance.close();
+                    } else {
+                        $scope.wrongPassword = true;
+                    }
+                }
+            );*/
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
         };
     });
 

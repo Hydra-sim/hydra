@@ -115,7 +115,7 @@ public class Simulation
 
         preset = false;
         passwordProtected = true;
-        password = "pass";
+        password = "password";
     }
     //endregion
 
@@ -186,6 +186,22 @@ public class Simulation
 
     public void setPreset(boolean preset) {
         this.preset = preset;
+    }
+
+    public boolean isPasswordProtected() {
+        return passwordProtected;
+    }
+
+    public void setPasswordProtected(boolean passwordProtected) {
+        this.passwordProtected = passwordProtected;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     //endregion

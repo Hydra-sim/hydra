@@ -143,6 +143,15 @@ public class Simulation {
         return producers;
     }
 
+    @POST
+    @Path("auth")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response auth(@PathParam("password") String password) {
+
+        return Response.ok( password.equals("123") ).build();
+    }
+
     /**
      * Gets a list all the simulations in the database with a named query defined in {@link models.Simulation}
      *
