@@ -27,11 +27,11 @@
             .when('/timetable/:id/',    {controller: 'TimetableEditCtrl',       templateUrl: 'templates/timetable/show.html'})
 
             // Preset
-            .when('/preset',            {controller: 'PresetController',        templateUrl: 'templates/preset/index.html'})
+            .when('/preset',            {controller: 'PresetCtrl',              templateUrl: 'templates/preset/index.html'})
             .when('/preset/new',        {templateUrl: 'templates/preset/new.html'})
             .when('/preset/:id/',       {templateUrl: 'templates/preset/show.html'})
 
-            .when('/map',               {controller: 'UploadMap',               templateUrl: "templates/map.html"})
+            .when('/map',               {controller: 'UploadMapCtrl',           templateUrl: "templates/map.html"})
 
             .otherwise({redirectTo : '/'})
     });

@@ -39,7 +39,7 @@
         };
     });
 
-    app.controller('UploadMap', function($scope, $rootScope, $log, Map){
+    app.controller('UploadMapCtrl', function($scope, $rootScope, $log, Map){
 
         $scope.image = { visible: true, id: 86, exists: true, zoom: 0};
         $scope.image2 = {scale: 1, zoom: 0};
