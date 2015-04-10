@@ -22,9 +22,9 @@
             .when('/show/:id/',         {controller: 'SimulationShowCtrl',      templateUrl: 'templates/simulation/show.html'})
 
             // Timetable
-            .when('/timetable',         {controller: 'TimetableController',     templateUrl: 'templates/timetable/index.html'})
+            .when('/timetable',         {controller: 'TimetableCtrl',           templateUrl: 'templates/timetable/index.html'})
             .when('/timetable/new',     {templateUrl: 'templates/timetable/new.html'})
-            .when('/timetable/:id/',    {controller: 'TimetableEdit',           templateUrl: 'templates/timetable/show.html'})
+            .when('/timetable/:id/',    {controller: 'TimetableEditCtrl',       templateUrl: 'templates/timetable/show.html'})
 
             // Preset
             .when('/preset',            {controller: 'PresetController',        templateUrl: 'templates/preset/index.html'})
