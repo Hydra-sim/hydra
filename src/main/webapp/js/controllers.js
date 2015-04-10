@@ -9,7 +9,7 @@
         'angularFileUpload'
     ]);
 
-    app.controller('ApplicationController', function($scope, $rootScope, $location, menu_field_name) {
+    app.controller('ApplicationCtrl', function($scope, $rootScope, $location, menu_field_name) {
 
         $rootScope.menu_field_button = "New Simulation";
         $rootScope.menu_field_button_icon = "fa-plus-circle";

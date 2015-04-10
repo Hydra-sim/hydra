@@ -9,7 +9,7 @@
         'angularFileUpload'
     ]);
 
-    app.controller('SimulationController', function ($scope, Simulation, $location, $modal) {
+    app.controller('SimulationListCtrl', function ($scope, Simulation, $location, $modal) {
         $scope.simulations = Simulation.query({});
 
         $scope.deleteSimulation = function(id) {
@@ -32,7 +32,7 @@
         };
     });
 
-    app.controller('SimulationNew', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
         //Default values
         $scope.ticks = 60;
         $scope.ticksToConsumeEntitiesList = [];
@@ -44,8 +44,6 @@
 
         // For dropdown in add consumer/passengerflow
         $scope.options = [];
-
-
 
         menu_field_name.setValue("Untitled simulation");
 
@@ -329,7 +327,7 @@
         };
     });
 
-    app.controller('SimulationEdit', function ($log, $scope, $routeParams, $rootScope, $location, Simulation, SimResult,
+    app.controller('SimulationEditCtrl', function ($log, $scope, $routeParams, $rootScope, $location, Simulation, SimResult,
                                                menu_field_name) {
 
         Simulation.get({}, {"id": $routeParams.id}, function(result) {
@@ -371,7 +369,7 @@
             });
         };
     });
-    app.controller('SimulationResult', function($scope, $rootScope, SimResult) {
+    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult) {
         $scope.entitiesConsumed         = SimResult.data.entitiesConsumed;
         $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;
         $scope.maxWaitingTimeInTicks    = SimResult.data.maxWaitingTimeInTicks;
@@ -381,7 +379,7 @@
         $rootScope.menu_field_button_click = function() {};
     });
 
-    app.controller('SimulationShow', function($scope, $rootScope, $routeParams, Simulation) {
+    app.controller('SimulationShowCtrl', function($scope, $rootScope, $routeParams, Simulation) {
         Simulation.get({}, {"id": $routeParams.id}, function(data) {
             console.log(data);
 
