@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kristinesundtlorentzen on 24/2/15.
+ * The parent of both {@link models.Consumer consumers} and {@link models.Producer producers}.
+ * Has a unique ID, a list of {@link models.Relationship relationships} and a value representing the number of
+ * {@link models.Entity entites} that have been transfered from this node to another.
  */
 @javax.persistence.Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)

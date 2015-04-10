@@ -17,7 +17,8 @@ import java.util.Scanner;
 @NamedQuery(name = "Timetable.findAll", query = "SELECT a FROM Timetable a")
 
 /**
- * Created by knarf on 10/03/15.
+ * Used by {@link models.Producer producers} to dictate when the producers is to produces its entites, and how many
+ * entities to produce per. arrival.
  */
 @javax.persistence.Entity
 public class Timetable {

@@ -5,7 +5,9 @@ import helpers.ConsumerHelper;
 import javax.persistence.*;
 
 /**
- * Represents a path an {@link models.Entity} can take from a {@link models.Node node} to another node.
+ * Represents a path an {@link models.Entity entity} can take from a {@link models.Node node} to another node.
+ * Has a unique ID, a {@link Consumer consumer} that the {@link models.Node parent node} can send entites to and a
+ * value representing the weight of the relationship.
  */
 //TODO: Add a check when using dependencies so that it doesn't crash if you make something dependent to itself?
 @javax.persistence.Entity

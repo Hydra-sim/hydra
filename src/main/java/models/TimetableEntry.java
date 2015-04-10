@@ -5,7 +5,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * Created by knarf on 10/03/15.
+ * A dataentry in a {@link models.Timetable}
  */
 @javax.persistence.Entity
 public class TimetableEntry {

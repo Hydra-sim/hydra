@@ -20,7 +20,8 @@ import java.util.List;
 })
 
 /**
- * Created by knarf on 10/02/15.
+ * The simulation engine
+ * Has information about all the elements of the simulation and calculates and contains the result
  */
 @javax.persistence.Entity
 public class Simulation
