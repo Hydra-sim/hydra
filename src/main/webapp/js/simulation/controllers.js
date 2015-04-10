@@ -43,23 +43,28 @@
 
         $scope.submitPassword = function(password){
 
-            var Sim = $resource('api/simulation/auth');
-            var auth = Sim.save({}, {"password": password}, function() {
-
-                $log.info(auth);
-            });
 
             /*
-            $http.post('/api/simulation/auth', {"password": password})
+            // Resource.action([parameters], postData, [success], [error])
+            var Auth = $resource('api/auth', {}, {
+
+                auth: {method: 'POST'}
+            });
+
+            $log.info(Auth.auth({}, {password: password}));
+            */
+
+            $http.post('/api/auth', {"password": password})
                 .success(function(data, status, headers, config) {
-                    if(data) {
+                    $log.info(data);
+                    if(data == "123") {
                         //$location.path('/simulation/' + id);
                         $modalInstance.close();
                     } else {
                         $scope.wrongPassword = true;
                     }
                 }
-            );*/
+            );
         };
 
         $scope.cancel = function () {

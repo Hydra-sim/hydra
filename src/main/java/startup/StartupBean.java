@@ -29,7 +29,10 @@ public class StartupBean {
 
         // Creating the OSL preset and saving it to the database
 
-        Simulation simulation = new OSLPreset().createOSLPreset();
-        entityManager.persist(simulation);
+        Simulation simulation1 = new OSLPreset().createOSLPreset();
+        entityManager.persist(simulation1);
+
+        // For testing purposes
+        entityManager.persist(new Simulation());
     }
 }
