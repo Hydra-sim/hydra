@@ -4,6 +4,9 @@ import helpers.ConsumerHelper;
 
 import javax.persistence.*;
 
+/**
+ * Represents a path an {@link models.Entity} can take from a {@link models.Node node} to another node.
+ */
 //TODO: Add a check when using dependencies so that it doesn't crash if you make something dependent to itself?
 @javax.persistence.Entity
 public class Relationship implements Comparable<Relationship>{

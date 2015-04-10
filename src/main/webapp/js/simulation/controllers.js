@@ -9,31 +9,7 @@
         'angularFileUpload'
     ]);
 
-    app.controller('SimulationListCtrl', function ($scope, Simulation, $location, $modal) {
-        $scope.simulations = Simulation.query({});
 
-        $scope.deleteSimulation = function(id) {
-
-            Simulation.delete({}, {"id": id}, function() {
-                $scope.simulations = Simulation.query({});
-            });
-
-        };
-
-        $scope.editSimulation = function(id, size) {
-
-            $modal.open({
-                templateUrl: 'passwordAuth.html',
-                controller: 'PasswordInstanceCtrl',
-                size: size,
-                resolve: {
-                    id: function() {
-                        return id;
-                    }
-                }
-            });
-        };
-    });
 
     app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, $location, $log, $resource, Simulation, $http, id) {
 

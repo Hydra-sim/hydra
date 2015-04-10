@@ -1,7 +1,8 @@
 package models;
 
 /**
- * Created by kristinesundtlorentzen on 4/2/15.
+ * Represents a person traveling through the location.
+ * Has a value containing how many ticks the entity have waited on all the conumers it's been at combined.
  */
 public class Entity implements Comparable<Entity>{
 

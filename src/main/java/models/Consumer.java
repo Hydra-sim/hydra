@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kristinesundtlorentzen on 4/2/15.
+ * Used to represent units like doors, terminals and other units that consume time for an {@link models.Entity}.
+ * Has all the attributes of {@link Node a node}, a name, a value representing how long it takes to consume an entity, a list of entities currently queueing to
+ * get consumed, and the number of entities that have been consumed.
  */
 @javax.persistence.Entity
 public class Consumer extends Node{

@@ -6,6 +6,10 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An extension of {@link models.Consumer}, representing a group of consumers where each consumer is weighted equally.
+ * Has all the values of consumer and a list of consumers.
+ */
 @javax.persistence.Entity
 public class ConsumerGroup extends Consumer{
 

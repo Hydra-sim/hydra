@@ -3,11 +3,11 @@ package models;
 import javax.persistence.*;
 import javax.ws.rs.Produces;
 
-/**
- * Created by kristinesundtlorentzen on 24/3/15.
- */
 @NamedQuery(name = "Map.findAll", query = "SELECT a FROM Map a")
 
+/**
+ * A model containing information used to display, scale and zoom into a Map
+ */
 @javax.persistence.Entity
 public class Map {
 
