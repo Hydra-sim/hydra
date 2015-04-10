@@ -1,7 +1,7 @@
 package models;
 
-import managers.ConsumerManager;
-import managers.NodeManager;
+import helpers.ConsumerHelper;
+import helpers.NodeHelper;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -71,10 +71,10 @@ public class Simulation
 
     //region transient attributes
     @Transient
-    ConsumerManager consumerManager;
+    ConsumerHelper consumerHelper;
 
     @Transient
-    NodeManager nodeManager;
+    NodeHelper nodeHelper;
     //endregion
 
     //region constructors
@@ -107,8 +107,8 @@ public class Simulation
         this.ticks = ticks;
 
 
-        consumerManager = new ConsumerManager();
-        nodeManager = new NodeManager();
+        consumerHelper = new ConsumerHelper();
+        nodeHelper = new NodeHelper();
 
         distributeWeightConsumers();
         distributeWeightProducers();
@@ -255,7 +255,7 @@ public class Simulation
 
         for(Consumer consumer : consumers) {
 
-            int waitingTime = consumerManager.getMaxWaitingTime(consumer);
+            int waitingTime = consumerHelper.getMaxWaitingTime(consumer);
             if(waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
         }
 
@@ -274,7 +274,7 @@ public class Simulation
         // Consume entities in queue on Consumer
         for(int i = 0; i < consumers.size(); i++) {
 
-            consumerManager.consumeEntity(consumers.get(i));
+            consumerHelper.consumeEntity(consumers.get(i));
         }
 
         // Consume entities in queue on a ConsumerGroup
@@ -304,7 +304,7 @@ public class Simulation
             // Consumer
             for(int i = 0; i < consumerGroup.getConsumers().size(); i++) {
 
-                consumerManager.consumeEntity(consumerGroup.getConsumers().get(i));
+                consumerHelper.consumeEntity(consumerGroup.getConsumers().get(i));
             }
 
 
@@ -336,12 +336,12 @@ public class Simulation
 
                             for (Relationship relationship : relationships) {
 
-                                int recieved = consumerManager.getTotalSentToConsumer(relationship.getChild());
+                                int recieved = consumerHelper.getTotalSentToConsumer(relationship.getChild());
                                 double currentWeight = (double) recieved / producer.getEntitiesTransfered();
 
                                 if (currentWeight <= relationship.getWeight() || producer.getEntitiesTransfered() == 0) {
 
-                                    consumerManager.addEntity(relationship.getChild(), new Entity());
+                                    consumerHelper.addEntity(relationship.getChild(), new Entity());
                                     producer.setEntitiesTransfered(producer.getEntitiesTransfered() + 1);
                                     break;
                                 }
@@ -387,7 +387,7 @@ public class Simulation
         if(sender.getEntitesConsumed().size() != 0) {
 
             // Number of entities already sent to the recieving consumer
-            int recieved = consumerManager.getTotalSentToConsumer(relationship.getChild());
+            int recieved = consumerHelper.getTotalSentToConsumer(relationship.getChild());
 
             // The percentage of entites already sent from our sending consumer to the recieving consumer
             double currentWeight = (double) recieved / sender.getEntitiesTransfered();
@@ -415,7 +415,7 @@ public class Simulation
 
         for(int i = 0; i < consumers.size(); i++) {
 
-            consumerManager.increaseWaitingTime(consumers.get(i), 1);
+            consumerHelper.increaseWaitingTime(consumers.get(i), 1);
         }
     }
 
@@ -460,7 +460,7 @@ public class Simulation
 
         for (int i = 0; i < producers.size(); i++) {
 
-            nodeManager.distributeWeightIfNotSpecified(producers.get(i));
+            nodeHelper.distributeWeightIfNotSpecified(producers.get(i));
         }
     }
 
@@ -468,7 +468,7 @@ public class Simulation
 
         for(int i = 0; i < consumers.size(); i++) {
 
-            nodeManager.distributeWeightIfNotSpecified(consumers.get(i));
+            nodeHelper.distributeWeightIfNotSpecified(consumers.get(i));
         }
     }
     //endregion

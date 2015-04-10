@@ -1,4 +1,4 @@
-package managers;
+package helpers;
 
 import models.Consumer;
 import models.Entity;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * A manager with helper method(s) for {@link models.Consumer}
  */
-public class ConsumerManager {
+public class ConsumerHelper {
 
     /**
      * Adds entity to the queue of a consumer

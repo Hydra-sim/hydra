@@ -1,5 +1,6 @@
 package api;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -17,9 +18,11 @@ import javax.ws.rs.core.Response;
 public class Preset {
 
     // EntityManager for communications with the database.
-
     @PersistenceContext(unitName = "manager")
     private EntityManager entityManager;
+
+    @EJB
+    private dao.Preset presetDao;
 
     /**
      * Gets a list all the presets in the database with a named query defined in {@link models.Simulation}
@@ -31,12 +34,7 @@ public class Preset {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response list()
     {
-        TypedQuery<models.Simulation> query = entityManager.createNamedQuery(
-                "Simulation.findPresets",
-                models.Simulation.class
-        );
-
-        return Response.ok( query.getResultList() ).build();
+        return Response.ok( presetDao.list() ).build();
     }
 
     /**
@@ -52,9 +50,7 @@ public class Preset {
     public Response get(@PathParam("id") int id)
     {
         try {
-            models.Simulation item = entityManager.find(models.Simulation.class, id);
-
-            return Response.ok( item ).build();
+            return Response.ok( presetDao.get(id) ).build();
         }
         catch (Exception e) {
             return Response.serverError().build();
@@ -75,8 +71,7 @@ public class Preset {
     public Response delete(@PathParam("id") int id)
     {
         try {
-            models.Simulation item = entityManager.find(models.Simulation.class, id);
-            entityManager.remove(item);
+            presetDao.delete(id);
         }
         catch (Exception e) {
             return Response.serverError().build();

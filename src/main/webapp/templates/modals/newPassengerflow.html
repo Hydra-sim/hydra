@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h1 class="modal-title">NEW PASSENGERFLOW</h1>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label>Number of passengers</label>
+            <input type="number" class="form-control" min="0" ng-modell="numberOfPassengers">
+        </div>
+        <div class="form-group">
+            <label>Amount of people</label>
+            <input type="number" class="form-control" ng-model="amountOfTimePassengerflow" min="0">
+            <label>Per</label>
+            <select class="form-control" ng-model="timeSelectPassengerflow" ng-options="opt as opt.label for opt in options">
+            </select>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary"
+            ng-click="submitPassengerflow(numberOfPassengers, amountOfTimePassengerflow, timeSelectPassengerflow)"
+            type="submit">Submit
+    </button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+</div>

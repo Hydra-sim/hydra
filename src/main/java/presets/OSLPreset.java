@@ -1,4 +1,4 @@
-package models.presets;
+package presets;
 
 import models.Consumer;
 import models.ConsumerGroup;

@@ -1,9 +1,9 @@
 package calculations;
 
-import managers.ConsumerManager;
-import managers.ProducerManager;
+import helpers.ConsumerHelper;
+import helpers.ProducerHelper;
 import models.*;
-import models.presets.OSLPreset;
+import presets.OSLPreset;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,11 +19,11 @@ import static org.junit.Assert.assertTrue;
  */
 public class SimulationEngineIntegrationTest {
 
-    ProducerManager producerManager;
+    ProducerHelper producerHelper;
 
     @Before
     public void before() {
-        producerManager = new ProducerManager();
+        producerHelper = new ProducerHelper();
     }
 
     //region tests
@@ -93,7 +93,7 @@ public class SimulationEngineIntegrationTest {
         int startTick = 0;
         int ticksBetweenArrivals = 1;
 
-        producerManager.generateTimetable(producer, startTick, ticksBetweenArrivals, numberOfArrivals, numberOfPassengers);
+        producerHelper.generateTimetable(producer, startTick, ticksBetweenArrivals, numberOfArrivals, numberOfPassengers);
 
         return producer;
     }
@@ -278,7 +278,7 @@ public class SimulationEngineIntegrationTest {
         Simulation simulation = setUpStandardSimulationOneProducerTwoConsumers(1, 1, 0, 1, ticks, weight1, weight2);
         simulation.simulate();
 
-        ConsumerManager con = new ConsumerManager();
+        ConsumerHelper con = new ConsumerHelper();
         assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulation.getConsumers().get(0)), 0.0);
         assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulation.getConsumers().get(1)), 0.0);
     }
@@ -299,7 +299,7 @@ public class SimulationEngineIntegrationTest {
         relationships.add(relationship2);
 
         producer.setRelationships(relationships);
-        producerManager.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals, entitiesToProduce);
+        producerHelper.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals, entitiesToProduce);
 
         List<Producer> producers = new ArrayList<>();
         List<Consumer> consumers = new ArrayList<>();
@@ -323,7 +323,7 @@ public class SimulationEngineIntegrationTest {
         relationshipList.add(relationship);
 
         producer.setRelationships(relationshipList);
-        producerManager.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals, entitiesToProduce);
+        producerHelper.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals, entitiesToProduce);
 
         List<Consumer> consumerList = new ArrayList<>();
         List<Producer> producerList = new ArrayList<>();

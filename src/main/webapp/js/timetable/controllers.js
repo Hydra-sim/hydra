@@ -9,18 +9,18 @@
         'angularFileUpload'
     ]);
 
-    app.controller('TimetableController', function($scope, $modal, $rootScope) {
+    app.controller('TimetableCtrl', function($scope, $modal, $rootScope) {
         $rootScope.menu_field_button = "New Timetable";
         $rootScope.menu_field_button_icon = "fa-plus-circle";
         $rootScope.menu_field_button_click = function() {
             $modal.open({
                 templateUrl: 'templates/timetable/new.html',
-                controller: 'TimetableNew'
+                controller: 'TimetableNewCtrl'
             });
         };
     });
 
-    app.controller('TimetableEdit', function($scope, $routeParams, $rootScope, $location, Timetable) {
+    app.controller('TimetableEditCtrl', function($scope, $routeParams, $rootScope, $location, Timetable) {
         Timetable.get({}, {"id": $routeParams.id}, function(result) {
             $scope.id = result.id;
             $scope.arrivals = result.arrivals;
@@ -51,7 +51,7 @@
     });
 
 
-    app.controller('TimetableNew', function($scope, $rootScope, $modalInstance, Timetable) {
+    app.controller('TimetableNewCtrl', function($scope, $rootScope, $modalInstance, Timetable) {
         $scope.arrivals = [
             { time: 0, passengers: 0 }
         ];
@@ -78,7 +78,7 @@
         };
     });
 
-    app.controller('TimetableList', function($scope, $rootScope, Timetable) {
+    app.controller('TimetableListCtrl', function($scope, $rootScope, Timetable) {
         function updateTimetableScope() {
             $scope.timetables = Timetable.query({});
         }

@@ -1,4 +1,4 @@
-<div class="tabMenu" ng-controller="tabController">
+<div class="tabMenu" ng-controller="TabCtrl">
     <ul>
         <li ng-repeat="tab in tabs" >
             <div ng-click="select(tab)" ng-class="itemClass(tab)">{{tab.name}}</div>

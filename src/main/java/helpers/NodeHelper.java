@@ -1,4 +1,4 @@
-package managers;
+package helpers;
 
 import models.Node;
 import models.Relationship;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * A manager with helper method(s) for {@link models.Node}
  */
-public class NodeManager {
+public class NodeHelper {
 
     /**
      * Automatically distributes weight to the {@link models.Relationship relationships} if they are all 0.0

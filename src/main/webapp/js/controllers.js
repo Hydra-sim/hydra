@@ -9,7 +9,7 @@
         'angularFileUpload'
     ]);
 
-    app.controller('ApplicationController', function($scope, $rootScope, $location, menu_field_name) {
+    app.controller('ApplicationCtrl', function($scope, $rootScope, $location, menu_field_name) {
 
         $rootScope.menu_field_button = "New Simulation";
         $rootScope.menu_field_button_icon = "fa-plus-circle";
@@ -21,7 +21,7 @@
         menu_field_name.disable();
     });
 
-    app.controller("tabController", function($scope, $rootScope, $location) {
+    app.controller("TabCtrl", function($scope, $rootScope, $location) {
 
         $scope.tabs = [
             {name: "SIMULATIONS", link: "/"},
@@ -39,7 +39,7 @@
         };
     });
 
-    app.controller('UploadMap', function($scope, $rootScope, $log, Map){
+    app.controller('UploadMapCtrl', function($scope, $rootScope, $log, Map){
 
         $scope.image = { visible: true, id: 86, exists: true, zoom: 0};
         $scope.image2 = {scale: 1, zoom: 0};
@@ -139,14 +139,9 @@
 
     });
 
-    app.controller("collapseController", function($scope){
+    app.controller("CollapseCtrl", function($scope){
         $scope.isCollapsed = true;
 
     });
-
-
-
-
-
 
 })();

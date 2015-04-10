@@ -1,6 +1,6 @@
 package models;
 
-import managers.ConsumerManager;
+import helpers.ConsumerHelper;
 
 import javax.persistence.*;
 
@@ -61,7 +61,7 @@ public class Relationship implements Comparable<Relationship>{
 
         if(o == this) return 0;
 
-        ConsumerManager controller = new ConsumerManager();
+        ConsumerHelper controller = new ConsumerHelper();
         if(controller.getTotalSentToConsumer(o.getChild()) > controller.getTotalSentToConsumer(this.getChild())) return 1;
         if(o.getWeight() > this.getWeight()) return 1;
         return -1;

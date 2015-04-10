@@ -1,7 +1,7 @@
 package startup;
 
 import models.Simulation;
-import models.presets.OSLPreset;
+import presets.OSLPreset;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
