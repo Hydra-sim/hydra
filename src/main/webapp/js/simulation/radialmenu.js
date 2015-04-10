@@ -9,7 +9,7 @@
         'angularFileUpload'
     ]);
 
-    app.controller("RadialMenuController", function () {
+    app.controller("RadialMenuCtrl", function () {
 
         var circularMenu = document.querySelector('.circular-menu');
         var openBtn = document.querySelector('.menu-button');

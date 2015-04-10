@@ -21,7 +21,7 @@
         menu_field_name.disable();
     });
 
-    app.controller("tabController", function($scope, $rootScope, $location) {
+    app.controller("TabCtrl", function($scope, $rootScope, $location) {
 
         $scope.tabs = [
             {name: "SIMULATIONS", link: "/"},
@@ -139,14 +139,9 @@
 
     });
 
-    app.controller("collapseController", function($scope){
+    app.controller("CollapseCtrl", function($scope){
         $scope.isCollapsed = true;
 
     });
-
-
-
-
-
 
 })();

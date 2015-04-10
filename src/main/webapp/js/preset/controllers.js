@@ -10,10 +10,6 @@
     ]);
 
 
-    app.controller('presetModalInstanceCtrl', function(){
-
-    });
-
     app.controller('PresetController', function($scope, $rootScope) {
         $rootScope.menu_field_button = "New Preset";
         $rootScope.menu_field_button_icon = "fa-plus-circle";
