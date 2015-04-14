@@ -37,20 +37,28 @@
 
                     function removeNodeWithId(id) {
                         removeEdgeWithSourceOrTargetId(id);
-                        scope.nodes = _.reject(scope.nodes, function(obj) { return obj.id == id; });
+                        scope.$apply(function() {
+                            scope.nodes = _.reject(scope.nodes, function (obj) {
+                                return obj.id == id;
+                            });
+                        });
                         update();
                     }
 
                     function removeEdgeWithSourceOrTargetId(id) {
-                        scope.edges = _.reject(scope.edges, function(obj) {
-                            return obj.source == id || obj.target == id;
+                        scope.$apply(function() {
+                            scope.edges = _.reject(scope.edges, function (obj) {
+                                return obj.source == id || obj.target == id;
+                            });
                         });
                         update();
                     }
 
                     function removeEdge(targetAndSourceID) {
-                        scope.edges = _.reject(scope.edges, function(obj) {
-                            return obj.source == targetAndSourceID.source && obj.target == targetAndSourceID.target;
+                        scope.$apply(function() {
+                            scope.edges = _.reject(scope.edges, function (obj) {
+                                return obj.source == targetAndSourceID.source && obj.target == targetAndSourceID.target;
+                            });
                         });
                         update();
                     }
@@ -109,8 +117,8 @@
 
                     // Watch angular properties for changes
                     // trigger an update if they do change
-                    scope.$watch('nodes', update, true);
-                    scope.$watch('edges', update, true);
+                    scope.$watchCollection('nodes', update, true);
+                    scope.$watchCollection('edges', update, true);
 
                     // svg nodes and edges
                     var paths = container.append("g").selectAll("g");
