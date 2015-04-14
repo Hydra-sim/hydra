@@ -99,19 +99,6 @@
                         return selectedItem != undefined && selectedItem != null;
                     }
 
-                    // Circle to move
-                    var circleToMove = null;
-
-                    function setCircleToMove(circle) {  circleToMove = circle; }
-                    function resetCricleToMove() {  circleToMove = null; }
-                    function circleToMoveNotEmpty() { return circleToMove != null; }
-
-                    // data = [0: x, 1: y]
-                    function setCircleToMovePosition(data) {
-                        circleToMove.x = data[0];
-                        circleToMove.y = data[1];
-                    }
-
                     // Create the svg element
                     var svg = d3.select(element[0])
                         .append("svg")
@@ -150,15 +137,6 @@
                         .append('svg:path')
                         .attr('d', 'M0,-5L10,0L0,5');
 
-                    // If something is selected and you move the mouse
-                    svg.on("mousemove", function() {
-                        // If a circle is selected lets move it
-                        if(circleToMoveNotEmpty()) {
-                            setCircleToMovePosition(d3.mouse(this));
-                            update();
-                        }
-                    });
-
                     svg.on("mouseup", unselectItem);
 
                     // If someone tries to delete something
@@ -170,6 +148,14 @@
                                 deleteSelectedItem();
                         }
                     });
+
+                    var drag = d3.behavior.drag()
+                        .origin(function(d) { return d; })
+                        .on("drag", function(d) {
+                            d.x = d3.event.x;
+                            d.y = d3.event.y;
+                            update();
+                        });
 
                     // Update function, updating nodes and edges
                     function update() {
@@ -193,8 +179,7 @@
                             .style('marker-end','url(#end-arrow)')
                             .classed("link", true)
                             .attr("d", d)
-                            .on("mouseup", function() {
-                                d3.event.stopPropagation();
+                            .on("click", function() {
                                 selectItem(d3.select(this), "edge");
                             });
 
@@ -213,12 +198,10 @@
                         newCircleWrappers
                             .attr('class', function(d) { return d.type + " " + consts.circleWrapperClass; })
                             .attr("transform", transformFunction)
-                            .on("mousedown", setCircleToMove)
-                            .on("mouseup", function(){
-                                d3.event.stopPropagation();
-                                resetCricleToMove();
+                            .on("click", function() {
                                 selectItem(d3.select(this), "circle");
-                            });
+                            })
+                            .call(drag)
 
                         newCircleWrappers
                             .append("circle")
