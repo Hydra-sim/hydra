@@ -1,31 +1,33 @@
-<div class="modal-header">
-    <h1 class="modal-title">
-        <input type="text" placeholder="name" ng-model="name" />
-    </h1>
-</div>
-<div class="modal-body">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6"><span>Arrival</span></div>
-            <div class="col-md-6"><span>Passengers</span></div>
-        </div>
-        <div class="vertical-scrollable">
-            <div class="row" ng-repeat="arrival in arrivals">
-                <div class="col-md-6">
-                    <input type="time" class="form-control"  ng-model="arrival.time" />
-                </div>
-                <div class="col-md-6">
-                    <input type="number" class="form-control" ng-model="arrival.passengers" />
+<form novalidate>
+    <div class="modal-header">
+        <h1 class="modal-title">
+            <input type="text" placeholder="name" ng-model="name" required autofocus/>
+        </h1>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6"><span>Arrival</span></div>
+                <div class="col-md-6"><span>Passengers</span></div>
+            </div>
+            <div class="vertical-scrollable">
+                <div class="row" ng-repeat="arrival in arrivals">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" ng-model="arrival.time"/>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="number" class="form-control" ng-model="arrival.passengers"/>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">Arrivals: {{arrivals.length}}</span></div>
-            <div class="col-md-6"><a href="" ng-click="addLine()">New line</a></div>
+            <div class="row">
+                <div class="col-md-6">Arrivals: {{arrivals.length}}</span></div>
+                <div class="col-md-6"><a href="" ng-click="addLine()">New line</a></div>
+            </div>
         </div>
     </div>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-    <button class="btn btn-default" ng-click="ok()" type="submit">Add</button>
-</div>
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-default" ng-click="ok()" type="submit">Add</button>
+    </div>
+</form>
