@@ -241,49 +241,6 @@
         };
     });
 
-    app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,
-                                                  Timetable, timetableIds, type) {
-        $scope.options = [
-            {label: "Seconds", value: "1"},
-            {label: "Minutes", value: "2"},
-            {label: "Hours", value: "3"}
-        ];
-
-        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
-
-        $scope.modalTitle = type;
-
-        $scope.submitConsumer = function (ticksToConsumeEntities) {
-
-            $scope.ticksToConsumeEntitiesList.push( ticksToConsumeEntities );
-
-            $modalInstance.close();
-        };
-
-        $scope.timetableIds = timetableIds;
-
-        function updateTimetableScope() {
-            $scope.timetables = Timetable.query({});
-        }
-        updateTimetableScope();
-
-        $scope.submitProducer = function () {
-            $scope.active = function() {
-                return $scope.timetables.filter(function(timetable){
-                    return timetable;
-                })[0];
-
-
-
-            };
-            $scope.timetableIds.push( $scope.active().id );
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
 
     /**
      * WHY DO I GET AN ERROR IF I MOVE THIS INTO simulation/controllers.js????
@@ -297,6 +254,9 @@
         $scope.consumerGroupNames = [];
         $scope.numberOfConsumersInGroups = [];
         $scope.ticksToConsumeEntitiesGroups = [];
+
+        $scope.amountOfPeopleList = [];
+        $scope.timeBetweenArrivalsList = [];
 
 
         // For dropdown in add consumer/passengerflow
@@ -415,7 +375,16 @@
                 templateUrl: 'templates/modals/newPassengerflow.html',
                 controller: 'NewPassengerflowInstanceCtrl',
                 size: 'sm',
-                resolve: function(){
+                resolve: {
+                    amountOfPeopleList: function(){
+                        return $scope.amountOfPeopleList;
+                    },
+                    timeBetweenArrivalsList: function(){
+                        return $scope.timeBetweenArrivalsList;
+                    },
+                    timeSelect: function(){
+                        return $scope.timeSelect;
+                    }
 
                 }
             });
@@ -484,6 +453,7 @@
         updateTimetableScope();
 
         $scope.submitProducer = function(selectedItem){
+
             $log.info(selectedItem);
             $log.info(selectedItem.item.label);
             timetableIds.push(selectedItem);
@@ -496,10 +466,13 @@
 
     });
 
-    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, $log, numberOfPassangers, timeSelect){
+    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, $log, amountOfPeopleList, timeBetweenArrivalsList, timeSelect, timetableIds){
 
-        $scope.numberOfPassangers = numberOfPassangers;
+        $scope.timetableIds = timetableIds;
+        $scope.amountOfPeopleList = amountOfPeopleList;
+        $scope.timeBetweenArrivalsList = timeBetweenArrivalsList;
         $scope.timeSelect = timeSelect;
+
         $scope.options = [
             {label: "Seconds", value: "1"},
             {label: "Minutes", value: "2"},
@@ -507,6 +480,18 @@
         ];
 
         $scope.submitPassengerflow =  function(numberOfPassangers, timeBetweenArrivals, timeSelect){
+
+            var ticksToProduceEnteties = timeBetweenArrivals;
+
+            if(timeSelect.item.label == "Minutes"){
+                ticksToProduceEnteties *= 60;
+            }
+            else if(timeSelect.item.label == "Hours"){
+                ticksToProduceEnteties *= 60 * 60;
+            }
+
+            amountOfPeopleList.push(numberOfPassangers);
+            timeBetweenArrivalsList.push(ticksToProduceEnteties);
 
             $modalInstance.close();
         }
