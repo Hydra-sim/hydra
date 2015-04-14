@@ -4,11 +4,11 @@
 <div class="modal-body">
     <form>
         <div class="form-group">
-            <label>Number of passengers</label>
-            <input type="number" class="form-control" min="0" ng-modell="numberOfPassengers">
+            <label>Total number of persons</label>
+            <input type="number" class="form-control" min="0" ng-model="numberOfPassengers">
         </div>
         <div class="form-group">
-            <label>Amount of people</label>
+            <label>Amount of passengers</label>
             <input type="number" class="form-control" ng-model="timeBetweenArrivals" min="0">
             <label>Per</label>
             <select class="form-control" ng-model="timeSelect.item" ng-options="opt as opt.label for opt in options">
