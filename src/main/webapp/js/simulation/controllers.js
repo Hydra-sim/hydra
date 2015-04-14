@@ -95,6 +95,7 @@
             });
         };
     });
+
     app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult) {
         $scope.entitiesConsumed         = SimResult.data.entitiesConsumed;
         $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;
