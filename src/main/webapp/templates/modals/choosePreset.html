@@ -4,11 +4,10 @@
     <p>A preset is a predefined simulation that can be run as is or modified to your liking.</p>
 </div>
 <div class="modal-body">
-    <tabset vertical="true" type=pills>
-        <tab ng-repeat="preset in presets" heading="{{preset.name}}" active="preset.active"></tab>
-    </tabset>
+    <label>Presets</label>
+    <select class="form-control" ng-model="preset" ng-options="pre as pre.name for preset in presets"></select>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="loadPreset()" type="submit">Add</button>
+    <button class="btn btn-primary" ng-click="loadPreset(preset)" type="submit">Add</button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>

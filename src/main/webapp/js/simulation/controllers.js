@@ -13,7 +13,9 @@
 
     app.controller('ChoosePresetInstanceCtrl', function($scope, $modalInstance){
 
-        $scope.loadPreset = function(){
+
+        $scope.loadPreset = function(preset){
+
             $modalInstance.close();
         };
 
@@ -40,44 +42,8 @@
             $modalInstance.dismiss('cancel');
         };
     });
-    app.controller('NewProducerInstanceCtrl', function($scope, $modalInstance, timetable, timetableIds){
-
-       $scope.timetableIds = timetableIds;
-
-        function updateTimetables(){
-            $scope.timetables = timetable.query({});
-        }
-
-        updateTimetables()
-
-        $scope.submitProducer = function(){
 
 
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
-
-    app.controller('NewPassengerflowInstanceCtrl', function($scope, $modelInstance){
-
-        $scope.options = [
-            {label: "Seconds", value: "1"},
-            {label: "Minutes", value: "2"},
-            {label: "Hours", value: "3"}
-        ];
-
-        $scope.submitPassengerflow = function(){
-            $modelInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modelInstance.dismiss('cancel');
-        };
-
-    });
 
     app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, $log) {
         $scope.days = 0;

@@ -235,6 +235,7 @@
         $scope.numberOfConsumersInGroups = [];
         $scope.ticksToConsumeEntitiesGroups = [];
 
+
         // For dropdown in add consumer/passengerflow
         $scope.options = [];
 
@@ -283,18 +284,18 @@
 
             $modal.open({
                 templateUrl: 'templates/modals/newProducer.html',
-                controller: 'ModalInstanceCtrl',
+                controller: 'NewProducerInstanceCtrl',
                 size: 'sm',
                 resolve: {
-                    ticksToConsumeEntitiesList: function () {
-                        return $scope.ticksToConsumeEntitiesList;
-                    },
                     timetableIds: function () {
                         return $scope.timetableIds;
                     },
                     type: function(){
                         return type;
-                    }
+                    },
+                    selectedItem: function(){
+                        return $scope.selectedItem;                    }
+
                 }
             });
         };
@@ -347,7 +348,10 @@
             $modal.open({
                 templateUrl: 'templates/modals/newPassengerflow.html',
                 controller: 'NewPassengerflowInstanceCtrl',
-                size: 'sm'
+                size: 'sm',
+                resolve: function(){
+
+                }
             });
         };
 
@@ -414,48 +418,43 @@
         };
     });
 
-    app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,
-                                                  Timetable, timetableIds, type) {
-        $scope.options = [
-            {label: "Seconds", value: "1"},
-            {label: "Minutes", value: "2"},
-            {label: "Hours", value: "3"}
-        ];
-
-        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
-
-        $scope.modalTitle = type;
-
-        $scope.submitConsumer = function (ticksToConsumeEntities) {
-
-            $scope.ticksToConsumeEntitiesList.push( ticksToConsumeEntities );
-
-            $modalInstance.close();
-        };
+    app.controller('NewProducerInstanceCtrl', function($scope, $modalInstance,Timetable, timetableIds, $log, selectedItem, type){
 
         $scope.timetableIds = timetableIds;
+        $scope.modalTitle = type;
+        $scope.selectedItem = selectedItem;
 
         function updateTimetableScope() {
             $scope.timetables = Timetable.query({});
         }
         updateTimetableScope();
 
-        $scope.submitProducer = function () {
-            $scope.active = function() {
-                return $scope.timetables.filter(function(timetable){
-                    return timetable;
-                })[0];
-
-
-
-            };
-            $scope.timetableIds.push( $scope.active().id );
+        $scope.submitProducer = function(selectedItem){
+            $log.info(selectedItem);
+            $log.info(selectedItem.item.label);
+            timetableIds.push(selectedItem);
             $modalInstance.close();
         };
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-    })
+    });
 
+    app.controller('NewPassengerflowInstanceCtrl', function($scope, $modelInstance){
+        $scope.options = [
+            {label: "Seconds", value: "1"},
+            {label: "Minutes", value: "2"},
+            {label: "Hours", value: "3"}
+        ];
+
+        $scope.submitPassengerflow = function(){
+
+            $modelInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modelInstance.dismiss('cancel');
+        };
+    });
 })();
