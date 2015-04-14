@@ -105,14 +105,16 @@
                         .attr("width", "100%")
                         .attr("height", "100%");
 
+                    var container = svg.append("g");
+
                     // Watch angular properties for changes
                     // trigger an update if they do change
                     scope.$watch('nodes', update, true);
                     scope.$watch('edges', update, true);
 
                     // svg nodes and edges
-                    var paths = svg.append("g").selectAll("g");
-                    var circles = svg.append("g").selectAll("g");
+                    var paths = container.append("g").selectAll("g");
+                    var circles = container.append("g").selectAll("g");
 
                     // define arrow markers for graph links
                     var defs = svg.append('svg:defs');
@@ -156,6 +158,15 @@
                             d.y = d3.event.y;
                             update();
                         });
+
+
+                    var zoom = d3.behavior.zoom()
+                        .scaleExtent([0.1, 10])
+                        .on("zoom", function() {
+                            container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+                        });
+                    svg.call(zoom);
+                    //*/
 
                     // Update function, updating nodes and edges
                     function update() {
