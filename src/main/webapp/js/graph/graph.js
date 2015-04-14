@@ -64,6 +64,13 @@
                         update();
                     }
 
+                    function addEdge(source, target) {
+                        scope.$apply(function() {
+                            scope.edges.push({ "source": source, "target": target });
+                        });
+                        update();
+                    }
+
                     // Selected circle / edge
                     var selectedItem = null;
                     var selectedItemType = "circle";
@@ -182,8 +189,20 @@
                             }
                             update();
                         })
-                        .on("dragend", function() {
+                        .on("dragend", function(element) {
                             dragLine.classed('hidden', true);
+                            if(shiftNodeDrag) {
+                                var pos = d3.mouse(container.node());
+                                var el = _.find(scope.nodes, function(itm) {
+                                    var diffX = itm.x - pos[0];
+                                    var diffY = itm.y - pos[1];
+                                    var length = Math.sqrt(diffX*diffX+diffY*diffY);
+                                    return length <= consts.nodeRadius;
+                                });
+                                if(el != undefined && el != null && el.id != element.id) {
+                                    addEdge(element.id, el.id);
+                                }
+                            }
                         });
 
                     // Add zoom and pan to the container
