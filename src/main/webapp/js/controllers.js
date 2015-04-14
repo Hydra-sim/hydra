@@ -466,9 +466,7 @@
 
     });
 
-    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, $log, amountOfPeopleList, timeBetweenArrivalsList, timeSelect, timetableIds){
-
-        $scope.timetableIds = timetableIds;
+    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, $log, amountOfPeopleList, timeBetweenArrivalsList, timeSelect){
         $scope.amountOfPeopleList = amountOfPeopleList;
         $scope.timeBetweenArrivalsList = timeBetweenArrivalsList;
         $scope.timeSelect = timeSelect;
