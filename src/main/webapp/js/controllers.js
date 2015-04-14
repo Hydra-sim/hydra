@@ -200,7 +200,7 @@
         };
     });
 
-    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, $log, ticksToConsumeEntitiesList, type, timeSelectConsumer){
+    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, $log, ticksToConsumeEntitiesList, type){
 
         $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
         $scope.modalTitle = type;
@@ -209,8 +209,6 @@
             {label: "Minutes", value: "2"},
             {label: "Hours", value: "3"}
         ];
-
-        $scope.timeSelectConsumer = timeSelectConsumer;
 
         $scope.submitConsumer = function(amountOfTime, timeSelectConsumer){
 
@@ -255,7 +253,8 @@
         $scope.numberOfConsumersInGroups = [];
         $scope.ticksToConsumeEntitiesGroups = [];
 
-        $scope.amountOfPeopleList = [];
+        $scope.totalNumberOfEntititesList = [];
+        $scope.numberOfEntitiesList = [];
         $scope.timeBetweenArrivalsList = [];
 
 
@@ -274,7 +273,10 @@
                 'timetableIds' :                    $scope.timetableIds,
                 'consumerGroupNames' :              $scope.consumerGroupNames,
                 'numberOfConsumersInGroups' :       $scope.numberOfConsumersInGroups,
-                'ticksToConsumeEntitiesGroups' :    $scope.ticksToConsumeEntitiesGroups
+                'ticksToConsumeEntitiesGroups' :    $scope.ticksToConsumeEntitiesGroups,
+                'totalNumberOfEntititesList':       $scope.totalNumberOfEntititesList,
+                'numberOfEntitiesList':             $scope.numberOfEntitiesList,
+                'timeBetweenArrivalsList':          $scope.timeBetweenArrivalsList
             });
 
             sim.$save().then(function(result) {
@@ -316,12 +318,9 @@
                     timetableIds: function () {
                         return $scope.timetableIds;
                     },
-                    type: function(){
+                    type: function () {
                         return type;
-                    },
-                    selectedItem: function(){
-                        return $scope.selectedItem;                    }
-
+                    }
                 }
             });
         };
@@ -341,9 +340,6 @@
                     type: function(){
                         $scope.type = type;
                         return $scope.type;
-                    },
-                    timeSelectConsumer: function() {
-                        return $scope.timeSelectConsumer;
                     }
                 }
             });
@@ -376,16 +372,15 @@
                 controller: 'NewPassengerflowInstanceCtrl',
                 size: 'sm',
                 resolve: {
-                    amountOfPeopleList: function(){
-                        return $scope.amountOfPeopleList;
+                    totalNumberOfEntititesList: function(){
+                        return $scope.totalNumberOfEntititesList;
+                    },
+                    numberOfEntitiesList: function(){
+                        return $scope.numberOfEntitiesList;
                     },
                     timeBetweenArrivalsList: function(){
                         return $scope.timeBetweenArrivalsList;
-                    },
-                    timeSelect: function(){
-                        return $scope.timeSelect;
                     }
-
                 }
             });
         };
@@ -441,11 +436,10 @@
         };
     });
 
-    app.controller('NewProducerInstanceCtrl', function($scope, $modalInstance,Timetable, timetableIds, $log, selectedItem, type){
+    app.controller('NewProducerInstanceCtrl', function($scope, $modalInstance, Timetable, timetableIds, $log, type){
 
         $scope.timetableIds = timetableIds;
         $scope.modalTitle = type;
-        $scope.selectedItem = selectedItem;
 
         function updateTimetableScope() {
             $scope.timetables = Timetable.query({});
@@ -454,9 +448,12 @@
 
         $scope.submitProducer = function(selectedItem){
 
+            /*Lage funksjon som finner og returnerer aktiv tidstabell id så pushe den inn i $scope.timetableIds liste*/
+
             $log.info(selectedItem);
-            $log.info(selectedItem.item.label);
             timetableIds.push(selectedItem);
+
+
             $modalInstance.close();
         };
 
@@ -466,10 +463,10 @@
 
     });
 
-    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, $log, amountOfPeopleList, timeBetweenArrivalsList, timeSelect){
-        $scope.amountOfPeopleList = amountOfPeopleList;
+    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, $log, totalNumberOfEntititesList, numberOfEntitiesList, timeBetweenArrivalsList){
+        $scope.totalNumberOfEntititesList = totalNumberOfEntititesList;
+        $scope.numberOfEntitiesList = numberOfEntitiesList;
         $scope.timeBetweenArrivalsList = timeBetweenArrivalsList;
-        $scope.timeSelect = timeSelect;
 
         $scope.options = [
             {label: "Seconds", value: "1"},
@@ -477,19 +474,22 @@
             {label: "Hours", value: "3"}
         ];
 
-        $scope.submitPassengerflow =  function(numberOfPassangers, timeBetweenArrivals, timeSelect){
+        $scope.submitPassengerflow =  function(totalNumberOfEntities, numberOfEntities, timeBetweenArrivals , timeSelect){
 
-            var ticksToProduceEnteties = timeBetweenArrivals;
+
+            $scope.totalNumberOfEntititesList.push(totalNumberOfEntities);
+            $scope.numberOfEntitiesList.push(numberOfEntities);
+
+
 
             if(timeSelect.item.label == "Minutes"){
-                ticksToProduceEnteties *= 60;
+                timeBetweenArrivals *= 60;
             }
             else if(timeSelect.item.label == "Hours"){
-                ticksToProduceEnteties *= 60 * 60;
+                timeBetweenArrivals *= 60 * 60;
             }
 
-            amountOfPeopleList.push(numberOfPassangers);
-            timeBetweenArrivalsList.push(ticksToProduceEnteties);
+            $scope.timeBetweenArrivalsList.push(timeBetweenArrivals);
 
             $modalInstance.close();
         }

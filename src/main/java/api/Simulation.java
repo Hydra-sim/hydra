@@ -1,5 +1,6 @@
 package api;
 
+import helpers.ProducerHelper;
 import models.Consumer;
 import models.ConsumerGroup;
 import models.Producer;
@@ -150,6 +151,14 @@ public class Simulation {
 
             producers.add(producer);
         }
+
+         for(int i = 0; i < input.numberOfEntitiesList.length; i++ ){
+             Producer producer = new Producer();
+             new ProducerHelper().generateTimetable(producer, 0 , input.timeBetweenArrivalsList[i],
+                     input.totalNumberOfEntititesList[i]/input.numberOfEntitiesList[i], input.numberOfEntitiesList[i]);
+
+             producers.add(producer);
+         }
 
         return producers;
     }

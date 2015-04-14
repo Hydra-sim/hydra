@@ -20,4 +20,8 @@ class InputValue {
     // Proucers
     public int[] timetableIds;
 
+    public int[] totalNumberOfEntititesList;
+    public int[] timeBetweenArrivalsList;
+    public int[] numberOfEntitiesList;
+
 }

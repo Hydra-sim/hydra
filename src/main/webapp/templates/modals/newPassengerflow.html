@@ -4,13 +4,16 @@
 <div class="modal-body">
     <form>
         <div class="form-group">
-            <label>Total number of persons</label>
-            <input type="number" class="form-control" min="0" ng-model="numberOfPassengers">
+            <label>Total number of passangers</label>
+            <input type="number" class="form-control" min="0" ng-model="totalNumberOfEntities">
         </div>
         <div class="form-group">
-            <label>Amount of passengers</label>
+            <label>Persons per arrival</label>
+            <input type="number" class="form-control" min="0" ng-model="numberOfEntities">
+        </div>
+        <div class="form-group">
+            <label>Time between arrivals</label>
             <input type="number" class="form-control" ng-model="timeBetweenArrivals" min="0">
-            <label>Per</label>
             <select class="form-control" ng-model="timeSelect.item" ng-options="opt as opt.label for opt in options">
             </select>
         </div>
@@ -18,7 +21,7 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary"
-            ng-click="submitPassengerflow(numberOfPassengers, timeBetweenArrivals, timeSelect)"
+            ng-click="submitPassengerflow(totalNumberOfEntities, numberOfEntities, timeBetweenArrivals, timeSelect)"
             type="submit">Submit
     </button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
