@@ -16,20 +16,19 @@
     fill: #333;
   }
 
-  g.node circle           {  fill: red;  }
-  g.node.producer circle  {  fill: $producer_color; }
-  g.node.consumer circle  {  fill: $consumer_color; }
-  g.node:hover circle     {  fill: $node_hover_color; }
-  g.node.selected circle  {  stroke: $node_selected; stroke-width: 3px;  }
+  .node circle           {  fill: red;  }
+  .node.producer circle  {  fill: $producer_color; }
+  .node.consumer circle  {  fill: $consumer_color; }
+  .node:hover circle     {  fill: $node_hover_color; }
+  .node.selected circle  {  stroke: $node_selected; stroke-width: 3px;  }
 
-  path.link {
+  .link {
     fill: none;
     stroke: #333;
     stroke-width: 6px;
-    cursor: default;
   }
 
-  path.link:hover{
+  .link:hover{
     stroke: rgb(94, 196, 204);
   }
 
@@ -37,11 +36,15 @@
     fill: #BEFFFF;
   }
 
-  path.link.hidden{
+  .link.hidden{
     stroke-width: 0;
   }
 
-  path.link.selected {
+  .link.selected {
     stroke: rgb(229, 172, 247);
+  }
+
+  .node, .link {
+    cursor: pointer;
   }
 }
