@@ -32,7 +32,8 @@
                         connectClass: scope.connectClass || "connect-node",
                         circleWrapperClass: scope.circleWrapperClass || "node",
                         nodeRadius: scope.nodeRadius || 20,
-                        BACKSPACE_KEY: 8
+                        BACKSPACE_KEY: 8,
+                        DELETE_KEY: 46
                     };
 
                     function removeNodeWithId(id) {
@@ -63,7 +64,7 @@
                         update();
                     }
 
-                    // Selected circle
+                    // Selected circle / edge
                     var selectedItem = null;
                     var selectedItemType = "circle";
 
@@ -100,7 +101,6 @@
                             unselectItem();
                             removeNodeWithId(data.id);
                         }
-
                     }
 
                     function itemIsSelected() {
@@ -147,11 +147,17 @@
                         .append('svg:path')
                         .attr('d', 'M0,-5L10,0L0,5');
 
+                    var dragLine = container.append('svg:path')
+                        .attr('class', 'link dragline hidden')
+                        .attr('d', 'M0,0L0,0')
+                        .style('marker-end', 'url(#mark-end-arrow)');
+
                     svg.on("mouseup", unselectItem);
 
                     // If someone tries to delete something
                     d3.select("body").on("keydown", function(d) {
-                        if (d3.event.keyCode == consts.BACKSPACE_KEY && d3.event.shiftKey) {
+                        if (d3.event.keyCode == consts.BACKSPACE_KEY && d3.event.shiftKey
+                            || d3.event.keyCode == consts.DELETE_KEY) {
                             d3.event.preventDefault();
 
                             if(itemIsSelected())
@@ -159,25 +165,34 @@
                         }
                     });
 
+                    var shiftNodeDrag = false;
                     var drag = d3.behavior.drag()
                         .origin(function(d) { return d; })
                         .on("dragstart", function() {
                             d3.event.sourceEvent.stopPropagation();
+                            shiftNodeDrag = d3.event.sourceEvent.shiftKey;
                         })
                         .on("drag", function(d) {
-                            d.x = d3.event.x;
-                            d.y = d3.event.y;
+                            if(shiftNodeDrag) {
+                                dragLine.classed('hidden', false);
+                                dragLine.attr('d', 'M' + d.x + ',' + d.y + 'L' + d3.mouse(container.node())[0] + ',' + d3.mouse(container.node())[1]);
+                            } else {
+                                d.x = d3.event.x;
+                                d.y = d3.event.y;
+                            }
                             update();
+                        })
+                        .on("dragend", function() {
+                            dragLine.classed('hidden', true);
                         });
 
-
+                    // Add zoom and pan to the container
                     var zoom = d3.behavior.zoom()
                         .scaleExtent([0.1, 10])
                         .on("zoom", function() {
                             container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
                         });
                     svg.call(zoom);
-                    //*/
 
                     // Update function, updating nodes and edges
                     function update() {
@@ -223,7 +238,7 @@
                             .on("click", function() {
                                 selectItem(d3.select(this), "circle");
                             })
-                            .call(drag)
+                            .call(drag);
 
                         newCircleWrappers
                             .append("circle")
