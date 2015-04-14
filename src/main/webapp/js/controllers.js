@@ -442,8 +442,10 @@
 
     });
 
-    app.controller(NewPassengerflowInstanceCtrl, function($scope, $modal, $modalInstance, $log, numberOfPassangers, timeBetweenArrivals, timeSelect){
+    app.controller(NewPassengerflowInstanceCtrl, function($scope, $modal, $modalInstance, $log, numberOfPassangers, timeSelect){
 
+        $scope.numberOfPassangers = numberOfPassangers;
+        $scope.timeSelect = timeSelect;
         $scope.options = [
             {label: "Seconds", value: "1"},
             {label: "Minutes", value: "2"},
