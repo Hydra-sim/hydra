@@ -2,7 +2,7 @@
     <h1 class="modal-title" ng-controller="SimulationNew"> {{ modalTitle }} </h1>
 </div>
 <div class="modal-body">
-    <form>
+    <form novalidate>
         <label>Timetable</label>
         <select class="form-control" ng-model="selectedItem" ng-options="timetable.id as timetable.name for timetable in timetables">
             <!-- <option ng-repeat="timetable in timetables" value="{{timetable.id}}">
