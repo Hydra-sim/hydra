@@ -200,44 +200,6 @@
         };
     });
 
-    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, $log, ticksToConsumeEntitiesList, type){
-
-        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
-        $scope.modalTitle = type;
-        $scope.options = [
-            {label: "Seconds", value: "1"},
-            {label: "Minutes", value: "2"},
-            {label: "Hours", value: "3"}
-        ];
-
-        $scope.submitConsumer = function(amountOfTime, timeSelectConsumer){
-
-            $log.info(amountOfTime);
-            $log.info(timeSelectConsumer.item.label);
-
-            var ticksToConsumeEntities = amountOfTime; // Seconds by default
-
-
-            if(timeSelectConsumer.item.label == "Minutes") { // Minutes
-
-                ticksToConsumeEntities *= 60;
-
-            } else if(timeSelectConsumer.item.label == "Hours") { // Hours
-
-                ticksToConsumeEntities *= 60 * 60;
-            }
-
-
-            $scope.ticksToConsumeEntitiesList.push(ticksToConsumeEntities);
-
-            $modalInstance.close();
-        };
-
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
 
 
     /**
@@ -433,6 +395,45 @@
                     }
                 }
             });
+        };
+    });
+
+    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, $log, ticksToConsumeEntitiesList, type){
+
+        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
+        $scope.modalTitle = type;
+        $scope.options = [
+            {label: "Seconds", value: "1"},
+            {label: "Minutes", value: "2"},
+            {label: "Hours", value: "3"}
+        ];
+
+        $scope.submitConsumer = function(amountOfTime, timeSelectConsumer){
+
+            $log.info(amountOfTime);
+            $log.info(timeSelectConsumer.item.label);
+
+            var ticksToConsumeEntities = amountOfTime; // Seconds by default
+
+
+            if(timeSelectConsumer.item.label == "Minutes") { // Minutes
+
+                ticksToConsumeEntities *= 60;
+
+            } else if(timeSelectConsumer.item.label == "Hours") { // Hours
+
+                ticksToConsumeEntities *= 60 * 60;
+            }
+
+
+            $scope.ticksToConsumeEntitiesList.push(ticksToConsumeEntities);
+
+            $modalInstance.close();
+        };
+
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
         };
     });
 

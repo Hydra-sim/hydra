@@ -70,7 +70,8 @@
             timetable.$save().then(function() {
                 $rootScope.$emit('updateTimetable');
             });
-            $modalInstance.close();
+
+                $modalInstance.close();
         };
 
         $scope.cancel = function () {
