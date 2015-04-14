@@ -2,12 +2,7 @@
 
     'use strict';
 
-    var app = angular.module('timetable', [
-        'ngRoute',
-        'services',
-        'ui.bootstrap',
-        'angularFileUpload'
-    ]);
+    var app = angular.module('unit.controllers');
 
     app.controller('TimetableCtrl', function($scope, $modal, $rootScope) {
         $rootScope.menu_field_button = "New Timetable";

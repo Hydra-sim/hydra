@@ -6,8 +6,6 @@
         'ngRoute',
         'unit.controllers',
         'graph',
-        'preset',
-        'timetable',
         'simulation'
     ]);
 

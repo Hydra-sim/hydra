@@ -2,12 +2,7 @@
 
     'use strict';
 
-    var app = angular.module('preset', [
-        'ngRoute',
-        'services',
-        'ui.bootstrap',
-        'angularFileUpload'
-    ]);
+    var app = angular.module('unit.controllers');
 
 
     app.controller('PresetCtrl', function($scope, $rootScope) {
