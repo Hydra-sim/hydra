@@ -441,4 +441,17 @@
         };
 
     });
+
+    app.controller(NewPassengerflowInstanceCtrl, function($scope, $modal, $modalInstance, $log){
+
+        $scope.submitPassengerflow =  function(){
+            
+            $modalInstance.close();
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+    });
 })();
