@@ -153,6 +153,9 @@
 
                     var drag = d3.behavior.drag()
                         .origin(function(d) { return d; })
+                        .on("dragstart", function() {
+                            d3.event.sourceEvent.stopPropagation();
+                        })
                         .on("drag", function(d) {
                             d.x = d3.event.x;
                             d.y = d3.event.y;
