@@ -144,31 +144,6 @@
 
     });
 
-    app.controller('SimulationListCtrl', function ($scope, Simulation, $location, $modal) {
-        $scope.simulations = Simulation.query({});
-
-        $scope.deleteSimulation = function(id) {
-
-            Simulation.delete({}, {"id": id}, function() {
-                $scope.simulations = Simulation.query({});
-            });
-
-        };
-
-        $scope.editSimulation = function(id, size) {
-
-            $modal.open({
-                templateUrl: 'passwordAuth.html',
-                controller: 'PasswordInstanceCtrl',
-                size: size,
-                resolve: {
-                    id: function() {
-                        return id;
-                    }
-                }
-            });
-        };
-    });
 
     app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, $location, Authentication, $log, $resource, $http, id) {
 
@@ -225,6 +200,94 @@
         };
     });
 
+    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, $log, ticksToConsumeEntitiesList, type, timeSelectConsumer){
+
+        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
+        $scope.modalTitle = type;
+        $scope.options = [
+            {label: "Seconds", value: "1"},
+            {label: "Minutes", value: "2"},
+            {label: "Hours", value: "3"}
+        ];
+
+        $scope.timeSelectConsumer = timeSelectConsumer;
+
+        $scope.submitConsumer = function(amountOfTime, timeSelectConsumer){
+
+            $log.info(amountOfTime);
+            $log.info(timeSelectConsumer.item.label);
+
+            var ticksToConsumeEntities = amountOfTime; // Seconds by default
+
+
+            if(timeSelectConsumer.item.label == "Minutes") { // Minutes
+
+                ticksToConsumeEntities *= 60;
+
+            } else if(timeSelectConsumer.item.label == "Hours") { // Hours
+
+                ticksToConsumeEntities *= 60 * 60;
+            }
+
+
+            $scope.ticksToConsumeEntitiesList.push(ticksToConsumeEntities);
+
+            $modalInstance.close();
+        };
+
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+    app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,
+                                                  Timetable, timetableIds, type) {
+        $scope.options = [
+            {label: "Seconds", value: "1"},
+            {label: "Minutes", value: "2"},
+            {label: "Hours", value: "3"}
+        ];
+
+        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
+
+        $scope.modalTitle = type;
+
+        $scope.submitConsumer = function (ticksToConsumeEntities) {
+
+            $scope.ticksToConsumeEntitiesList.push( ticksToConsumeEntities );
+
+            $modalInstance.close();
+        };
+
+        $scope.timetableIds = timetableIds;
+
+        function updateTimetableScope() {
+            $scope.timetables = Timetable.query({});
+        }
+        updateTimetableScope();
+
+        $scope.submitProducer = function () {
+            $scope.active = function() {
+                return $scope.timetables.filter(function(timetable){
+                    return timetable;
+                })[0];
+
+
+
+            };
+            $scope.timetableIds.push( $scope.active().id );
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+    /**
+     * WHY DO I GET AN ERROR IF I MOVE THIS INTO simulation/controllers.js????
+     */
     app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
         //Default values
         $scope.ticks = 60;
@@ -275,6 +338,9 @@
 
         $scope.addData = function() {
             var id = _.max($scope.dataset.nodes, function(node) { return node.id; }).id + 1;
+
+            console.log(id);
+
             $scope.dataset.nodes.push(
                 {type: "consumer", id: id, x: 400, y: 100}
             );
@@ -377,44 +443,32 @@
         };
     });
 
-    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, $log, ticksToConsumeEntitiesList, type, timeSelectConsumer){
+    /**
+     * WHY DO I GET AN ERROR IF I MOVE THIS INTO simulation/controllers.js????
+     */
+    app.controller('SimulationListCtrl', function ($scope, Simulation, $location, $modal) {
+        $scope.simulations = Simulation.query({});
 
-        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
-        $scope.modalTitle = type;
-        $scope.options = [
-            {label: "Seconds", value: "1"},
-            {label: "Minutes", value: "2"},
-            {label: "Hours", value: "3"}
-        ];
+        $scope.deleteSimulation = function(id) {
 
-        $scope.timeSelectConsumer = timeSelectConsumer;
+            Simulation.delete({}, {"id": id}, function() {
+                $scope.simulations = Simulation.query({});
+            });
 
-        $scope.submitConsumer = function(amountOfTime, timeSelectConsumer){
-
-            $log.info(amountOfTime);
-            $log.info(timeSelectConsumer.item.label);
-
-            var ticksToConsumeEntities = amountOfTime; // Seconds by default
-
-
-            if(timeSelectConsumer.item.label == "Minutes") { // Minutes
-
-                ticksToConsumeEntities *= 60;
-
-            } else if(timeSelectConsumer.item.label == "Hours") { // Hours
-
-                ticksToConsumeEntities *= 60 * 60;
-            }
-
-
-            $scope.ticksToConsumeEntitiesList.push(ticksToConsumeEntities);
-
-            $modalInstance.close();
         };
 
+        $scope.editSimulation = function(id, size) {
 
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
+            $modal.open({
+                templateUrl: 'passwordAuth.html',
+                controller: 'PasswordInstanceCtrl',
+                size: size,
+                resolve: {
+                    id: function() {
+                        return id;
+                    }
+                }
+            });
         };
     });
 
