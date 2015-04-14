@@ -9,16 +9,16 @@
         </div>
         <div class="form-group">
             <label>Amount of people</label>
-            <input type="number" class="form-control" ng-model="amountOfTimePassengerflow" min="0">
+            <input type="number" class="form-control" ng-model="timeBetweenArrivals" min="0">
             <label>Per</label>
-            <select class="form-control" ng-model="timeSelectPassengerflow.item" ng-options="opt as opt.label for opt in options">
+            <select class="form-control" ng-model="timeSelect.item" ng-options="opt as opt.label for opt in options">
             </select>
         </div>
     </form>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary"
-            ng-click="submitPassengerflow(numberOfPassengers, amountOfTimePassengerflow, timeSelectPassengerflow)"
+            ng-click="submitPassengerflow(numberOfPassengers, timeBetweenArrivals, timeSelect)"
             type="submit">Submit
     </button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
