@@ -9,11 +9,7 @@
         'angularFileUpload'
     ]);
 
-
-
     app.controller('ChoosePresetInstanceCtrl', function($scope, $modalInstance){
-
-
         $scope.loadPreset = function(preset){
 
             $modalInstance.close();
@@ -42,9 +38,6 @@
             $modalInstance.dismiss('cancel');
         };
     });
-
-
-
     app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, $log) {
         $scope.days = 0;
         $scope.hours = 1;

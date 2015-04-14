@@ -439,22 +439,6 @@
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-    });
 
-    app.controller('NewPassengerflowInstanceCtrl', function($scope, $modelInstance){
-        $scope.options = [
-            {label: "Seconds", value: "1"},
-            {label: "Minutes", value: "2"},
-            {label: "Hours", value: "3"}
-        ];
-
-        $scope.submitPassengerflow = function(){
-
-            $modelInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modelInstance.dismiss('cancel');
-        };
     });
 })();
