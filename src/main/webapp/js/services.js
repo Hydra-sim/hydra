@@ -52,4 +52,8 @@
         };
     });
 
+    app.factory('Authentication', ['$resource', function($resource) {
+        return $resource('api/auth');
+    }]);
+
 })();

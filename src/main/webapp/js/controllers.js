@@ -170,4 +170,292 @@
         };
     });
 
+    app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, $location, Authentication, $log, $resource, $http, id) {
+
+        $scope.id = id;
+
+        $scope.wrongPassword = false;
+
+        $scope.submitPassword = function(input){
+
+
+            var auth = new Authentication({
+                'input': input
+            });
+
+            auth.$save().then(function(result) {
+
+                //$location.path('/result');
+                //$location.replace();
+
+                $log.info(result.input);
+            });
+
+
+            //$location.path('/simulation/' + id);
+            //$location.replace();
+
+            // Resource.action([parameters], postData, [success], [error])
+
+            /*
+             var Auth = $resource('api/auth', {}, {
+
+             auth: {method: 'POST'}
+             });
+
+             $log.info(Auth.auth({}, {password: password}));
+             */
+
+            /*
+             $http.post('/api/auth', {"password": password})
+             .success(function(data, status, headers, config) {
+             $log.info(data);
+             if(data == "123") {
+             //$location.path('/simulation/' + id);
+             $modalInstance.close();
+             } else {
+             $scope.wrongPassword = true;
+             }
+             }
+             );*/
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
+        //Default values
+        $scope.ticks = 60;
+        $scope.ticksToConsumeEntitiesList = [];
+        $scope.timetableIds = [];
+
+        $scope.consumerGroupNames = [];
+        $scope.numberOfConsumersInGroups = [];
+        $scope.ticksToConsumeEntitiesGroups = [];
+
+        // For dropdown in add consumer/passengerflow
+        $scope.options = [];
+
+        menu_field_name.setValue("Untitled simulation");
+
+        $rootScope.menu_field_button = "Submit";
+        $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
+        $rootScope.menu_field_button_click = function() {
+            var sim = new Simulation({
+                'name':                             menu_field_name.value,
+                'ticks':                            $scope.ticks,
+                'ticksToConsumeEntitiesList' :      $scope.ticksToConsumeEntitiesList,
+                'timetableIds' :                    $scope.timetableIds,
+                'consumerGroupNames' :              $scope.consumerGroupNames,
+                'numberOfConsumersInGroups' :       $scope.numberOfConsumersInGroups,
+                'ticksToConsumeEntitiesGroups' :    $scope.ticksToConsumeEntitiesGroups
+            });
+
+            sim.$save().then(function(result) {
+                $location.path('/result');
+                $location.replace();
+
+                SimResult.data = result;
+            });
+        };
+
+        $scope.dataset = {
+            nodes: [
+                {type: "producer", id: 0, x: 100, y: 100},
+                {type: "producer", id: 1, x: 100, y: 300},
+                {type: "consumer", id: 2, x: 300, y: 300}
+            ],
+            edges: [
+                {source: 1, target: 0}
+            ]
+        };
+
+        $scope.addData = function() {
+            var id = _.max($scope.dataset.nodes, function(node) { return node.id; }).id + 1;
+            $scope.dataset.nodes.push(
+                {type: "consumer", id: id, x: 400, y: 100}
+            );
+        };
+
+        $scope.newProducer = function (type) {
+
+            $modal.open({
+                templateUrl: 'templates/modals/newProducer.html',
+                controller: 'ModalInstanceCtrl',
+                size: 'sm',
+                resolve: {
+                    ticksToConsumeEntitiesList: function () {
+                        return $scope.ticksToConsumeEntitiesList;
+                    },
+                    timetableIds: function () {
+                        return $scope.timetableIds;
+                    },
+                    type: function(){
+                        return type;
+                    }
+                }
+            });
+        };
+
+        $scope.newConsumer = function (type) {
+
+            $modal.open({
+                templateUrl: 'templates/modals/newConsumer.html',
+                controller: 'NewConsumerInstanceCtrl',
+                size: 'sm',
+                resolve: {
+
+                    //  ticksToConsumeEntitiesList, type, timeSelectConsumer
+                    ticksToConsumeEntitiesList: function () {
+                        return $scope.ticksToConsumeEntitiesList;
+                    },
+                    type: function(){
+                        $scope.type = type;
+                        return $scope.type;
+                    },
+                    timeSelectConsumer: function() {
+                        return $scope.timeSelectConsumer;
+                    }
+                }
+            });
+        };
+
+        $scope.newConsumerGroup = function() {
+
+            $modal.open({
+                templateUrl: 'templates/modals/newConsumerGroup.html',
+                controller: 'ConsumerGroupInstanceCtrl',
+                size: 'sm',
+                resolve: {
+                    consumerGroupNames: function () {
+                        return $scope.consumerGroupNames;
+                    },
+                    numberOfConsumersInGroups: function () {
+                        return $scope.numberOfConsumersInGroups;
+                    },
+                    ticksToConsumeEntitiesGroups: function() {
+                        return $scope.ticksToConsumeEntitiesGroups;
+                    }
+                }
+
+            });
+        };
+
+        $scope.newPassengerflow = function(){
+            $modal.open({
+                templateUrl: 'templates/modals/newPassengerflow.html',
+                controller: 'NewPassengerflowInstanceCtrl',
+                size: 'sm'
+            });
+        };
+
+        $scope.openConfigModal = function() {
+
+            var configModal = $modal.open({
+                templateUrl: 'templates/modals/configModal.html',
+                controller: 'ConfigModalInstanceCtrl',
+                size: 'sm'
+            });
+
+            configModal.result.then(function (ticks) {
+                $scope.ticks = ticks;
+            });
+        };
+
+        $scope.choosePreset = function(){
+            $modal.open({
+                templateUrl: 'templates/modals/choosePreset.html',
+                controller:  'ChoosePresetInstanceCtrl',
+                size: 'sm'
+            });
+        };
+    });
+
+    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, $log, ticksToConsumeEntitiesList, type, timeSelectConsumer){
+
+        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
+        $scope.modalTitle = type;
+        $scope.options = [
+            {label: "Seconds", value: "1"},
+            {label: "Minutes", value: "2"},
+            {label: "Hours", value: "3"}
+        ];
+
+        $scope.timeSelectConsumer = timeSelectConsumer;
+
+        $scope.submitConsumer = function(amountOfTime, timeSelectConsumer){
+
+            $log.info(amountOfTime);
+            $log.info(timeSelectConsumer.item.label);
+
+            var ticksToConsumeEntities = amountOfTime; // Seconds by default
+
+
+            if(timeSelectConsumer.item.label == "Minutes") { // Minutes
+
+                ticksToConsumeEntities *= 60;
+
+            } else if(timeSelectConsumer.item.label == "Hours") { // Hours
+
+                ticksToConsumeEntities *= 60 * 60;
+            }
+
+
+            $scope.ticksToConsumeEntitiesList.push(ticksToConsumeEntities);
+
+            $modalInstance.close();
+        };
+
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+    app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, ticksToConsumeEntitiesList,
+                                                  Timetable, timetableIds, type) {
+        $scope.options = [
+            {label: "Seconds", value: "1"},
+            {label: "Minutes", value: "2"},
+            {label: "Hours", value: "3"}
+        ];
+
+        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
+
+        $scope.modalTitle = type;
+
+        $scope.submitConsumer = function (ticksToConsumeEntities) {
+
+            $scope.ticksToConsumeEntitiesList.push( ticksToConsumeEntities );
+
+            $modalInstance.close();
+        };
+
+        $scope.timetableIds = timetableIds;
+
+        function updateTimetableScope() {
+            $scope.timetables = Timetable.query({});
+        }
+        updateTimetableScope();
+
+        $scope.submitProducer = function () {
+            $scope.active = function() {
+                return $scope.timetables.filter(function(timetable){
+                    return timetable;
+                })[0];
+
+
+
+            };
+            $scope.timetableIds.push( $scope.active().id );
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    })
+
 })();

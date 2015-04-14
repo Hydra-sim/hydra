@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h1 class="modal-title" ng-controller="SimulationNew"> {{ modalTitle }} </h1>
+    <h1 class="modal-title" ng-controller="SimulationNewCtrl"> {{ modalTitle }} </h1>
 </div>
 <div class="modal-body">
     <form>
@@ -13,7 +13,7 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary"
-            ng-click="submitProducer(entitesToProduce, startTickForProducer, timeBetweenBuses)" type="submit">Submit
+            ng-click="submitProducer(selectedItem)" type="submit">Submit
     </button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>
