@@ -496,7 +496,7 @@
 
     });
 
-    app.controller(NewPassengerflowInstanceCtrl, function($scope, $modal, $modalInstance, $log, numberOfPassangers, timeSelect){
+    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, $log, numberOfPassangers, timeSelect){
 
         $scope.numberOfPassangers = numberOfPassangers;
         $scope.timeSelect = timeSelect;
