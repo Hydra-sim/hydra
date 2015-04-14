@@ -2,12 +2,7 @@
 
     'use strict';
 
-    var app = angular.module('simulation', [
-        'ngRoute',
-        'services',
-        'ui.bootstrap',
-        'angularFileUpload'
-    ]);
+    var app = angular.module('unit.controllers');
 
     app.controller('ChoosePresetInstanceCtrl', function($scope, $modalInstance){
         $scope.loadPreset = function(preset){
