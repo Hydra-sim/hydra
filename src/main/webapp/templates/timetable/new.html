@@ -1,7 +1,7 @@
-<form novalidate>
+<form name="newTimetable">
     <div class="modal-header">
         <h1 class="modal-title">
-            <input type="text"  placeholder="name" ng-model="name" required />
+            <input type="text"  placeholder="name" ng-model="name" required=""/>
         </h1>
     </div>
     <div class="modal-body">
@@ -28,6 +28,6 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-        <button class="btn btn-default" ng-click="ok()" type="submit">Add</button>
+        <button class="btn btn-default" ng-click="ok()" type="submit" ng-disabled="newTimetable.$invalid" >Add</button>
     </div>
 </form>
