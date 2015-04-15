@@ -13,7 +13,7 @@
             <div class="vertical-scrollable">
                 <div class="row" ng-repeat="arrival in arrivals">
                     <div class="col-md-6">
-                        <timepicker id="arrivalTime" ng-model="arrivalTime" show-meridian="false"></timepicker>
+                        <timepicker id="arrivalTime" ng-model="arrival.time" show-meridian="false"></timepicker>
                     </div>
                     <div class="col-md-6">
                         <input type="text" class="form-control" ng-model="arrival.passengers"/>
