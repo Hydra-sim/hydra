@@ -7,9 +7,6 @@ import models.Producer;
 import models.Relationship;
 
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -65,7 +62,7 @@ public class Simulation {
         }
 
         // Create the simulation
-        models.Simulation sim = new models.Simulation(input.name, consumers, producers, consumerGroups, input.ticks);
+        models.Simulation sim = new models.Simulation(input.name, consumers, producers, consumerGroups, input.startTick, input.ticks);
 
         // Run the simulation
         sim.simulate();

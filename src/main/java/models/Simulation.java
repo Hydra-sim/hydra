@@ -26,6 +26,8 @@ import java.util.List;
 @javax.persistence.Entity
 public class Simulation
 {
+    @Transient
+    final int MIDNIGHT = 0;
     //region persistant attributes
     /**
      * An automatically generated id
@@ -63,6 +65,7 @@ public class Simulation
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Producer> producers;
 
+    private int startTick;
     private int ticks;
     private boolean preset;
     private boolean passwordProtected;
@@ -99,12 +102,26 @@ public class Simulation
         this(name, new Date(), consumers, consumerGroups, producers, ticks);
     }
 
-    public Simulation(String name, Date date, List<Consumer> consumers, List<ConsumerGroup> consumerGroups, List<Producer> producers, int ticks) {
+    public Simulation(String name, List<Consumer> consumers, List<Producer> producers, List<ConsumerGroup> consumerGroups,
+                      int startTick, int ticks) {
+
+        this(name, new Date(), consumers, consumerGroups, producers, startTick, ticks);
+    }
+
+    public Simulation(String name, Date date, List<Consumer> consumers, List<ConsumerGroup> consumerGroups,
+                      List<Producer> producers, int ticks) {
+
+        this(name, date, consumers, consumerGroups, producers, 0, ticks);
+    }
+
+    public Simulation(String name, Date date, List<Consumer> consumers, List<ConsumerGroup> consumerGroups,
+                      List<Producer> producers, int startTick, int ticks) {
         this.name = name;
         this.date = date;
         this.consumers = consumers;
         this.consumerGroups = consumerGroups;
         this.producers = producers;
+        this.startTick = startTick;
         this.ticks = ticks;
 
 
@@ -224,7 +241,7 @@ public class Simulation
 
         int maxWaitingTime = 0;
 
-        for(int i = 0; i < ticks; i++) {
+        for(int i = startTick; i < startTick + ticks; i++) {
 
             increaseWaitingTime();
 

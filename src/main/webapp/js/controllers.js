@@ -205,9 +205,25 @@
     /**
      * WHY DO I GET AN ERROR IF I MOVE THIS INTO simulation/controllers.js????
      */
-    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, $log, Simulation, SimResult, menu_field_name) {
+
+        $scope.updateTicks = function() {
+
+            $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
+            $scope.ticks = ($scope.endTime.getHours() * 60 * 60) + ($scope.endTime.getMinutes() * 60) - $scope.startTick;
+        };
+
         //Default values
-        $scope.ticks = 60;
+        $scope.startTime = new Date();
+        $scope.startTime.setHours(6);
+        $scope.startTime.setMinutes(0);
+
+        $scope.endTime = new Date();
+        $scope.endTime.setHours(8);
+        $scope.endTime.setMinutes(0);
+
+        $scope.updateTicks();
+
         $scope.ticksToConsumeEntitiesList = [];
         $scope.timetableIds = [];
 
@@ -228,6 +244,9 @@
         $rootScope.menu_field_button = "Submit";
         $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
         $rootScope.menu_field_button_click = function() {
+
+            $scope.updateTicks();
+
             var sim = new Simulation({
                 'name':                             menu_field_name.value,
                 'ticks':                            $scope.ticks,
@@ -352,11 +371,20 @@
             var configModal = $modal.open({
                 templateUrl: 'templates/modals/configModal.html',
                 controller: 'ConfigModalInstanceCtrl',
-                size: 'sm'
+                resolve: {
+                    startTime: function() {
+                        return $scope.startTime;
+                    },
+                    endTime: function() {
+                        return $scope.endTime;
+                    }
+                }
             });
 
-            configModal.result.then(function (ticks) {
-                $scope.ticks = ticks;
+            configModal.result.then(function (time) {
+                $scope.startTime = time.startTime;
+                $scope.endTime = time.endTime;
+                $scope.updateTicks();
             });
         };
 

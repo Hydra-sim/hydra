@@ -33,14 +33,15 @@
             $modalInstance.dismiss('cancel');
         };
     });
-    app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, $log) {
-        $scope.days = 0;
-        $scope.hours = 1;
-        $scope.minutes = 0;
+    app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, startTime, endTime) {
 
-        $scope.submitConfig = function (days, hours, minutes) {
-            var ticks = ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60));
-            $modalInstance.close(ticks);
+        $scope.startTime = startTime;
+        $scope.endTime = endTime;
+
+        $scope.submitConfig = function () {
+            var time = {startTime: $scope.startTime, endTime: $scope.endTime};
+
+            $modalInstance.close(time);
         };
 
         $scope.cancel = function () {
@@ -114,5 +115,4 @@
         $rootScope.menu_field_button_icon = "";
         $rootScope.menu_field_button_click = function() {};
     });
-
 })();

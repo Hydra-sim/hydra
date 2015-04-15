@@ -7,6 +7,7 @@ class InputValue {
 
     // Simulation
     public String name;
+    public int startTick;
     public int ticks;
 
     // Consumers (single)
