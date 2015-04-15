@@ -3,22 +3,20 @@
 </div>
 <div class="modal-body">
     <form novalidate>
-        <div class="form-group">
-
-            <label for="startTime">Start time</label>
-            <timepicker id="startTime" ng-model="startTime" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
-            <label for="endTime">End time</label>
-            <timepicker id="endTime" ng-model="endTime" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
-            <!--
-            <label for="days">Days</label>
-            <input type="number" id="days" class="form-control" ng-model="days" min="0"/>
-            <label for="hours">Hours</label>
-            <input type="number" id="hours" class="form-control" ng-model="hours" min="0"/>
-            <label for="minutes">Minutes</label>
-            <input type="number" id="minutes" class="form-control" ng-model="minutes" min="0"/>
-            -->
+        <div class="container-fluid">
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label for="startTime">Start time</label>
+                    <timepicker id="startTime" ng-model="startTime" show-meridian="false"></timepicker>
+                </div>
+                <div class="col-md-6">
+                    <label for="endTime">End time</label>
+                    <timepicker id="endTime" ng-model="endTime" show-meridian="false"></timepicker>
+                </div>
+            </div>
         </div>
     </form>
+
     <div class="modal-footer">
         <button class="btn btn-primary" ng-click="submitConfig(days, hours, minutes)" type="submit">Submit</button>
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>

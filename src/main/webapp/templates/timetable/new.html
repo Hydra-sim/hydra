@@ -13,10 +13,10 @@
             <div class="vertical-scrollable">
                 <div class="row" ng-repeat="arrival in arrivals">
                     <div class="col-md-6">
-                        <input type="text" class="form-control" ng-model="arrival.time" placeholder="00:00"/>
+                        <timepicker id="arrivalTime" ng-model="arrivalTime" show-meridian="false"></timepicker>
                     </div>
                     <div class="col-md-6">
-                        <input type="number" class="form-control" ng-model="arrival.passengers"/>
+                        <input type="text" class="form-control" ng-model="arrival.passengers"/>
                     </div>
                 </div>
             </div>
