@@ -144,7 +144,6 @@
 
     });
 
-
     app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, $location, Authentication, $log, $resource, $http, id) {
 
         $scope.id = id;
@@ -397,7 +396,7 @@
         };
     });
 
-    /**
+    /**sk
      * WHY DO I GET AN ERROR IF I MOVE THIS INTO simulation/controllers.js????
      */
     app.controller('SimulationListCtrl', function ($scope, Simulation, $location, $modal) {
@@ -426,106 +425,5 @@
         };
     });
 
-    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, $log, ticksToConsumeEntitiesList, type){
 
-        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
-        $scope.modalTitle = type;
-        $scope.options = [
-            {label: "Seconds", value: "1"},
-            {label: "Minutes", value: "2"},
-            {label: "Hours", value: "3"}
-        ];
-
-        $scope.submitConsumer = function(amountOfTime, timeSelectConsumer){
-
-            $log.info(amountOfTime);
-            $log.info(timeSelectConsumer.item.label);
-
-            var ticksToConsumeEntities = amountOfTime; // Seconds by default
-
-
-            if(timeSelectConsumer.item.label == "Minutes") { // Minutes
-
-                ticksToConsumeEntities *= 60;
-
-            } else if(timeSelectConsumer.item.label == "Hours") { // Hours
-
-                ticksToConsumeEntities *= 60 * 60;
-            }
-
-
-            $scope.ticksToConsumeEntitiesList.push(ticksToConsumeEntities);
-
-            $modalInstance.close();
-        };
-
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
-
-    app.controller('NewProducerInstanceCtrl', function($scope, $modalInstance, Timetable, timetableIds, $log, type){
-
-        $scope.timetableIds = timetableIds;
-        $scope.modalTitle = type;
-
-        function updateTimetableScope() {
-            $scope.timetables = Timetable.query({});
-        }
-        updateTimetableScope();
-
-        $scope.submitProducer = function(selectedItem){
-
-            /*Lage funksjon som finner og returnerer aktiv tidstabell id så pushe den inn i $scope.timetableIds liste*/
-
-            $log.info(selectedItem);
-            timetableIds.push(selectedItem);
-
-
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-
-    });
-
-    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, $log, totalNumberOfEntititesList, numberOfEntitiesList, timeBetweenArrivalsList){
-        $scope.totalNumberOfEntititesList = totalNumberOfEntititesList;
-        $scope.numberOfEntitiesList = numberOfEntitiesList;
-        $scope.timeBetweenArrivalsList = timeBetweenArrivalsList;
-
-        $scope.options = [
-            {label: "Seconds", value: "1"},
-            {label: "Minutes", value: "2"},
-            {label: "Hours", value: "3"}
-        ];
-
-        $scope.submitPassengerflow =  function(totalNumberOfEntities, numberOfEntities, timeBetweenArrivals , timeSelect){
-
-
-            $scope.totalNumberOfEntititesList.push(totalNumberOfEntities);
-            $scope.numberOfEntitiesList.push(numberOfEntities);
-
-
-
-            if(timeSelect.item.label == "Minutes"){
-                timeBetweenArrivals *= 60;
-            }
-            else if(timeSelect.item.label == "Hours"){
-                timeBetweenArrivals *= 60 * 60;
-            }
-
-            $scope.timeBetweenArrivalsList.push(timeBetweenArrivals);
-
-            $modalInstance.close();
-        }
-
-        $scope.cancel = function(){
-            $modalInstance.dismiss('cancel');
-        }
-
-    });
 })();
