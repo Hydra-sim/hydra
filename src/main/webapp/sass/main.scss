@@ -303,6 +303,48 @@ table{
   box-shadow: none;
 }
 
+.modal-body .timepicker {
+  margin-bottom: 10px !important;
+
+  &.timepicker--tiny {
+
+    .btn,
+    tr:first-child,
+    tr:nth-child( 3 ) {
+      display: none;
+    }
+  }
+
+  a {
+    margin: 0;
+  }
+
+  .btn {
+    height: 30px;
+    min-width: 100%;
+    margin: 0;
+
+    &,
+    &:hover {
+      background: transparent;
+      text-decoration: none;
+    }
+  }
+
+  input {
+    margin: 0;
+  }
+
+  td:nth-child( 2 ) {
+    font-size: 22px;
+  }
+}
+
+.multi-input-section {
+  margin-top: 10px;
+}
+
+
 h1 {
   font-size: 24px;
   font-family: "Avinor-bold";
@@ -449,29 +491,6 @@ a:hover{
   color: #84216b;
 }
 
-
-/*Timepicker on timetable and Run simulation modal*/
-
-table#arrivalTime, table#startTime, table#endTime {
-  width:100%;
-  margin-bottom: 0px !important;
-}
-
-table#arrivalTime tr {
-  width: 100%;
-}
-
-tr.text-center{
-  display: none;
-}
-
-td.form-group{
-  width: 50% !important;
-}
-
-.btn-link{
-  display: none;
-}
 
 /*HELP FUNCTION*/
 
