@@ -48,7 +48,6 @@ header {
   margin-left: -20px;
 }
 
-
 .tabMenu{
   margin-top: 20px;
   width:100%;
@@ -302,47 +301,6 @@ table{
   background-color: #1d1d1d;
   color: #ffffff;
   box-shadow: none;
-}
-
-.modal-body .timepicker {
-  margin-bottom: 10px !important;
-
-  &.timepicker--tiny {
-
-    .btn,
-    tr:first-child,
-    tr:nth-child( 3 ) {
-      display: none;
-    }
-  }
-
-  a {
-    margin: 0;
-  }
-
-  .btn {
-    height: 30px;
-    min-width: 100%;
-    margin: 0;
-
-    &,
-    &:hover {
-      background: transparent;
-      text-decoration: none;
-    }
-  }
-
-  input {
-    margin: 0;
-  }
-
-  td:nth-child( 2 ) {
-    font-size: 22px;
-  }
-}
-
-.multi-input-section {
-  margin-top: 10px;
 }
 
 h1 {
