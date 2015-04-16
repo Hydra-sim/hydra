@@ -377,12 +377,12 @@ h6 {
 }
 
 p{
-  font-size: 12px;
+  font-size: 14px;
   font-family: arial, sans-serif ;
   color: #1d1d1d;
 }
 
-a {
+  a {
   color: #84216b;
   text-decoration: none;
 }
@@ -446,6 +446,10 @@ a:hover{
   margin: 0px 0px 10px 0px;
 }
 
+.modal-body .col-md-6.ng-binding {
+  text-align: left;
+}
+
 .modal-footer{
   text-align: center;
 }
@@ -455,6 +459,7 @@ a:hover{
 }
 
 .modal-header .modal-title input{
+  width: 100%;
   font-family: "Avinor-bold";
   font-size: 24px;
   text-align: center;
@@ -483,7 +488,7 @@ a:hover{
 
 .modal-body .container-fluid a{
   float: right;
-  margin-right: 20px;
+  margin-right: 0px;
 }
 
 .modal-body .container-fluid a:hover{
@@ -663,4 +668,12 @@ a:hover{
   background-color: #c6c8ca;
   color: #000000;
   text-decoration: none;
+}
+
+
+/*RESULT PAGE*/
+
+.result-container{
+  width:100%;
+  text-align: center;
 }
