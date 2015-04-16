@@ -371,6 +371,7 @@
             var configModal = $modal.open({
                 templateUrl: 'templates/modals/configModal.html',
                 controller: 'ConfigModalInstanceCtrl',
+                size: 'sm',
                 resolve: {
                     startTime: function() {
                         return $scope.startTime;

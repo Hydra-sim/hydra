@@ -1,4 +1,4 @@
-<form name="newTimetable">
+<form name="newTimetable" novalidate="true">
     <div class="modal-header">
         <h1 class="modal-title">
             <input type="text"  placeholder="name" ng-model="name" required=""/>
@@ -10,17 +10,17 @@
                 <div class="col-md-6"><span>Arrival</span></div>
                 <div class="col-md-6"><span>Passengers</span></div>
             </div>
-            <div class="vertical-scrollable">
+            <div class="multi-input-section">
                 <div class="row" ng-repeat="arrival in arrivals">
                     <div class="col-md-6">
-                        <timepicker id="arrivalTime" ng-model="arrival.time" show-meridian="false"></timepicker>
+                        <timepicker class="timepicker timepicker--tiny" id="arrivalTime" ng-model="arrival.time" show-meridian="false"></timepicker>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" ng-model="arrival.passengers"/>
+                        <input type="text" class="form-control text-center" ng-model="arrival.passengers"/>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row text-center">
                 <div class="col-md-6">Arrivals: {{arrivals.length}}</span></div>
                 <div class="col-md-6"><a href="" ng-click="addLine()">New line</a></div>
             </div>

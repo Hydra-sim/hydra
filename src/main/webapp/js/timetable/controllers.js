@@ -10,7 +10,8 @@
         $rootScope.menu_field_button_click = function() {
             $modal.open({
                 templateUrl: 'templates/timetable/new.html',
-                controller: 'TimetableNewCtrl'
+                controller:  'TimetableNewCtrl',
+                size:        'sm'
             });
         };
     });
