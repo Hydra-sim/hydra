@@ -182,8 +182,9 @@
             $scope.id = id;
             $scope.message = message;
 
+
         $scope.copySimulation = function(){
-            angular.copy(message);
+
             $modalInstance.close();
         }
 
@@ -482,7 +483,7 @@
                         return id;
                     },
                     message: function(){
-                        return path + 'simulation/' + id;
+                        return 'www.pj6000.me/hydra/#' + path + 'simulation/' + id;
                     }
                 }
             });
