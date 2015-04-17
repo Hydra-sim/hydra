@@ -144,7 +144,7 @@
 
     });
 
-    app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, $location, Authentication, $log, $resource, $http, id) {
+    app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, id, func, Authentication) {
 
         $scope.id = id;
 
@@ -159,11 +159,17 @@
 
             auth.$save().then(function(result) {
 
-                //$location.path('/result');
-                //$location.replace();
+                if(result.truefalse) {
 
-                $log.info(result);
+                    func(id);
+                    $modalInstance.close();
+
+                } else {
+
+                    $scope.wrongPassword = true;
+                }
             });
+
         };
 
         $scope.cancel = function () {
@@ -376,9 +382,20 @@
     app.controller('SimulationListCtrl', function ($scope, $log, Simulation, $location, $modal) {
         $scope.simulations = Simulation.query({});
 
-        $scope.auth = function(id, func) {
+        $scope.auth = function(id, funcDesc) {
 
             Simulation.get({}, {'id': id}, function(result) {
+
+                var func;
+
+                switch (funcDesc) {
+                    case 'edit':
+                        func = $scope.editSimulation;
+                        break;
+                    case 'delete':
+                        func = $scope.deleteSimulation;
+                        break;
+                }
 
                 if (result.passwordProtected) {              // It does really find it
 
@@ -389,19 +406,16 @@
                         resolve: {
                             id: function () {
                                 return id;
+                            },
+                            func: function() {
+                                return func;
                             }
                         }
                     });
+
                 } else {
 
-                    switch (func) {
-                        case 'edit':
-                            $scope.editSimulation(id);
-                            break;
-                        case 'delete':
-                            $scope.deleteSimulation(id);
-                            break;
-                    }
+                    func(id);
                 }
             });
         };
