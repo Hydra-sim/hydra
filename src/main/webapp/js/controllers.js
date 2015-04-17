@@ -177,15 +177,14 @@
         };
     });
 
-    app.controller('ShareSimulationInstanceCtrl', function($scope, $modalInstance, $location, id, message){
-
+    app.controller('ShareSimulationInstanceCtrl', function($scope, $modalInstance, $location, $log, id, message){
             $scope.id = id;
             $scope.message = message;
 
-
         $scope.copySimulation = function(){
+            $log.info($scope.message);
 
-            $modalInstance.close();
+            $scope.message.select();
         }
 
         $scope.cancel = function(){
