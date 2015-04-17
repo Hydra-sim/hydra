@@ -8,14 +8,16 @@
         'graph',
         'simulation',
         'zeroclpboard'
-    ]).config(['uiZeroclipConfigProvider', function(uiZeroclipConfigProvider) {
+    ]);
 
-            // config ZeroClipboard
-            uiZeroclipConfigProvider.setZcConf({
-                swfPath: '../bower_components/zeroclipboard/dist/ZeroClipboard.swf'
-            });
+    app.config(['uiZeroclipConfigProvider', function(uiZeroclipConfigProvider) {
 
-        }]);
+        // config ZeroClipboard
+        uiZeroclipConfigProvider.setZcConf({
+            swfPath: 'vendor/zeroclipboard/dist/ZeroClipboard.swf'
+        });
+
+    }]);
 
     app.config(function ($routeProvider) {
         $routeProvider
