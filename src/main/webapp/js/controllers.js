@@ -6,7 +6,8 @@
         'ngRoute',
         'services',
         'ui.bootstrap',
-        'angularFileUpload'
+        'angularFileUpload',
+        'zeroclipboard'
     ]);
 
     app.controller('ApplicationCtrl', function($scope, $rootScope, $location, menu_field_name) {

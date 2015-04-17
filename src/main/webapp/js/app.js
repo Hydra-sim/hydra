@@ -6,8 +6,16 @@
         'ngRoute',
         'unit.controllers',
         'graph',
-        'simulation'
-    ]);
+        'simulation',
+        'zeroclpboard'
+    ]).config(['uiZeroclipConfigProvider', function(uiZeroclipConfigProvider) {
+
+            // config ZeroClipboard
+            uiZeroclipConfigProvider.setZcConf({
+                swfPath: '../bower_components/zeroclipboard/dist/ZeroClipboard.swf'
+            });
+
+        }]);
 
     app.config(function ($routeProvider) {
         $routeProvider
