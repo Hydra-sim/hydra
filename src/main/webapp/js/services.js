@@ -21,6 +21,12 @@
         return $resource('api/preset/:presetId', {presetId: '@id'});
     }]);
 
+
+    app.factory('Authentication', ['$resource', function($resource) {
+        return $resource('api/auth/');
+    }]);
+
+
     app.factory('SimResult', function() {
         return {
             data: {}
@@ -51,9 +57,5 @@
             }
         };
     });
-
-    app.factory('Authentication', ['$resource', function($resource) {
-        return $resource('api/auth');
-    }]);
 
 })();
