@@ -14,7 +14,7 @@
                     <p class="title_date_tr">{{simulation.date | date}}</p>
                 </td>
                 <td class="text-right">
-                    <button class="btn btn-default">Share</button>
+                    <button class="btn btn-default" ng-click="shareSimulation(simulation.id)">Share</button>
                     <button class="btn btn-default">Compare</button>
                     <button class="btn btn-danger" ng-click="auth(simulation.id, 'delete')">Delete</button>
                     <button class="btn btn-icon" ng-class="{active: hasPassord}">

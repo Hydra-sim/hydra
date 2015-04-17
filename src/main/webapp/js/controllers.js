@@ -171,7 +171,20 @@
         };
     });
 
+    app.controller('ShareSimulationInstanceCtrl', function($scope, $modalInstance, $location, id){
 
+            $scope.id = id;
+            var path =   $location.path('/simulation/' + id);
+
+        $scope.copySimulation = function(){
+
+            $modalInstance.close();
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('close');
+        }
+    });
 
     /**
      * WHY DO I GET AN ERROR IF I MOVE THIS INTO simulation/controllers.js????
@@ -419,6 +432,20 @@
             $location.path('/simulation/' + id);
 
         };
+
+        $scope.shareSimulation = function(id) {
+
+            $modal.open({
+                templateUrl: 'templates/modals/shareSimulation.html',
+                controller: 'ShareSimulationInstanceCtrl',
+                size: 'sm',
+                resolve: {
+                    id: function(){
+                        return $scope.id;
+                    }
+                }
+            });
+        }
     });
 
 })();
