@@ -2,10 +2,13 @@
     <h1 class="modal-tittle">SHARE SIMULATION</h1>
 </div>
 <div class="modal-body">
-    <input class="form-control copy" type="text" ng-model="{{message}}"/>
-    <span ng-show="copied">The sentence "This was your text: {{ message }}" was copied!</span>
+    <input class="form-control copy" type="text" ng-model="message"/>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ui-zeroclip zeroclip-copied="copied=true">Copy</button>
+    <button class="btn btn-primary" ng-click="copySimulation()"
+            ui-zeroclip
+            zeroclip-copied="complete($event)"
+            zeroclip-on-error="clipError($event)"
+            zeroclip-model="message">Copy</button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>
