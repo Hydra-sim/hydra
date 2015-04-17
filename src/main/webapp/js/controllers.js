@@ -422,6 +422,20 @@
 
         $scope.deleteSimulation = function(id) {
 
+            $modal.open({
+                templateUrl: 'confirmation.html',
+                controller: 'PasswordInstanceCtrl',
+                size: 'sm',
+                resolve: {
+                    id: function () {
+                        return id;
+                    },
+                    func: function() {
+                        return func;
+                    }
+                }
+            });
+
             Simulation.delete({}, {"id": id}, function () {
                 $scope.simulations = Simulation.query({});
             });
