@@ -18,7 +18,7 @@
                     <button class="btn btn-default" ng-click="auth(simulation.id, 'edit')">Edit</button>
                     <button class="btn btn-danger" ng-click="auth(simulation.id, 'delete')">Delete</button>
 
-                    <button class="btn btn-icon" ng-class="{locked: simulation.passwordProtected}">
+                    <button class="btn btn-icon" ng-class="{locked: simulation.passwordProtected}" ng-click="auth(simulation.id, 'setPassword')">
                         <span class="fa fa-lock"></span>
                     </button>
                 </td>

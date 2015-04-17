@@ -395,12 +395,20 @@
                     case 'delete':
                         func = $scope.deleteSimulation;
                         break;
+                    case 'show':
+                        func = $scope.showSimulation;
+                        break;
+                    case 'setPassword':
+                        func = $scope.setPassword;
+                        break;
+                    default:
+                        func = null;
                 }
 
-                if (result.passwordProtected) {              // It does really find it
+                if (result.passwordProtected) {              // It really does find it
 
                     $modal.open({
-                        templateUrl: 'passwordAuth.html',
+                        templateUrl: 'templates/modals/passwordAuth.html',
                         controller: 'PasswordInstanceCtrl',
                         size: 'sm',
                         resolve: {
@@ -447,6 +455,44 @@
             $location.path('/simulation/' + id);
 
         };
+
+        $scope.showSimulation = function(id) {
+
+            $location.path('/show/' + id);
+        };
+
+        $scope.setPassword = function(id) {
+
+            $modal.open({
+
+                templateUrl: 'templates/modals/newPassword.html',
+                size: 'sm',
+                controller: 'SetPasswordCtrl',
+                resolve: {
+                    id: function () {
+                        return id;
+                    }
+                }
+            });
+        };
+    });
+
+    app.controller('SetPasswordCtrl', function( $scope, $modalInstance, id ) {
+
+        $scope.passwordMismatch = false;
+
+        $scope.submit = function( password, repPassword ) {
+
+            if(password == repPassword) {
+
+                // TODO: Persist password
+                $modalInstance.close();
+
+            } else {
+
+                $scope.passwordMismatch = true;
+            }
+        }
     });
 
 })();
