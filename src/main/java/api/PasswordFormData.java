@@ -5,5 +5,6 @@ package api;
  */
 public class PasswordFormData {
 
+    public int id;
     public String input;
 }

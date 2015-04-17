@@ -152,8 +152,8 @@
 
         $scope.submitPassword = function(input){
 
-
             var auth = new Authentication({
+                'id':    id,
                 'input': input
             });
 
@@ -162,36 +162,8 @@
                 //$location.path('/result');
                 //$location.replace();
 
-                $log.info(result.input);
+                $log.info(result);
             });
-
-
-            //$location.path('/simulation/' + id);
-            //$location.replace();
-
-            // Resource.action([parameters], postData, [success], [error])
-
-            /*
-             var Auth = $resource('api/auth', {}, {
-
-             auth: {method: 'POST'}
-             });
-
-             $log.info(Auth.auth({}, {password: password}));
-             */
-
-            /*
-             $http.post('/api/auth', {"password": password})
-             .success(function(data, status, headers, config) {
-             $log.info(data);
-             if(data == "123") {
-             //$location.path('/simulation/' + id);
-             $modalInstance.close();
-             } else {
-             $scope.wrongPassword = true;
-             }
-             }
-             );*/
         };
 
         $scope.cancel = function () {
@@ -399,32 +371,54 @@
 
     /**sk
      * WHY DO I GET AN ERROR IF I MOVE THIS INTO simulation/controllers.js????
+     * TODO: Because simulation/list.html doesn't know about simulation/controller.js?
      */
-    app.controller('SimulationListCtrl', function ($scope, Simulation, $location, $modal) {
+    app.controller('SimulationListCtrl', function ($scope, $log, Simulation, $location, $modal) {
         $scope.simulations = Simulation.query({});
+
+        $scope.auth = function(id, func) {
+
+            Simulation.get({}, {'id': id}, function(result) {
+
+                if (result.passwordProtected) {              // It does really find it
+
+                    $modal.open({
+                        templateUrl: 'passwordAuth.html',
+                        controller: 'PasswordInstanceCtrl',
+                        size: 'sm',
+                        resolve: {
+                            id: function () {
+                                return id;
+                            }
+                        }
+                    });
+                } else {
+
+                    switch (func) {
+                        case 'edit':
+                            $scope.editSimulation(id);
+                            break;
+                        case 'delete':
+                            $scope.deleteSimulation(id);
+                            break;
+                    }
+                }
+            });
+        };
 
         $scope.deleteSimulation = function(id) {
 
-            Simulation.delete({}, {"id": id}, function() {
+            Simulation.delete({}, {"id": id}, function () {
                 $scope.simulations = Simulation.query({});
             });
 
         };
 
-        $scope.editSimulation = function(id, size) {
+        $scope.editSimulation = function(id) {
 
-            $modal.open({
-                templateUrl: 'passwordAuth.html',
-                controller: 'PasswordInstanceCtrl',
-                size: size,
-                resolve: {
-                    id: function() {
-                        return id;
-                    }
-                }
-            });
+            $location.path('/simulation/' + id);
+
         };
     });
-
 
 })();

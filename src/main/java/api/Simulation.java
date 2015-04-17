@@ -40,7 +40,7 @@ public class Simulation {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(InputValue input)
     {
-        List<Relationship> relationships =      new ArrayList<>();
+        List<Relationship> relationships = new ArrayList<>();
         List<Producer> producers;
 
         try {

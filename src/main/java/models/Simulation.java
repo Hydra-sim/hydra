@@ -4,6 +4,7 @@ import helpers.ConsumerHelper;
 import helpers.NodeHelper;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -132,8 +133,8 @@ public class Simulation
         distributeWeightProducers();
 
         preset = false;
-        passwordProtected = true;
-        password = "password";
+        passwordProtected = false;
+        password = null;
     }
     //endregion
 
@@ -210,7 +211,7 @@ public class Simulation
         return passwordProtected;
     }
 
-    public void setPasswordProtected(boolean passwordProtected) {
+    private void setPasswordProtected(boolean passwordProtected) {
         this.passwordProtected = passwordProtected;
     }
 
@@ -219,7 +220,10 @@ public class Simulation
     }
 
     public void setPassword(String password) {
-        this.password = password;
+
+        String hash = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.password = hash;
+        setPasswordProtected(true);
     }
 
     //endregion
