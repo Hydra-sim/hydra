@@ -177,13 +177,13 @@
         };
     });
 
-    app.controller('ShareSimulationInstanceCtrl', function($scope, $modalInstance, $location, id){
+    app.controller('ShareSimulationInstanceCtrl', function($scope, $modalInstance, $location, id, message){
 
             $scope.id = id;
-            var path =   $location.path('/simulation/' + id);
+            $scope.message = message;
 
         $scope.copySimulation = function(){
-
+            angular.copy(message);
             $modalInstance.close();
         }
 
@@ -471,13 +471,18 @@
 
         $scope.shareSimulation = function (id) {
 
+            var path = $location.url();
+
             $modal.open({
                 templateUrl: 'templates/modals/shareSimulation.html',
                 controller: 'ShareSimulationInstanceCtrl',
                 size: 'sm',
                 resolve: {
                     id: function () {
-                        return $scope.id;
+                        return id;
+                    },
+                    message: function(){
+                        return path + 'simulation/' + id;
                     }
                 }
             });
