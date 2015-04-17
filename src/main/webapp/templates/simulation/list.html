@@ -8,16 +8,16 @@
             </tr>
             <tr ng-repeat="simulation in simulations">
                 <td>
-                    <a ng-click="auth(simulation.id, 'edit')" class="title_date_tr">{{simulation.name}}</a>
+                    <a ng-click="auth(simulation.id, 'show')" class="title_date_tr">{{simulation.name}}</a>
                 </td>
                 <td>
                     <p class="title_date_tr">{{simulation.date | date}}</p>
                 </td>
                 <td class="text-right">
                     <button class="btn btn-default" ng-click="shareSimulation(simulation.id)">Share</button>
-                    <button class="btn btn-default">Compare</button>
+                    <button class="btn btn-default" ng-click="auth(simulation.id, 'edit')">Edit</button>
                     <button class="btn btn-danger" ng-click="auth(simulation.id, 'delete')">Delete</button>
-                    <button class="btn btn-icon" ng-class="{active: hasPassord}">
+                    <button class="btn btn-icon" ng-class="{locked: simulation.passwordProtected}" ng-click="auth(simulation.id, 'setPassword')">
                         <span class="fa fa-lock"></span>
                     </button>
                 </td>
@@ -25,25 +25,3 @@
         </tbody>
     </table>
 </div>
-
-<script type="text/ng-template" id="passwordAuth.html">
-    <div class="modal-header">
-        <h3>Please enter password</h3>
-    </div>
-    <div class="modal-body">
-        <form novalidate>
-            <div class="form-group">
-                <label for="simulationPassword">This simulation is protected by a password. To access the simulation,
-                                                please enter the password below.</label>
-                <input type='password' id="simulationPassword" class="form-control" ng-model="simulationPassword"/>
-                <div class="alert alert-danger" ng-show="wrongPassword">
-                    Password not valid
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="submitPassword(simulationPassword)" type="submit">Submit</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-    </div>
-</script>

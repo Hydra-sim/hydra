@@ -144,7 +144,7 @@
 
     });
 
-    app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, $location, Authentication, $log, $resource, $http, id) {
+    app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, id, func, Authentication) {
 
         $scope.id = id;
 
@@ -159,11 +159,17 @@
 
             auth.$save().then(function(result) {
 
-                //$location.path('/result');
-                //$location.replace();
+                if(result.truefalse) {
 
-                $log.info(result);
+                    func(id);
+                    $modalInstance.close();
+
+                } else {
+
+                    $scope.wrongPassword = true;
+                }
             });
+
         };
 
         $scope.cancel = function () {
@@ -389,37 +395,67 @@
     app.controller('SimulationListCtrl', function ($scope, $log, Simulation, $location, $modal) {
         $scope.simulations = Simulation.query({});
 
-        $scope.auth = function(id, func) {
+        $scope.auth = function (id, funcDesc) {
 
-            Simulation.get({}, {'id': id}, function(result) {
+            Simulation.get({}, {'id': id}, function (result) {
 
-                if (result.passwordProtected) {              // It does really find it
+                var func;
+
+                switch (funcDesc) {
+                    case 'edit':
+                        func = $scope.editSimulation;
+                        break;
+                    case 'delete':
+                        func = $scope.deleteSimulation;
+                        break;
+                    case 'show':
+                        func = $scope.showSimulation;
+                        break;
+                    case 'setPassword':
+                        func = $scope.setPassword;
+                        break;
+                    default:
+                        func = null;
+                }
+
+                if (result.passwordProtected) {              // It really does find it
 
                     $modal.open({
-                        templateUrl: 'passwordAuth.html',
+                        templateUrl: 'templates/modals/passwordAuth.html',
                         controller: 'PasswordInstanceCtrl',
                         size: 'sm',
                         resolve: {
                             id: function () {
                                 return id;
+                            },
+                            func: function () {
+                                return func;
                             }
                         }
                     });
+
                 } else {
 
-                    switch (func) {
-                        case 'edit':
-                            $scope.editSimulation(id);
-                            break;
-                        case 'delete':
-                            $scope.deleteSimulation(id);
-                            break;
-                    }
+                    func(id);
                 }
             });
         };
 
-        $scope.deleteSimulation = function(id) {
+        $scope.deleteSimulation = function (id) {
+
+            $modal.open({
+                templateUrl: 'confirmation.html',
+                controller: 'PasswordInstanceCtrl',
+                size: 'sm',
+                resolve: {
+                    id: function () {
+                        return id;
+                    },
+                    func: function () {
+                        return func;
+                    }
+                }
+            });
 
             Simulation.delete({}, {"id": id}, function () {
                 $scope.simulations = Simulation.query({});
@@ -427,24 +463,65 @@
 
         };
 
-        $scope.editSimulation = function(id) {
+        $scope.editSimulation = function (id) {
 
             $location.path('/simulation/' + id);
 
         };
 
-        $scope.shareSimulation = function(id) {
+        $scope.shareSimulation = function (id) {
 
             $modal.open({
                 templateUrl: 'templates/modals/shareSimulation.html',
                 controller: 'ShareSimulationInstanceCtrl',
                 size: 'sm',
                 resolve: {
-                    id: function(){
+                    id: function () {
                         return $scope.id;
                     }
                 }
             });
+
+        };
+
+        $scope.showSimulation = function (id) {
+
+            $location.path('/show/' + id);
+        };
+
+        $scope.setPassword = function (id) {
+
+            $modal.open({
+
+                templateUrl: 'templates/modals/newPassword.html',
+                size: 'sm',
+                controller: 'SetPasswordCtrl',
+                resolve: {
+                    id: function () {
+                        return id;
+                    }
+                }
+            });
+        };
+
+    });
+
+    app.controller('SetPasswordCtrl', function( $scope, $modalInstance, id ) {
+
+        $scope.passwordMismatch = false;
+
+        $scope.submit = function( password, repPassword ) {
+
+            if(password == repPassword) {
+
+                // TODO: Persist password
+                $modalInstance.close();
+
+            } else {
+
+                $scope.passwordMismatch = true;
+            }
+
         }
     });
 
