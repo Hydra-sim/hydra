@@ -58,4 +58,18 @@
         };
     });
 
+    app.factory('Session', function($http) {
+
+        var Session = {
+            data: {
+                ids: []
+            },
+            updateSession: function() {
+                Session.data = $http.get('session.json').then(function(r) { return r.data;});
+            }
+        };
+
+        Session.updateSession();
+        return Session;
+    });
 })();

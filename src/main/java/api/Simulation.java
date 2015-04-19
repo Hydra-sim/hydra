@@ -218,4 +218,25 @@ public class Simulation {
 
         return Response.ok().build();
     }
+
+    @Transactional
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("set/password")
+    public Response updatePassword(PasswordFormData data)
+    {
+        try {
+
+            models.Simulation simulation = simulationDao.get( data.id );
+            simulation.setPassword( data.input );
+            simulationDao.update(simulation);
+
+        } catch (Exception e) {
+
+            return Response.serverError().build();
+        }
+
+        return Response.ok().build();
+    }
 }

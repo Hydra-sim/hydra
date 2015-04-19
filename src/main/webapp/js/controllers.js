@@ -144,7 +144,7 @@
         $scope.isCollapsed = true;
 
     });
-
+    
     app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, id, func, Authentication) {
 
         $scope.id = id;
@@ -455,24 +455,26 @@
 
         $scope.deleteSimulation = function (id) {
 
-            $modal.open({
-                templateUrl: 'confirmation.html',
-                controller: 'PasswordInstanceCtrl',
-                size: 'sm',
-                resolve: {
-                    id: function () {
-                        return id;
-                    },
-                    func: function () {
-                        return func;
-                    }
-                }
+            var modalInstance = $scope.confirmation();
+
+            modalInstance.result.then(function (selectedItem) {
+                Simulation.delete({}, {"id": id}, function () {
+                    $scope.simulations = Simulation.query({});
+                });
+            });
+        };
+
+        $scope.confirmation = function() {
+
+            $scope.confirmed = false;
+
+            var modalInstance = $modal.open({
+                templateUrl: 'templates/modals/confirmation.html',
+                controller: 'ConfirmationInstanceCtrl',
+                size: 'sm'
             });
 
-            Simulation.delete({}, {"id": id}, function () {
-                $scope.simulations = Simulation.query({});
-            });
-
+            return modalInstance;
         };
 
         $scope.editSimulation = function (id) {
@@ -508,22 +510,47 @@
 
         $scope.setPassword = function (id) {
 
-            $modal.open({
+            Simulation.get({}, {'id': id}, function (result) {
 
-                templateUrl: 'templates/modals/newPassword.html',
-                size: 'sm',
-                controller: 'SetPasswordCtrl',
-                resolve: {
-                    id: function () {
-                        return id;
-                    }
+                if (result.passwordProtected) {              // It really does find it
+
+                    $modal.open({
+                        templateUrl: 'templates/modals/changePassword.html',
+                        controller: 'ChangePasswordCtrl',
+                        size: 'sm',
+                        resolve: {
+                            id: function () {
+                                return id;
+                            }
+                        }
+                    });
+
+                } else {
+
+                    $modal.open({
+                        templateUrl: 'templates/modals/newPassword.html',
+                        controller: 'NewPasswordCtrl',
+                        size: 'sm',
+                        resolve: {
+                            id: function () {
+                                return id;
+                            }
+                        }
+                    });
                 }
             });
         };
 
+        $scope.newPassword = function( id ) {
+
+        };
+
+        $scope.changePassword = function( id ) {
+
+        };
     });
 
-    app.controller('SetPasswordCtrl', function( $scope, $modalInstance, id ) {
+    app.controller('NewPasswordCtrl', function( $scope, $modalInstance, id, Simulation ) {
 
         $scope.passwordMismatch = false;
 
@@ -531,7 +558,14 @@
 
             if(password == repPassword) {
 
-                // TODO: Persist password
+                var sim = new Simulation({
+                    'id':    id,
+                    'input': password
+                });
+
+                sim.$$url = "set/password";
+                sim.$save();
+
                 $modalInstance.close();
 
             } else {
@@ -539,7 +573,62 @@
                 $scope.passwordMismatch = true;
             }
 
+        };
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss();
+        };
+    });
+
+    app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, id, func, Authentication) {
+
+        $scope.id = id;
+
+        $scope.wrongPassword = false;
+
+        $scope.submitPassword = function(input){
+
+            var auth = new Authentication({
+                'id':    id,
+                'input': input
+            });
+
+            auth.$save().then(function(result) {
+
+                if(result.truefalse) {
+
+                    func(id);
+                    $modalInstance.close();
+
+                } else {
+
+                    $scope.wrongPassword = true;
+                }
+            });
+
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+    app.controller('ConfirmationInstanceCtrl', function($scope, $modalInstance) {
+
+        $scope.confirm = function(){
+
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function() {
+
+            $modalInstance.dismiss();
         }
+    });
+
+    app.controller('ChangePasswordCtrl', function($scope, $modalInstance) {
+
+
     });
 
 })();
