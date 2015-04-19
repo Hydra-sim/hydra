@@ -1,6 +1,7 @@
 package helpers;
 
 import models.Consumer;
+import models.ConsumerGroup;
 import models.Simulation;
 
 /**
@@ -28,6 +29,12 @@ public class SimulationHelper {
         return maxWaitingTime;
     }
 
+    /**
+     *
+     *
+     * @param simulation
+     * @param nodeHelper
+     */
     public void distributeWeight(Simulation simulation, NodeHelper nodeHelper) {
 
         // Distribute weigh producers
@@ -36,4 +43,47 @@ public class SimulationHelper {
         // Distribute weight consumers
         simulation.getConsumers().forEach(nodeHelper::distributeWeightIfNotSpecified);
     }
+
+    /**
+     *
+     * @param simulation
+     * @return
+     */
+    public int getEntitesConsumed(Simulation simulation) {
+
+        int entitiesConsumed = 0;
+
+        for(Consumer consumer : simulation.getConsumers()) {
+            entitiesConsumed += consumer.getEntitesConsumed().size();
+        }
+
+        for(ConsumerGroup consumerGroup : simulation.getConsumerGroups()) {
+
+            for(Consumer consumer : consumerGroup.getConsumers()) {
+
+                entitiesConsumed += consumer.getEntitesConsumed().size();
+            }
+        }
+
+        return entitiesConsumed;
+    }
+
+
+    public int getEntitiesInQueue(Simulation simulation) {
+
+        int entitiesInQueue = 0;
+
+        for(Consumer consumer : simulation.getConsumers()) {
+
+            entitiesInQueue += consumer.getEntitesInQueue().size();
+        }
+
+        for(ConsumerGroup consumerGroup : simulation.getConsumerGroups()) {
+
+            entitiesInQueue += consumerGroup.getEntitesInQueue().size();
+        }
+
+        return entitiesInQueue;
+    }
+
 }

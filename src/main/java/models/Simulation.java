@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.ejb.EJB;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -259,7 +258,9 @@ public class Simulation
 
         for(int i = simulation.startTick; i < simulation.startTick + simulation.ticks; i++) {
 
-            simulation.increaseWaitingTime();
+            // Increase waiting time
+            for(Consumer consumer : simulation.consumers)
+                simulation.consumerHelper.increaseWaitingTime(consumer);
 
             simulation.addEntitiesFromProducer(i);
 
@@ -271,7 +272,13 @@ public class Simulation
 
         }
 
-        simulation.setResult(new SimulationResult(simulation.getEntitesConsumed(), simulation.getEntitiesInQueue(), maxWaitingTime));
+        simulation.setResult(
+                new SimulationResult(
+                        simulation.simulationHelper.getEntitesConsumed(simulation),
+                        simulation.simulationHelper.getEntitiesInQueue(simulation),
+                        maxWaitingTime
+                )
+        );
     }
 
     //region simulation methods
@@ -422,50 +429,6 @@ public class Simulation
         }
     }
 
-    /**
-     * Increases the waiting time of all the entities that have not been consumed by 1.
-     */
-    private void increaseWaitingTime() {
-
-        for(Consumer consumer : consumers)
-            consumerHelper.increaseWaitingTime(consumer, 1);
-    }
-
-    private int getEntitiesInQueue() {
-
-        int entitiesInQueue = 0;
-
-        for(Consumer consumer : consumers) {
-
-            entitiesInQueue += consumer.getEntitesInQueue().size();
-        }
-
-        for(ConsumerGroup consumerGroup : consumerGroups) {
-
-            entitiesInQueue += consumerGroup.getEntitesInQueue().size();
-        }
-
-        return entitiesInQueue;
-    }
-
-    private int getEntitesConsumed() {
-
-        int entitiesConsumed = 0;
-
-        for(Consumer consumer : consumers) {
-            entitiesConsumed += consumer.getEntitesConsumed().size();
-        }
-
-        for(ConsumerGroup consumerGroup : consumerGroups) {
-
-            for(Consumer consumer : consumerGroup.getConsumers()) {
-
-                entitiesConsumed += consumer.getEntitesConsumed().size();
-            }
-        }
-
-        return entitiesConsumed;
-    }
 
     //endregion
 

@@ -41,6 +41,15 @@ public class ConsumerHelper {
     }
 
     /**
+     * Increases the registered waiting time for entities in queue on a consumer by 1
+     *
+     * @param con the consumer on which the entities are queueing
+     */
+    public static void increaseWaitingTime(Consumer con) {
+        increaseWaitingTime(con, 1);
+    }
+
+    /**
      * Moves as many entities as consumer can consume from queue to consumed
      *
      * @param con the consumer on which the entities are to be moved
