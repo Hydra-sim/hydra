@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mindrot.jbcrypt.BCrypt;
 
+import javax.ejb.EJB;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;

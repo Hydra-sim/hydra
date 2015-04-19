@@ -3,12 +3,14 @@ package helpers;
 import models.Consumer;
 import models.Entity;
 
+import javax.ejb.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A manager with helper method(s) for {@link models.Consumer}
  */
+@Singleton
 public class ConsumerHelper {
 
     /**
