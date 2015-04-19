@@ -436,7 +436,7 @@
                 {type: "consumer", id: 2, x: 300, y: 300}
             ],
             edges: [
-                {source: 1, target: 0}
+                {source: {id: 1}, target: {id: 0}}
             ]
         };
 
