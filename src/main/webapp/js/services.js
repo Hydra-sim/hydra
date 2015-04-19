@@ -7,7 +7,10 @@
     ]);
 
     app.factory('Simulation', ['$resource', function($resource) {
-        return $resource('api/simulation/:simulationId', {simulationId: '@id'});
+        return $resource('api/simulation/:simulationId', {simulationId: '@id'},
+            {
+                'update': { method: 'PUT' }
+            });
     }]);
 
     app.factory('Timetable', ['$resource', function($resource) {
