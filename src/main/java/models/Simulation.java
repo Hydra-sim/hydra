@@ -130,13 +130,11 @@ public class Simulation
         this.startTick = startTick;
         this.ticks = ticks;
 
-
         consumerHelper = new ConsumerHelper();
         nodeHelper = new NodeHelper();
         simulationHelper = new SimulationHelper();
 
-        distributeWeightConsumers();
-        distributeWeightProducers();
+        simulationHelper.distributeWeight(this, nodeHelper);
 
         preset = false;
         passwordProtected = false;
@@ -429,11 +427,8 @@ public class Simulation
      */
     private void increaseWaitingTime() {
 
-
-        for(int i = 0; i < consumers.size(); i++) {
-
-            consumerHelper.increaseWaitingTime(consumers.get(i), 1);
-        }
+        for(Consumer consumer : consumers)
+            consumerHelper.increaseWaitingTime(consumer, 1);
     }
 
     private int getEntitiesInQueue() {
@@ -458,7 +453,6 @@ public class Simulation
         int entitiesConsumed = 0;
 
         for(Consumer consumer : consumers) {
-
             entitiesConsumed += consumer.getEntitesConsumed().size();
         }
 
@@ -473,21 +467,6 @@ public class Simulation
         return entitiesConsumed;
     }
 
-    private void distributeWeightProducers() {
-
-        for (int i = 0; i < producers.size(); i++) {
-
-            nodeHelper.distributeWeightIfNotSpecified(producers.get(i));
-        }
-    }
-
-    private void distributeWeightConsumers() {
-
-        for(int i = 0; i < consumers.size(); i++) {
-
-            nodeHelper.distributeWeightIfNotSpecified(consumers.get(i));
-        }
-    }
     //endregion
 
     //endregion

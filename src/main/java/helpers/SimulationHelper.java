@@ -27,4 +27,13 @@ public class SimulationHelper {
 
         return maxWaitingTime;
     }
+
+    public void distributeWeight(Simulation simulation, NodeHelper nodeHelper) {
+
+        // Distribute weigh producers
+        simulation.getProducers().forEach(nodeHelper::distributeWeightIfNotSpecified);
+
+        // Distribute weight consumers
+        simulation.getConsumers().forEach(nodeHelper::distributeWeightIfNotSpecified);
+    }
 }
