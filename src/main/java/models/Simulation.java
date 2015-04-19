@@ -221,9 +221,17 @@ public class Simulation
 
     public void setPassword(String password) {
 
-        String hash = BCrypt.hashpw(password, BCrypt.gensalt());
-        this.password = hash;
-        setPasswordProtected(true);
+        if( password != null ) {
+
+            String hash = BCrypt.hashpw( password, BCrypt.gensalt() );
+            this.password = hash;
+            setPasswordProtected( true );
+
+        } else {
+
+            setPasswordProtected( false );
+            this.password = password;
+        }
     }
 
     //endregion

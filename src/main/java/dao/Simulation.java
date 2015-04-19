@@ -63,4 +63,12 @@ public class Simulation {
         models.Simulation item = entityManager.find(models.Simulation.class, id);
         entityManager.remove(item);
     }
+
+    /**
+     * TODO: Comment
+     */
+    public void update(models.Simulation simulation) throws Exception
+    {
+        entityManager.merge(simulation);
+    }
 }
