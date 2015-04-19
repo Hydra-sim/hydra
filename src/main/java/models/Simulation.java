@@ -2,6 +2,7 @@ package models;
 
 import helpers.ConsumerHelper;
 import helpers.NodeHelper;
+import helpers.SimulationHelper;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mindrot.jbcrypt.BCrypt;
@@ -81,6 +82,9 @@ public class Simulation
 
     @Transient
     NodeHelper nodeHelper;
+
+    @Transient
+    SimulationHelper simulationHelper;
     //endregion
 
     //region constructors
@@ -129,6 +133,7 @@ public class Simulation
 
         consumerHelper = new ConsumerHelper();
         nodeHelper = new NodeHelper();
+        simulationHelper = new SimulationHelper();
 
         distributeWeightConsumers();
         distributeWeightProducers();
@@ -250,48 +255,29 @@ public class Simulation
      *
      * @return A {@link models.SimulationResult} object with entities consumed, entities left in queue and max waiting time.
      */
-    public void simulate() {
+    public static void simulate(Simulation simulation) {
 
         int maxWaitingTime = 0;
 
-        for(int i = startTick; i < startTick + ticks; i++) {
+        for(int i = simulation.startTick; i < simulation.startTick + simulation.ticks; i++) {
 
-            increaseWaitingTime();
+            simulation.increaseWaitingTime();
 
-            addEntitiesFromProducer(i);
+            simulation.addEntitiesFromProducer(i);
 
-            addEntitiesFromConsumers();
+            simulation.addEntitiesFromConsumers();
 
-            consumeEntities();
+            simulation.consumeEntities();
 
-            maxWaitingTime = calculateWaitingTime(maxWaitingTime);
+            maxWaitingTime = simulation.simulationHelper.calculateWaitingTime(simulation, simulation.consumerHelper, maxWaitingTime);
 
         }
 
-        setResult(new SimulationResult(getEntitesConsumed(), getEntitiesInQueue(), maxWaitingTime));
+        simulation.setResult(new SimulationResult(simulation.getEntitesConsumed(), simulation.getEntitiesInQueue(), maxWaitingTime));
     }
 
     //region simulation methods
 
-    /**
-     * Checks which entity has the longest waiting time registered on it, and checks if this is higher than the highest
-     * waiting time registered so far in the simulation.
-     *
-     * @param maxWaitingTime The largest of the registered waiting times so far in the simulation
-     *
-     * @return Whichever value is largest of the registered waiting times so far in the simulation and the highest
-     *         waiting time of the entities registered on the entities list.
-     */
-    private int calculateWaitingTime(int maxWaitingTime) {
-
-        for(Consumer consumer : consumers) {
-
-            int waitingTime = consumerHelper.getMaxWaitingTime(consumer);
-            if(waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
-        }
-
-        return maxWaitingTime;
-    }
 
     /**
      * Takes the list of entities and deletes them from the list of entities according to the number and strength of

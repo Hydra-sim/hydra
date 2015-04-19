@@ -65,7 +65,7 @@ public class Simulation {
         models.Simulation sim = new models.Simulation(input.name, consumers, producers, consumerGroups, input.startTick, input.ticks);
 
         // Run the simulation
-        sim.simulate();
+        models.Simulation.simulate(sim);
 
         // Persist the simulation, with results, to the database
         simulationDao.add(sim);
