@@ -6,7 +6,8 @@
         'ngRoute',
         'services',
         'ui.bootstrap',
-        'angularFileUpload'
+        'angularFileUpload',
+        'zeroclipboard'
     ]);
 
     app.controller('ApplicationCtrl', function($scope, $rootScope, $location, menu_field_name) {
@@ -143,14 +144,58 @@
         $scope.isCollapsed = true;
 
     });
+    
+    app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, id, func, Authentication) {
 
-    app.controller('ShareSimulationInstanceCtrl', function($scope, $modalInstance, $location, id, message){
+        $scope.id = id;
 
-            $scope.id = id;
-            $scope.message = message;
+        $scope.wrongPassword = false;
+
+        $scope.submitPassword = function(input){
+
+            var auth = new Authentication({
+                'id':    id,
+                'input': input
+            });
+
+            auth.$save().then(function(result) {
+
+                if(result.truefalse) {
+
+                    func(id);
+                    $modalInstance.close();
+
+                } else {
+
+                    $scope.wrongPassword = true;
+                }
+            });
+
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+    app.controller('ShareSimulationInstanceCtrl', function($scope, $modalInstance, $location, $log, id, message){
+
+        $scope.id = id;
+        $scope.message = message;
 
         $scope.copySimulation = function(){
-            angular.copy(message);
+
+            $scope.complete = function(e) {
+                console.log('copy complete', e);
+                $scope.copied = true
+            };
+            $scope.$watch('input', function(v) {
+                $scope.copied = false
+            });
+            $scope.clipError = function(e) {
+                console.log('Error: ' + e.name + ' - ' + e.message);
+            };
+
             $modalInstance.close();
         }
 
@@ -451,7 +496,7 @@
                         return id;
                     },
                     message: function(){
-                        return path + 'simulation/' + id;
+                        return 'www.pj6000.me/hydra/#' + path + 'simulation/' + id;
                     }
                 }
             });

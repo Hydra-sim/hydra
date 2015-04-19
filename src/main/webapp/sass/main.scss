@@ -434,7 +434,6 @@ a:hover{
 /* MODAL */
 
 .modal-content{
-  background-color: #f0f1f3;
   border: none;
   border-radius: 0px;
 }
@@ -501,6 +500,16 @@ a:hover{
   color: #84216b;
 }
 
+
+.copyModal{
+  background-color: transparent;
+}
+
+.copyModal span{
+  float: right;
+  display:inline-block;;
+  margin-right: 10px;
+}
 
 /*HELP FUNCTION*/
 
