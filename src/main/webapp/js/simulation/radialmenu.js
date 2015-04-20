@@ -16,28 +16,21 @@
             transclude: true,
 
             scope: {
-                graphClass: '@',
                 control: '='
             },
 
             // observe and manipulate the DOM
             link : function(scope, element, attrs) {
 
-                var consts = {
-                    menuButtonClass: '.menu-button',
-                    outerCircleClass: '.outer-circle',
-                    graphClass: scope.graphClass || '.graph'
-                };
-
                 scope.internalControl = scope.control || {};
                 scope.internalControl.close = close;
                 scope.internalControl.getlastpos = getlastpos;
 
                 var circularMenu    = element[0];
-                var openBtn         = document.querySelector(consts.menuButtonClass);
-                var outerCircle     = document.querySelector(consts.outerCircleClass);
-                var graph           = document.querySelector(consts.graphClass);
-                var items           = document.querySelectorAll('.outer-circle .circle');
+                var graph           = circularMenu.parentNode;
+                var openBtn         = circularMenu.querySelector('.menu-button');
+                var outerCircle     = circularMenu.querySelector('.outer-circle');
+                var items           = circularMenu.querySelectorAll('.outer-circle .circle');
 
                 for (var i = 0, l = items.length; i < l; i++) {
                     items[i].style.left = (50 - 35 * Math.cos(-0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
