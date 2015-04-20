@@ -4,9 +4,12 @@ import models.Producer;
 import models.Timetable;
 import models.TimetableEntry;
 
+import javax.ejb.Singleton;
+
 /**
- * A manager with helper method(s) for {@link models.Producer}
+ * A helper with helper method(s) for {@link models.Producer}
  */
+@Singleton
 public class ProducerHelper {
 
     /**

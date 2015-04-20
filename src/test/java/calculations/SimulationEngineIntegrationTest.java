@@ -47,7 +47,7 @@ public class SimulationEngineIntegrationTest {
 
         Simulation simulation = intializeSimulation(producer, consumer, 1);
 
-        simulation.simulate();
+        simulation.simulate(simulation);
 
         // Assert that there is a queue
 
@@ -75,7 +75,7 @@ public class SimulationEngineIntegrationTest {
 
         Simulation simulation = intializeSimulation(producer, consumer, 1);
 
-        simulation.simulate();
+        simulation.simulate(simulation);
 
         // Assert that entites have been consumed
 
@@ -123,7 +123,7 @@ public class SimulationEngineIntegrationTest {
     public void testSimulateEqualAmountProducedAndConsumed() throws Exception{
 
         Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(1, 1, 0, 1, 10);
-        simulation.simulate();
+        simulation.simulate(simulation);
         assertEquals(0, simulation.getResult().getEntitiesInQueue());
     }
 
@@ -131,7 +131,7 @@ public class SimulationEngineIntegrationTest {
     public void testSimulateMoreProducedThanConsumed() throws Exception{
 
         Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(1, 2, 0, 1, 10);
-        simulation.simulate();
+        simulation.simulate(simulation);
         assertTrue(simulation.getResult().getEntitiesInQueue() > 0);
     }
 
@@ -139,7 +139,7 @@ public class SimulationEngineIntegrationTest {
     public void testSimulateMoreConsumedThanProduced() throws Exception{
 
         Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(2, 1, 0, 1, 1);
-        simulation.simulate();
+        simulation.simulate(simulation);
         assertEquals(0, simulation.getResult().getEntitiesInQueue());
     }
 
@@ -150,7 +150,7 @@ public class SimulationEngineIntegrationTest {
         int ticksBetweenArrival = 10;
 
         Simulation simulation = setUpStandardSimulationOneProducerOneConsumer(1, 10, 0, ticksBetweenArrival, ticks);
-        simulation.simulate();
+        simulation.simulate(simulation);
 
         assertEquals(0, simulation.getResult().getEntitiesInQueue());
         assertTrue(simulation.getResult().getMaxWaitingTimeInTicks() > 0);
@@ -194,7 +194,7 @@ public class SimulationEngineIntegrationTest {
 
         long start = System.currentTimeMillis();
 
-        simulation.simulate();
+        simulation.simulate(simulation);
 
         System.out.println((System.currentTimeMillis() - start));
     }
@@ -218,7 +218,7 @@ public class SimulationEngineIntegrationTest {
 
         long start = System.currentTimeMillis();
 
-        sim.simulate();
+        sim.simulate(sim);
 
         System.out.println((System.currentTimeMillis() - start));
     }
@@ -265,7 +265,7 @@ public class SimulationEngineIntegrationTest {
         // Simulation (with no regular consumers)
 
         Simulation simulation = new Simulation("Test Simulation", consumers, producers, consumerGroups, 10);
-        simulation.simulate();
+        simulation.simulate(simulation);
 
         assertTrue(simulation.getResult().getEntitiesConsumed() > 0);
         assertTrue(simulation.getConsumers().get(0).getEntitesConsumed().size() > 0);
@@ -276,7 +276,7 @@ public class SimulationEngineIntegrationTest {
     private void testSimulateWeight(double weight1, double weight2, int ticks) {
 
         Simulation simulation = setUpStandardSimulationOneProducerTwoConsumers(1, 1, 0, 1, ticks, weight1, weight2);
-        simulation.simulate();
+        simulation.simulate(simulation);
 
         ConsumerHelper con = new ConsumerHelper();
         assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulation.getConsumers().get(0)), 0.0);

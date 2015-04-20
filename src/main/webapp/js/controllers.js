@@ -546,7 +546,8 @@
         }
     });
 
-    app.controller('ChangePasswordCtrl', function( $scope, $modalInstance, $log, $rootScope, $location, id, Simulation ) {
+    app.controller('ChangePasswordCtrl', function( $scope, $modalInstance, id, Simulation ) {
+
 
         $scope.passwordMismatch = false;
 

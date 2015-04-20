@@ -3,11 +3,13 @@ package helpers;
 import models.Node;
 import models.Relationship;
 
+import javax.ejb.Singleton;
 import java.util.List;
 
 /**
  * A manager with helper method(s) for {@link models.Node}
  */
+@Singleton
 public class NodeHelper {
 
     /**

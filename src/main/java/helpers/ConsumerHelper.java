@@ -3,12 +3,14 @@ package helpers;
 import models.Consumer;
 import models.Entity;
 
+import javax.ejb.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A manager with helper method(s) for {@link models.Consumer}
  */
+@Singleton
 public class ConsumerHelper {
 
     /**
@@ -36,6 +38,15 @@ public class ConsumerHelper {
 
             entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + ticks);
         }
+    }
+
+    /**
+     * Increases the registered waiting time for entities in queue on a consumer by 1
+     *
+     * @param con the consumer on which the entities are queueing
+     */
+    public static void increaseWaitingTime(Consumer con) {
+        increaseWaitingTime(con, 1);
     }
 
     /**

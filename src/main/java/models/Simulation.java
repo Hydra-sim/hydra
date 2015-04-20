@@ -2,6 +2,7 @@ package models;
 
 import helpers.ConsumerHelper;
 import helpers.NodeHelper;
+import helpers.SimulationHelper;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mindrot.jbcrypt.BCrypt;
@@ -80,6 +81,9 @@ public class Simulation
 
     @Transient
     NodeHelper nodeHelper;
+
+    @Transient
+    SimulationHelper simulationHelper;
     //endregion
 
     //region constructors
@@ -125,12 +129,11 @@ public class Simulation
         this.startTick = startTick;
         this.ticks = ticks;
 
-
         consumerHelper = new ConsumerHelper();
         nodeHelper = new NodeHelper();
+        simulationHelper = new SimulationHelper();
 
-        distributeWeightConsumers();
-        distributeWeightProducers();
+        simulationHelper.distributeWeight(this, nodeHelper);
 
         preset = false;
         passwordProtected = false;
@@ -249,48 +252,37 @@ public class Simulation
      *
      * @return A {@link models.SimulationResult} object with entities consumed, entities left in queue and max waiting time.
      */
-    public void simulate() {
+    public static void simulate(Simulation simulation) {
 
         int maxWaitingTime = 0;
 
-        for(int i = startTick; i < startTick + ticks; i++) {
+        for(int i = simulation.startTick; i < simulation.startTick + simulation.ticks; i++) {
 
-            increaseWaitingTime();
+            // Increase waiting time
+            for(Consumer consumer : simulation.consumers)
+                simulation.consumerHelper.increaseWaitingTime(consumer);
 
-            addEntitiesFromProducer(i);
+            simulation.addEntitiesFromProducer(i);
 
-            addEntitiesFromConsumers();
+            simulation.addEntitiesFromConsumers();
 
-            consumeEntities();
+            simulation.consumeEntities();
 
-            maxWaitingTime = calculateWaitingTime(maxWaitingTime);
+            maxWaitingTime = simulation.simulationHelper.calculateWaitingTime(simulation, simulation.consumerHelper, maxWaitingTime);
 
         }
 
-        setResult(new SimulationResult(getEntitesConsumed(), getEntitiesInQueue(), maxWaitingTime));
+        simulation.setResult(
+                new SimulationResult(
+                        simulation.simulationHelper.getEntitesConsumed(simulation),
+                        simulation.simulationHelper.getEntitiesInQueue(simulation),
+                        maxWaitingTime
+                )
+        );
     }
 
     //region simulation methods
 
-    /**
-     * Checks which entity has the longest waiting time registered on it, and checks if this is higher than the highest
-     * waiting time registered so far in the simulation.
-     *
-     * @param maxWaitingTime The largest of the registered waiting times so far in the simulation
-     *
-     * @return Whichever value is largest of the registered waiting times so far in the simulation and the highest
-     *         waiting time of the entities registered on the entities list.
-     */
-    private int calculateWaitingTime(int maxWaitingTime) {
-
-        for(Consumer consumer : consumers) {
-
-            int waitingTime = consumerHelper.getMaxWaitingTime(consumer);
-            if(waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
-        }
-
-        return maxWaitingTime;
-    }
 
     /**
      * Takes the list of entities and deletes them from the list of entities according to the number and strength of
@@ -416,13 +408,13 @@ public class Simulation
         // If the consumer has any entities to send
         if(sender.getEntitesConsumed().size() != 0) {
 
-            // Number of entities already sent to the recieving consumer
-            int recieved = consumerHelper.getTotalSentToConsumer(relationship.getChild());
+            // Number of entities already sent to the receiving consumer
+            int received = consumerHelper.getTotalSentToConsumer(relationship.getChild());
 
-            // The percentage of entites already sent from our sending consumer to the recieving consumer
-            double currentWeight = (double) recieved / sender.getEntitiesTransfered();
+            // The percentage of entities already sent from our sending consumer to the receiving consumer
+            double currentWeight = (double) received / sender.getEntitiesTransfered();
 
-            // Checks if the percentage already sent to the recieving consumer is equal or greater to what it should
+            // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
             // have, and runs the code if either this is true, or it is the first entity sent from the sending
             // consumer
             if(currentWeight <= relationship.getWeight() || sender.getEntitiesTransfered() == 0) {
@@ -437,70 +429,7 @@ public class Simulation
         }
     }
 
-    /**
-     * Increases the waiting time of all the entities that have not been consumed by 1.
-     */
-    private void increaseWaitingTime() {
 
-
-        for(int i = 0; i < consumers.size(); i++) {
-
-            consumerHelper.increaseWaitingTime(consumers.get(i), 1);
-        }
-    }
-
-    private int getEntitiesInQueue() {
-
-        int entitiesInQueue = 0;
-
-        for(Consumer consumer : consumers) {
-
-            entitiesInQueue += consumer.getEntitesInQueue().size();
-        }
-
-        for(ConsumerGroup consumerGroup : consumerGroups) {
-
-            entitiesInQueue += consumerGroup.getEntitesInQueue().size();
-        }
-
-        return entitiesInQueue;
-    }
-
-    private int getEntitesConsumed() {
-
-        int entitiesConsumed = 0;
-
-        for(Consumer consumer : consumers) {
-
-            entitiesConsumed += consumer.getEntitesConsumed().size();
-        }
-
-        for(ConsumerGroup consumerGroup : consumerGroups) {
-
-            for(Consumer consumer : consumerGroup.getConsumers()) {
-
-                entitiesConsumed += consumer.getEntitesConsumed().size();
-            }
-        }
-
-        return entitiesConsumed;
-    }
-
-    private void distributeWeightProducers() {
-
-        for (int i = 0; i < producers.size(); i++) {
-
-            nodeHelper.distributeWeightIfNotSpecified(producers.get(i));
-        }
-    }
-
-    private void distributeWeightConsumers() {
-
-        for(int i = 0; i < consumers.size(); i++) {
-
-            nodeHelper.distributeWeightIfNotSpecified(consumers.get(i));
-        }
-    }
     //endregion
 
     //endregion

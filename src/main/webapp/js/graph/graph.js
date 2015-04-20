@@ -49,7 +49,7 @@
                     function removeEdgeWithSourceOrTargetId(id) {
                         scope.$apply(function() {
                             scope.edges = _.reject(scope.edges, function (obj) {
-                                return obj.source == id || obj.target == id;
+                                return obj.source.id == id || obj.target.id == id;
                             });
                         });
                         update();
@@ -58,7 +58,7 @@
                     function removeEdge(targetAndSourceID) {
                         scope.$apply(function() {
                             scope.edges = _.reject(scope.edges, function (obj) {
-                                return obj.source == targetAndSourceID.source && obj.target == targetAndSourceID.target;
+                                return obj.source.id == targetAndSourceID.source.id && obj.target.id == targetAndSourceID.target.id;
                             });
                         });
                         update();
@@ -66,7 +66,7 @@
 
                     function addEdge(source, target) {
                         scope.$apply(function() {
-                            scope.edges.push({ "source": source, "target": target });
+                            scope.edges.push({ "source": {"id": source}, "target": {"id": target} });
                         });
                         update();
                     }
@@ -218,11 +218,11 @@
                         function transformFunction(d){return "translate(" + d.x + "," + d.y + ")";}
 
                         // update existing paths
-                        paths = paths.data(scope.edges, function(d){ return "" + d.source + "+" + d.target; });
+                        paths = paths.data(scope.edges, function(d){ return "" + d.source.id + "+" + d.target.id; });
 
                         function d(d) {
-                            var source = _.findWhere(scope.nodes, { id: d.source });
-                            var target = _.findWhere(scope.nodes, { id: d.target });
+                            var source = _.findWhere(scope.nodes, { id: d.source.id });
+                            var target = _.findWhere(scope.nodes, { id: d.target.id });
                             return "M" + source.x + "," + source.y + "L" + target.x + "," + target.y;
                         }
 
