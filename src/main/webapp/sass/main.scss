@@ -264,9 +264,8 @@ table{
 
 /*BUTTON STYLES*/
 
-.btn, .btn-default, .btn-danger{
+.btn, .btn-default, .btn-danger, .btn-warning, .btn-info, .btn-primary{
   min-width: 80px;
-  background-color: #c6c8ca;
   text-align: center;
   font-family: "Avinor";
   font-size: 14px;
@@ -281,6 +280,13 @@ table{
   -ms-border-radius: 0px;
   box-shadow: none;
 }
+.btn-default, .btn-primary{
+  background-color: #c6c8ca;
+}
+
+.btn-danger{
+  color: #fff;
+}
 
 .btn-icon {
   background: transparent;
@@ -294,6 +300,7 @@ table{
   }
 
 }
+
 
 .btn-icon:hover{
   background: transparent !important;
