@@ -1,12 +1,7 @@
 <button class="btn btn-default" ng-click="openConfigModal()">Configure simulation</button>
 <button class="btn btn-default" ng-click="newConsumerGroup()">Add Consumer-Group</button>
 <button class="btn btn-default" ng-click="choosePreset()">Choose Preset</button>
-<p>
-    {{ticksToConsumeEntitiesList.length}} consumers,
-    {{consumerGroupNames.length}} consumer-groups,
-    {{timetableIds.length}} producers,
-    {{ticks}} ticks
-</p>
+
 <graph nodes="dataset.nodes" edges="dataset.edges" height="500px" control="control">
     <radialmenu control="control">
         <radialbutton icon="fa-train" color="purple" ng-click="newProducer('NEW TRAIN')"></radialbutton>
@@ -18,7 +13,7 @@
         <radialbutton icon="i" color="azure" ng-click="addData()">P</radialbutton>
     </radialmenu>
 </graph>
-<div ng-include src=" 'templates/simulation/simulationProgressBar.html' "></div>
+
 <p>
     Drag a node to move it.
     Scroll too zoom working area, drag working area too move around.
@@ -26,4 +21,7 @@
     Click shift+backspace to delete selected edge / selected node and all connected edges.
     Shift+drag from one node to another to add an edge.
 </p>
+
+<!--<div ng-include src=" 'templates/simulation/simulationProgressBar.html' "></div>-->
+
 <div ng-include src="'templates/simulation/help-simulation.html'"></div>
