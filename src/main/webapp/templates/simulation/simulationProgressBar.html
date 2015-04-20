@@ -1,0 +1,7 @@
+<form ng-controller="SimulationProgressCtrl" class="progressBar">
+    <p class="labels">
+        {{startTime.toLocaleTimeString()}}
+        <span style="float: right">{{endTime.toLocaleTimeString()}}</span>
+    </p>
+    <input type="range" name="points" min="{{startTime}}" max="{{endTime}}">
+</form>

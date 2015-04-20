@@ -635,4 +635,9 @@
         }
     });
 
+    app.controller('SimulationProgressCtrl', function($log) {
+
+        $log.info("Hello");
+    });
+
 })();
