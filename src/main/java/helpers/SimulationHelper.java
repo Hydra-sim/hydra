@@ -224,21 +224,6 @@ public class SimulationHelper {
 
     /**
      *
-     *
-     * @param simulation
-     * @param nodeHelper
-     */
-    public void distributeWeight(Simulation simulation, NodeHelper nodeHelper) {
-
-        // Distribute weigh producers
-        simulation.getProducers().forEach(nodeHelper::distributeWeightIfNotSpecified);
-
-        // Distribute weight consumers
-        simulation.getConsumers().forEach(nodeHelper::distributeWeightIfNotSpecified);
-    }
-
-    /**
-     *
      * @param simulation
      * @return
      */

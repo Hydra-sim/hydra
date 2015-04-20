@@ -1,6 +1,5 @@
 package models;
 
-import helpers.ConsumerHelper;
 import helpers.NodeHelper;
 import helpers.SimulationHelper;
 import org.hibernate.validator.constraints.Length;
@@ -78,8 +77,6 @@ public class Simulation
     @Transient
     NodeHelper nodeHelper;
 
-    @Transient
-    SimulationHelper simulationHelper;
     //endregion
 
     //region constructors
@@ -126,9 +123,12 @@ public class Simulation
         this.ticks = ticks;
 
         nodeHelper = new NodeHelper();
-        simulationHelper = new SimulationHelper();
 
-        simulationHelper.distributeWeight(this, nodeHelper);
+        // Distribute weight producers
+        getProducers().forEach(nodeHelper::distributeWeightIfNotSpecified);
+
+        // Distribute weight consumers
+        getConsumers().forEach(nodeHelper::distributeWeightIfNotSpecified);
 
         preset = false;
         passwordProtected = false;
@@ -240,10 +240,5 @@ public class Simulation
         this.startTick = startTick;
     }
 
-    //endregion
-
-    public void simulate() {
-
-        new SimulationHelper().simulate(this);
-    }
+    //endregiong
 }
