@@ -301,6 +301,7 @@
                             .attr('font-size', function(d) { return 1.8 +'em'} )
                             .attr("dy", function(d){return consts.nodeRadius/2})
                             .attr("text-anchor", "middle")
+                            .attr('fill', 'white')
                             .text(function(d) {
                                 switch(d.type) {
                                     case 'train':
