@@ -421,9 +421,9 @@
 
         $scope.dataset = {
             nodes: [
-                {type: "producer", id: 0, x: 100, y: 100},
-                {type: "producer", id: 1, x: 100, y: 300},
-                {type: "consumer", id: 2, x: 300, y: 300}
+                {type: "producer", id: 0, x: 100, y: 100, timetableId: 0},
+                {type: "producer", id: 1, x: 100, y: 300, timetableId: 0},
+                {type: "consumer", id: 2, x: 300, y: 300, ticksToConsumeEntity: 1}
             ],
             edges: [
                 {source: {id: 1}, target: {id: 0}}

@@ -8,4 +8,15 @@ public class SimulationNode {
     public String type;
     public int x;
     public int y;
+
+    // Producer
+    public int timetableId;
+
+    // Consumer
+    public int ticksToConsumeEntity;
+
+    // ConsumerGroup
+    public String consumerGroupName;
+    public int numberOfConsumers;
+
 }

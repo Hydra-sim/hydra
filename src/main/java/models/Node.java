@@ -22,6 +22,8 @@ abstract public class Node {
 
     private String type;
 
+    private int x, y;
+
     @Transient
     private int entitiesTransfered;
 
@@ -37,6 +39,7 @@ abstract public class Node {
         entitiesRecieved = 0;
         entitiesReady = new ArrayList<>();
         type = "";
+        x = y = 0;
     }
 
     public int getId() {
@@ -77,5 +80,21 @@ abstract public class Node {
 
     public void setEntitiesReady(List<Entity> entitiesReady) {
         this.entitiesReady = entitiesReady;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

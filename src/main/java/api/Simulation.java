@@ -1,14 +1,9 @@
 package api;
 
-import api.data.PasswordFormData;
-import api.data.SimulationFormData;
-import api.data.TrueFalse;
-import helpers.ProducerHelper;
+import api.data.*;
 import helpers.SimulationHelper;
-import models.Consumer;
-import models.ConsumerGroup;
-import models.Producer;
-import models.Relationship;
+import models.*;
+import models.Timetable;
 
 import javax.ejb.EJB;
 import javax.transaction.Transactional;
@@ -130,6 +125,11 @@ public class Simulation {
      */
     private List<ConsumerGroup> initConsumerGroups(SimulationFormData input) {
         List<ConsumerGroup> consumerGroups = new ArrayList<>();
+
+        for(SimulationNode node : input.nodes) {
+
+            if()
+        }
         /*
         for(int i = 0; i < input.consumerGroupNames.length; i++) {
 
@@ -154,29 +154,66 @@ public class Simulation {
      @SuppressWarnings("unchecked")
      private List<Producer> initProducers(SimulationFormData input) throws Exception
      {
-        List<Producer> producers = new ArrayList<>();
-        /*
-        for(int i = 0; i < input.timetableIds.length; i++) {
+         List<Producer> producers = new ArrayList<>();
+         List<Consumer> consumers = new ArrayList<>();
+         List<ConsumerGroup> consumerGroups = new ArrayList<>();
+         List<Relationship> relationships = new ArrayList<>();
 
+         for(SimulationNode node : input.nodes) {
 
-            models.Timetable timetable = timetableDao.get(input.timetableIds[i]);
+             switch(node.type) {
+                 case "producer":
 
-            Producer producer = new Producer(timetable);
+                     producers.add(createProducer(node));
+                     break;
 
-            producer.setType(input.producerType[i]); // TODO: Fix for format from frontend
+                 case "consumer":
 
-            producers.add(producer);
-        }
+                     consumers.add(createConsumer(node));
+                     break;
 
-         for(int i = 0; i < input.numberOfEntitiesList.length; i++ ){
-             Producer producer = new Producer();
-             new ProducerHelper().generateTimetable(producer, 0 , input.timeBetweenArrivalsList[i],
-                     input.totalNumberOfEntititesList[i]/input.numberOfEntitiesList[i], input.numberOfEntitiesList[i]);
+                 case "consumerGroup":
 
-             producers.add(producer);
+                     consumerGroups.add(createConsumerGroup(node));
+                     break;
+             }
          }
-        */
+
+         for(SimulationEdge edge : input.edges) {
+
+             Producer producer = new Producer();
+
+             if(edge.source.type.equals("producer")) {
+
+                 producer.setX(edge.source.x);
+             }
+             Relationship relationship = new Relationship(edge.source, edge.target, edge.weight);
+         }
+
         return producers;
+    }
+
+    private Producer createProducer(SimulationNode node) throws Exception {
+        Timetable timetable = timetableDao.get(node.timetableId);
+        Producer producer = new Producer(timetable);
+        producer.setX(node.x);
+        producer.setY(node.y);
+
+        return producer;
+    };
+
+    private ConsumerGroup createConsumerGroup(SimulationNode node) {
+
+        return new ConsumerGroup(node.consumerGroupName, node.numberOfConsumers,
+                node.ticksToConsumeEntity);
+    }
+
+    private Consumer createConsumer(SimulationNode node) {
+        Consumer consumer = new Consumer(node.ticksToConsumeEntity);
+        consumer.setX(node.x);
+        consumer.setY(node.y);
+
+        return consumer;
     }
 
     /**

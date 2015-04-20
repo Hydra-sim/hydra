@@ -6,4 +6,5 @@ package api.data;
 public class SimulationEdge {
     public SimulationNode source;
     public SimulationNode target;
+    public double weight;
 }
