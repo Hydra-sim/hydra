@@ -123,13 +123,13 @@ public class SimulationHelper {
 
                         for (Relationship relationship : simulation.getRelationships()) {
 
-                            if(relationship.getParent() == producer) {
+                            if(relationship.getSource() == producer) {
 
-                                int recieved = relationship.getChild().getEntitiesRecieved();
+                                int recieved = relationship.getTarget().getEntitiesRecieved();
 
-                                double currentWeight = (double) recieved / relationship.getParent().getEntitiesTransfered();
+                                double currentWeight = (double) recieved / relationship.getSource().getEntitiesTransfered();
 
-                                if (currentWeight <= relationship.getWeight() || relationship.getParent().getEntitiesTransfered() == 0) {
+                                if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
 
                                     Consumer consumer = null;
 
@@ -137,7 +137,7 @@ public class SimulationHelper {
 
                                         Consumer con = simulation.getConsumers().get(k);
 
-                                        if(con == relationship.getChild()) {
+                                        if(con == relationship.getTarget()) {
                                             consumer = con;
                                         }
                                     }
@@ -146,7 +146,7 @@ public class SimulationHelper {
 
                                         Consumer con = simulation.getConsumerGroups().get(k);
 
-                                        if(con == relationship.getChild()) {
+                                        if(con == relationship.getTarget()) {
                                             consumer = con;
                                         }
                                     }
@@ -172,11 +172,11 @@ public class SimulationHelper {
         for(Relationship relationship : simulation.getRelationships()) {
 
             simulation.getConsumers().stream().filter(consumer
-                    -> relationship.getChild() == consumer).forEach(consumer
+                    -> relationship.getTarget() == consumer).forEach(consumer
                     -> sendEntitiesFromConsumer(relationship));
 
             simulation.getConsumerGroups().stream().filter(consumerGroup
-                    -> relationship.getChild() == consumerGroup).forEach(consumerGroup
+                    -> relationship.getTarget() == consumerGroup).forEach(consumerGroup
                     -> sendEntitiesFromConsumer(relationship));
         }
     }
@@ -184,18 +184,18 @@ public class SimulationHelper {
     private void sendEntitiesFromConsumer(Relationship relationship) {
 
         // If the consumer has any entities to send
-        if(relationship.getParent().getEntitiesReady().size() != 0) {
+        if(relationship.getSource().getEntitiesReady().size() != 0) {
 
             // The percentage of entities already sent from our sending consumer to the receiving consumer
-            double currentWeight = (double) relationship.getChild().getEntitiesRecieved() / relationship.getParent().getEntitiesTransfered();
+            double currentWeight = (double) relationship.getTarget().getEntitiesRecieved() / relationship.getSource().getEntitiesTransfered();
 
             // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
             // have, and runs the code if either this is true, or it is the first entity sent from the sending
             // consumer
-            if(currentWeight <= relationship.getWeight() || relationship.getParent().getEntitiesTransfered() == 0) {
+            if(currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
 
                 // Get the data about the entity that is to be sent
-                Entity entity = relationship.getParent().getEntitiesReady().get(0);
+                Entity entity = relationship.getSource().getEntitiesReady().get(0);
 
                 Consumer consumer = null;
 
@@ -203,7 +203,7 @@ public class SimulationHelper {
 
                     Consumer con = simulation.getConsumers().get(i);
 
-                    if(con == relationship.getChild()) {
+                    if(con == relationship.getTarget()) {
                         consumer = con;
                     }
                 }
@@ -212,7 +212,7 @@ public class SimulationHelper {
 
                     Consumer con = simulation.getConsumerGroups().get(i);
 
-                    if(con == relationship.getChild()) {
+                    if(con == relationship.getTarget()) {
                         consumer = con;
                     }
                 }

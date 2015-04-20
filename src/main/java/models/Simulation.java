@@ -128,7 +128,7 @@ public class Simulation
 
         for(Relationship relationship : relationships) {
 
-            if(relationship.getParent() == node) {
+            if(relationship.getSource() == node) {
 
                 if (relationship.getWeight() != 0.0) weighted = true;
             }
@@ -138,7 +138,7 @@ public class Simulation
             double weight = (double) 1 / relationships.size();
 
             relationships.stream().filter(relationship
-                    -> relationship.getParent() == node).forEach(relationship
+                    -> relationship.getSource() == node).forEach(relationship
                     -> relationship.setWeight(weight));
         }
     }
