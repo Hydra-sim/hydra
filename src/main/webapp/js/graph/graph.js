@@ -21,7 +21,8 @@
                     nodeRadius: '@',
                     selectedClass: '@',
                     connectClass: '@',
-                    circleWrapperClass: '@'
+                    circleWrapperClass: '@',
+                    control: '='
                 },
 
                 // observe and manipulate the DOM
@@ -34,6 +35,17 @@
                         nodeRadius: scope.nodeRadius || 20,
                         BACKSPACE_KEY: 8,
                         DELETE_KEY: 46
+                    };
+
+                    scope.safeApply = function(fn) {
+                        var phase = this.$root.$$phase;
+                        if(phase == '$apply' || phase == '$digest') {
+                            if(fn && (typeof(fn) === 'function')) {
+                                fn();
+                            }
+                        } else {
+                            this.$apply(fn);
+                        }
                     };
 
                     function removeNodeWithId(id) {
@@ -70,6 +82,25 @@
                         });
                         update();
                     }
+
+                    function addNode(type, x, y) {
+                        // Get a new unused id
+                        var id = _.max(scope.nodes, function(node) { return node.id; }).id + 1;
+
+                        // Get the translation occurring because of zooming and dragging
+                        var pos = zoom.translate();
+                        x -= pos[0];
+                        y -= pos[1];
+
+                        // Add the node
+                        scope.safeApply(function() {
+                            scope.nodes.push({"type": type, "id": id, "x": x, "y": y});
+                        });
+                        update();
+                    }
+
+                    scope.internalControl = scope.control || {};
+                    scope.internalControl.addNode = addNode;
 
                     // Selected circle / edge
                     var selectedItem = null;

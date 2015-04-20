@@ -436,15 +436,10 @@
             ]
         };
 
+        $scope.control = {};
         $scope.addData = addData;
         function addData() {
-            var id = _.max($scope.dataset.nodes, function(node) { return node.id; }).id + 1;
-
-            console.log(id);
-
-            $scope.dataset.nodes.push(
-                {type: "consumer", id: id, x: 400, y: 100}
-            );
+            $scope.control.addNode("consumer", 400, 100);
         }
 
         $scope.newProducer = function (type) {
