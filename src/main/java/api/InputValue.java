@@ -5,6 +5,8 @@ package api;
  */
 class InputValue {
 
+    // TODO: Fix for format from frontend
+
     // Simulation
     public String name;
     public int startTick;
@@ -13,10 +15,14 @@ class InputValue {
     // Consumers (single)
     public int[] ticksToConsumeEntitiesList;
 
+    public String[] consumerTypes;
+
     // Consumer-Groups
     public String[] consumerGroupNames;
     public int[] numberOfConsumersInGroups;
     public int[] ticksToConsumeEntitiesGroups;
+
+    public String[] consumerGroupTypes;
 
     // Proucers
     public int[] timetableIds;
@@ -24,5 +30,7 @@ class InputValue {
     public int[] totalNumberOfEntititesList;
     public int[] timeBetweenArrivalsList;
     public int[] numberOfEntitiesList;
+
+    public String[] producerType;
 
 }

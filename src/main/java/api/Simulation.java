@@ -85,6 +85,7 @@ public class Simulation {
         for(int i = 0; i < input.ticksToConsumeEntitiesList.length; i++) {
             Consumer consumer = new Consumer(input.ticksToConsumeEntitiesList[i]);
 
+            consumer.setType(input.consumerTypes[i]); // TODO: Fix for format from frontend
             consumers.add(consumer);
         }
 
@@ -132,6 +133,8 @@ public class Simulation {
                                                             input.numberOfConsumersInGroups[i],
                                                             input.ticksToConsumeEntitiesGroups[i]);
 
+            consumerGroup.setType(input.consumerGroupTypes[i]); // TODO: Fix for format from frontend
+
             consumerGroups.add(consumerGroup);
         }
 
@@ -155,6 +158,8 @@ public class Simulation {
             models.Timetable timetable = timetableDao.get(input.timetableIds[i]);
 
             Producer producer = new Producer(timetable);
+
+            producer.setType(input.producerType[i]); // TODO: Fix for format from frontend
 
             producers.add(producer);
         }

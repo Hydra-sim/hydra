@@ -20,6 +20,8 @@ abstract public class Node {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
+    private String type;
+
     @Transient
     private int entitiesTransfered;
 
@@ -34,6 +36,7 @@ abstract public class Node {
         entitiesTransfered = 0;
         entitiesRecieved = 0;
         entitiesReady = new ArrayList<>();
+        type = "";
     }
 
     public int getId() {
@@ -42,6 +45,14 @@ abstract public class Node {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getEntitiesTransfered() {
