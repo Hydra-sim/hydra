@@ -4,13 +4,13 @@
 
 <graph nodes="dataset.nodes" edges="dataset.edges" height="500px" control="control">
     <radialmenu control="control">
-        <radialbutton icon="fa-train" color="purple" ng-click="newProducer('NEW TRAIN')"></radialbutton>
-        <radialbutton icon="fa-bus" color="dark-purple" ng-click="newConsumer('NEW TERMINAL')"></radialbutton>
-        <radialbutton icon="fa-desktop" color="dark-purple" ng-click="newConsumer('NEW TERMINAL')"></radialbutton>
-        <radialbutton icon="fa-arrows-h" color="dark-purple" ng-click="newConsumer('NEW DOOR')"></radialbutton>
-        <radialbutton icon="fa-suitcase" color="dark-purple" ng-click="newConsumer('NEW BAGDROP')"></radialbutton>
-        <radialbutton icon="fa-users" color="black" ng-click="newPassengerflow()"></radialbutton>
-        <radialbutton icon="i" color="azure" ng-click="addData()">P</radialbutton>
+        <radialbutton icon="fa-train" color="purple" ng-click="newProducer('NEW TRAIN')" tooltip="New Train" tooltip-placement="top"></radialbutton>
+        <radialbutton icon="fa-bus" color="dark-purple" ng-click="newConsumer('NEW TERMINAL')" tooltip="New Bus" tooltip-placement="right"></radialbutton>
+        <radialbutton icon="fa-desktop" color="dark-purple" ng-click="newConsumer('NEW TERMINAL')" tooltip="New Terminal" tooltip-placement="right"></radialbutton>
+        <radialbutton icon="fa-arrows-h" color="dark-purple" ng-click="newConsumer('NEW DOOR')" tooltip="New Door"tooltip-placement="right"></radialbutton>
+        <radialbutton icon="fa-suitcase" color="dark-purple" ng-click="newConsumer('NEW BAGDROP')" tooltip="New Bagdrop" tooltip-placement="left"></radialbutton>
+        <radialbutton icon="fa-users" color="black" ng-click="newPassengerflow()" tooltip="New Passengerflow" tooltip-placement="left"></radialbutton>
+        <radialbutton icon="i" color="azure" ng-click="addData()" tooltip="New Parkingspace" tooltip-placement="left">P</radialbutton>
     </radialmenu>
 </graph>
 
@@ -22,6 +22,8 @@
     Shift+drag from one node to another to add an edge.
 </p>
 
-<!--<div ng-include src=" 'templates/simulation/simulationProgressBar.html' "></div>-->
+<!--
+<div ng-include src=" 'templates/simulation/simulationProgressBar.html' "></div>
+-->
 
 <div ng-include src="'templates/simulation/help-simulation.html'"></div>
