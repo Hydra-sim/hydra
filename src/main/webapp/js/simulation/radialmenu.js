@@ -2,53 +2,63 @@
 
     'use strict';
 
-    var app = angular.module('simulation', [
-        'ngRoute',
-        'services',
-        'ui.bootstrap',
-        'angularFileUpload'
-    ]);
+    var app = angular.module('simulation', []);
 
-    app.controller("RadialMenuCtrl", function () {
+    app.directive('radialmenu', function() {
+        //noinspection HtmlUnknownBooleanAttribute
+        return {
+            restricted: 'E',
+            transclude: true,
 
-        var circularMenu = document.querySelector('.circular-menu');
-        var openBtn = document.querySelector('.menu-button');
-        var outerCircle = document.querySelector('.outer-circle');
-        var items = document.querySelectorAll('.outer-circle .circle');
+            template: '<nav class="circular-menu"><div class="outer-circle" ng-transclude></div><a class="menu-button fa fa-close fa-4x"></a></nav>',
+            replace: true,
 
+            // observe and manipulate the DOM
+            link : function(scope, element, attrs) {
 
-        for (var i = 0, l = items.length; i < l; i++) {
-            items[i].style.left = (50 - 35 * Math.cos(-0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
-            items[i].style.top = (50 + 35 * Math.sin(-0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+                var consts = {
+                    circularMenuClass: '.circular-menu',
+                    menuButtonClass: '.menu-button',
+                    outerCircleClass: '.outer-circle',
+                    graphClass: '.graph'
+                };
+
+                var circularMenu    = document.querySelector(consts.circularMenuClass);
+                var openBtn         = document.querySelector(consts.menuButtonClass);
+                var outerCircle     = document.querySelector(consts.outerCircleClass);
+                var graph           = document.querySelector(consts.graphClass);
+                var items           = document.querySelectorAll('.outer-circle .circle');
+
+                for (var i = 0, l = items.length; i < l; i++) {
+                    items[i].style.left = (50 - 35 * Math.cos(-0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+                    items[i].style.top = (50 + 35 * Math.sin(-0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+                }
+
+                graph.oncontextmenu = open;
+                openBtn.onclick = close;
+                graph.onclick = close;
+
+                function open(e) {
+                    e.preventDefault();
+
+                    outerCircle.classList.add('open');
+                    var xPosition = e.clientX - (circularMenu.clientWidth / 2);
+                    var yPosition = e.clientY - (circularMenu.clientHeight / 2);
+
+                    circularMenu.style.left = xPosition + "px";
+                    circularMenu.style.top = yPosition + "px";
+                    circularMenu.style.visibility = "visible";
+                    openBtn.style.display = "block";
+                }
+
+                function close(e) {
+                    e.preventDefault();
+                    outerCircle.classList.remove('open');
+                    openBtn.style.display = "none";
+                    circularMenu.style.visibility = "hidden";
+                }
+            }
         }
-
-        document.querySelector('.graph').oncontextmenu = function (e) {
-            e.preventDefault();
-
-            outerCircle.classList.add('open');
-            var xPosition = e.clientX - (circularMenu.clientWidth / 2);
-            var yPosition = e.clientY - (circularMenu.clientHeight / 2);
-
-            circularMenu.style.left = xPosition + "px";
-            circularMenu.style.top = yPosition + "px";
-            circularMenu.style.visibility = "visible";
-            openBtn.style.display = "block";
-        }
-
-        openBtn.onclick = function (e) {
-            e.preventDefault();
-            document.querySelector('.outer-circle').classList.remove('open');
-            openBtn.style.display = "none";
-            circularMenu.style.visibility = "hidden";
-        }
-
-        document.querySelector('.graph').onclick = function (e) {
-            e.preventDefault();
-            document.querySelector('.outer-circle').classList.remove('open');
-            openBtn.style.display = "none";
-            circularMenu.style.visibility = "hidden";
-        }
-
     });
 
 })();
