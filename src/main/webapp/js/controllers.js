@@ -405,7 +405,11 @@
      * TODO: Because simulation/list.html doesn't know about simulation/controller.js?
      */
     app.controller('SimulationListCtrl', function ($scope, $log, Simulation, $location, $modal) {
-        $scope.simulations = Simulation.query({});
+        function updateSimulations() {
+            $scope.simulations = Simulation.query({});
+        }
+
+        updateSimulations();
 
         $scope.auth = function (id, funcDesc) {
 
@@ -512,49 +516,41 @@
 
             Simulation.get({}, {'id': id}, function (result) {
 
+                var path;
+
                 if (result.passwordProtected) {              // It really does find it
 
-                    $modal.open({
-                        templateUrl: 'templates/modals/changePassword.html',
-                        controller: 'ChangePasswordCtrl',
-                        size: 'sm',
-                        resolve: {
-                            id: function () {
-                                return id;
-                            }
-                        }
-                    });
+                    path = 'templates/modals/changePassword.html';
 
                 } else {
 
-                    $modal.open({
-                        templateUrl: 'templates/modals/newPassword.html',
-                        controller: 'NewPasswordCtrl',
-                        size: 'sm',
-                        resolve: {
-                            id: function () {
-                                return id;
-                            }
-                        }
-                    });
+                    path = 'templates/modals/newPassword.html';
                 }
+
+                $modal.open({
+                    templateUrl: path,
+                    controller: 'ChangePasswordCtrl',
+                    size: 'sm',
+                    resolve: {
+                        id: function () {
+                            return id;
+                        }
+                    }
+                });
             });
         };
 
-        $scope.newPassword = function( id ) {
+        $scope.deletePassword = function () {
 
-        };
-
-        $scope.changePassword = function( id ) {
-
-        };
+            $scope.submitPassword(null);
+        }
     });
 
-    app.controller('NewPasswordCtrl', function( $scope, $modalInstance, $log, id, Simulation ) {
+    app.controller('ChangePasswordCtrl', function( $scope, $modalInstance, $log, $rootScope, $location, id, Simulation ) {
 
         $scope.passwordMismatch = false;
 
-        $scope.submit = function( password, repPassword ) {
+        $scope.submitPassword = function( password, repPassword ) {
 
             if(password == repPassword) {
 
@@ -563,16 +559,10 @@
                     'input': password
                 });
 
-                Simulation.update({}, sim).$promise.then(function() {});
-
-                $log.info("Am I even here??")
-
-                /*
-                Timetable.update({"id": $scope.id}, timetable).$promise.then(function() {
-                    $rootScope.$emit('updateTimetable');
-                    $location.path('/timetable');
+                Simulation.update({}, sim).$promise.then(function() {
+                    $rootScope.$emit('updateSimulations');
+                    $location.path('/#');
                 });
-                */
 
                 $modalInstance.close();
 
@@ -632,11 +622,6 @@
 
             $modalInstance.dismiss();
         }
-    });
-
-    app.controller('ChangePasswordCtrl', function($scope, $modalInstance) {
-
-
     });
 
 })();
