@@ -224,7 +224,12 @@
 
 
     app.controller('SimulationListCtrl', function ($scope, $log, Simulation, $location, $modal) {
-        $scope.simulations = Simulation.query({});
+
+        function updateSimulations() {
+            $scope.simulations = Simulation.query({});
+        }
+
+        updateSimulations();
 
         $scope.auth = function (id, funcDesc) {
 
@@ -331,41 +336,28 @@
 
             Simulation.get({}, {'id': id}, function (result) {
 
+                var path;
+
                 if (result.passwordProtected) {              // It really does find it
 
-                    $modal.open({
-                        templateUrl: 'templates/modals/changePassword.html',
-                        controller: 'ChangePasswordCtrl',
-                        size: 'sm',
-                        resolve: {
-                            id: function () {
-                                return id;
-                            }
-                        }
-                    });
+                    path = 'templates/modals/changePassword.html';
 
                 } else {
 
-                    $modal.open({
-                        templateUrl: 'templates/modals/newPassword.html',
-                        controller: 'NewPasswordCtrl',
-                        size: 'sm',
-                        resolve: {
-                            id: function () {
-                                return id;
-                            }
-                        }
-                    });
+                    path = 'templates/modals/newPassword.html';
                 }
+
+                $modal.open({
+                    templateUrl: path,
+                    controller: 'ChangePasswordCtrl',
+                    size: 'sm',
+                    resolve: {
+                        id: function () {
+                            return id;
+                        }
+                    }
+                });
             });
-        };
-
-        $scope.newPassword = function( id ) {
-
-        };
-
-        $scope.changePassword = function( id ) {
-
         };
     });
 
@@ -563,5 +555,88 @@
         };
     });
 
+    app.controller('ChangePasswordCtrl', function( $scope, $modalInstance, $rootScope, $location, id, Simulation ) {
+
+
+        $scope.passwordMismatch = false;
+
+        $scope.submitPassword = function( password, repPassword ) {
+
+            if(password == repPassword) {
+
+                var sim = new Simulation({
+                    'id':    id,
+                    'input': password
+                });
+
+                Simulation.update({}, sim).$promise.then(function() {
+                    $rootScope.$emit('updateSimulations');
+                    $location.path('/#');
+                });
+
+                $modalInstance.close();
+
+            } else {
+
+                $scope.passwordMismatch = true;
+            }
+
+        };
+
+        $scope.deletePassword = function () {
+
+            $scope.submitPassword(null);
+        };
+        
+        $scope.cancel = function(){
+            $modalInstance.dismiss();
+        };
+    });
+
+    app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, id, func, Authentication) {
+
+        $scope.id = id;
+
+        $scope.wrongPassword = false;
+
+        $scope.submitPassword = function(input){
+
+            var auth = new Authentication({
+                'id':    id,
+                'input': input
+            });
+
+            auth.$save().then(function(result) {
+
+                if(result.truefalse) {
+
+                    func(id);
+                    $modalInstance.close();
+
+                } else {
+
+                    $scope.wrongPassword = true;
+                }
+            });
+
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
+
+    app.controller('ConfirmationInstanceCtrl', function($scope, $modalInstance) {
+
+        $scope.confirm = function(){
+
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function() {
+
+            $modalInstance.dismiss();
+        }
+    });
 
 })();
