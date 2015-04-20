@@ -34,9 +34,7 @@ public class SimulationHelper {
         for(int i = simulation.getStartTick(); i < simulation.getStartTick() + simulation.getTicks(); i++) {
 
             // Increase waiting time
-            for(Consumer consumer : simulation.getConsumers())
-
-                consumerHelper.increaseWaitingTime(consumer);
+            simulation.getConsumers().forEach(ConsumerHelper::increaseWaitingTime);
 
             addEntitiesFromProducer(i);
 
@@ -44,14 +42,14 @@ public class SimulationHelper {
 
             consumeEntities();
 
-            maxWaitingTime = calculateWaitingTime(simulation, maxWaitingTime);
+            maxWaitingTime = calculateWaitingTime(maxWaitingTime);
 
         }
 
         simulation.setResult(
                 new SimulationResult(
-                        getEntitesConsumed(simulation),
-                        getEntitiesInQueue(simulation),
+                        getEntitesConsumed(),
+                        getEntitiesInQueue(),
                         maxWaitingTime
                 )
         );
@@ -211,7 +209,7 @@ public class SimulationHelper {
      * @return Whichever value is largest of the registered waiting times so far in the simulation and the highest
      *         waiting time of the entities registered on the entities list.
      */
-    public int calculateWaitingTime(Simulation simulation, int maxWaitingTime) {
+    public int calculateWaitingTime(int maxWaitingTime) {
 
         for(Consumer consumer : simulation.getConsumers()) {
 
@@ -227,7 +225,7 @@ public class SimulationHelper {
      * @param simulation
      * @return
      */
-    public int getEntitesConsumed(Simulation simulation) {
+    public int getEntitesConsumed() {
 
         int entitiesConsumed = 0;
 
@@ -247,7 +245,7 @@ public class SimulationHelper {
     }
 
 
-    public int getEntitiesInQueue(Simulation simulation) {
+    public int getEntitiesInQueue() {
 
         int entitiesInQueue = 0;
 
