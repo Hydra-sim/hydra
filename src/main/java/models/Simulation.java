@@ -1,5 +1,6 @@
 package models;
 
+import helpers.SimulationHelper;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mindrot.jbcrypt.BCrypt;
@@ -64,6 +65,9 @@ public class Simulation
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Producer> producers;
 
+    @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Relationship> relationships;
+
     private int startTick;
     private int ticks;
     private boolean preset;
@@ -77,43 +81,29 @@ public class Simulation
     //region constructors
     public Simulation() {
 
-        this("Untitled simulation", new Date(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        this("Untitled simulation");
     }
 
     public Simulation(String name) {
 
-        this(name, new Date(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        this(name, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
     }
 
-    public Simulation(String name, List<Consumer> consumers, List<Producer> producers, int ticks) {
+    public Simulation(String name, List<Consumer> consumers, List<ConsumerGroup> consumerGroups,
+                      List<Producer> producers, List<Relationship> relationships, int ticks) {
 
-        this(name, new Date(), consumers, new ArrayList<>(), producers, ticks);
+        this(name, new Date(), consumers, consumerGroups, producers, relationships, 0, ticks);
     }
 
-    public Simulation(String name, List<Consumer> consumers, List<Producer> producers, List<ConsumerGroup> consumerGroups, int ticks) {
-
-        this(name, new Date(), consumers, consumerGroups, producers, ticks);
-    }
-
-    public Simulation(String name, List<Consumer> consumers, List<Producer> producers, List<ConsumerGroup> consumerGroups,
-                      int startTick, int ticks) {
-
-        this(name, new Date(), consumers, consumerGroups, producers, startTick, ticks);
-    }
 
     public Simulation(String name, Date date, List<Consumer> consumers, List<ConsumerGroup> consumerGroups,
-                      List<Producer> producers, int ticks) {
-
-        this(name, date, consumers, consumerGroups, producers, 0, ticks);
-    }
-
-    public Simulation(String name, Date date, List<Consumer> consumers, List<ConsumerGroup> consumerGroups,
-                      List<Producer> producers, int startTick, int ticks) {
+                      List<Producer> producers, List<Relationship> relationships, int startTick, int ticks) {
         this.name = name;
         this.date = date;
         this.consumers = consumers;
         this.consumerGroups = consumerGroups;
         this.producers = producers;
+        this.relationships = relationships;
         this.startTick = startTick;
         this.ticks = ticks;
 
@@ -134,22 +124,22 @@ public class Simulation
      */
     public void distributeWeightIfNotSpecified(Node node) {
 
-        List<Relationship> relationships = node.getRelationships();
-
         boolean weighted = false;
 
         for(Relationship relationship : relationships) {
 
-            if(relationship.getWeight() != 0.0) weighted = true;
+            if(relationship.getParent() == node) {
+
+                if (relationship.getWeight() != 0.0) weighted = true;
+            }
         }
 
         if(!weighted) {
             double weight = (double) 1 / relationships.size();
 
-            for (int i = 0; i < relationships.size(); i++) {
-
-                relationships.get(i).setWeight(weight);
-            }
+            relationships.stream().filter(relationship
+                    -> relationship.getParent() == node).forEach(relationship
+                    -> relationship.setWeight(weight));
         }
     }
     //endregion
@@ -258,5 +248,18 @@ public class Simulation
         this.startTick = startTick;
     }
 
-    //endregiong
+    public List<Relationship> getRelationships() {
+        return relationships;
+    }
+
+    public void setRelationships(List<Relationship> relationships) {
+        this.relationships = relationships;
+    }
+
+    //endregion
+
+    public void simulate() {
+
+        new SimulationHelper().simulate(this);
+    }
 }

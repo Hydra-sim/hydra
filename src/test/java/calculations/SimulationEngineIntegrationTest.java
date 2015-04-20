@@ -47,9 +47,9 @@ public class SimulationEngineIntegrationTest {
 
         Producer producer = createProducer(1, numberOfEntitesToProduce);
         Consumer consumer = new Consumer(numberOfEntitiesToConsume);
-        setRelationship(producer, consumer);
+        Relationship relationship = new Relationship(producer, consumer, 1.0);
 
-        Simulation simulation = intializeSimulation(producer, consumer, 1);
+        Simulation simulation = intializeSimulation(producer, consumer, relationship, 1);
 
         simulationHelper.simulate(simulation);
 
@@ -75,9 +75,9 @@ public class SimulationEngineIntegrationTest {
 
         Producer producer = createProducer(1, numberOfEntitesToProduce);
         Consumer consumer = new Consumer(numberOfEntitiesToConsume);
-        setRelationship(producer, consumer);
+        Relationship relationship = new Relationship(producer, consumer, 1.0);
 
-        Simulation simulation = intializeSimulation(producer, consumer, 1);
+        Simulation simulation = intializeSimulation(producer, consumer, relationship, 1);
 
         simulationHelper.simulate(simulation);
 
@@ -102,15 +102,7 @@ public class SimulationEngineIntegrationTest {
         return producer;
     }
 
-    private void setRelationship(Node parent, Consumer child) {
-
-        List<Relationship> relationships = new ArrayList<>();
-        Relationship relationship = new Relationship(child, 1.0);
-        relationships.add(relationship);
-        parent.setRelationships(relationships);
-    }
-
-    private Simulation intializeSimulation(Producer producer, Consumer consumer, int ticks) {
+    private Simulation intializeSimulation(Producer producer, Consumer consumer, Relationship relationship, int ticks) {
 
         List<Producer> producers = new ArrayList<>();
         producers.add(producer);
@@ -118,7 +110,10 @@ public class SimulationEngineIntegrationTest {
         List<Consumer> consumers = new ArrayList<>();
         consumers.add(consumer);
 
-        return new Simulation("Test", consumers, producers, ticks);
+        List<Relationship> relationships = new ArrayList<>();
+        relationships.add(relationship);
+
+        return new Simulation("Test", consumers, new ArrayList<>(), producers, relationships, ticks);
 
     }
 
@@ -232,9 +227,10 @@ public class SimulationEngineIntegrationTest {
 
         // Making ConsumerGroup
 
-        ConsumerGroup consumerGroup = new ConsumerGroup(10, 1);
+        int entitiesToConsume = 10;
+        ConsumerGroup consumerGroup = new ConsumerGroup(entitiesToConsume, 1);
 
-        Consumer consumer = new Consumer(10);
+        Consumer consumer = new Consumer(entitiesToConsume);
 
         // Making producer
 
@@ -244,16 +240,13 @@ public class SimulationEngineIntegrationTest {
 
         // Establishing relationships
 
-        List<Relationship> producerRelationships = new ArrayList<>();
-        Relationship producerRelationship = new Relationship(consumerGroup, 1.0);
-        producerRelationships.add(producerRelationship);
-        producer.setRelationships(producerRelationships);
+        List<Relationship> relationships = new ArrayList<>();
 
-        List<Relationship> consumerGroupRelationships = new ArrayList<>();
-        Relationship consumerGroupRelationship = new Relationship(consumer, 1.0);
-        consumerGroupRelationships.add(consumerGroupRelationship);
-        consumerGroup.setRelationships(consumerGroupRelationships);
+        Relationship producerRelationship = new Relationship(producer, consumerGroup, 1.0);
+        relationships.add(producerRelationship);
 
+        Relationship consumerGroupRelationship = new Relationship(consumerGroup, consumer, 1.0);
+        relationships.add(consumerGroupRelationship);
 
         // Adding the Nodes to Lists
 
@@ -268,11 +261,11 @@ public class SimulationEngineIntegrationTest {
 
         // Simulation (with no regular consumers)
 
-        Simulation simulation = new Simulation("Test Simulation", consumers, producers, consumerGroups, 10);
+        Simulation simulation = new Simulation("Test Simulation", consumers, consumerGroups, producers, relationships, 10);
         simulationHelper.simulate(simulation);
 
-        assertTrue(simulation.getResult().getEntitiesConsumed() > 0);
-        assertTrue(simulation.getConsumers().get(0).getEntitesConsumed().size() > 0);
+        assertEquals(entitiesToConsume, simulation.getResult().getEntitiesConsumed());
+        assertTrue(simulation.getConsumerGroups().get(0).getEntitesConsumed().size() > 0);
     }
     //endregion
 
@@ -283,6 +276,10 @@ public class SimulationEngineIntegrationTest {
         simulationHelper.simulate(simulation);
 
         ConsumerHelper con = new ConsumerHelper();
+
+        int w1 = con.getTotalSentToConsumer(simulation.getConsumers().get(0));
+        int w2 = con.getTotalSentToConsumer(simulation.getConsumers().get(1));
+
         assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulation.getConsumers().get(0)), 0.0);
         assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulation.getConsumers().get(1)), 0.0);
     }
@@ -295,14 +292,13 @@ public class SimulationEngineIntegrationTest {
         Consumer consumer1 = new Consumer(ticksToConsumeEntities);
         Consumer consumer2 = new Consumer(ticksToConsumeEntities);
 
-        Relationship relationship1 = new Relationship(consumer1, consumerWeight1);
-        Relationship relationship2 = new Relationship(consumer2, consumerWeight2);
+        Relationship relationship1 = new Relationship(producer, consumer1, consumerWeight1);
+        Relationship relationship2 = new Relationship(producer, consumer2, consumerWeight2);
 
         List<Relationship> relationships = new ArrayList<>();
         relationships.add(relationship1);
         relationships.add(relationship2);
 
-        producer.setRelationships(relationships);
         producerHelper.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals, entitiesToProduce);
 
         List<Producer> producers = new ArrayList<>();
@@ -312,7 +308,7 @@ public class SimulationEngineIntegrationTest {
         consumers.add(consumer1);
         consumers.add(consumer2);
 
-        return new Simulation("Test", consumers, producers, 10);
+        return new Simulation("Test", consumers, new ArrayList<>(), producers, relationships, 10);
     }
 
     private Simulation setUpStandardSimulationOneProducerOneConsumer(int ticksToConsumeEntities, int entitiesToProduce, int startTick,
@@ -321,12 +317,11 @@ public class SimulationEngineIntegrationTest {
 
         Consumer consumer = new Consumer(ticksToConsumeEntities);
         Producer producer = new Producer();
-        Relationship relationship = new Relationship(consumer, 1.0);
+        Relationship relationship = new Relationship(producer, consumer, 1.0);
 
         List<Relationship> relationshipList = new ArrayList<>();
         relationshipList.add(relationship);
 
-        producer.setRelationships(relationshipList);
         producerHelper.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals, entitiesToProduce);
 
         List<Consumer> consumerList = new ArrayList<>();
@@ -335,7 +330,7 @@ public class SimulationEngineIntegrationTest {
         consumerList.add(consumer);
         producerList.add(producer);
 
-        return new Simulation("Test", consumerList, producerList, ticks);
+        return new Simulation("Test", consumerList, new ArrayList<>(), producerList, relationshipList, ticks);
     }
 
     //endregion

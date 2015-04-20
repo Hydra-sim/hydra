@@ -20,24 +20,28 @@ abstract public class Node {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Relationship> relationships = new ArrayList<>();
-
     @Transient
     private int entitiesTransfered;
 
+    @Transient
+    private int entitiesRecieved;
+
+    @Transient
+    private List<Entity> entitiesReady;
+
     public Node() {
 
-        relationships = new ArrayList<>();
         entitiesTransfered = 0;
+        entitiesRecieved = 0;
+        entitiesReady = new ArrayList<>();
     }
 
-    public List<Relationship> getRelationships() {
-        return relationships;
+    public int getId() {
+        return id;
     }
 
-    public void setRelationships(List<Relationship> relationships) {
-        this.relationships = relationships;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getEntitiesTransfered() {
@@ -46,5 +50,21 @@ abstract public class Node {
 
     public void setEntitiesTransfered(int entitiesTransfered) {
         this.entitiesTransfered = entitiesTransfered;
+    }
+
+    public int getEntitiesRecieved() {
+        return entitiesRecieved;
+    }
+
+    public void setEntitiesRecieved(int entitiesRecieved) {
+        this.entitiesRecieved = entitiesRecieved;
+    }
+
+    public List<Entity> getEntitiesReady() {
+        return entitiesReady;
+    }
+
+    public void setEntitiesReady(List<Entity> entitiesReady) {
+        this.entitiesReady = entitiesReady;
     }
 }

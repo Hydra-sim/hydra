@@ -66,23 +66,25 @@ public class OSLPreset {
         ConsumerGroup toilets   = new ConsumerGroup( "Toilet",      TOILET_QUANTITY,    TOILET_CONSUMPTION_TIME );
 
         // Iterates through the doors and sets relationships to and from them
+
+        List<Relationship> relationships = new ArrayList<>();
         for(int i = 0; i < doors.size(); i++) {
 
             if(i == 0) {
-                busStops.getRelationships().add( new Relationship( doors.get(i),    0.8 ) );
+                relationships.add(new Relationship(busStops, doors.get(i), 0.8 ) );
             } else {
-                busStops.getRelationships().add( new Relationship( doors.get(1),    0.05 ) );
+                relationships.add(new Relationship(busStops, doors.get(1), 0.05 ) );
             }
-            doors.get(i).getRelationships().add( new Relationship( terminals,       1.0 ) );
+            relationships.add(new Relationship(doors.get(i), terminals, 1.0));
         }
 
         //Sets the rest of the relationships
-        terminals       .getRelationships().add( new Relationship( bagDrops,        1.0 ) );
-        bagDrops        .getRelationships().add( new Relationship( securityCheck,   0.85 ) );
-        bagDrops        .getRelationships().add( new Relationship( toilets,         0.1 ) );
-        bagDrops        .getRelationships().add( new Relationship( cafe,            0.05) );
-        toilets         .getRelationships().add( new Relationship( securityCheck,   1.0 ) );
-        cafe            .getRelationships().add( new Relationship( securityCheck,   1.0 ) );
+        relationships.add( new Relationship(terminals, bagDrops, 1.0));
+        relationships.add( new Relationship(bagDrops, securityCheck, 0.85));
+        relationships.add( new Relationship(bagDrops, toilets, 0.1));
+        relationships.add( new Relationship(bagDrops, cafe, 0.05));
+        relationships.add( new Relationship( toilets, securityCheck,   1.0 ) );
+        relationships.add( new Relationship( cafe, securityCheck,   1.0 ) );
 
         // All the consumers
         List<Consumer> consumers = new ArrayList<>();
@@ -104,6 +106,7 @@ public class OSLPreset {
 
         simulation.setConsumers(consumers);
         simulation.setConsumerGroups(consumerGroups);
+        simulation.setRelationships(relationships);
 
         simulation.setTicks(100);
         simulation.setPreset(true);

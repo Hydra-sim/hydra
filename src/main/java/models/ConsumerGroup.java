@@ -52,5 +52,17 @@ public class ConsumerGroup extends Consumer{
         this.consumers = consumers;
     }
 
+    public List<Entity> getEntitesConsumed() {
+
+        List<Entity> entitesConsumed = new ArrayList<>();
+
+        for(Consumer consumer : consumers) {
+
+            entitesConsumed.addAll(consumer.getEntitesConsumed());
+        }
+
+        return entitesConsumed;
+    }
+
     //endregion
 }

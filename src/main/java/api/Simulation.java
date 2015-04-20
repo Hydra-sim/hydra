@@ -13,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,7 +42,6 @@ public class Simulation {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(InputValue input)
     {
-        List<Relationship> relationships = new ArrayList<>();
         List<Producer> producers;
 
         try {
@@ -51,19 +51,16 @@ public class Simulation {
             return Response.serverError().build();
         }
 
-        List<Consumer> consumers =              initConsumers(input, relationships);
+        List<Consumer> consumers =              initConsumers(input);
 
-        List<ConsumerGroup> consumerGroups =    initConsumerGroups(input, relationships);
+        List<ConsumerGroup> consumerGroups =    initConsumerGroups(input);
 
-        // Iterates through all the producers and registers a relationship automatically
-        // TODO: Remove this after relationships have been implemented frontend
-        for(int i = 0; i < producers.size(); i++) {
-
-            producers.get(i).setRelationships(relationships);
-        }
+        // TODO: Change this to make relationships according to frontend data
+        List<Relationship> relationships =      initRelationships(input, producers, consumers, consumerGroups);
 
         // Create the simulation
-        models.Simulation sim = new models.Simulation(input.name, consumers, producers, consumerGroups, input.startTick, input.ticks);
+        models.Simulation sim = new models.Simulation(input.name, new Date(), consumers, consumerGroups, producers,
+                relationships, input.startTick, input.ticks);
 
         // Run the simulation
         new SimulationHelper().simulate(sim);
@@ -80,20 +77,13 @@ public class Simulation {
     /**
      * Initializes consumers
      * @param input the data from which the consumers are built
-     * @param relationships a list of relationships where all consumers and consumerGroups currently gets added to.
-     *                      TODO: Remove this
      * @return a list of consumers
      */
-    private List<Consumer> initConsumers(InputValue input, List<Relationship> relationships) {
+    private List<Consumer> initConsumers(InputValue input) {
         List<Consumer> consumers = new ArrayList<>();
 
         for(int i = 0; i < input.ticksToConsumeEntitiesList.length; i++) {
             Consumer consumer = new Consumer(input.ticksToConsumeEntitiesList[i]);
-
-            // Sets a relationship for later use
-            // TODO: Remove this after relationships have been implemented frontend
-            Relationship relationship = new Relationship(consumer, 0.0);
-            relationships.add(relationship);
 
             consumers.add(consumer);
         }
@@ -102,14 +92,38 @@ public class Simulation {
     }
 
     /**
+     * Initializes relationships
+     * @param input the data from which the consumers are built
+     * @return a list of consumers
+     */
+    private List<Relationship> initRelationships(InputValue input, List<Producer> producers, List<Consumer> consumers,
+                                             List<ConsumerGroup> consumerGroups) {
+
+        List<Relationship> relationships = new ArrayList<>();
+
+        for( Producer producer : producers ) {
+
+            for( Consumer consumer : consumers ) {
+
+                relationships.add(new Relationship(producer, consumer, 0.0));
+            }
+
+            for( ConsumerGroup consumerGroup : consumerGroups) {
+
+                relationships.add(new Relationship(producer, consumerGroup, 0.0));
+            }
+        }
+
+        return relationships;
+    }
+
+    /**
      *Initializes consumer-groups
      *
      * @param input the data from which the consumer-groups are built
-     * @param relationships a list of relationships where all consumers and consumerGroups currently gets added to.
-     *                      TODO: Remove this
      * @return a list of consumer-groups
      */
-    private List<ConsumerGroup> initConsumerGroups(InputValue input, List<Relationship> relationships) {
+    private List<ConsumerGroup> initConsumerGroups(InputValue input) {
         List<ConsumerGroup> consumerGroups = new ArrayList<>();
 
         for(int i = 0; i < input.consumerGroupNames.length; i++) {
@@ -117,11 +131,6 @@ public class Simulation {
             ConsumerGroup consumerGroup = new ConsumerGroup(input.consumerGroupNames[i],
                                                             input.numberOfConsumersInGroups[i],
                                                             input.ticksToConsumeEntitiesGroups[i]);
-
-            // Sets a relationship for later use
-            // TODO: Remove this after relationships have been implemented frontend
-            Relationship relationship = new Relationship(consumerGroup, 0.0);
-            relationships.add(relationship);
 
             consumerGroups.add(consumerGroup);
         }

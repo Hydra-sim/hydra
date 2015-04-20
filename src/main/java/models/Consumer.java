@@ -64,6 +64,7 @@ public class Consumer extends Node{
     }
 
     public void setEntitesInQueue(List<Entity> entitesInQueue) {
+
         this.entitesInQueue = entitesInQueue;
     }
 

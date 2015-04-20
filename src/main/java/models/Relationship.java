@@ -1,7 +1,5 @@
 package models;
 
-import helpers.ConsumerHelper;
-
 import javax.persistence.*;
 
 /**
@@ -23,7 +21,10 @@ public class Relationship implements Comparable<Relationship>{
     private int id;
 
     @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private Consumer child;
+    private Node parent;
+
+    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private Node child;
 
     private double weight;
 
@@ -31,25 +32,37 @@ public class Relationship implements Comparable<Relationship>{
 
     //region constructors
 
-    public Relationship(Consumer child, double weight) {
+    public Relationship(Node parent, Node child, double weight) {
+        this.parent = parent;
         this.child = child;
         this.weight = weight;
-    }
-
-    public Relationship() {
-
-        this(new Consumer(), 0.0);
     }
 
     //endregion
 
     //region getters and setters
 
-    public Consumer getChild() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    public Node getChild() {
         return child;
     }
 
-    public void setChild(Consumer child) {
+    public void setChild(Node child) {
         this.child = child;
     }
 
@@ -66,13 +79,10 @@ public class Relationship implements Comparable<Relationship>{
 
         if(o == this) return 0;
 
-        ConsumerHelper controller = new ConsumerHelper();
-        if(controller.getTotalSentToConsumer(o.getChild()) > controller.getTotalSentToConsumer(this.getChild())) return 1;
+        if(o.getChild().getEntitiesRecieved() > child.getEntitiesRecieved()) return 1;
         if(o.getWeight() > this.getWeight()) return 1;
         return -1;
     }
 
     //endregion
-
-
 }
