@@ -436,7 +436,8 @@
             ]
         };
 
-        $scope.addData = function() {
+        $scope.addData = addData;
+        function addData() {
             var id = _.max($scope.dataset.nodes, function(node) { return node.id; }).id + 1;
 
             console.log(id);
@@ -444,7 +445,7 @@
             $scope.dataset.nodes.push(
                 {type: "consumer", id: id, x: 400, y: 100}
             );
-        };
+        }
 
         $scope.newProducer = function (type) {
 
@@ -460,7 +461,7 @@
                         return type;
                     }
                 }
-            });
+            }).result.then(addData);
         };
 
         $scope.newConsumer = function (type) {
@@ -480,7 +481,7 @@
                         return $scope.type;
                     }
                 }
-            });
+            }).result.then(addData);
         };
 
         $scope.newConsumerGroup = function() {
@@ -501,7 +502,7 @@
                     }
                 }
 
-            });
+            }).result.then(addData);
         };
 
         $scope.newPassengerflow = function(){
@@ -520,7 +521,7 @@
                         return $scope.timeBetweenArrivalsList;
                     }
                 }
-            });
+            }).result.then(addData);
         };
 
         $scope.openConfigModal = function() {
