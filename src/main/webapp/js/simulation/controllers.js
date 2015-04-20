@@ -432,12 +432,12 @@
 
         $scope.control = {};
         $scope.addData = addData;
-        function addData() {
+        function addData(type) {
             var pos = $scope.control.getlastpos();
-            $scope.control.addNode("consumer", pos.x, pos.y);
+            $scope.control.addNode(type || "consumer", pos.x, pos.y);
         }
 
-        $scope.newProducer = function (type) {
+        $scope.newProducer = function (title, type) {
 
             $modal.open({
                 templateUrl: 'templates/modals/newProducer.html',
@@ -448,30 +448,32 @@
                         return $scope.timetableIds;
                     },
                     type: function () {
-                        return type;
+                        return title;
                     }
                 }
-            }).result.then(addData);
+            }).result.then(function() {
+                addData(type)
+            });
         };
 
-        $scope.newConsumer = function (type) {
+        $scope.newConsumer = function (title, type) {
 
             $modal.open({
                 templateUrl: 'templates/modals/newConsumer.html',
                 controller: 'NewConsumerInstanceCtrl',
                 size: 'sm',
                 resolve: {
-
                     //  ticksToConsumeEntitiesList, type, timeSelectConsumer
                     ticksToConsumeEntitiesList: function () {
                         return $scope.ticksToConsumeEntitiesList;
                     },
                     type: function(){
-                        $scope.type = type;
-                        return $scope.type;
+                        return title;
                     }
                 }
-            }).result.then(addData);
+            }).result.then(function() {
+                addData(type)
+            });
         };
 
         $scope.newConsumerGroup = function() {
