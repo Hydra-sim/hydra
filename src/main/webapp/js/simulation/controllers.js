@@ -433,7 +433,8 @@
         $scope.control = {};
         $scope.addData = addData;
         function addData() {
-            $scope.control.addNode("consumer", 400, 100);
+            var pos = $scope.control.getlastpos();
+            $scope.control.addNode("consumer", pos.x, pos.y);
         }
 
         $scope.newProducer = function (type) {

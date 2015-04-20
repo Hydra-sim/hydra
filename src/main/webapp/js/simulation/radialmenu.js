@@ -31,6 +31,7 @@
 
                 scope.internalControl = scope.control || {};
                 scope.internalControl.close = close;
+                scope.internalControl.getlastpos = getlastpos;
 
                 var circularMenu    = element[0];
                 var openBtn         = document.querySelector(consts.menuButtonClass);
@@ -47,12 +48,17 @@
                 openBtn.onclick = close;
                 graph.onclick = close;
 
+                var lastpos = {x:0, y:0};
+
                 function open(e) {
                     e.preventDefault();
 
                     outerCircle.classList.add('open');
                     var xPosition = e.clientX - (circularMenu.clientWidth / 2);
                     var yPosition = e.clientY - (circularMenu.clientHeight / 2);
+
+                    lastpos.x = e.clientX;
+                    lastpos.y = e.clientY;
 
                     circularMenu.style.left = xPosition + "px";
                     circularMenu.style.top = yPosition + "px";
@@ -65,6 +71,10 @@
                     outerCircle.classList.remove('open');
                     openBtn.style.display = "none";
                     circularMenu.style.visibility = "hidden";
+                }
+
+                function getlastpos() {
+                    return lastpos;
                 }
             },
 
