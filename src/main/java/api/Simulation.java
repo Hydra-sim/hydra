@@ -128,7 +128,6 @@ public class Simulation {
 
         for(SimulationNode node : input.nodes) {
 
-            if()
         }
         /*
         for(int i = 0; i < input.consumerGroupNames.length; i++) {
