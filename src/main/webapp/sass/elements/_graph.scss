@@ -16,9 +16,17 @@
     fill: #333;
   }
 
-  .node circle           {  fill: red;  }
-  .node.producer circle  {  fill: $producer_color; }
-  .node.consumer circle  {  fill: $consumer_color; }
+  /*.node circle           {  fill: red;  }*/
+
+  .node.producer circle,
+  .node.train circle,
+  .node.bus circle       {  fill: $producer_color; }
+
+  .node.consumer circle,
+  .node.desktop circle,
+  .node.arrows-h circle,
+  .node.suitcase circle  {  fill: $consumer_color; }
+
   .node:hover circle     {  fill: $node_hover_color; }
   .node.selected circle  {  stroke: $node_selected; stroke-width: 3px;  }
 

@@ -295,6 +295,40 @@
                             .append("circle")
                             .attr("r", String(consts.nodeRadius));
 
+                        newCircleWrappers
+                            .append('text')
+                            .attr('font-family', 'FontAwesome')
+                            .attr('font-size', function(d) { return 1.8 +'em'} )
+                            .attr("dy", function(d){return consts.nodeRadius/2})
+                            .attr("text-anchor", "middle")
+                            .attr('fill', 'white')
+                            .text(function(d) {
+                                switch(d.type) {
+                                    case 'train':
+                                        return '\uf238';
+                                        break;
+
+                                    case 'bus':
+                                        return '\uf207';
+                                        break;
+
+                                    case 'desktop':
+                                        return '\uf108';
+                                        break;
+
+                                    case 'arrows-h':
+                                        return '\uf07e';
+                                        break;
+
+                                    case 'suitcase':
+                                        return '\uf0f2';
+                                        break;
+
+                                    default:
+                                        return '\uf118';
+                                }
+                            });
+
                         // remove old nodes
                         circles.exit().remove();
                     }
