@@ -195,7 +195,8 @@ public class SimulationEngineIntegrationTest {
 
         simulationHelper.simulate(simulation);
 
-        System.out.println((System.currentTimeMillis() - start));
+        System.out.printf("%-80s%s","Timetest; 1,000,000 consumers, 100 arrivals with 100 passengers each: ",
+                (System.currentTimeMillis() - start) + " milliseconds.\n");
     }
 
     @Test
@@ -219,7 +220,7 @@ public class SimulationEngineIntegrationTest {
 
         simulationHelper.simulate(sim);
 
-        System.out.println((System.currentTimeMillis() - start));
+        System.out.printf("%-80s%s", "Timetest; OSL Preset: ", (System.currentTimeMillis() - start) + " milliseconds.\n");
     }
 
     @Test
