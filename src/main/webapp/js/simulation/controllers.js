@@ -407,14 +407,8 @@
             var sim = new Simulation({
                 'name':                             menu_field_name.value,
                 'ticks':                            $scope.ticks,
-                'ticksToConsumeEntitiesList' :      $scope.ticksToConsumeEntitiesList,
-                'timetableIds' :                    $scope.timetableIds,
-                'consumerGroupNames' :              $scope.consumerGroupNames,
-                'numberOfConsumersInGroups' :       $scope.numberOfConsumersInGroups,
-                'ticksToConsumeEntitiesGroups' :    $scope.ticksToConsumeEntitiesGroups,
-                'totalNumberOfEntititesList':       $scope.totalNumberOfEntititesList,
-                'numberOfEntitiesList':             $scope.numberOfEntitiesList,
-                'timeBetweenArrivalsList':          $scope.timeBetweenArrivalsList
+                'nodes':                            $scope.dataset.nodes,
+                'edges':                            $scope.dataset.edges
             });
 
             sim.$save().then(function(result) {

@@ -1,5 +1,7 @@
 package api.data;
 
+import java.util.List;
+
 /**
  * The values used by the API to persist the simulation
  */
@@ -12,25 +14,8 @@ public class SimulationFormData {
     public int startTick;
     public int ticks;
 
-    // Consumers (single)
-    public int[] ticksToConsumeEntitiesList;
+    public List<SimulationNode> nodes;
+    public List<SimulationEdge> edges;
 
-    public String[] consumerTypes;
-
-    // Consumer-Groups
-    public String[] consumerGroupNames;
-    public int[] numberOfConsumersInGroups;
-    public int[] ticksToConsumeEntitiesGroups;
-
-    public String[] consumerGroupTypes;
-
-    // Proucers
-    public int[] timetableIds;
-
-    public int[] totalNumberOfEntititesList;
-    public int[] timeBetweenArrivalsList;
-    public int[] numberOfEntitiesList;
-
-    public String[] producerType;
 
 }

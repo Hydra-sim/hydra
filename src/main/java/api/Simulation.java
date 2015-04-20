@@ -83,15 +83,16 @@ public class Simulation {
      * @return a list of consumers
      */
     private List<Consumer> initConsumers(SimulationFormData input) {
-        List<Consumer> consumers = new ArrayList<>();
 
+        List<Consumer> consumers = new ArrayList<>();
+        /*
         for(int i = 0; i < input.ticksToConsumeEntitiesList.length; i++) {
             Consumer consumer = new Consumer(input.ticksToConsumeEntitiesList[i]);
 
             consumer.setType(input.consumerTypes[i]); // TODO: Fix for format from frontend
             consumers.add(consumer);
         }
-
+        */
         return consumers;
     }
 
@@ -129,7 +130,7 @@ public class Simulation {
      */
     private List<ConsumerGroup> initConsumerGroups(SimulationFormData input) {
         List<ConsumerGroup> consumerGroups = new ArrayList<>();
-
+        /*
         for(int i = 0; i < input.consumerGroupNames.length; i++) {
 
             ConsumerGroup consumerGroup = new ConsumerGroup(input.consumerGroupNames[i],
@@ -140,7 +141,7 @@ public class Simulation {
 
             consumerGroups.add(consumerGroup);
         }
-
+        */
         return consumerGroups;
     }
 
@@ -154,7 +155,7 @@ public class Simulation {
      private List<Producer> initProducers(SimulationFormData input) throws Exception
      {
         List<Producer> producers = new ArrayList<>();
-
+        /*
         for(int i = 0; i < input.timetableIds.length; i++) {
 
 
@@ -174,7 +175,7 @@ public class Simulation {
 
              producers.add(producer);
          }
-
+        */
         return producers;
     }
 
