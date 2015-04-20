@@ -186,7 +186,7 @@ public class Simulation {
 
                  producer.setX(edge.source.x);
              }
-             Relationship relationship = new Relationship(edge.source, edge.target, edge.weight);
+             //Relationship relationship = new Relationship(edge.source, edge.target, edge.weight);
          }
 
         return producers;
