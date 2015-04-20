@@ -1,6 +1,7 @@
 package api;
 
 import helpers.ProducerHelper;
+import helpers.SimulationHelper;
 import models.Consumer;
 import models.ConsumerGroup;
 import models.Producer;
@@ -65,7 +66,7 @@ public class Simulation {
         models.Simulation sim = new models.Simulation(input.name, consumers, producers, consumerGroups, input.startTick, input.ticks);
 
         // Run the simulation
-        models.Simulation.simulate(sim);
+        new SimulationHelper().simulate(sim);
 
         // Persist the simulation, with results, to the database
         simulationDao.add(sim);

@@ -587,7 +587,7 @@
 
             $scope.submitPassword(null);
         };
-        
+
         $scope.cancel = function(){
             $modalInstance.dismiss();
         };
