@@ -47,11 +47,16 @@
                     e.preventDefault();
 
                     outerCircle.classList.add('open');
-                    var xPosition = e.clientX - (circularMenu.clientWidth / 2);
-                    var yPosition = e.clientY - (circularMenu.clientHeight / 2);
 
-                    lastpos.x = e.clientX;
-                    lastpos.y = e.clientY;
+                    var parentPosition = getPosition(e.currentTarget);
+                    var x = e.clientX - parentPosition.x;
+                    var y = e.clientY - parentPosition.y;
+
+                    lastpos.x = x;
+                    lastpos.y = y;
+
+                    var xPosition = x - (circularMenu.clientWidth / 2);
+                    var yPosition = y - (circularMenu.clientHeight / 2);
 
                     circularMenu.style.left = xPosition + "px";
                     circularMenu.style.top = yPosition + "px";
@@ -68,6 +73,19 @@
 
                 function getlastpos() {
                     return lastpos;
+                }
+
+                // source http://www.kirupa.com/html5/getting_mouse_click_position.htm
+                function getPosition(element) {
+                    var xPosition = 0;
+                    var yPosition = 0;
+
+                    while (element) {
+                        xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+                        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+                        element = element.offsetParent;
+                    }
+                    return { x: xPosition, y: yPosition };
                 }
             },
 
