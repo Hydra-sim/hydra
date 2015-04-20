@@ -144,7 +144,7 @@
         $scope.isCollapsed = true;
 
     });
-    
+
     app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, id, func, Authentication) {
 
         $scope.id = id;
@@ -217,8 +217,16 @@
                     'input': password
                 });
 
-                sim.$$url = "set/password";
-                sim.$save();
+                Simulation.update({}, sim).$promise.then(function() {});
+
+                $log.info("Am I even here??")
+
+                /*
+                Timetable.update({"id": $scope.id}, timetable).$promise.then(function() {
+                    $rootScope.$emit('updateTimetable');
+                    $location.path('/timetable');
+                });
+                */
 
                 $modalInstance.close();
 

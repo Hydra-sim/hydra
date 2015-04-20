@@ -195,6 +195,10 @@
     });
 
     app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult) {
+        $scope.producerTooltip =  'Next arrival: 14:20 \n Passengers: 40 \n Persons delivered: 120 \n Persons remaining: 0';
+        $scope.consumerTooltip = "Number in line: 10 \n Longest waiting time: 40 seconds";
+        $scope.parkingTooltip = "Number arrived: 6";
+
         $scope.entitiesConsumed         = SimResult.data.entitiesConsumed;
         $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;
         $scope.maxWaitingTimeInTicks    = SimResult.data.maxWaitingTimeInTicks;

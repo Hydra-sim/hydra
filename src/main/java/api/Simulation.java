@@ -220,23 +220,23 @@ public class Simulation {
     }
 
     @Transactional
-    @POST
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("set/password")
-    public Response updatePassword(PasswordFormData data)
+    @Path("{id}")
+    public Response updatePassword(@PathParam("id") int id, PasswordFormData data)
     {
         try {
 
-            models.Simulation simulation = simulationDao.get( data.id );
+            models.Simulation simulation = simulationDao.get( id );
             simulation.setPassword( data.input );
             simulationDao.update(simulation);
 
         } catch (Exception e) {
 
-            return Response.serverError().build();
+            return Response.ok(new TrueFalse(false)).build();
         }
 
-        return Response.ok().build();
+        return Response.ok(new TrueFalse(true)).build();
     }
 }
