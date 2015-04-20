@@ -17,26 +17,12 @@
     Shift+drag from one node to another to add an edge.
 </p>
 <radialmenu>
-    <div class="circle purple">
-        <a ng-click="newProducer('NEW TRAIN')" class="fa fa-2x fa-train"></a>
-    </div>
-    <div class="circle purple">
-        <a ng-click="newProducer('NEW BUS')" class="fa fa-2x fa-bus"></a>
-    </div>
-    <div class="circle dark-purple">
-        <a ng-click="newConsumer('NEW TERMINAL')" class="fa fa-2x fa-desktop"></a>
-    </div>
-    <div class="circle dark-purple">
-        <a ng-click="newConsumer('NEW DOOR')" class="fa fa-2x fa-arrows-h"></a>
-    </div>
-    <div class="circle dark-purple">
-        <a ng-click="newConsumer('NEW BAGDROP')" class="fa fa-2x fa-suitcase"></a>
-    </div>
-    <div class="circle black">
-        <a ng-click="newPassengerflow()" class="fa fa-2x fa-users"></a>
-    </div>
-    <div class="circle azure">
-        <a><i class="fa fa-2x i">P</i></a>
-    </div>
+    <radialbutton icon="fa-train" color="purple" ng-click="newProducer('NEW TRAIN')"></radialbutton>
+    <radialbutton icon="fa-bus" color="dark-purple" ng-click="newProducer('NEW TRAIN')"></radialbutton>
+    <radialbutton icon="fa-desktop" color="dark-purple" ng-click="newProducer('NEW TRAIN')"></radialbutton>
+    <radialbutton icon="fa-arrows-h" color="dark-purple" ng-click="newProducer('NEW TRAIN')"></radialbutton>
+    <radialbutton icon="fa-suitcase" color="dark-purple" ng-click="newProducer('NEW TRAIN')"></radialbutton>
+    <radialbutton icon="fa-users" color="black" ng-click="newProducer('NEW TRAIN')"></radialbutton>
+    <radialbutton icon="i" color="azure" ng-click="newProducer('NEW TRAIN')">P</radialbutton>
 </radialmenu>
 <div ng-include src="'templates/simulation/help-simulation.html'"></div>

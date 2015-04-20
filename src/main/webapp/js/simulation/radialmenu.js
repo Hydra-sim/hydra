@@ -66,4 +66,20 @@
         }
     });
 
+    app.directive('radialbutton', function() {
+        return {
+            require: '^radialmenu',
+            restrict: 'E',
+
+            template: '<div class="circle {{color}}"><a class="fa fa-2x {{icon}}" ng-transclude></a></div>',
+            replace: true,
+            transclude: true,
+
+            scope: {
+                color: '@',
+                icon: '@'
+            }
+        };
+    });
+
 })();
