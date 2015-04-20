@@ -10,8 +10,9 @@
                 restrict: 'E',
 
                 // replace <graph> with this html
-                template: '<div class="graph" style="width: {{width}}; height: {{height}};"></div>',
+                template: '<div class="graph" style="width: {{width}}; height: {{height}};" ng-transclude></div>',
                 replace: true,
+                transclude: true,
 
                 scope: {
                     nodes: '=',

@@ -3,9 +3,9 @@
 .graph {
   margin: 0;
   padding: 0;
-  overflow:hidden;
   @include user-select(none);
   background-color: rgb(248, 248, 248);
+  position: relative;
 
   $consumer_color:rgb(71, 28, 89);
   $producer_color: rgb(132, 35, 107);

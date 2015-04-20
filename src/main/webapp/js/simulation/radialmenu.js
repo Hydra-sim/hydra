@@ -16,27 +16,21 @@
             transclude: true,
 
             scope: {
-                graphClass: '@',
                 control: '='
             },
 
             // observe and manipulate the DOM
             link : function(scope, element, attrs) {
 
-                var consts = {
-                    menuButtonClass: '.menu-button',
-                    outerCircleClass: '.outer-circle',
-                    graphClass: scope.graphClass || '.graph'
-                };
-
                 scope.internalControl = scope.control || {};
                 scope.internalControl.close = close;
+                scope.internalControl.getlastpos = getlastpos;
 
                 var circularMenu    = element[0];
-                var openBtn         = document.querySelector(consts.menuButtonClass);
-                var outerCircle     = document.querySelector(consts.outerCircleClass);
-                var graph           = document.querySelector(consts.graphClass);
-                var items           = document.querySelectorAll('.outer-circle .circle');
+                var graph           = circularMenu.parentNode;
+                var openBtn         = circularMenu.querySelector('.menu-button');
+                var outerCircle     = circularMenu.querySelector('.outer-circle');
+                var items           = circularMenu.querySelectorAll('.outer-circle .circle');
 
                 for (var i = 0, l = items.length; i < l; i++) {
                     items[i].style.left = (50 - 35 * Math.cos(-0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
@@ -47,12 +41,22 @@
                 openBtn.onclick = close;
                 graph.onclick = close;
 
+                var lastpos = {x:0, y:0};
+
                 function open(e) {
                     e.preventDefault();
 
                     outerCircle.classList.add('open');
-                    var xPosition = e.clientX - (circularMenu.clientWidth / 2);
-                    var yPosition = e.clientY - (circularMenu.clientHeight / 2);
+
+                    var parentPosition = getPosition(e.currentTarget);
+                    var x = e.clientX - parentPosition.x;
+                    var y = e.clientY - parentPosition.y;
+
+                    lastpos.x = x;
+                    lastpos.y = y;
+
+                    var xPosition = x - (circularMenu.clientWidth / 2);
+                    var yPosition = y - (circularMenu.clientHeight / 2);
 
                     circularMenu.style.left = xPosition + "px";
                     circularMenu.style.top = yPosition + "px";
@@ -65,6 +69,23 @@
                     outerCircle.classList.remove('open');
                     openBtn.style.display = "none";
                     circularMenu.style.visibility = "hidden";
+                }
+
+                function getlastpos() {
+                    return lastpos;
+                }
+
+                // source http://www.kirupa.com/html5/getting_mouse_click_position.htm
+                function getPosition(element) {
+                    var xPosition = 0;
+                    var yPosition = 0;
+
+                    while (element) {
+                        xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+                        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+                        element = element.offsetParent;
+                    }
+                    return { x: xPosition, y: yPosition };
                 }
             },
 
