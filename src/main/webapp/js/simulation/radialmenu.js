@@ -16,7 +16,8 @@
             transclude: true,
 
             scope: {
-                graphClass: '@'
+                graphClass: '@',
+                control: '='
             },
 
             // observe and manipulate the DOM
@@ -27,6 +28,9 @@
                     outerCircleClass: '.outer-circle',
                     graphClass: scope.graphClass || '.graph'
                 };
+
+                scope.internalControl = scope.control || {};
+                scope.internalControl.close = close;
 
                 var circularMenu    = element[0];
                 var openBtn         = document.querySelector(consts.menuButtonClass);
@@ -57,10 +61,16 @@
                 }
 
                 function close(e) {
-                    e.preventDefault();
+                    if(e != 'undefined' && e != null) e.preventDefault();
                     outerCircle.classList.remove('open');
                     openBtn.style.display = "none";
                     circularMenu.style.visibility = "hidden";
+                }
+            },
+
+            controller: function($scope) {
+                this.close = function() {
+                    $scope.internalControl.close();
                 }
             }
         }
@@ -78,6 +88,11 @@
             scope: {
                 color: '@',
                 icon: '@'
+            },
+
+            // observe and manipulate the DOM
+            link : function(scope, element, attrs, radialmenu) {
+                element[0].onclick = radialmenu.close;
             }
         };
     });
