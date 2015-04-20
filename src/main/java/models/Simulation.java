@@ -74,9 +74,6 @@ public class Simulation
     // private boolean movementBasedOnQueues; //TODO: HPXIVXXI-188
     //endregion
 
-    @Transient
-    NodeHelper nodeHelper;
-
     //endregion
 
     //region constructors
@@ -122,17 +119,40 @@ public class Simulation
         this.startTick = startTick;
         this.ticks = ticks;
 
-        nodeHelper = new NodeHelper();
-
         // Distribute weight producers
-        getProducers().forEach(nodeHelper::distributeWeightIfNotSpecified);
+        getProducers().forEach(this::distributeWeightIfNotSpecified);
 
         // Distribute weight consumers
-        getConsumers().forEach(nodeHelper::distributeWeightIfNotSpecified);
+        getConsumers().forEach(this::distributeWeightIfNotSpecified);
 
         preset = false;
         passwordProtected = false;
         password = null;
+    }
+
+    /**
+     * Automatically distributes weight to the {@link models.Relationship relationships} if they are all 0.0
+     * @param node the node we wish to distribute weight on
+     */
+    public void distributeWeightIfNotSpecified(Node node) {
+
+        List<Relationship> relationships = node.getRelationships();
+
+        boolean weighted = false;
+
+        for(Relationship relationship : relationships) {
+
+            if(relationship.getWeight() != 0.0) weighted = true;
+        }
+
+        if(!weighted) {
+            double weight = (double) 1 / relationships.size();
+
+            for (int i = 0; i < relationships.size(); i++) {
+
+                relationships.get(i).setWeight(weight);
+            }
+        }
     }
     //endregion
 
