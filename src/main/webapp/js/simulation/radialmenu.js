@@ -7,23 +7,28 @@
     app.directive('radialmenu', function() {
         //noinspection HtmlUnknownBooleanAttribute
         return {
+            // required to make it work as an element
             restricted: 'E',
-            transclude: true,
 
+            // replace <radialmenu> with this html
             template: '<nav class="circular-menu"><div class="outer-circle" ng-transclude></div><a class="menu-button fa fa-close fa-4x"></a></nav>',
             replace: true,
+            transclude: true,
+
+            scope: {
+                graphClass: '@'
+            },
 
             // observe and manipulate the DOM
             link : function(scope, element, attrs) {
 
                 var consts = {
-                    circularMenuClass: '.circular-menu',
                     menuButtonClass: '.menu-button',
                     outerCircleClass: '.outer-circle',
-                    graphClass: '.graph'
+                    graphClass: scope.graphClass || '.graph'
                 };
 
-                var circularMenu    = document.querySelector(consts.circularMenuClass);
+                var circularMenu    = element[0];
                 var openBtn         = document.querySelector(consts.menuButtonClass);
                 var outerCircle     = document.querySelector(consts.outerCircleClass);
                 var graph           = document.querySelector(consts.graphClass);
