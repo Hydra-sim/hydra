@@ -408,13 +408,13 @@ public class Simulation
         // If the consumer has any entities to send
         if(sender.getEntitesConsumed().size() != 0) {
 
-            // Number of entities already sent to the recieving consumer
-            int recieved = consumerHelper.getTotalSentToConsumer(relationship.getChild());
+            // Number of entities already sent to the receiving consumer
+            int received = consumerHelper.getTotalSentToConsumer(relationship.getChild());
 
-            // The percentage of entites already sent from our sending consumer to the recieving consumer
-            double currentWeight = (double) recieved / sender.getEntitiesTransfered();
+            // The percentage of entities already sent from our sending consumer to the receiving consumer
+            double currentWeight = (double) received / sender.getEntitiesTransfered();
 
-            // Checks if the percentage already sent to the recieving consumer is equal or greater to what it should
+            // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
             // have, and runs the code if either this is true, or it is the first entity sent from the sending
             // consumer
             if(currentWeight <= relationship.getWeight() || sender.getEntitiesTransfered() == 0) {
