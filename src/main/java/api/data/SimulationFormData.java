@@ -1,9 +1,9 @@
-package api;
+package api.data;
 
 /**
  * The values used by the API to persist the simulation
  */
-class InputValue {
+public class SimulationFormData {
 
     // TODO: Fix for format from frontend
 

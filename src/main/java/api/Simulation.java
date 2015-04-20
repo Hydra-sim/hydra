@@ -1,5 +1,8 @@
 package api;
 
+import api.data.PasswordFormData;
+import api.data.SimulationFormData;
+import api.data.TrueFalse;
 import helpers.ProducerHelper;
 import helpers.SimulationHelper;
 import models.Consumer;
@@ -40,7 +43,7 @@ public class Simulation {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(InputValue input)
+    public Response add(SimulationFormData input)
     {
         List<Producer> producers;
 
@@ -79,7 +82,7 @@ public class Simulation {
      * @param input the data from which the consumers are built
      * @return a list of consumers
      */
-    private List<Consumer> initConsumers(InputValue input) {
+    private List<Consumer> initConsumers(SimulationFormData input) {
         List<Consumer> consumers = new ArrayList<>();
 
         for(int i = 0; i < input.ticksToConsumeEntitiesList.length; i++) {
@@ -97,7 +100,7 @@ public class Simulation {
      * @param input the data from which the consumers are built
      * @return a list of consumers
      */
-    private List<Relationship> initRelationships(InputValue input, List<Producer> producers, List<Consumer> consumers,
+    private List<Relationship> initRelationships(SimulationFormData input, List<Producer> producers, List<Consumer> consumers,
                                              List<ConsumerGroup> consumerGroups) {
 
         List<Relationship> relationships = new ArrayList<>();
@@ -124,7 +127,7 @@ public class Simulation {
      * @param input the data from which the consumer-groups are built
      * @return a list of consumer-groups
      */
-    private List<ConsumerGroup> initConsumerGroups(InputValue input) {
+    private List<ConsumerGroup> initConsumerGroups(SimulationFormData input) {
         List<ConsumerGroup> consumerGroups = new ArrayList<>();
 
         for(int i = 0; i < input.consumerGroupNames.length; i++) {
@@ -148,7 +151,7 @@ public class Simulation {
      * @return a list of producers
      */
      @SuppressWarnings("unchecked")
-     private List<Producer> initProducers(InputValue input) throws Exception
+     private List<Producer> initProducers(SimulationFormData input) throws Exception
      {
         List<Producer> producers = new ArrayList<>();
 

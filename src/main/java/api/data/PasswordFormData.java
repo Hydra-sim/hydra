@@ -1,4 +1,4 @@
-package api;
+package api.data;
 
 /**
  * Password for {@link models.Simulation}

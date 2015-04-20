@@ -1,5 +1,7 @@
 package api;
 
+import api.data.PasswordFormData;
+import api.data.TrueFalse;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.ejb.EJB;
@@ -38,6 +40,6 @@ public class Authentication {
             return Response.serverError().build();
         }
         /**/
-        return Response.ok( new TrueFalse(false) ).build();
+        return Response.ok(new TrueFalse(false)).build();
     }
 }

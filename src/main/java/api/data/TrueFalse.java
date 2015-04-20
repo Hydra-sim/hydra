@@ -1,4 +1,4 @@
-package api;
+package api.data;
 
 /**
  * Created by knarf on 17/04/15.
