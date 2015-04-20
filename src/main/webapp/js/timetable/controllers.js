@@ -99,7 +99,6 @@
 
             timetable.$save().then(function() {
                 $rootScope.$emit('updateTimetable');
-                $location.path('/timetable');
             });
 
             $modalInstance.close();
