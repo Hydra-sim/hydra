@@ -220,12 +220,7 @@ public class SimulationHelper {
         return maxWaitingTime;
     }
 
-    /**
-     *
-     * @param simulation
-     * @return
-     */
-    public int getEntitesConsumed() {
+    private int getEntitesConsumed() {
 
         int entitiesConsumed = 0;
 
@@ -245,7 +240,7 @@ public class SimulationHelper {
     }
 
 
-    public int getEntitiesInQueue() {
+    private int getEntitiesInQueue() {
 
         int entitiesInQueue = 0;
 
