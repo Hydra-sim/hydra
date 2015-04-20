@@ -1,7 +1,5 @@
 package models;
 
-import helpers.NodeHelper;
-import helpers.SimulationHelper;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mindrot.jbcrypt.BCrypt;
