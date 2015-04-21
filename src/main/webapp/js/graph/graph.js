@@ -310,8 +310,8 @@
                             .append('text')
                             .attr('font-family', 'FontAwesome')
                             .attr('font-size', function(d) { return 1.8 +'em'} )
-                            .attr("dy", function(d){return consts.nodeRadius/2})
                             .attr("text-anchor", "middle")
+                            .attr("alignment-baseline", "central")
                             .attr('fill', 'white')
                             .text(function(d) {
                                 return icons[d.type] || '\uf118';
