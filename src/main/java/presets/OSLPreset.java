@@ -13,11 +13,7 @@ import java.util.List;
 // -                Doors,          5,          80% / 5% / 5% / 5% / 5%
 // - -              Terminals,      39,         equal
 // - - -            Bag drop,       26,         equal
-// - - - - -        Security check, 1,          85%
-// - - - - -        Toilet,         2,          5% / 5%
-// - - - - - -      Security check, 1,          equal
-// - - - - -        Cafe,           1,          5%
-// - - - - - -      Security check, 1,          equal
+// - - - - - -      Security check, 1,          100%
 // ======================================================================
 
 /**
@@ -31,15 +27,12 @@ public class OSLPreset {
     final int DOOR_QUANTITY         = 5;
     final int TERMINAL_QUANTITY     = 39;
     final int BAG_DROP_QUANTITY     = 26;
-    final int TOILET_QUANTITY       = 2;
 
     // Consumption time in ticks for each pre-defined consumer
     final int BUS_STOP_CONSUMPTION_TIME       = 60;         // 1 minute
     final int DOOR_CONSUMPTION_TIME           = 10;         // 10 seconds
     final int TERMINAL_CONSUMPTION_TIME       = 60 * 2;     // 2 minutes
     final int BAG_DROP_CONSUMPTION_TIME       = 60 * 2;     // 2 minutes
-    final int TOILET_CONSUMPTION_TIME         = 60 * 5;     // 5 minutes
-    final int CAFE_CONSUMPTION_TIME           = 60 * 30;    // 30 minutes
     final int SECURITY_CHECK_CONSUMPTION_TIME = 60 * 10;    // 10 minutes
 
     /**
@@ -56,7 +49,6 @@ public class OSLPreset {
         Producer producer = new Producer(timetable);
 
         // Creation of single consumers
-        Consumer cafe           = new Consumer(      "Café",        CAFE_CONSUMPTION_TIME );
         Consumer securityCheck  = new Consumer(      "Security",    SECURITY_CHECK_CONSUMPTION_TIME );
 
         // Creation of single consumers in list
@@ -66,7 +58,6 @@ public class OSLPreset {
         ConsumerGroup busStops  = new ConsumerGroup( "Bus stop",    BUS_STOP_QUANTITY,  BUS_STOP_CONSUMPTION_TIME );
         ConsumerGroup terminals = new ConsumerGroup( "Terminal",    TERMINAL_QUANTITY,  TERMINAL_CONSUMPTION_TIME );
         ConsumerGroup bagDrops  = new ConsumerGroup( "Bag drop",    BAG_DROP_QUANTITY,  BAG_DROP_CONSUMPTION_TIME );
-        ConsumerGroup toilets   = new ConsumerGroup( "Toilet",      TOILET_QUANTITY,    TOILET_CONSUMPTION_TIME );
 
         // Iterates through the doors and sets relationships to and from them
 
@@ -83,17 +74,12 @@ public class OSLPreset {
 
         //Sets the rest of the relationships
         relationships.add( new Relationship(terminals, bagDrops, 1.0));
-        relationships.add( new Relationship(bagDrops, securityCheck, 0.85));
-        relationships.add( new Relationship(bagDrops, toilets, 0.1));
-        relationships.add( new Relationship(bagDrops, cafe, 0.05));
-        relationships.add( new Relationship( toilets, securityCheck,   1.0 ) );
-        relationships.add( new Relationship( cafe, securityCheck,   1.0 ) );
+        relationships.add( new Relationship(bagDrops, securityCheck, 1.0));
 
         // All the consumers
         List<Consumer> consumers = new ArrayList<>();
 
         consumers.addAll(doors);
-        consumers.add(cafe);
         consumers.add(securityCheck);
 
         // All the consumer-groups
@@ -102,7 +88,6 @@ public class OSLPreset {
         consumerGroups.add(busStops);
         consumerGroups.add(terminals);
         consumerGroups.add(bagDrops);
-        consumerGroups.add(toilets);
 
         // Initialize the simulation
         Simulation simulation = new Simulation("Oslo Lufthavn");
