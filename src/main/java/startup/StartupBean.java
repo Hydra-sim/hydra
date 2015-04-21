@@ -21,15 +21,12 @@ public class StartupBean {
 
     @PersistenceContext(unitName = "manager")
     private EntityManager entityManager;
-    //private dao.Timetable timetableDao;
 
     /**
      * This method is run on every deployment
      */
     @PostConstruct
     public void startup() {
-
-        //timetableDao = new dao.Timetable();
 
         // Creating the OSL preset and saving it to the database
         Simulation simulation1 = new OSLPreset().createOSLPreset();

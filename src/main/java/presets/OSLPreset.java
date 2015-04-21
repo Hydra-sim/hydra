@@ -1,7 +1,6 @@
 package presets;
 
 import models.Consumer;
-import models.ConsumerGroup;
 import models.Relationship;
 import models.Simulation;
 
@@ -59,15 +58,19 @@ public class OSLPreset {
         // Creation of single consumers in list
         List<Consumer> doors    = createConsumers(   "Door",        DOOR_QUANTITY,      DOOR_CONSUMPTION_TIME);
 
+        /*
         // Creation of consumer-groups
         ConsumerGroup busStops  = new ConsumerGroup( "Bus stop",    BUS_STOP_QUANTITY,  BUS_STOP_CONSUMPTION_TIME );
         ConsumerGroup terminals = new ConsumerGroup( "Terminal",    TERMINAL_QUANTITY,  TERMINAL_CONSUMPTION_TIME );
         ConsumerGroup bagDrops  = new ConsumerGroup( "Bag drop",    BAG_DROP_QUANTITY,  BAG_DROP_CONSUMPTION_TIME );
         ConsumerGroup toilets   = new ConsumerGroup( "Toilet",      TOILET_QUANTITY,    TOILET_CONSUMPTION_TIME );
+        */
 
         // Iterates through the doors and sets relationships to and from them
 
+        // TESTING TO SEE IF RELATIONSHIP WORKS 
         List<Relationship> relationships = new ArrayList<>();
+        /*
         for(int i = 0; i < doors.size(); i++) {
 
             if(i == 0) {
@@ -84,6 +87,7 @@ public class OSLPreset {
         relationships.add( new Relationship(bagDrops, toilets, 0.1));
         relationships.add( new Relationship(bagDrops, cafe, 0.05));
         relationships.add( new Relationship( toilets, securityCheck,   1.0 ) );
+        */
         relationships.add( new Relationship( cafe, securityCheck,   1.0 ) );
 
         // All the consumers
@@ -94,18 +98,20 @@ public class OSLPreset {
         consumers.add(securityCheck);
 
         // All the consumer-groups
+        /*
         List<ConsumerGroup> consumerGroups = new ArrayList<>();
 
         consumerGroups.add(busStops);
         consumerGroups.add(terminals);
         consumerGroups.add(bagDrops);
         consumerGroups.add(toilets);
+        */
 
         // Initialize the simulation
         Simulation simulation = new Simulation("OSL Preset");
 
         simulation.setConsumers(consumers);
-        simulation.setConsumerGroups(consumerGroups);
+        // simulation.setConsumerGroups(consumerGroups);
         simulation.setRelationships(relationships);
 
         simulation.setTicks(100);
