@@ -8,7 +8,7 @@
     app.controller('PresetCtrl', function($scope, $rootScope) {
         $rootScope.menu_field_button = "";
         $rootScope.menu_field_button_icon = "";
-        $rootScope.menu_field_button_click = ""
+        $rootScope.menu_field_button_click = function () {};
     });
 
     app.controller('PresetListCtrl', function($scope, $rootScope, Preset) {
