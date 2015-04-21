@@ -10,8 +10,9 @@
         <radialbutton icon="fa-arrows-h" color="dark-purple" ng-click="newConsumer('NEW DOOR', 'arrows-h')" tooltip="Door"tooltip-placement="right"></radialbutton>
         <radialbutton icon="fa-suitcase" color="dark-purple" ng-click="newConsumer('NEW BAGDROP', 'suitcase')" tooltip="Bagdrop" tooltip-placement="left"></radialbutton>
         <radialbutton icon="fa-users" color="purple" ng-click="newPassengerflow()" tooltip="Passengerflow" tooltip-placement="left"></radialbutton>
-        <radialbutton icon="i" color="azure" ng-click="addData()" tooltip="Parkingspace" tooltip-placement="left">P</radialbutton>
+        <radialbutton icon="i" color="azure" ng-click="addData()" tooltip="Bus stop" tooltip-placement="left">P</radialbutton>
     </radialmenu>
+
 </graph>
 
 <p>
@@ -21,7 +22,6 @@
     Click shift+backspace to delete selected edge / selected node and all connected edges.
     Shift+drag from one node to another to add an edge.
 </p>
-
 <div ng-include src="'templates/simulation/simulationProgressBar.html'"></div>
-
 <div ng-include src="'templates/simulation/help-simulation.html'"></div>
+
