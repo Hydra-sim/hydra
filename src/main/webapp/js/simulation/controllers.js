@@ -222,7 +222,6 @@
         $rootScope.menu_field_button_click = function() {};
     });
 
-
     app.controller('SimulationListCtrl', function ($scope, $log, Simulation, $location, $modal) {
 
         function updateSimulations() {
@@ -360,7 +359,6 @@
             });
         };
     });
-
 
     app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, $log, Simulation, SimResult, menu_field_name) {
 

@@ -6,7 +6,7 @@
         <div class="form-group">
             <label>Time to process</label>
             <input type="number" class="form-control" ng-model="amountOfTime" min="0">
-            <select class="form-control" ng-model="timeSelectConsumer.item" ng-options="opt as opt.label for opt in options"></select>
+            <select class="form-control ng-prestine ng-valid" ng-init="timeSelectConsumer.item = options[0]" ng-model="timeSelectConsumer.item" ng-options="opt as opt.label for opt in options"></select>
         </div>
     </form>
     <div class="modal-footer">
