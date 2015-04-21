@@ -32,6 +32,13 @@ public class Consumer extends Node{
         this("Untitled", ticksToConsumeEntities);
     }
 
+    public Consumer(int ticksToConsumeEntities, int x, int y) {
+
+        this("Untitled", ticksToConsumeEntities);
+        this.setX(x);
+        this.setY(y);
+    }
+
     public Consumer(String name, int ticksToConsumeEntities) {
 
         this.name = name;

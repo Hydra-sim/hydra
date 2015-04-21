@@ -33,6 +33,9 @@ abstract public class Node {
     @Transient
     private List<Entity> entitiesReady;
 
+    @Transient
+    int tmpId;
+
     public Node() {
 
         entitiesTransfered = 0;
@@ -96,5 +99,13 @@ abstract public class Node {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getTmpId() {
+        return tmpId;
+    }
+
+    public void setTmpId(int tmpId) {
+        this.tmpId = tmpId;
     }
 }
