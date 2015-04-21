@@ -70,7 +70,6 @@ public class OSLPreset {
 
         // Iterates through the doors and sets relationships to and from them
 
-        // TESTING TO SEE IF RELATIONSHIP WORKS
         List<Relationship> relationships = new ArrayList<>();
         for(int i = 0; i < doors.size(); i++) {
 
