@@ -309,7 +309,7 @@
                         newCircleWrappers
                             .append('text')
                             .attr('font-family', 'FontAwesome')
-                            .attr('font-size', function(d) { return 1.8 +'em'} )
+                            .attr('font-size', function(d) { return 1.4 +'em'} )
                             .attr("text-anchor", "middle")
                             .attr("alignment-baseline", "central")
                             .attr('fill', 'white')
