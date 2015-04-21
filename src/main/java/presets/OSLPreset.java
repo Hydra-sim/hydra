@@ -105,7 +105,7 @@ public class OSLPreset {
         consumerGroups.add(toilets);
 
         // Initialize the simulation
-        Simulation simulation = new Simulation("OSL Preset");
+        Simulation simulation = new Simulation("Oslo Lufthavn");
 
         simulation.setConsumers(consumers);
         simulation.setConsumerGroups(consumerGroups);
