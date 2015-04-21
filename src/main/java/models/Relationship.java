@@ -32,6 +32,11 @@ public class Relationship implements Comparable<Relationship>{
 
     //region constructors
 
+    public Relationship() {
+
+        this(new Producer(), new Consumer(), 0.0);
+    }
+
     public Relationship(Node source, Node target, double weight) {
         this.source = source;
         this.target = target;

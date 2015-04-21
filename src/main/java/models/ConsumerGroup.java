@@ -22,6 +22,11 @@ public class ConsumerGroup extends Consumer{
 
     //region constructors
 
+    public ConsumerGroup() {
+
+        new ConsumerGroup("No name", 0, 0);
+    }
+
     public ConsumerGroup(String name, int numberOfConsumers, int ticksToConsumeEntities) {
 
         setName(name);
