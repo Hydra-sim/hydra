@@ -27,7 +27,10 @@ public class SimulationEngineIntegrationTest {
     public void before() {
         
         producerHelper = new ProducerHelper();
-        simulationHelper = new SimulationHelper(); 
+        simulationHelper = new SimulationHelper();
+
+        Timetable timetable = new Timetable().getTimetableFromCsv("src/main/resources/timetables/flybussekspressen/monday-friday.csv", "Flybussekspressen: Monday-Friday");
+        System.out.println(timetable);
     }
 
     //region tests

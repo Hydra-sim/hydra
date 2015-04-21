@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, ticksToConsumeEntitiesList, type){
+    app.controller('NewConsumerModalCtrl', function($scope, $modalInstance, ticksToConsumeEntitiesList, type){
 
         $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
         $scope.modalTitle = type;
@@ -38,7 +38,7 @@
         };
     });
 
-    app.controller('NewProducerInstanceCtrl', function($scope, $modalInstance, Timetable, timetableIds, type){
+    app.controller('NewProducerModalCtrl', function($scope, $modalInstance, Timetable, timetableIds, type){
 
         $scope.timetableIds = timetableIds;
         $scope.modalTitle = type;
@@ -62,7 +62,7 @@
 
     });
 
-    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, totalNumberOfEntititesList, numberOfEntitiesList, timeBetweenArrivalsList){
+    app.controller("NewPassengerflowModalCtrl", function($scope, $modal, $modalInstance, totalNumberOfEntititesList, numberOfEntitiesList, timeBetweenArrivalsList){
         $scope.totalNumberOfEntititesList = totalNumberOfEntititesList;
         $scope.numberOfEntitiesList = numberOfEntitiesList;
         $scope.timeBetweenArrivalsList = timeBetweenArrivalsList;
@@ -99,7 +99,7 @@
 
     });
 
-    app.controller('ChoosePresetInstanceCtrl', function($scope, $modalInstance){
+    app.controller('ChoosePresetModalCtrl', function($scope, $modalInstance){
         $scope.loadPreset = function(preset){
 
             $modalInstance.close();
@@ -110,7 +110,7 @@
         };
     });
 
-    app.controller('ConsumerGroupInstanceCtrl', function($scope, $modalInstance, consumerGroupNames, numberOfConsumersInGroups,
+    app.controller('ConsumerGroupModalCtrl', function($scope, $modalInstance, consumerGroupNames, numberOfConsumersInGroups,
                                                 ticksToConsumeEntitiesGroups) {
 
         $scope.consumerGroupNames = consumerGroupNames;
@@ -128,7 +128,7 @@
             $modalInstance.dismiss('cancel');
         };
     });
-    app.controller('ConfigModalInstanceCtrl', function ($scope, $modalInstance, startTime, endTime) {
+    app.controller('ConfigModalModalCtrl', function ($scope, $modalInstance, startTime, endTime) {
 
         $scope.startTime = startTime;
         $scope.endTime = endTime;
@@ -214,7 +214,6 @@
         $rootScope.menu_field_button_click = function() {};
     });
 
-
     app.controller('SimulationListCtrl', function ($scope, Simulation, $location, $modal) {
 
         function updateSimulations() {
@@ -250,7 +249,7 @@
 
                     $modal.open({
                         templateUrl: 'templates/modals/passwordAuth.html',
-                        controller: 'PasswordInstanceCtrl',
+                        controller: 'PasswordModalCtrl',
                         size: 'sm',
                         resolve: {
                             id: function () {
@@ -286,7 +285,7 @@
 
             var modalInstance = $modal.open({
                 templateUrl: 'templates/modals/confirmation.html',
-                controller: 'ConfirmationInstanceCtrl',
+                controller: 'ConfirmationModalCtrl',
                 size: 'sm'
             });
 
@@ -305,7 +304,7 @@
 
             $modal.open({
                 templateUrl: 'templates/modals/shareSimulation.html',
-                controller: 'ShareSimulationInstanceCtrl',
+                controller: 'ShareSimulationModalCtrl',
                 size: 'sm',
                 resolve: {
                     id: function () {
@@ -352,7 +351,6 @@
             });
         };
     });
-
 
     app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
 
@@ -434,7 +432,7 @@
 
             $modal.open({
                 templateUrl: 'templates/modals/newProducer.html',
-                controller: 'NewProducerInstanceCtrl',
+                controller: 'NewProducerModalCtrl',
                 size: 'sm',
                 resolve: {
                     timetableIds: function () {
@@ -453,7 +451,7 @@
 
             $modal.open({
                 templateUrl: 'templates/modals/newConsumer.html',
-                controller: 'NewConsumerInstanceCtrl',
+                controller: 'NewConsumerModalCtrl',
                 size: 'sm',
                 resolve: {
                     //  ticksToConsumeEntitiesList, type, timeSelectConsumer
@@ -473,7 +471,7 @@
 
             $modal.open({
                 templateUrl: 'templates/modals/newConsumerGroup.html',
-                controller: 'ConsumerGroupInstanceCtrl',
+                controller: 'ConsumerGroupModalCtrl',
                 size: 'sm',
                 resolve: {
                     consumerGroupNames: function () {
@@ -493,7 +491,7 @@
         $scope.newPassengerflow = function(){
             $modal.open({
                 templateUrl: 'templates/modals/newPassengerflow.html',
-                controller: 'NewPassengerflowInstanceCtrl',
+                controller: 'NewPassengerflowModalCtrl',
                 size: 'sm',
                 resolve: {
                     totalNumberOfEntititesList: function(){
@@ -513,7 +511,7 @@
 
             var configModal = $modal.open({
                 templateUrl: 'templates/modals/configModal.html',
-                controller: 'ConfigModalInstanceCtrl',
+                controller: 'ConfigModalModalCtrl',
                 size: 'sm',
                 resolve: {
                     startTime: function() {
@@ -535,7 +533,7 @@
         $scope.choosePreset = function(){
             $modal.open({
                 templateUrl: 'templates/modals/choosePreset.html',
-                controller:  'ChoosePresetInstanceCtrl',
+                controller:  'ChoosePresetModalCtrl',
                 size: 'sm'
             });
         };
@@ -580,7 +578,7 @@
         };
     });
 
-    app.controller('PasswordInstanceCtrl', function($scope, $modalInstance, id, func, Authentication) {
+    app.controller('PasswordModalCtrl', function($scope, $modalInstance, id, func, Authentication) {
 
         $scope.id = id;
 
@@ -613,7 +611,7 @@
         };
     });
 
-    app.controller('ConfirmationInstanceCtrl', function($scope, $modalInstance) {
+    app.controller('ConfirmationModalCtrl', function($scope, $modalInstance) {
 
         $scope.confirm = function(){
 
@@ -632,6 +630,32 @@
 
     app.controller('TooltipCtrl', function($scope, templateUrl, positionX, positionY){
 
-    })
+    });
+
+    app.controller('ShareSimulationModalCtrl', function($scope, $modalInstance, $location, $log, id, message){
+
+        $scope.id = id;
+        $scope.message = message;
+
+        $scope.copySimulation = function(){
+
+            $scope.complete = function(e) {
+                console.log('copy complete', e);
+                $scope.copied = true
+            };
+            $scope.$watch('input', function(v) {
+                $scope.copied = false
+            });
+            $scope.clipError = function(e) {
+                console.log('Error: ' + e.name + ' - ' + e.message);
+            };
+
+            $modalInstance.close();
+        }
+
+        $scope.cancel = function(){
+            $modalInstance.dismiss('close');
+        }
+    });
 
 })();

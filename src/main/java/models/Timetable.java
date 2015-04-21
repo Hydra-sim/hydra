@@ -84,11 +84,15 @@ public class Timetable {
     }
     //endregion
 
-    public static Timetable getTimetableFromCsv(String path, String name) {
+    public Timetable getTimetableFromCsv(String path, String name) {
 
         List<TimetableEntry> entries = new ArrayList<>();
 
-        try (Scanner scanner = new Scanner(new File(path))) {
+        // ClassLoader classLoader = getClass().getClassLoader();
+        // File file = new File(classLoader.getResource(path).getFile());
+        File file = new File(path);
+
+        try (Scanner scanner = new Scanner(file)) {
 
             scanner.nextLine(); //Column names
 
@@ -114,5 +118,4 @@ public class Timetable {
 
         return new Timetable(entries, name);
     }
-
 }
