@@ -278,11 +278,14 @@
                         circles = circles.data(scope.nodes, function(d){ return d.id; });
                         circles.attr("transform", transformFunction);
 
+
                         // add new nodes
                         var newCircleWrappers = circles
                             .enter()
                             .append("g");
 
+
+                        newCircleWrappers
                         newCircleWrappers
                             .attr('class', function(d) { return d.type + " " + consts.circleWrapperClass; })
                             .attr("transform", transformFunction)
@@ -293,7 +296,11 @@
 
                         newCircleWrappers
                             .append("circle")
-                            .attr("r", String(consts.nodeRadius));
+                            .attr("r", String(consts.nodeRadius))
+                            .attr("tooltip-append-to-body", true)
+                            .attr("tooltip", function(){
+                                return "Hello World";
+                            })
 
                         newCircleWrappers
                             .append('text')

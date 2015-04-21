@@ -14,7 +14,7 @@
         <div class="form-group">
             <label>Time between arrivals</label>
             <input type="number" class="form-control" ng-model="timeBetweenArrivals" min="0">
-            <select class="form-control" ng-model="timeSelect.item" ng-options="opt as opt.label for opt in options">
+            <select class="form-control" ng-init="timeSelect.item = options[0]" ng-model="timeSelect.item" ng-options="opt as opt.label for opt in options">
             </select>
         </div>
     </form>

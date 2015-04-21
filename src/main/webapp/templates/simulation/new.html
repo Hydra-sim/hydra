@@ -2,14 +2,14 @@
 <button class="btn btn-default" ng-click="newConsumerGroup()">Add Consumer-Group</button>
 <button class="btn btn-default" ng-click="choosePreset()">Choose Preset</button>
 
-<graph nodes="dataset.nodes" edges="dataset.edges" height="500px" control="control">
+<graph nodes="dataset.nodes" edges="dataset.edges" height="500px" control="control" nodes.tooltip="Check">
     <radialmenu control="control">
         <radialbutton icon="fa-train" color="purple" ng-click="newProducer('NEW TRAIN', 'train')" tooltip="Train" tooltip-placement="top"></radialbutton>
         <radialbutton icon="fa-bus" color="purple" ng-click="newProducer('NEW BUS', 'bus')" tooltip="Bus" tooltip-placement="right"></radialbutton>
         <radialbutton icon="fa-desktop" color="dark-purple" ng-click="newConsumer('NEW TERMINAL', 'desktop')" tooltip="Terminal" tooltip-placement="right"></radialbutton>
         <radialbutton icon="fa-arrows-h" color="dark-purple" ng-click="newConsumer('NEW DOOR', 'arrows-h')" tooltip="Door"tooltip-placement="right"></radialbutton>
         <radialbutton icon="fa-suitcase" color="dark-purple" ng-click="newConsumer('NEW BAGDROP', 'suitcase')" tooltip="Bagdrop" tooltip-placement="left"></radialbutton>
-        <radialbutton icon="fa-users" color="black" ng-click="newPassengerflow()" tooltip="Passengerflow" tooltip-placement="left"></radialbutton>
+        <radialbutton icon="fa-users" color="purple" ng-click="newPassengerflow()" tooltip="Passengerflow" tooltip-placement="left"></radialbutton>
         <radialbutton icon="i" color="azure" ng-click="addData()" tooltip="Parkingspace" tooltip-placement="left">P</radialbutton>
     </radialmenu>
 </graph>
