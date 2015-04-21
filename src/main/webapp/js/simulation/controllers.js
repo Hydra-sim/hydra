@@ -546,6 +546,7 @@
                 size: 'sm'
             });
         };
+
     });
 
     app.controller('ChangePasswordCtrl', function( $scope, $modalInstance, $rootScope, $location, id, Simulation ) {
@@ -636,5 +637,9 @@
 
         $log.info("Hello");
     });
+
+    app.controller('TooltipCtrl', function($scope, templateUrl, positionX, positionY){
+
+    })
 
 })();

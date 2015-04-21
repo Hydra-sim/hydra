@@ -305,6 +305,7 @@
                             .append("circle")
                             .attr("r", String(consts.nodeRadius));
 
+
                         newCircleWrappers
                             .append('text')
                             .attr('font-family', 'FontAwesome')
