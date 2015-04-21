@@ -2,7 +2,7 @@
 <button class="btn btn-default" ng-click="newConsumerGroup()">Add Consumer-Group</button>
 <button class="btn btn-default" ng-click="choosePreset()">Choose Preset</button>
 
-<graph nodes="dataset.nodes" edges="dataset.edges" height="500px" control="control" nodes.tooltip="Check">
+<graph nodes="dataset.nodes" edges="dataset.edges" height="500px" control="control" >
     <radialmenu control="control">
         <radialbutton icon="fa-train" color="purple" ng-click="newProducer('NEW TRAIN', 'train')" tooltip="Train" tooltip-placement="top"></radialbutton>
         <radialbutton icon="fa-bus" color="purple" ng-click="newProducer('NEW BUS', 'bus')" tooltip="Bus" tooltip-placement="right"></radialbutton>
