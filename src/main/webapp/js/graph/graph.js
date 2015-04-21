@@ -296,12 +296,7 @@
 
                         newCircleWrappers
                             .append("circle")
-                            .attr("r", String(consts.nodeRadius))
-                            .attr("tooltip-append-to-body", true)
-                            .attr("tooltip-placement", "right")
-                            .attr("tooltip", function(){
-                                return "Hello World";
-                            })
+                            .attr("r", String(consts.nodeRadius));
 
                         newCircleWrappers
                             .append('text')
