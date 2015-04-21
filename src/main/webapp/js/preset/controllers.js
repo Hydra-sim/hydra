@@ -6,9 +6,9 @@
 
 
     app.controller('PresetCtrl', function($scope, $rootScope) {
-        $rootScope.menu_field_button = "New Location";
-        $rootScope.menu_field_button_icon = "fa-plus-circle";
-        $rootScope.menu_field_button_click = function() { alert("Not implemented"); };
+        $rootScope.menu_field_button = "";
+        $rootScope.menu_field_button_icon = "";
+        $rootScope.menu_field_button_click = ""
     });
 
     app.controller('PresetListCtrl', function($scope, $rootScope, Preset) {
