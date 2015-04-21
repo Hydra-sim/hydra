@@ -1,18 +1,14 @@
 package api;
 
 import api.data.*;
+import factory.SimulationFactory;
 import helpers.SimulationHelper;
-import models.*;
-import models.Timetable;
 
 import javax.ejb.EJB;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * This class handles all REST-ful calls for {@link models.Simulation}
@@ -28,6 +24,9 @@ public class Simulation {
     @EJB
     private dao.Timetable timetableDao;
 
+    @EJB
+    private factory.SimulationFactory simulationFactory;
+
     /**
      * Creates and persists a new simulation
      *
@@ -40,179 +39,22 @@ public class Simulation {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(SimulationFormData input)
     {
-        List<Producer> producers;
-
         try {
-            producers = initProducers(input);
+            models.Simulation simulation = simulationFactory.createSimulation(input);
+
+            // Run the simulation
+            new SimulationHelper().simulate(simulation);
+
+            // Persist the simulation, with results, to the database
+            simulationDao.add(simulation);
+
+            return Response.ok(simulation.getResult()).build();
+
         }
-        catch(Exception e) {
+        catch(Exception e)
+        {
             return Response.serverError().build();
         }
-
-        List<Consumer> consumers =              initConsumers(input);
-
-        List<ConsumerGroup> consumerGroups =    initConsumerGroups(input);
-
-        // TODO: Change this to make relationships according to frontend data
-        List<Relationship> relationships =      initRelationships(input, producers, consumers, consumerGroups);
-
-        // Create the simulation
-        models.Simulation sim = new models.Simulation(input.name, new Date(), consumers, consumerGroups, producers,
-                relationships, input.startTick, input.ticks);
-
-        // Run the simulation
-        new SimulationHelper().simulate(sim);
-
-        // Persist the simulation, with results, to the database
-        simulationDao.add(sim);
-
-        return Response.ok(sim.getResult()).build();
-
-    }
-
-    // Helper methods for add
-
-    /**
-     * Initializes consumers
-     * @param input the data from which the consumers are built
-     * @return a list of consumers
-     */
-    private List<Consumer> initConsumers(SimulationFormData input) {
-
-        List<Consumer> consumers = new ArrayList<>();
-        /*
-        for(int i = 0; i < input.ticksToConsumeEntitiesList.length; i++) {
-            Consumer consumer = new Consumer(input.ticksToConsumeEntitiesList[i]);
-
-            consumer.setType(input.consumerTypes[i]); // TODO: Fix for format from frontend
-            consumers.add(consumer);
-        }
-        */
-        return consumers;
-    }
-
-    /**
-     * Initializes relationships
-     * @param input the data from which the consumers are built
-     * @return a list of consumers
-     */
-    private List<Relationship> initRelationships(SimulationFormData input, List<Producer> producers, List<Consumer> consumers,
-                                             List<ConsumerGroup> consumerGroups) {
-
-        List<Relationship> relationships = new ArrayList<>();
-
-        for( Producer producer : producers ) {
-
-            for( Consumer consumer : consumers ) {
-
-                relationships.add(new Relationship(producer, consumer, 0.0));
-            }
-
-            for( ConsumerGroup consumerGroup : consumerGroups) {
-
-                relationships.add(new Relationship(producer, consumerGroup, 0.0));
-            }
-        }
-
-        return relationships;
-    }
-
-    /**
-     *Initializes consumer-groups
-     *
-     * @param input the data from which the consumer-groups are built
-     * @return a list of consumer-groups
-     */
-    private List<ConsumerGroup> initConsumerGroups(SimulationFormData input) {
-        List<ConsumerGroup> consumerGroups = new ArrayList<>();
-
-        for(SimulationNode node : input.nodes) {
-
-        }
-        /*
-        for(int i = 0; i < input.consumerGroupNames.length; i++) {
-
-            ConsumerGroup consumerGroup = new ConsumerGroup(input.consumerGroupNames[i],
-                                                            input.numberOfConsumersInGroups[i],
-                                                            input.ticksToConsumeEntitiesGroups[i]);
-
-            consumerGroup.setType(input.consumerGroupTypes[i]); // TODO: Fix for format from frontend
-
-            consumerGroups.add(consumerGroup);
-        }
-        */
-        return consumerGroups;
-    }
-
-    /**
-     * Initializes producers
-     *
-     * @param input the data from which the producers are built
-     * @return a list of producers
-     */
-     @SuppressWarnings("unchecked")
-     private List<Producer> initProducers(SimulationFormData input) throws Exception
-     {
-         List<Producer> producers = new ArrayList<>();
-         List<Consumer> consumers = new ArrayList<>();
-         List<ConsumerGroup> consumerGroups = new ArrayList<>();
-         List<Relationship> relationships = new ArrayList<>();
-
-         for(SimulationNode node : input.nodes) {
-
-             switch(node.type) {
-                 case "producer":
-
-                     producers.add(createProducer(node));
-                     break;
-
-                 case "consumer":
-
-                     consumers.add(createConsumer(node));
-                     break;
-
-                 case "consumerGroup":
-
-                     consumerGroups.add(createConsumerGroup(node));
-                     break;
-             }
-         }
-
-         for(SimulationEdge edge : input.edges) {
-
-             Producer producer = new Producer();
-
-             if(edge.source.type.equals("producer")) {
-
-                 producer.setX(edge.source.x);
-             }
-             //Relationship relationship = new Relationship(edge.source, edge.target, edge.weight);
-         }
-
-        return producers;
-    }
-
-    private Producer createProducer(SimulationNode node) throws Exception {
-        Timetable timetable = timetableDao.get(node.timetableId);
-        Producer producer = new Producer(timetable);
-        producer.setX(node.x);
-        producer.setY(node.y);
-
-        return producer;
-    };
-
-    private ConsumerGroup createConsumerGroup(SimulationNode node) {
-
-        return new ConsumerGroup(node.consumerGroupName, node.numberOfConsumers,
-                node.ticksToConsumeEntity);
-    }
-
-    private Consumer createConsumer(SimulationNode node) {
-        Consumer consumer = new Consumer(node.ticksToConsumeEntity);
-        consumer.setX(node.x);
-        consumer.setY(node.y);
-
-        return consumer;
     }
 
     /**
@@ -294,4 +136,5 @@ public class Simulation {
 
         return Response.ok(new TrueFalse(true)).build();
     }
+
 }

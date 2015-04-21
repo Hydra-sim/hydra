@@ -38,6 +38,14 @@
                         DELETE_KEY: 46
                     };
 
+                    var icons = {
+                        'train' : '\uf238',
+                        'bus': '\uf207',
+                        'desktop': '\uf108',
+                        'arrows-h': '\uf07e',
+                        'suitcase': '\uf0f2'
+                    };
+
                     scope.safeApply = function(fn) {
                         var phase = this.$root.$$phase;
                         if(phase == '$apply' || phase == '$digest') {
@@ -306,30 +314,7 @@
                             .attr("text-anchor", "middle")
                             .attr('fill', 'white')
                             .text(function(d) {
-                                switch(d.type) {
-                                    case 'train':
-                                        return '\uf238';
-                                        break;
-
-                                    case 'bus':
-                                        return '\uf207';
-                                        break;
-
-                                    case 'desktop':
-                                        return '\uf108';
-                                        break;
-
-                                    case 'arrows-h':
-                                        return '\uf07e';
-                                        break;
-
-                                    case 'suitcase':
-                                        return '\uf0f2';
-                                        break;
-
-                                    default:
-                                        return '\uf118';
-                                }
+                                return icons[d.type] || '\uf118';
                             });
 
                         // remove old nodes

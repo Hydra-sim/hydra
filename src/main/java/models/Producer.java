@@ -3,6 +3,7 @@ package models;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 /**
  * Represents something bringing {@link models.Entity entities} to a location.
@@ -20,6 +21,11 @@ public class Producer extends Node{
         this.timetable = timetable;
     }
 
+    public Producer(Timetable timetable, int x, int y) {
+        this.timetable = timetable;
+        this.setX(x);
+        this.setY(y);
+    }
 
     public Producer() {
         this(new Timetable());

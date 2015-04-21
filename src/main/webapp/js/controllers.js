@@ -27,7 +27,7 @@
         $scope.tabs = [
             {name: "SIMULATIONS", link: "/"},
             {name: "TIMETABLES", link: "/timetable"},
-            {name: "PRESETS", link: "/preset"},
+            {name: "LOCATIONS", link: "/preset"},
         ];
 
         $scope.select= function(item) {
