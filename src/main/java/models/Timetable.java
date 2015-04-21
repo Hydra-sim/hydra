@@ -22,6 +22,7 @@ import java.util.Scanner;
  */
 @javax.persistence.Entity
 public class Timetable {
+
     //region attributes
     /**
      * An automatically generated id
@@ -44,6 +45,7 @@ public class Timetable {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<TimetableEntry> arrivals;
     //endregion
+
 
     //region getters and setters
     public String getName() {
@@ -82,9 +84,9 @@ public class Timetable {
     }
     //endregion
 
-    public static Timetable getTimetableFromCsv(String path) {
+    public static Timetable getTimetableFromCsv(String path, String name) {
 
-        Timetable timetable = new Timetable();
+        List<TimetableEntry> entries = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(new File(path))) {
 
@@ -99,17 +101,18 @@ public class Timetable {
                 int hours = Integer.parseInt(times[0]);
                 int minutes = Integer.parseInt(times[1]);
                 int seconds = Integer.parseInt(times[2]);
+
                 int tick = (hours * 60 * 60) + (minutes * 60) + seconds;
 
                 int passengers = Integer.parseInt(data[1]);
-                timetable.getArrivals().add(new TimetableEntry(tick, passengers));
+                entries.add(new TimetableEntry(tick, passengers));
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.println(timetable.getArrivals().get(0).getTime());
-        return timetable;
+        return new Timetable(entries, name);
     }
+
 }
