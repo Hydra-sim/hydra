@@ -94,7 +94,7 @@
 
                     function addNode(type, x, y) {
                         // Get a new unused id
-                        var id = _.max(scope.nodes, function(node) { return node.id; }).id + 1;
+                        var id = (_.max(scope.nodes, function(node) { return node.id; }).id || 0) + 1;
 
                         // Get the translation occurring because of zooming and dragging
                         var pos = zoom.translate();

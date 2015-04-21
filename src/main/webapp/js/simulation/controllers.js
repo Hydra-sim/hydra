@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, $log, ticksToConsumeEntitiesList, type){
+    app.controller('NewConsumerInstanceCtrl', function($scope, $modalInstance, ticksToConsumeEntitiesList, type){
 
         $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
         $scope.modalTitle = type;
@@ -15,12 +15,7 @@
         ];
 
         $scope.submitConsumer = function(amountOfTime, timeSelectConsumer){
-
-            $log.info(amountOfTime);
-            $log.info(timeSelectConsumer.item.label);
-
             var ticksToConsumeEntities = amountOfTime; // Seconds by default
-
 
             if(timeSelectConsumer.item.label == "Minutes") { // Minutes
 
@@ -43,7 +38,7 @@
         };
     });
 
-    app.controller('NewProducerInstanceCtrl', function($scope, $modalInstance, Timetable, timetableIds, $log, type){
+    app.controller('NewProducerInstanceCtrl', function($scope, $modalInstance, Timetable, timetableIds, type){
 
         $scope.timetableIds = timetableIds;
         $scope.modalTitle = type;
@@ -55,9 +50,6 @@
 
         $scope.submitProducer = function(selectedItem){
 
-            /*Lage funksjon som finner og returnerer aktiv tidstabell id så pushe den inn i $scope.timetableIds liste*/
-
-            $log.info(selectedItem);
             timetableIds.push(selectedItem);
 
 
@@ -70,7 +62,7 @@
 
     });
 
-    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, $log, totalNumberOfEntititesList, numberOfEntitiesList, timeBetweenArrivalsList){
+    app.controller("NewPassengerflowInstanceCtrl", function($scope, $modal, $modalInstance, totalNumberOfEntititesList, numberOfEntitiesList, timeBetweenArrivalsList){
         $scope.totalNumberOfEntititesList = totalNumberOfEntititesList;
         $scope.numberOfEntitiesList = numberOfEntitiesList;
         $scope.timeBetweenArrivalsList = timeBetweenArrivalsList;
@@ -152,7 +144,7 @@
         };
     });
 
-    app.controller('SimulationEditCtrl', function ($log, $scope, $routeParams, $rootScope, $location, Simulation, SimResult, menu_field_name) {
+    app.controller('SimulationEditCtrl', function ($scope, $routeParams, $rootScope, $location, Simulation, SimResult, menu_field_name) {
 
         Simulation.get({}, {"id": $routeParams.id}, function(result) {
             $scope.id = result.id;
@@ -223,7 +215,7 @@
     });
 
 
-    app.controller('SimulationListCtrl', function ($scope, $log, Simulation, $location, $modal) {
+    app.controller('SimulationListCtrl', function ($scope, Simulation, $location, $modal) {
 
         function updateSimulations() {
             $scope.simulations = Simulation.query({});
@@ -362,7 +354,7 @@
     });
 
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, $log, Simulation, SimResult, menu_field_name) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
 
         $scope.updateTicks = function() {
 
@@ -416,17 +408,18 @@
                 $location.replace();
 
                 SimResult.data = result;
+                console.log(result);
             });
         };
 
         $scope.dataset = {
             nodes: [
-                {type: "producer", id: 0, x: 100, y: 100, timetableId: 0},
+                /*{type: "producer", id: 0, x: 100, y: 100, timetableId: 0},
                 {type: "producer", id: 1, x: 100, y: 300, timetableId: 0},
-                {type: "consumer", id: 2, x: 300, y: 300, ticksToConsumeEntity: 1}
+                {type: "consumer", id: 2, x: 300, y: 300, ticksToConsumeEntity: 1}*/
             ],
             edges: [
-                {source: {id: 1}, target: {id: 0}}
+                /*{source: {id: 1}, target: {id: 0}}*/
             ]
         };
 
@@ -633,9 +626,8 @@
         }
     });
 
-    app.controller('SimulationProgressCtrl', function($log) {
+    app.controller('SimulationProgressCtrl', function() {
 
-        $log.info("Hello");
     });
 
     app.controller('TooltipCtrl', function($scope, templateUrl, positionX, positionY){
