@@ -286,7 +286,6 @@
 
 
                         newCircleWrappers
-                        newCircleWrappers
                             .attr('class', function(d) { return d.type + " " + consts.circleWrapperClass; })
                             .attr("transform", transformFunction)
                             .on("click", function() {
