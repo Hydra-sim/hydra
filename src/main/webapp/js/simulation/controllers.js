@@ -191,6 +191,8 @@
         $scope.consumerTooltip = "Number in line: 10 \n Longest waiting time: 40 seconds";
         $scope.parkingTooltip = "Number arrived: 6";
 
+        $scope.startTime                = SimResult.data.startTime;
+        $scope.endTime                  = SimResult.data.endTime;
         $scope.entitiesConsumed         = SimResult.data.entitiesConsumed;
         $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;
         $scope.maxWaitingTimeInTicks    = SimResult.data.maxWaitingTimeInTicks;
