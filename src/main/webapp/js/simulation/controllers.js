@@ -630,8 +630,20 @@
 
     });
 
-    app.controller('TooltipCtrl', function($scope, templateUrl, positionX, positionY){
+    app.controller('TooltipTestCtrl', function($scope){
+        var tooltip = angular.element(document.querySelector(".custom-tooltip"));
+        var path = "templates/tooltip/";
 
+        $scope.open = function(templateUrl, posX, posY){
+            tooltip.empty();
+            tooltip.append("<div class='inner-tooltip' ng-include src='" + path + templateUrl + "\'></div>");
+            tooltip.css({
+               "position": "absolute",
+                "opacity": "1",
+                left: posX + "px",
+                top: posY + "px"
+            });
+        }
     })
 
 })();

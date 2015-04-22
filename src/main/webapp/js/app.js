@@ -40,7 +40,7 @@
             .when('/preset/:id/',       {templateUrl: 'templates/preset/show.html'})
 
             .when('/map',               {controller: 'UploadMapCtrl',           templateUrl: "templates/map.html"})
-            .when('/tooltip',           {controller: 'TooltipTestCtrl',         templateUrl: "templates/simulation/testTooltip.html"})
+            .when('/tooltip',           {controller: 'TooltipTestCtrl',         templateUrl: "templates/tooltip/testTooltip.html"})
 
             .otherwise({redirectTo : '/'})
     });

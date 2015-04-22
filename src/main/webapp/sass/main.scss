@@ -613,12 +613,12 @@ a:hover{
 }
 
 .custom-tooltip {
-  position: absolute;
   z-index: 1070;
   display: block;
   line-height: 1.4;
-  opacity: 1;
+  opacity: 0;
   max-width: 200px;
+  min-height: 25px;
   padding: 3px 8px;
   background-color: #000;
   border-radius: 4px;
@@ -626,10 +626,4 @@ a:hover{
   -moz-transition: opacity 0.5s;
   -o-transition: opacity 0.5s ;
   -ms-transition: opacity 0.5s;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  font-weight: normal;
-  color: #fff;
-  text-align: left;
-  text-decoration: none;
 }
