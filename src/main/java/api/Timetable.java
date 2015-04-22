@@ -116,4 +116,35 @@ public class Timetable {
 
         return Response.ok().build();
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("dummydata")
+    public Response getData() {
+
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/flybussekspressen/monday-friday.csv", "Flybussekspressen: Monday-Friday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/flybussekspressen/saturday.csv", "Flybussekspressen: Saturday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/flybussekspressen/sunday.csv", "Flybussekspressen: Sunday"));
+
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/flytoget/moday-friday.csv", "Flytoget: Monday - Friday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/flytoget/sunday.csv", "Flytoget: Sunday"));
+
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/nettbuss/monday-friday_express.csv", "Nettbus Timesekspress: Monday - Friday "));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/nettbuss/saturday_express.csv", "Nettbuss Timesekspress: Saturday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/nettbuss/sunday_express.csv", "Nettbuss Timesekspress: Sunday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/nettbuss/monday-friday_shuttle.csv", "Nettbuss Shuttle: Monday-Friday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/nettbuss/saturday_shuttle.csv", "Nettbuss Shuttle: Saturday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/nettbuss/sunday_shuttle.csv", "Nettbus Shuttle: Sunday"));
+
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/nsb/monday-friday.csv", "NSB: Monday-Friday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/nsb/saturday.csv", "NSB: Saturday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/nsb/sunday.csv", "NSB: Sunday"));
+
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/sas-flybussen/monday-friday.csv", "SAS Flybussen: Monday-Friday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/sas-flybussen/saturday.csv", "SAS Flybussen: Saturday"));
+        timetableDao.add(models.Timetable.getTimetableFromCsv("timetables/sas-flybussen/sunday.csv", "SAS Flybussen: Sunday"));
+
+        return Response.ok().build();
+    }
 }

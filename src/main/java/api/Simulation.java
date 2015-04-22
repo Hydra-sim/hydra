@@ -1,7 +1,8 @@
 package api;
 
-import api.data.*;
-import factory.SimulationFactory;
+import api.data.PasswordFormData;
+import api.data.SimulationFormData;
+import api.data.TrueFalse;
 import helpers.SimulationHelper;
 
 import javax.ejb.EJB;
@@ -136,5 +137,4 @@ public class Simulation {
 
         return Response.ok(new TrueFalse(true)).build();
     }
-
 }

@@ -84,7 +84,7 @@ public class Timetable {
     }
     //endregion
 
-    public Timetable getTimetableFromCsv(String path, String name) {
+    public static Timetable getTimetableFromCsv(String path, String name) {
 
         List<TimetableEntry> entries = new ArrayList<>();
 
