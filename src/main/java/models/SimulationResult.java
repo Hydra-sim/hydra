@@ -18,6 +18,8 @@ public class SimulationResult {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
+    private int startTime;
+    private int endTime;
     private int entitiesConsumed;
     private int entitiesInQueue;
     private int maxWaitingTimeInTicks;
@@ -60,5 +62,22 @@ public class SimulationResult {
     public void setMaxWaitingTimeInTicks(int maxWaitingTimeInTicks) {
         this.maxWaitingTimeInTicks = maxWaitingTimeInTicks;
     }
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(int endTime) {
+        this.endTime = endTime;
+    }
+
     //endregion
 }

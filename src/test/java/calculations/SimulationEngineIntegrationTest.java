@@ -27,7 +27,7 @@ public class SimulationEngineIntegrationTest {
     public void before() {
         
         producerHelper = new ProducerHelper();
-        simulationHelper = new SimulationHelper(); 
+        simulationHelper = new SimulationHelper();
     }
 
     //region tests
@@ -333,6 +333,5 @@ public class SimulationEngineIntegrationTest {
 
         return new Simulation("Test", consumerList, new ArrayList<>(), producerList, relationshipList, ticks);
     }
-
     //endregion
 }

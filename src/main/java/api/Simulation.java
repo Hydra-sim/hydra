@@ -1,7 +1,8 @@
 package api;
 
-import api.data.*;
-import factory.SimulationFactory;
+import api.data.PasswordFormData;
+import api.data.SimulationFormData;
+import api.data.TrueFalse;
 import helpers.SimulationHelper;
 
 import javax.ejb.EJB;
@@ -45,8 +46,17 @@ public class Simulation {
             // Run the simulation
             new SimulationHelper().simulate(simulation);
 
+
+            // Dummy data TODO: remove in actual solution
+            simulation.getResult().setStartTime(3600*14);
+            simulation.getResult().setEndTime(3600 * 16);
+            simulation.getResult().setEntitiesConsumed(1300);
+            simulation.getResult().setEntitiesInQueue(123);
+            simulation.getResult().setMaxWaitingTimeInTicks(300);
+
             // Persist the simulation, with results, to the database
             simulationDao.add(simulation);
+
 
             return Response.ok(simulation.getResult()).build();
 
