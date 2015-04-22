@@ -5,7 +5,6 @@
     var app = angular.module('unit.controllers');
 
     app.controller('NewConsumerModalCtrl', function($scope, $modalInstance, ticksToConsumeEntitiesList, type){
-
         $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
         $scope.modalTitle = type;
         $scope.options = [
@@ -18,20 +17,16 @@
             var ticksToConsumeEntities = amountOfTime; // Seconds by default
 
             if(timeSelectConsumer.item.label == "Minutes") { // Minutes
-
                 ticksToConsumeEntities *= 60;
 
             } else if(timeSelectConsumer.item.label == "Hours") { // Hours
-
                 ticksToConsumeEntities *= 60 * 60;
             }
 
-
-            $scope.ticksToConsumeEntitiesList.push(ticksToConsumeEntities);
-
-            $modalInstance.close();
+            $modalInstance.close({
+                'ticksToConsumeEntities': ticksToConsumeEntities
+            });
         };
-
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
@@ -39,7 +34,6 @@
     });
 
     app.controller('NewProducerModalCtrl', function($scope, $modalInstance, Timetable, timetableIds, type){
-
         $scope.timetableIds = timetableIds;
         $scope.modalTitle = type;
 
@@ -49,11 +43,9 @@
         updateTimetableScope();
 
         $scope.submitProducer = function(selectedItem){
-
-            timetableIds.push(selectedItem);
-
-
-            $modalInstance.close();
+            $modalInstance.close({
+                'timetable': selectedItem
+            });
         };
 
         $scope.cancel = function () {
@@ -84,9 +76,9 @@
                 timeBetweenArrivals *= 60 * 60;
             }
 
-            $scope.timeBetweenArrivalsList.push(timeBetweenArrivals);
-
-            $modalInstance.close();
+            $modalInstance.close({
+                'timeBetweenArrivals': timeBetweenArrivals
+            });
         }
 
         $scope.cancel = function(){
@@ -97,7 +89,6 @@
 
     app.controller('ChoosePresetModalCtrl', function($scope, $modalInstance){
         $scope.loadPreset = function(preset){
-
             $modalInstance.close();
         };
 
@@ -408,16 +399,7 @@
             });
         };
 
-        $scope.dataset = {
-            nodes: [
-                /*{type: "producer", id: 0, x: 100, y: 100, timetableId: 0},
-                {type: "producer", id: 1, x: 100, y: 300, timetableId: 0},
-                {type: "consumer", id: 2, x: 300, y: 300, ticksToConsumeEntity: 1}*/
-            ],
-            edges: [
-                /*{source: {id: 1}, target: {id: 0}}*/
-            ]
-        };
+        $scope.dataset = { nodes: [], edges: [] };
 
         $scope.control = {};
         $scope.addData = addData;
