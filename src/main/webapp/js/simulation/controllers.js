@@ -74,12 +74,8 @@
         ];
 
         $scope.submitPassengerflow =  function(totalNumberOfEntities, numberOfEntities, timeBetweenArrivals , timeSelect){
-
-
             $scope.totalNumberOfEntititesList.push(totalNumberOfEntities);
             $scope.numberOfEntitiesList.push(numberOfEntities);
-
-
 
             if(timeSelect.item.label == "Minutes"){
                 timeBetweenArrivals *= 60;
