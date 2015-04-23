@@ -612,14 +612,39 @@ a:hover{
   text-align: center;
 }
 
+.custom-tooltip:after, .custom-tooltip:before
+{
+  content: ' ';
+  position: absolute;
+  top: 100%;
+  border-style: solid;
+  width: 0;
+  height: 0;
+}
+
+.custom-tooltip:before
+{
+  border-color: #c6c8ca transparent transparent transparent;
+  border-width: 16px 16px 0 7px;
+  left: 10px;
+}
+
+.custom-tooltip:after
+{
+  border-color: #c6c8ca transparent transparent transparent;
+  border-width: 12px 11px 0 4px;
+  left: 14px;
+}
+
+
 .custom-tooltip {
-  z-index: 1070;
   display: none;
   line-height: 1.4;
   opacity: 0;
+  background-color: #c6c8ca;
   max-width: 200px;
+  min-height: 50px;
   padding: 3px 8px;
-  background-color: #000;
   border-radius: 4px;
   -webkit-transition: opacity 0.5s;
   -moz-transition: opacity 0.5s;
@@ -633,10 +658,12 @@ a:hover{
   height: 100%;
 }
 
+
+
 .inner-tooltip p, .inner-html span{
-  color: #fff;
+  color: #000;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 10px;
+  font-size: 14px;
   text-decoration: none;
   margin: 0;
 }
