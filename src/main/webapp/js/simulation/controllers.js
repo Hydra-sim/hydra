@@ -609,18 +609,21 @@
     });
 
 
-    app.controller('TooltipTestCtrl', function($scope){
-        var tooltip = angular.element(document.querySelector(".custom-tooltip"));
-        var path = "templates/tooltip/";
+    app.controller('TooltipTestCtrl', function($scope, $compile){
+        var tooltip = angular.element(document.getElementsByClassName('custom-tooltip'));
+        var path = "../templates/tooltip/";
 
         $scope.open = function(templateUrl, posX, posY){
             tooltip.empty();
-            tooltip.append("<div class='inner-tooltip' ng-include src='" + path + templateUrl + "\'></div>");
+            tooltip.append(
+                $compile("<div class='inner-tooltip' ng-include='\"" + path + templateUrl + "\"'></div>")
+                ($scope));
             tooltip.css({
-               "position": "absolute",
+                "position": "absolute",
+                "display": "block",
                 "opacity": "1",
-                left: posX + "px",
-                top: posY + "px"
+                "left": posX + "px",
+                "top": posY + "px"
             });
         }
     })
@@ -649,6 +652,6 @@
         $scope.cancel = function(){
             $modalInstance.dismiss('close');
         }
-    });3
+    });
 
 })();
