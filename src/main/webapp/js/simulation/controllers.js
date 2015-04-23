@@ -403,9 +403,9 @@
 
         $scope.control = {};
         $scope.addData = addData;
-        function addData(type) {
+        function addData(data, type) {
             var pos = $scope.control.getlastpos();
-            $scope.control.addNode(type || "consumer", pos.x, pos.y);
+            $scope.control.addNode(type || "consumer", pos.x, pos.y, data);
         }
 
         $scope.newProducer = function (title, type) {
@@ -422,8 +422,8 @@
                         return title;
                     }
                 }
-            }).result.then(function() {
-                addData(type)
+            }).result.then(function(data) {
+                addData(data, type)
             });
         };
 
@@ -434,7 +434,6 @@
                 controller: 'NewConsumerModalCtrl',
                 size: 'sm',
                 resolve: {
-                    //  ticksToConsumeEntitiesList, type, timeSelectConsumer
                     ticksToConsumeEntitiesList: function () {
                         return $scope.ticksToConsumeEntitiesList;
                     },
@@ -442,8 +441,8 @@
                         return title;
                     }
                 }
-            }).result.then(function() {
-                addData(type)
+            }).result.then(function(data) {
+                addData(data, type)
             });
         };
 

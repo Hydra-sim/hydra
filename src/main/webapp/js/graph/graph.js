@@ -92,7 +92,7 @@
                         update();
                     }
 
-                    function addNode(type, x, y) {
+                    function addNode(type, x, y, data) {
                         // Get a new unused id
                         var id = (_.max(scope.nodes, function(node) { return node.id; }).id || 0) + 1;
 
@@ -103,7 +103,7 @@
 
                         // Add the node
                         scope.safeApply(function() {
-                            scope.nodes.push({"type": type, "id": id, "x": x, "y": y});
+                            scope.nodes.push({"type": type, "id": id, "x": x, "y": y, "data": data});
                         });
                         update();
                     }
