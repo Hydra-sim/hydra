@@ -25,6 +25,8 @@ public class ConsumerGroup extends Consumer{
     public ConsumerGroup() {
 
         new ConsumerGroup("No name", 0, 0);
+        consumers = new ArrayList<>();
+
     }
 
     public ConsumerGroup(String name, int numberOfConsumers, int ticksToConsumeEntities) {

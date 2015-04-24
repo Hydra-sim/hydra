@@ -65,6 +65,9 @@ public class Simulation
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Producer> producers;
 
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Node> nodes;
+
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Relationship> relationships;
 
@@ -73,7 +76,6 @@ public class Simulation
     private boolean preset;
     private boolean passwordProtected;
     private String password;
-    // private boolean movementBasedOnQueues; //TODO: HPXIVXXI-188
     //endregion
 
     //endregion
@@ -116,6 +118,8 @@ public class Simulation
         preset = false;
         passwordProtected = false;
         password = null;
+
+        nodes = new ArrayList<>();
     }
 
     /**
@@ -195,6 +199,14 @@ public class Simulation
 
     public void setProducers(List<Producer> producers) {
         this.producers = producers;
+    }
+
+    public List<Node> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<Node> nodes) {
+        this.nodes = nodes;
     }
 
     public int getTicks() {
