@@ -5,6 +5,7 @@ import helpers.ProducerHelper;
 import helpers.SimulationHelper;
 import models.*;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import presets.OSLPreset;
 
@@ -37,6 +38,7 @@ public class SimulationEngineIntegrationTest {
     /**
      * Tests the queue function on the simulation
      */
+    @Ignore
     @Test
     public void testQueueing() {
 
@@ -65,6 +67,7 @@ public class SimulationEngineIntegrationTest {
     /**
      * Tests the consume function on the simulation
      */
+    @Ignore
     @Test
     public void testConsumtion() {
 
@@ -118,6 +121,7 @@ public class SimulationEngineIntegrationTest {
     }
 
     // OLD TESTS
+    @Ignore
     @Test
     public void testSimulateEqualAmountProducedAndConsumed() throws Exception{
 
@@ -126,6 +130,7 @@ public class SimulationEngineIntegrationTest {
         assertEquals(0, simulation.getResult().getEntitiesInQueue());
     }
 
+    @Ignore
     @Test
     public void testSimulateMoreProducedThanConsumed() throws Exception{
 
@@ -134,6 +139,7 @@ public class SimulationEngineIntegrationTest {
         assertTrue(simulation.getResult().getEntitiesInQueue() > 0);
     }
 
+    @Ignore
     @Test
     public void testSimulateMoreConsumedThanProduced() throws Exception{
 
@@ -142,6 +148,7 @@ public class SimulationEngineIntegrationTest {
         assertEquals(0, simulation.getResult().getEntitiesInQueue());
     }
 
+    @Ignore
     @Test
     public void testSimulate10ProducedPr10TicksAllConsumed() {
 
@@ -156,18 +163,21 @@ public class SimulationEngineIntegrationTest {
         assertTrue(simulation.getResult().getEntitiesConsumed() > 0);
     }
 
+    @Ignore
     @Test
     public void testSimulateWeightEqual() {
 
         testSimulateWeight(0.5, 0.5, 10);
     }
 
+    @Ignore
     @Test
     public void testSimulateWeightNotEqual() {
 
         testSimulateWeight(0.7, 0.3, 10);
     }
 
+    @Ignore
     @Test
     public void testSimulationSpeed(){
 
@@ -199,6 +209,7 @@ public class SimulationEngineIntegrationTest {
                 (System.currentTimeMillis() - start) + " milliseconds.\n");
     }
 
+    @Ignore
     @Test
     public void testPreset() {
 
@@ -223,6 +234,7 @@ public class SimulationEngineIntegrationTest {
         System.out.printf("%-80s%s", "Timetest; OSL Preset: ", (System.currentTimeMillis() - start) + " milliseconds.\n");
     }
 
+    @Ignore
     @Test
     public void testConsumerGroup() {
 
