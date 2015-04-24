@@ -21,36 +21,42 @@ public class SimulationFactory {
     private dao.Timetable timetableDao;
 
     public Simulation createSimulation(SimulationFormData input) throws Exception {
-            List<Producer> producers = new ArrayList<>();
-            List<Consumer> consumers = new ArrayList<>();
-            List<ConsumerGroup> consumerGroups = new ArrayList<>();
-            List<Relationship> relationships = new ArrayList<>();
+        List<Producer> producers = new ArrayList<>();
+        List<Consumer> consumers = new ArrayList<>();
+        List<ConsumerGroup> consumerGroups = new ArrayList<>();
 
-            for (SimulationNode node : input.nodes) {
-                if (isProducer(node)) {
-                    Timetable timetable = timetableDao.get(node.timetableId);
-                    producers.add(createProducer(node, timetable));
+        List<Relationship> relationships = new ArrayList<>();
 
-                } else if (isConsumer(node)) {
-                    consumers.add(createConsumer(node));
+        for (SimulationNode node : input.nodes) {
+            if (isProducer(node)) {
+                Timetable timetable = timetableDao.get(node.timetableId);
+                producers.add(createProducer(node, timetable));
 
-                } else if (isConsumerGroup(node)) {
-                    ConsumerGroup consumerGroup = new ConsumerGroup(node.consumerGroupName, node.numberOfConsumers, node.ticksToConsumeEntity);
-                    consumerGroups.add(consumerGroup);
-                }
+            } else if (isConsumer(node)) {
+                consumers.add(createConsumer(node));
+
+            } else if (isConsumerGroup(node)) {
+                ConsumerGroup consumerGroup = new ConsumerGroup(node.consumerGroupName, node.numberOfConsumers, node.ticksToConsumeEntity);
+                consumerGroups.add(consumerGroup);
             }
+        }
 
-            for (SimulationEdge edge : input.edges) {
-                Node source = findNodeWithId(edge.source.id, (List<Node>)(List<?>)producers, (List<Node>)(List<?>)consumers);
-                Node target = findNodeWithId(edge.target.id, (List<Node>)(List<?>)producers, (List<Node>)(List<?>)consumers);
+        for (SimulationEdge edge : input.edges) {
+            Node source = findNodeWithId(edge.source.id, (List<Node>)(List<?>)producers, (List<Node>)(List<?>)consumers);
+            Node target = findNodeWithId(edge.target.id, (List<Node>)(List<?>)producers, (List<Node>)(List<?>)consumers);
 
-                Relationship relationship = new Relationship(source,target,edge.weight);
-                relationships.add(relationship);
-            }
+            Relationship relationship = new Relationship(source,target,edge.weight);
+            relationships.add(relationship);
+        }
 
-            // Create the simulation
-            return new models.Simulation(input.name, new Date(), consumers, consumerGroups, producers,
-                    relationships, input.startTick, input.ticks);
+        List<Node> nodes = new ArrayList<>();
+
+        nodes.addAll(producers);
+        nodes.addAll(consumers);
+        nodes.addAll(consumerGroups);
+
+        // Create the simulation
+        return new models.Simulation(input.name, new Date(), nodes, relationships, input.startTick, input.ticks);
     }
 
     private Node findNodeWithId(int id, List<Node> list1, List<Node> list2) throws RuntimeException {

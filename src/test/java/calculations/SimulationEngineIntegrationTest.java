@@ -5,12 +5,12 @@ import helpers.ProducerHelper;
 import helpers.SimulationHelper;
 import models.*;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import presets.OSLPreset;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -38,7 +38,7 @@ public class SimulationEngineIntegrationTest {
     /**
      * Tests the queue function on the simulation
      */
-    @Ignore
+    
     @Test
     public void testQueueing() {
 
@@ -67,7 +67,7 @@ public class SimulationEngineIntegrationTest {
     /**
      * Tests the consume function on the simulation
      */
-    @Ignore
+    
     @Test
     public void testConsumtion() {
 
@@ -107,21 +107,20 @@ public class SimulationEngineIntegrationTest {
 
     private Simulation intializeSimulation(Producer producer, Consumer consumer, Relationship relationship, int ticks) {
 
-        List<Producer> producers = new ArrayList<>();
-        producers.add(producer);
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(producer);
 
-        List<Consumer> consumers = new ArrayList<>();
-        consumers.add(consumer);
+        nodes.add(consumer);
 
         List<Relationship> relationships = new ArrayList<>();
         relationships.add(relationship);
 
-        return new Simulation("Test", consumers, new ArrayList<>(), producers, relationships, ticks);
+        return new Simulation("Test", nodes, relationships, ticks);
 
     }
 
     // OLD TESTS
-    @Ignore
+    
     @Test
     public void testSimulateEqualAmountProducedAndConsumed() throws Exception{
 
@@ -130,7 +129,7 @@ public class SimulationEngineIntegrationTest {
         assertEquals(0, simulation.getResult().getEntitiesInQueue());
     }
 
-    @Ignore
+    
     @Test
     public void testSimulateMoreProducedThanConsumed() throws Exception{
 
@@ -139,7 +138,7 @@ public class SimulationEngineIntegrationTest {
         assertTrue(simulation.getResult().getEntitiesInQueue() > 0);
     }
 
-    @Ignore
+    
     @Test
     public void testSimulateMoreConsumedThanProduced() throws Exception{
 
@@ -148,7 +147,7 @@ public class SimulationEngineIntegrationTest {
         assertEquals(0, simulation.getResult().getEntitiesInQueue());
     }
 
-    @Ignore
+    
     @Test
     public void testSimulate10ProducedPr10TicksAllConsumed() {
 
@@ -163,21 +162,21 @@ public class SimulationEngineIntegrationTest {
         assertTrue(simulation.getResult().getEntitiesConsumed() > 0);
     }
 
-    @Ignore
+    
     @Test
     public void testSimulateWeightEqual() {
 
         testSimulateWeight(0.5, 0.5, 10);
     }
 
-    @Ignore
+    
     @Test
     public void testSimulateWeightNotEqual() {
 
         testSimulateWeight(0.7, 0.3, 10);
     }
 
-    @Ignore
+    
     @Test
     public void testSimulationSpeed(){
 
@@ -186,7 +185,7 @@ public class SimulationEngineIntegrationTest {
         for(int i = 0; i < 1000000; i++) {
 
             Consumer c = new Consumer(1);
-            simulation.getConsumers().add(c);
+            simulation.getNodes().add(c);
         }
 
         List<TimetableEntry> tList = new ArrayList<>();
@@ -199,7 +198,7 @@ public class SimulationEngineIntegrationTest {
 
         Producer p = new Producer(new Timetable(tList, "Timetable"));
 
-        simulation.getProducers().add(p);
+        simulation.getNodes().add(p);
 
         long start = System.currentTimeMillis();
 
@@ -209,7 +208,7 @@ public class SimulationEngineIntegrationTest {
                 (System.currentTimeMillis() - start) + " milliseconds.\n");
     }
 
-    @Ignore
+    
     @Test
     public void testPreset() {
 
@@ -225,7 +224,7 @@ public class SimulationEngineIntegrationTest {
 
         Producer p = new Producer(new Timetable(tList, "Timetable"));
 
-        sim.getProducers().add(p);
+        sim.getNodes().add(p);
 
         long start = System.currentTimeMillis();
 
@@ -234,7 +233,7 @@ public class SimulationEngineIntegrationTest {
         System.out.printf("%-80s%s", "Timetest; OSL Preset: ", (System.currentTimeMillis() - start) + " milliseconds.\n");
     }
 
-    @Ignore
+    
     @Test
     public void testConsumerGroup() {
 
@@ -263,22 +262,29 @@ public class SimulationEngineIntegrationTest {
 
         // Adding the Nodes to Lists
 
-        List<ConsumerGroup> consumerGroups = new ArrayList<>();
-        consumerGroups.add(consumerGroup);
-
-        List<Consumer> consumers = new ArrayList<>();
-        consumers.add(consumer);
-
-        List<Producer> producers = new ArrayList<>();
-        producers.add(producer);
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(consumerGroup);
+        nodes.add(consumer);
+        nodes.add(producer);
 
         // Simulation (with no regular consumers)
 
-        Simulation simulation = new Simulation("Test Simulation", consumers, consumerGroups, producers, relationships, 10);
+        Simulation simulation = new Simulation("Test Simulation", nodes, relationships, 1);
         simulationHelper.simulate(simulation);
 
         assertEquals(entitiesToConsume, simulation.getResult().getEntitiesConsumed());
-        assertTrue(simulation.getConsumerGroups().get(0).getEntitesConsumed().size() > 0);
+
+        for(Node node : simulation.getNodes()) {
+
+            if(node instanceof ConsumerGroup) {
+
+                ConsumerGroup cg = (ConsumerGroup) node;
+
+                assertTrue(cg.getEntitesConsumed().size() > 0);
+
+                break;
+            }
+        }
     }
     //endregion
 
@@ -290,11 +296,12 @@ public class SimulationEngineIntegrationTest {
 
         ConsumerHelper con = new ConsumerHelper();
 
-        int w1 = con.getTotalSentToConsumer(simulation.getConsumers().get(0));
-        int w2 = con.getTotalSentToConsumer(simulation.getConsumers().get(1));
+        List<Consumer> consumers = simulation.getNodes().stream().filter(
+                node -> node instanceof Consumer).map(
+                node -> (Consumer) node).collect(Collectors.toList());
 
-        assertEquals(ticks * weight1, con.getTotalSentToConsumer(simulation.getConsumers().get(0)), 0.0);
-        assertEquals(ticks * weight2, con.getTotalSentToConsumer(simulation.getConsumers().get(1)), 0.0);
+        assertEquals(ticks * weight1, con.getTotalSentToConsumer(consumers.get(0)), 0.0);
+        assertEquals(ticks * weight2, con.getTotalSentToConsumer(consumers.get(1)), 0.0);
     }
 
     private Simulation setUpStandardSimulationOneProducerTwoConsumers(int ticksToConsumeEntities, int entitiesToProduce, int startTick,
@@ -314,14 +321,13 @@ public class SimulationEngineIntegrationTest {
 
         producerHelper.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals, entitiesToProduce);
 
-        List<Producer> producers = new ArrayList<>();
-        List<Consumer> consumers = new ArrayList<>();
+        List<Node> nodes = new ArrayList<>();
 
-        producers.add(producer);
-        consumers.add(consumer1);
-        consumers.add(consumer2);
+        nodes.add(producer);
+        nodes.add(consumer1);
+        nodes.add(consumer2);
 
-        return new Simulation("Test", consumers, new ArrayList<>(), producers, relationships, 10);
+        return new Simulation("Test", nodes, relationships, 10);
     }
 
     private Simulation setUpStandardSimulationOneProducerOneConsumer(int ticksToConsumeEntities, int entitiesToProduce, int startTick,
@@ -337,13 +343,12 @@ public class SimulationEngineIntegrationTest {
 
         producerHelper.generateTimetable(producer, startTick, tickBetweenArrivals, ticks / tickBetweenArrivals, entitiesToProduce);
 
-        List<Consumer> consumerList = new ArrayList<>();
-        List<Producer> producerList = new ArrayList<>();
+        List<Node> nodes = new ArrayList<>();
 
-        consumerList.add(consumer);
-        producerList.add(producer);
+        nodes.add(consumer);
+        nodes.add(producer);
 
-        return new Simulation("Test", consumerList, new ArrayList<>(), producerList, relationshipList, ticks);
+        return new Simulation("Test", nodes, relationshipList, ticks);
     }
     //endregion
 }
