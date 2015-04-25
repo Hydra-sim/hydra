@@ -235,7 +235,6 @@
     app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
 
         $scope.updateTicks = function() {
-
             $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
             $scope.ticks = ($scope.endTime.getHours() * 60 * 60) + ($scope.endTime.getMinutes() * 60) - $scope.startTick;
         };
@@ -272,16 +271,18 @@
         $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
         $rootScope.menu_field_button_click = function() {
 
+            $scope.debug();
+            console.log($scope);
+
             $scope.updateTicks();
 
             var simulationdata = {
                 'name':                             menu_field_name.value,
                 'ticks':                            $scope.ticks,
+                'startTick':                        $scope.startTick,
                 'nodes':                            $scope.dataset.nodes,
                 'edges':                            $scope.dataset.edges
             };
-
-            console.log("$scope.dataset", $scope.dataset);
 
             var sim = new Simulation(simulationdata);
 
@@ -290,7 +291,6 @@
                 $location.replace();
 
                 SimResult.data = result;
-                console.log(result);
             });
         };
 
