@@ -25,12 +25,8 @@ public class Authentication {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response auth(PasswordFormData passwordFormData) {
-        System.out.println(passwordFormData.input);
-
-        models.Simulation item;
-
         try {
-            item = simulationDao.get(passwordFormData.id);
+            models.Simulation item = simulationDao.get(passwordFormData.id);
             if(BCrypt.checkpw(passwordFormData.input, item.getPassword())){
 
                 return Response.ok( new TrueFalse(true) ).build();
@@ -39,7 +35,7 @@ public class Authentication {
         } catch (Exception e) {
             return Response.serverError().build();
         }
-        /**/
+
         return Response.ok(new TrueFalse(false)).build();
     }
 }
