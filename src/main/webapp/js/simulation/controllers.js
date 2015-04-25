@@ -276,15 +276,13 @@
 
             $scope.updateTicks();
 
-            var simulationdata = {
+            var sim = new Simulation({
                 'name':                             menu_field_name.value,
                 'ticks':                            $scope.ticks,
                 'startTick':                        $scope.startTick,
                 'nodes':                            $scope.dataset.nodes,
                 'edges':                            $scope.dataset.edges
-            };
-
-            var sim = new Simulation(simulationdata);
+            });
 
             sim.$save().then(function(result) {
                 $location.path('/result');
