@@ -269,7 +269,9 @@
 
         $rootScope.menu_field_button = "Submit";
         $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
-        $rootScope.menu_field_button_click = function() {
+        $rootScope.menu_field_button_click = submit;
+        $scope.submit = submit;
+        function submit() {
 
             $scope.debug();
             console.log($scope);
