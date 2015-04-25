@@ -56,7 +56,7 @@ public class SimulationFactory {
         nodes.addAll(consumerGroups);
 
         // Create the simulation
-        return new models.Simulation(input.name, new Date(), nodes, relationships, input.startTick, input.ticks);
+        return new models.Simulation(input.name, new Date(), nodes, relationships, input.startTick, input.ticks, input.breakpoints);
     }
 
     private Node findNodeWithId(int id, List<Node> list1, List<Node> list2) throws RuntimeException {

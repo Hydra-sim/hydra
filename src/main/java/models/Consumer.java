@@ -1,5 +1,7 @@
 package models;
 
+import models.data.ConsumerData;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,9 @@ public class Consumer extends Node{
     private String name;
 
     private int ticksToConsumeEntities;
+
+    @Transient
+    private List<ConsumerData> consumerDataList;
 
     @Transient
     private List<Entity> entitesConsumed;
@@ -45,6 +50,7 @@ public class Consumer extends Node{
         this.ticksToConsumeEntities = ticksToConsumeEntities;
         this.entitesConsumed = new ArrayList<>();
         this.entitesInQueue = new ArrayList<>();
+        this.consumerDataList = new ArrayList<>();
     }
     //endregion
 
@@ -81,6 +87,14 @@ public class Consumer extends Node{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<ConsumerData> getConsumerDataList() {
+        return consumerDataList;
+    }
+
+    public void setConsumerDataList(List<ConsumerData> consumerDataList) {
+        this.consumerDataList = consumerDataList;
     }
 
     //endregion

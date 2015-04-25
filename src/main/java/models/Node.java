@@ -1,5 +1,7 @@
 package models;
 
+import models.data.NodeData;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,9 @@ abstract public class Node {
     private List<Entity> entitiesReady;
 
     @Transient
+    private List<NodeData> nodeDataList;
+
+    @Transient
     int tmpId;
 
     public Node() {
@@ -43,6 +48,8 @@ abstract public class Node {
         entitiesReady = new ArrayList<>();
         type = "";
         x = y = 0;
+
+        nodeDataList = new ArrayList<>();
     }
 
     public int getId() {
@@ -107,5 +114,13 @@ abstract public class Node {
 
     public void setTmpId(int tmpId) {
         this.tmpId = tmpId;
+    }
+
+    public List<NodeData> getNodeDataList() {
+        return nodeDataList;
+    }
+
+    public void setNodeDataList(List<NodeData> nodeDataList) {
+        this.nodeDataList = nodeDataList;
     }
 }
