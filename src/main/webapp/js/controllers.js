@@ -20,6 +20,8 @@
 
         $rootScope.menu_field_name = menu_field_name;
         menu_field_name.disable();
+
+        $rootScope.simulationAuth = [];
     });
 
     app.controller("TabCtrl", function($scope, $rootScope, $location) {

@@ -17,6 +17,7 @@
     });
 
     app.controller('TimetableEditCtrl', function($scope, $routeParams, $rootScope, $location, $log, Timetable) {
+
         Timetable.get({}, {"id": $routeParams.id}, function(result) {
             $scope.id = result.id;
 

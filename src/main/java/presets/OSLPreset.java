@@ -46,7 +46,6 @@ public class OSLPreset {
         List<TimetableEntry> timetableEntries = new ArrayList<>();
         timetableEntries.add(timetableEntry);
         Timetable timetable = new Timetable(timetableEntries, "Timetable");
-        Producer producer = new Producer(timetable);
 
         // Creation of single consumers
         Consumer securityCheck  = new Consumer(      "Security",    SECURITY_CHECK_CONSUMPTION_TIME );
@@ -76,27 +75,24 @@ public class OSLPreset {
         relationships.add( new Relationship(terminals, bagDrops, 1.0));
         relationships.add( new Relationship(bagDrops, securityCheck, 1.0));
 
+        List<Node> nodes = new ArrayList<>();
         // All the consumers
-        List<Consumer> consumers = new ArrayList<>();
 
-        consumers.addAll(doors);
-        consumers.add(securityCheck);
+        nodes.addAll(doors);
+        nodes.add(securityCheck);
 
         // All the consumer-groups
-        List<ConsumerGroup> consumerGroups = new ArrayList<>();
 
-        consumerGroups.add(busStops);
-        consumerGroups.add(terminals);
-        consumerGroups.add(bagDrops);
+        nodes.add(busStops);
+        nodes.add(terminals);
+        nodes.add(bagDrops);
 
         // Initialize the simulation
-        Simulation simulation = new Simulation("Oslo Lufthavn");
+        Simulation simulation = new Simulation("Oslo Lufthavn", 100);
 
-        simulation.setConsumers(consumers);
-        simulation.setConsumerGroups(consumerGroups);
+        simulation.setNodes(nodes);
         simulation.setRelationships(relationships);
 
-        simulation.setTicks(100);
         simulation.setPreset(true);
 
         return simulation;

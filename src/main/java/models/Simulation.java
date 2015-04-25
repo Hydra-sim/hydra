@@ -57,13 +57,7 @@ public class Simulation
     private SimulationResult result;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Consumer> consumers;
-
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<ConsumerGroup> consumerGroups;
-
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Producer> producers;
+    private List<Node> nodes;
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Relationship> relationships;
@@ -73,7 +67,6 @@ public class Simulation
     private boolean preset;
     private boolean passwordProtected;
     private String password;
-    // private boolean movementBasedOnQueues; //TODO: HPXIVXXI-188
     //endregion
 
     //endregion
@@ -86,32 +79,29 @@ public class Simulation
 
     public Simulation(String name) {
 
-        this(name, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        this(name, 0);
     }
 
-    public Simulation(String name, List<Consumer> consumers, List<ConsumerGroup> consumerGroups,
-                      List<Producer> producers, List<Relationship> relationships, int ticks) {
+    public Simulation(String name, int ticks) {
 
-        this(name, new Date(), consumers, consumerGroups, producers, relationships, 0, ticks);
+        this(name, new Date(), new ArrayList<>(), new ArrayList<>(), 0, ticks);
+    }
+
+    public Simulation(String name, List<Node> nodes, List<Relationship> relationships, int ticks) {
+
+        this(name, new Date(), nodes, relationships, 0, ticks);
     }
 
 
-    public Simulation(String name, Date date, List<Consumer> consumers, List<ConsumerGroup> consumerGroups,
-                      List<Producer> producers, List<Relationship> relationships, int startTick, int ticks) {
+    public Simulation(String name, Date date, List<Node> nodes, List<Relationship> relationships, int startTick, int ticks) {
         this.name = name;
         this.date = date;
-        this.consumers = consumers;
-        this.consumerGroups = consumerGroups;
-        this.producers = producers;
+        this.nodes = nodes;
         this.relationships = relationships;
         this.startTick = startTick;
         this.ticks = ticks;
 
-        // Distribute weight producers
-        getProducers().forEach(this::distributeWeightIfNotSpecified);
-
-        // Distribute weight consumers
-        getConsumers().forEach(this::distributeWeightIfNotSpecified);
+        this.nodes.forEach(this::distributeWeightIfNotSpecified);
 
         preset = false;
         passwordProtected = false;
@@ -173,28 +163,12 @@ public class Simulation
         this.result = result;
     }
 
-    public List<Consumer> getConsumers() {
-        return consumers;
+    public List<Node> getNodes() {
+        return nodes;
     }
 
-    public void setConsumers(List<Consumer> consumers) {
-        this.consumers = consumers;
-    }
-
-    public List<ConsumerGroup> getConsumerGroups() {
-        return consumerGroups;
-    }
-
-    public void setConsumerGroups(List<ConsumerGroup> consumerGroups) {
-        this.consumerGroups = consumerGroups;
-    }
-
-    public List<Producer> getProducers() {
-        return producers;
-    }
-
-    public void setProducers(List<Producer> producers) {
-        this.producers = producers;
+    public void setNodes(List<Node> nodes) {
+        this.nodes = nodes;
     }
 
     public int getTicks() {

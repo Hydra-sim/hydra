@@ -13,6 +13,11 @@ public class SimulationHelper {
 
     ConsumerHelper consumerHelper;
 
+    public SimulationHelper() {
+
+        consumerHelper = new ConsumerHelper();
+    }
+
     /**
      * This method simulates the trafic flow from the producers, through all the cosumers.
      *
@@ -34,7 +39,8 @@ public class SimulationHelper {
         for(int i = simulation.getStartTick(); i < simulation.getStartTick() + simulation.getTicks(); i++) {
 
             // Increase waiting time
-            simulation.getConsumers().forEach(ConsumerHelper::increaseWaitingTime);
+            simulation.getNodes().stream().filter(this::isConsumer).forEach(
+                    node -> ConsumerHelper.increaseWaitingTime((Consumer) node));
 
             addEntitiesFromProducer(i);
 
@@ -62,44 +68,36 @@ public class SimulationHelper {
      * @return The number of entities consumed so far in the simulation + the number of entities consumed during the
      *         running of the method.
      */
-    private void consumeEntities() {
+    public void consumeEntities() {
 
-        // Consume entities in queue on Consumer
-        for(int i = 0; i < simulation.getConsumers().size(); i++) {
+        // Will be true both for Consumers and ConsumerGroups
+        simulation.getNodes().stream().filter(this::isConsumer).forEach(
+                node -> {
 
-            consumerHelper.consumeEntity(simulation.getConsumers().get(i));
-        }
+            if (isConsumerGroup(node)) {
+                ConsumerGroup consumerGroup = (ConsumerGroup) node;
 
-        // Consume entities in queue on a ConsumerGroup
-        for(ConsumerGroup consumerGroup : simulation.getConsumerGroups()) {
+                List<Entity> entitiesToDistribute = consumerGroup.getEntitesInQueue();
 
-            // Distribute the Entities to the Consumers
-            // All have equal weight, so relationships are not needed (they use the ConsumerGroup relationship)
+                while (!entitiesToDistribute.isEmpty()) {
 
-            // Get the current entites in queue on current ConsumerGroup
-            List<Entity> entitiesToDistribute = consumerGroup.getEntitesInQueue();
+                    for (Consumer consumer : consumerGroup.getConsumers()) {
 
-            // Take each entity, add it to the queue for a spesific Consumer, and remove it from the list of entities in
-            // queue on the current ConsumerGroup
-            // Continues to iterate though the Entities untill all have been distributed
-            while(!entitiesToDistribute.isEmpty()) {
+                        List<Entity> entitiesInQueue = consumer.getEntitesInQueue();
+                        entitiesInQueue.add(entitiesToDistribute.get(0));
+                        entitiesToDistribute.remove(0);
+                        consumer.setEntitesInQueue(entitiesInQueue);
+                    }
 
-                for(Consumer consumer : consumerGroup.getConsumers()) {
-
-                    List<Entity> entitiesInQueue = consumer.getEntitesInQueue();
-                    entitiesInQueue.add(entitiesToDistribute.get(0));
-                    entitiesToDistribute.remove(0);
-                    consumer.setEntitesInQueue(entitiesInQueue);
                 }
-            }
 
-            // Loop through the Consumes in the current ConsumerGroup and consume Entities in queue on the current
-            // Consumer
-            for(int i = 0; i < consumerGroup.getConsumers().size(); i++) {
+                consumerGroup.getConsumers().forEach(consumerHelper::consumeEntity);
 
-                consumerHelper.consumeEntity(consumerGroup.getConsumers().get(i));
+            } else {
+
+                consumerHelper.consumeEntity((Consumer) node);
             }
-        }
+        });
     }
 
     /**
@@ -109,120 +107,88 @@ public class SimulationHelper {
      * @param currentTick The current tick number the simulation is on, to check if it is time for the producer to
      *                    produce entities.
      */
-    private void addEntitiesFromProducer(int currentTick) {
+    public void addEntitiesFromProducer(int currentTick) {
 
-        for(Producer producer : simulation.getProducers()) {
+        simulation.getNodes().stream().filter(this::isProducer).forEach(
+                producer -> {
 
-            models.Timetable timetable = producer.getTimetable();
+            Producer source = (Producer) producer;
 
-            for(int i = 0; i < timetable.getArrivals().size(); i++) {
+            for (TimetableEntry arrival : source.getTimetable().getArrivals()) {
 
-                if(timetable.getArrivals().get(i).getTime() == currentTick) {
+                if (arrival.getTime() == currentTick) {
 
-                    for (int j = 0; j < timetable.getArrivals().get(i).getPassengers(); j++) {
+                    for(int i = 0; i < arrival.getPassengers(); i++) {
 
-                        for (Relationship relationship : simulation.getRelationships()) {
+                        for(Relationship relationship : simulation.getRelationships()) {
 
-                            if(relationship.getSource() == producer) {
+                            boolean transferred = false;
+
+                            if(relationship.getSource() == source) {
 
                                 int recieved = relationship.getTarget().getEntitiesRecieved();
 
                                 double currentWeight = (double) recieved / relationship.getSource().getEntitiesTransfered();
 
-                                if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
+                                if ( relationship.getSource().getEntitiesTransfered() == 0
+                                        || currentWeight <= relationship.getWeight() ) {
 
-                                    Consumer consumer = null;
+                                    Consumer target = (Consumer) relationship.getTarget();
 
-                                    for(int k = 0; k < simulation.getConsumers().size(); k++) {
-
-                                        Consumer con = simulation.getConsumers().get(k);
-
-                                        if(con == relationship.getTarget()) {
-                                            consumer = con;
-                                        }
-                                    }
-
-                                    for(int k = 0; k < simulation.getConsumerGroups().size(); k++) {
-
-                                        Consumer con = simulation.getConsumerGroups().get(k);
-
-                                        if(con == relationship.getTarget()) {
-                                            consumer = con;
-                                        }
-                                    }
-
-                                    consumerHelper.addEntity(consumer, new Entity());
-                                    consumer.setEntitiesRecieved(consumer.getEntitiesRecieved() + 1);
-
+                                    consumerHelper.addEntity(target, new Entity());
+                                    target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
                                     producer.setEntitiesTransfered(producer.getEntitiesTransfered() + 1);
+
+                                    transferred = true;
                                     break;
+
                                 }
                             }
+
+                            if(transferred) break;
                         }
                     }
                 }
             }
-        }
+        });
     }
 
-    private void addEntitiesFromConsumers() {
+    public void addEntitiesFromConsumers() {
 
         // Current consumer sending entities
 
-        for(Relationship relationship : simulation.getRelationships()) {
+        // The percentage of entities already sent from our sending consumer to the receiving consumer
+        // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+        // have, and runs the code if either this is true, or it is the first entity sent from the sending
+        // consumer
+        // Get the data about the entity that is to be sent
+        simulation.getRelationships().stream().filter(
+                relationship -> relationship.getSource().getEntitiesReady().size() != 0).forEach(
+                relationship -> {
 
-            simulation.getConsumers().stream().filter(consumer
-                    -> relationship.getTarget() == consumer).forEach(consumer
-                    -> sendEntitiesFromConsumer(relationship));
+            while(!relationship.getSource().getEntitiesReady().isEmpty()) {
+                // The percentage of entities already sent from our sending consumer to the receiving consumer
+                double currentWeight = (double) relationship.getTarget().getEntitiesRecieved() / relationship.getSource().getEntitiesTransfered();
 
-            simulation.getConsumerGroups().stream().filter(consumerGroup
-                    -> relationship.getTarget() == consumerGroup).forEach(consumerGroup
-                    -> sendEntitiesFromConsumer(relationship));
-        }
-    }
+                // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                // consumer
+                if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
 
-    private void sendEntitiesFromConsumer(Relationship relationship) {
+                    // Get the data about the entity that is to be sent
+                    Entity entity = relationship.getSource().getEntitiesReady().get(0);
 
-        // If the consumer has any entities to send
-        if(relationship.getSource().getEntitiesReady().size() != 0) {
+                    Consumer target = (Consumer) relationship.getTarget();
 
-            // The percentage of entities already sent from our sending consumer to the receiving consumer
-            double currentWeight = (double) relationship.getTarget().getEntitiesRecieved() / relationship.getSource().getEntitiesTransfered();
+                    List<Entity> entities = target.getEntitesInQueue();
+                    entities.add(entity);
+                    target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+                    target.setEntitesInQueue(entities);
 
-            // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-            // have, and runs the code if either this is true, or it is the first entity sent from the sending
-            // consumer
-            if(currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
-
-                // Get the data about the entity that is to be sent
-                Entity entity = relationship.getSource().getEntitiesReady().get(0);
-
-                Consumer consumer = null;
-
-                for(int i = 0; i < simulation.getConsumers().size(); i++) {
-
-                    Consumer con = simulation.getConsumers().get(i);
-
-                    if(con == relationship.getTarget()) {
-                        consumer = con;
-                    }
+                    relationship.getSource().getEntitiesReady().remove(0);
                 }
-
-                for(int i = 0; i < simulation.getConsumerGroups().size(); i++) {
-
-                    Consumer con = simulation.getConsumerGroups().get(i);
-
-                    if(con == relationship.getTarget()) {
-                        consumer = con;
-                    }
-                }
-
-                List<Entity> entities = consumer.getEntitesInQueue();
-                entities.add(entity);
-                consumer.setEntitiesRecieved(consumer.getEntitiesRecieved() + 1);
-                consumer.setEntitesInQueue(entities);
             }
-        }
+        });
     }
 
     /**
@@ -236,10 +202,13 @@ public class SimulationHelper {
      */
     public int calculateWaitingTime(int maxWaitingTime) {
 
-        for(Consumer consumer : simulation.getConsumers()) {
+        for(Node node : simulation.getNodes()) {
 
-            int waitingTime = consumerHelper.getMaxWaitingTime(consumer);
-            if(waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
+            if(isConsumer(node)) {
+
+                int waitingTime = consumerHelper.getMaxWaitingTime((Consumer) node);
+                if(waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
+            }
         }
 
         return maxWaitingTime;
@@ -249,15 +218,24 @@ public class SimulationHelper {
 
         int entitiesConsumed = 0;
 
-        for(Consumer consumer : simulation.getConsumers()) {
-            entitiesConsumed += consumer.getEntitesConsumed().size();
-        }
+        for(Node node : simulation.getNodes()) {
 
-        for(ConsumerGroup consumerGroup : simulation.getConsumerGroups()) {
+            if(isConsumer(node)) {
 
-            for(Consumer consumer : consumerGroup.getConsumers()) {
+                if(isConsumerGroup(node)) {
 
-                entitiesConsumed += consumer.getEntitesConsumed().size();
+                    ConsumerGroup consumerGroup = (ConsumerGroup) node;
+                    for(Consumer consumer : consumerGroup.getConsumers()) {
+
+                        entitiesConsumed += consumer.getEntitesConsumed().size();
+                    }
+
+                } else {
+
+                    Consumer consumer = (Consumer) node;
+                    entitiesConsumed += consumer.getEntitesConsumed().size();
+
+                }
             }
         }
 
@@ -269,17 +247,30 @@ public class SimulationHelper {
 
         int entitiesInQueue = 0;
 
-        for(Consumer consumer : simulation.getConsumers()) {
+        for(Node node : simulation.getNodes()) {
 
-            entitiesInQueue += consumer.getEntitesInQueue().size();
-        }
+            if(isConsumer(node)) {
 
-        for(ConsumerGroup consumerGroup : simulation.getConsumerGroups()) {
+                Consumer consumer = (Consumer) node;
+                entitiesInQueue += consumer.getEntitesInQueue().size();
 
-            entitiesInQueue += consumerGroup.getEntitesInQueue().size();
+            }
         }
 
         return entitiesInQueue;
     }
 
+    public Simulation getSimulation() {
+        return simulation;
+    }
+
+    public void setSimulation(Simulation simulation) {
+        this.simulation = simulation;
+    }
+
+    private boolean isConsumer(Node node) {return node instanceof Consumer;}
+
+    private boolean isConsumerGroup(Node node) {return node instanceof ConsumerGroup;}
+
+    private boolean isProducer(Node node) {return node instanceof Producer;}
 }

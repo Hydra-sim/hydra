@@ -34,9 +34,13 @@ public class StartupBean {
         // For testing purposes
         entityManager.persist(new Simulation("PassDefault"));
 
-        Simulation simulation = new Simulation("PassTrue");
-        simulation.setPassword("password");
-        entityManager.persist(simulation);
+        Simulation simulation2 = new Simulation("PassTrue");
+        simulation2.setPassword("password");
+        entityManager.persist(simulation2);
+
+        Simulation simulation3 = new Simulation("PassTrue2");
+        simulation3.setPassword("password");
+        entityManager.persist(simulation3);
         
     }
 }
