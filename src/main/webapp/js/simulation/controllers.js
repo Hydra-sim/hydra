@@ -541,7 +541,7 @@
 
         $scope.submitProducer = function(selectedItem){
             $modalInstance.close({
-                'timetableId': selectedItem.id
+                'timetableId': selectedItem
             });
         };
 
