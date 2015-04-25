@@ -299,6 +299,10 @@
             $scope.control.addNode(type || "consumer", pos.x, pos.y, data);
         }
 
+        $scope.debug = function() {
+            console.log($scope.dataset.nodes);
+        };
+
         $scope.newProducer = function (title, type) {
 
             $modal.open({
@@ -469,7 +473,7 @@
                 "top": posY + "px"
             });
         }
-    })
+    });
 
     app.controller('ShareSimulationModalCtrl', function($scope, $modalInstance, $location, $log, id, message){
 
@@ -517,7 +521,7 @@
             }
 
             $modalInstance.close({
-                'ticksToConsumeEntities': ticksToConsumeEntities
+                'ticksToConsumeEntity': ticksToConsumeEntities
             });
         };
 
@@ -537,7 +541,7 @@
 
         $scope.submitProducer = function(selectedItem){
             $modalInstance.close({
-                'timetable': selectedItem
+                'timetableId': selectedItem.id
             });
         };
 
