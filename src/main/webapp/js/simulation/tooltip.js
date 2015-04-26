@@ -21,7 +21,7 @@
                 "top": posY + "px"
             });
         }
-    })
+    });
 
     app.directive("customTooltip", function($compile) {
         return {

@@ -460,25 +460,6 @@
 
     });
 
-    app.controller('TooltipTestCtrl', function($scope, $compile){
-        var tooltip = angular.element(document.getElementsByClassName('custom-tooltip'));
-        var path = "../templates/tooltip/";
-
-        $scope.open = function(templateUrl, posX, posY){
-            tooltip.empty();
-            tooltip.append(
-                $compile("<div class='inner-tooltip' ng-include='\"" + path + templateUrl + "\"'></div>")
-                ($scope));
-            tooltip.css({
-                "position": "absolute",
-                "display": "block",
-                "opacity": "1",
-                "left": posX + "px",
-                "top": posY + "px"
-            });
-        }
-    });
-
     app.controller('ShareSimulationModalCtrl', function($scope, $modalInstance, $location, $log, id, message){
 
         $scope.id = id;
@@ -598,6 +579,8 @@
         };
     });
 
+
+
     app.controller('ConfigModalModalCtrl', function ($scope, $modalInstance, startTime, endTime) {
 
         $scope.startTime = startTime;
@@ -715,5 +698,55 @@
         $rootScope.menu_field_button_icon = "";
         $rootScope.menu_field_button_click = function () {};
     });
+
+    app.controller('TooltipTestCtrl', function($scope){
+        var tooltip = angular.element(document.getElementsByClassName('custom-tooltip'));
+        var path = "../templates/tooltip/";
+
+        $scope.open = function(templateUrl, posX, posY){
+            tooltip.empty();
+            tooltip.append(
+                $compile("<div class='inner-tooltip' ng-include='\"" + path + templateUrl + "\"'></div>")
+                ($scope));
+            tooltip.css({
+                "position": "absolute",
+                "display": "block",
+                "opacity": "1",
+                "left": posX + "px",
+                "top": posY + "px"
+            });
+        }
+    })
+
+    app.controller('TooltipProducerCtrl', function($scope, $tooltip, Timetable){
+
+        $tooltip.open({
+            templateUrl: 'templates/tooltip/inner-tooltip-producer.html',
+            controller: 'TooltipProdCtrl',
+            poxX: 200,
+            posY: 200
+        });
+    });
+
+    app.controller('TooltipPassengerflowCtrl', function($scope, $tooltip){
+
+        $tooltip.open({
+            templateUrl: 'templates/tooltip/inner-tooltip-passengerflow.html',
+            controller: 'TooltipPassflowCtrl',
+            poxX: 200,
+            posY: 200
+        });
+    });
+
+    app.controller('TooltipConsumerCtrl', function($scope, $tooltip){
+
+        $tooltip.open({
+            templateUrl: 'templates/tooltip/inner-tooltip-consumer.html',
+            controller: 'TooltipConsCtrl',
+            poxX: 200,
+            posY: 200
+        });
+    });
+
 
 })();
