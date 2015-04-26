@@ -11,12 +11,11 @@
   $producer_color: rgb(132, 35, 107);
   $node_hover_color: grey;
   $node_selected: black;
+  $node_parking_color: #8ad8c5;
 
   marker{
     fill: #333;
   }
-
-  /*.node circle           {  fill: red;  }*/
 
   .node.producer circle,
   .node.train circle,
@@ -26,6 +25,8 @@
   .node.desktop circle,
   .node.arrows-h circle,
   .node.suitcase circle  {  fill: $consumer_color; }
+
+  .node.parking circle   {  fill: $node_parking_color; }
 
   .node:hover circle     {  fill: $node_hover_color; }
   .node.selected circle  {  stroke: $node_selected; stroke-width: 3px;  }

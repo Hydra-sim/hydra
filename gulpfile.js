@@ -9,7 +9,7 @@ var rootWebDir = './src/main/webapp/';
 
 var config = {
     bowerDir: rootWebDir + 'vendor/',
-    sassFiles:  rootWebDir + 'sass/*.scss',
+    sassFiles:  rootWebDir + 'sass/**/*.scss',
     sassInputFile: rootWebDir + 'sass/main.scss',
     cssOutputDir: rootWebDir + 'css/'
 };
@@ -25,7 +25,6 @@ var vendorJsFiles = [
     config.bowerDir + 'underscore/underscore-min.js',
     config.bowerDir + 'angular-zeroclipboard/src/angular-zeroclipboard.js',
     config.bowerDir + 'zeroclipboard/dist/ZeroClipboard.min.js'
-    // */
 ];
 
 
