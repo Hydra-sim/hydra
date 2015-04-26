@@ -1,7 +1,11 @@
 package helpers;
 
 import models.*;
+import models.data.ConsumerData;
+import models.data.NodeData;
+import models.data.ProducerData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,9 +17,12 @@ public class SimulationHelper {
 
     ConsumerHelper consumerHelper;
 
+    List<Integer> breakpoints;
+
     public SimulationHelper() {
 
         consumerHelper = new ConsumerHelper();
+        breakpoints = new ArrayList<>();
     }
 
     /**
@@ -35,6 +42,7 @@ public class SimulationHelper {
         consumerHelper = new ConsumerHelper();
 
         int maxWaitingTime = 0;
+        calculateBreakpoints();
 
         for(int i = simulation.getStartTick(); i < simulation.getStartTick() + simulation.getTicks(); i++) {
 
@@ -50,6 +58,17 @@ public class SimulationHelper {
 
             maxWaitingTime = calculateWaitingTime(maxWaitingTime);
 
+            for(int breakpoint : breakpoints) {
+
+                if(breakpoint == i) {
+
+                    updateNodeData(breakpoint);
+                }
+            }
+            if(breakpoints.contains(i)) {
+
+                updateNodeData(i);
+            }
         }
 
         simulation.setResult(
@@ -60,6 +79,21 @@ public class SimulationHelper {
                 )
         );
     }
+
+    private void calculateBreakpoints() {
+
+        if(simulation.getTickBreakpoints() != 0) {
+
+            int ticksBetweenBreakpoints = simulation.getTicks() / simulation.getTickBreakpoints();
+
+            for(int i = simulation.getStartTick(); i < simulation.getTicks(); i += ticksBetweenBreakpoints) {
+
+                breakpoints.add(i);
+            }
+        }
+    }
+
+    // Some of these are temporarily public for testing. TODO: Make private once testing is complete
 
     /**
      * Takes the list of entities and deletes them from the list of entities according to the number and strength of
@@ -242,7 +276,6 @@ public class SimulationHelper {
         return entitiesConsumed;
     }
 
-
     private int getEntitiesInQueue() {
 
         int entitiesInQueue = 0;
@@ -266,6 +299,44 @@ public class SimulationHelper {
 
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
+    }
+
+    private void updateNodeData(int breakpoint) {
+
+        for(Node node : simulation.getNodes()) {
+
+            NodeData nodeData = new NodeData(node.getEntitiesTransfered(), node.getEntitiesRecieved(), node.getEntitiesReady().size());
+
+            node.getNodeDataList().add(nodeData);
+
+            if(isConsumer(node)) {
+
+                Consumer consumer = (Consumer) node;
+                ConsumerData consumerData = new ConsumerData(consumer.getEntitesInQueue().size(),
+                                            consumer.getEntitesConsumed().size(),
+                                            consumerHelper.getMaxWaitingTime(consumer));
+
+                consumer.getConsumerDataList().add(consumerData);
+
+            } else if (isProducer(node)) {
+
+                Producer producer = (Producer) node;
+                int arrivals = 0;
+
+                for(TimetableEntry arrival : producer.getTimetable().getArrivals()) {
+
+                    if(arrival.getTime() <= breakpoint) {
+
+                        arrivals++;
+
+                    }
+                }
+
+                ProducerData producerData = new ProducerData(arrivals);
+
+                producer.getProducerDataList().add(producerData);
+            }
+        }
     }
 
     private boolean isConsumer(Node node) {return node instanceof Consumer;}

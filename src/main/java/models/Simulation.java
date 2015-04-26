@@ -26,9 +26,7 @@ import java.util.List;
 @javax.persistence.Entity
 public class Simulation
 {
-    @Transient
-    final int MIDNIGHT = 0;
-    //region persistant attributes
+    // region persistant attributes
     /**
      * An automatically generated id
      */
@@ -69,9 +67,13 @@ public class Simulation
     private String password;
     //endregion
 
-    //endregion
+    // region transient attributes
 
-    //region constructors
+    private int tickBreakpoints;
+
+    // endregion
+
+    // region constructors
     public Simulation() {
 
         this("Untitled simulation");
@@ -84,22 +86,23 @@ public class Simulation
 
     public Simulation(String name, int ticks) {
 
-        this(name, new Date(), new ArrayList<>(), new ArrayList<>(), 0, ticks);
+        this(name, new Date(), new ArrayList<>(), new ArrayList<>(), 0, ticks, 0);
     }
 
     public Simulation(String name, List<Node> nodes, List<Relationship> relationships, int ticks) {
 
-        this(name, new Date(), nodes, relationships, 0, ticks);
+        this(name, new Date(), nodes, relationships, 0, ticks, 0);
     }
 
 
-    public Simulation(String name, Date date, List<Node> nodes, List<Relationship> relationships, int startTick, int ticks) {
+    public Simulation(String name, Date date, List<Node> nodes, List<Relationship> relationships, int startTick, int ticks, int tickBreakpoints) {
         this.name = name;
         this.date = date;
         this.nodes = nodes;
         this.relationships = relationships;
         this.startTick = startTick;
         this.ticks = ticks;
+        this.tickBreakpoints = tickBreakpoints;
 
         this.nodes.forEach(this::distributeWeightIfNotSpecified);
 
@@ -228,6 +231,14 @@ public class Simulation
 
     public void setRelationships(List<Relationship> relationships) {
         this.relationships = relationships;
+    }
+
+    public int getTickBreakpoints() {
+        return tickBreakpoints;
+    }
+
+    public void setTickBreakpoints(int tickBreakpoints) {
+        this.tickBreakpoints = tickBreakpoints;
     }
 
     //endregion

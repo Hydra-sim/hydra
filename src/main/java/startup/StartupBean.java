@@ -1,6 +1,7 @@
 package startup;
 
-import models.Simulation;
+import helpers.SimulationHelper;
+import models.*;
 import presets.OSLPreset;
 
 import javax.annotation.PostConstruct;
@@ -8,6 +9,9 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * This class contains all the data that is to be persisted at deployment
@@ -38,9 +42,29 @@ public class StartupBean {
         simulation2.setPassword("password");
         entityManager.persist(simulation2);
 
-        Simulation simulation3 = new Simulation("PassTrue2");
-        simulation3.setPassword("password");
-        entityManager.persist(simulation3);
+        // Simulation with data
+
+        List<Node> nodes = new ArrayList<>();
+
+        Timetable timetable = new Timetable();
+        timetable.getArrivals().add(new TimetableEntry(0, 50));
+        timetable.getArrivals().add(new TimetableEntry(10, 50));
+        timetable.getArrivals().add(new TimetableEntry(20, 50));
+
+        Producer producer = new Producer(timetable);
+
+        Consumer consumer = new Consumer(10);
+
+        nodes.add(producer);
+        nodes.add(consumer);
+
+        List<Relationship> relationships = new ArrayList<>();
+        relationships.add(new Relationship(producer, consumer, 1.0));
+
+        Simulation simulation3 = new Simulation("Simulation with data which has been simulated", new Date(), nodes, relationships, 0, 100, 25);
+        SimulationHelper simulationHelper = new SimulationHelper();
+        simulationHelper.simulate(simulation3);
+        entityManager.persist(simulationHelper.getSimulation());
         
     }
 }

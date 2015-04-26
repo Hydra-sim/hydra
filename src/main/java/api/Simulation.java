@@ -147,4 +147,22 @@ public class Simulation {
         return Response.ok(new TrueFalse(true)).build();
     }
 
+    @GET
+    @Path("/{id}/simulationData")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response simulationData(@PathParam("id") int id) {
+
+        try {
+
+            models.Simulation simulation = simulationDao.get(id);
+            SimulationHelper simulationHelper = new SimulationHelper();
+            simulationHelper.simulate(simulation);
+            return Response.ok( simulationHelper.getSimulation() ).build();
+
+        } catch (Exception e) {
+
+            return Response.serverError().build();
+        }
+    }
 }

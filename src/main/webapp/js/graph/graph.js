@@ -101,9 +101,12 @@
                         x -= pos[0];
                         y -= pos[1];
 
+                        var newNode = {"type": type, "id": id, "x": x, "y": y};
+                        _.each(data, function(value, key) { newNode[key] = value; }); // Add the data to the element
+
                         // Add the node
                         scope.safeApply(function() {
-                            scope.nodes.push({"type": type, "id": id, "x": x, "y": y, "data": data});
+                            scope.nodes.push(newNode);
                         });
                         update();
                     }

@@ -1,9 +1,13 @@
 package models;
 
+import models.data.ProducerData;
+
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents something bringing {@link models.Entity entities} to a location.
@@ -15,10 +19,14 @@ public class Producer extends Node{
     @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     Timetable timetable;
 
+    @Transient
+    List<ProducerData> producerDataList;
+
     //region constructors
 
     public Producer(Timetable timetable) {
         this.timetable = timetable;
+        producerDataList = new ArrayList<>();
     }
 
     public Producer(Timetable timetable, int x, int y) {
@@ -41,6 +49,14 @@ public class Producer extends Node{
 
     public void setTimetable(Timetable timetable) {
         this.timetable = timetable;
+    }
+
+    public List<ProducerData> getProducerDataList() {
+        return producerDataList;
+    }
+
+    public void setProducerDataList(List<ProducerData> producerDataList) {
+        this.producerDataList = producerDataList;
     }
 
     //endregion

@@ -7,9 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestingCorner {
 
@@ -154,5 +156,42 @@ public class TestingCorner {
 
         assertEquals(0, sourceResult.getEntitiesReady().size());
         assertEquals(5, targetResult.getEntitesInQueue().size());
+    }
+
+    @Test
+    public void testSimulationWithBreakpoints() {
+
+        List<Node> nodes = new ArrayList<>();
+
+        Timetable timetable = new Timetable();
+        timetable.getArrivals().add(new TimetableEntry(0, 50));
+        timetable.getArrivals().add(new TimetableEntry(10, 50));
+        timetable.getArrivals().add(new TimetableEntry(20, 50));
+
+        Producer producer = new Producer(timetable);
+
+        Consumer consumer = new Consumer(10);
+
+        nodes.add(producer);
+        nodes.add(consumer);
+
+        List<Relationship> relationships = new ArrayList<>();
+        relationships.add(new Relationship(producer, consumer, 1.0));
+
+        Simulation simulation3 = new Simulation("Simulation with data which has been simulated", new Date(), nodes, relationships, 0, 100, 25);
+        SimulationHelper simulationHelper = new SimulationHelper();
+        simulationHelper.simulate(simulation3);
+
+        // producer
+        Producer producerResult = (Producer) simulationHelper.getSimulation().getNodes().get(0);
+        assertTrue(producerResult.getNodeDataList().size() > 0);
+        assertTrue(producerResult.getProducerDataList().size() > 0);
+
+        // consumer
+
+        Consumer consumerrResult = (Consumer) simulationHelper.getSimulation().getNodes().get(1);
+        assertTrue(consumerrResult.getNodeDataList().size() > 0);
+        assertTrue(consumerrResult.getConsumerDataList().size() > 0);
+
     }
 }

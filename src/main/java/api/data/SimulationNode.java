@@ -15,6 +15,9 @@ public class SimulationNode {
     // Consumer
     public int ticksToConsumeEntity;
 
+    // Passengerflow / people
+    public int timeBetweenArrivals;
+
     // ConsumerGroup
     public String consumerGroupName;
     public int numberOfConsumers;

@@ -235,7 +235,6 @@
     app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
 
         $scope.updateTicks = function() {
-
             $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
             $scope.ticks = ($scope.endTime.getHours() * 60 * 60) + ($scope.endTime.getMinutes() * 60) - $scope.startTick;
         };
@@ -270,13 +269,19 @@
 
         $rootScope.menu_field_button = "Submit";
         $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
-        $rootScope.menu_field_button_click = function() {
+        $rootScope.menu_field_button_click = submit;
+        $scope.submit = submit;
+        function submit() {
+
+            $scope.debug();
+            console.log($scope);
 
             $scope.updateTicks();
 
             var sim = new Simulation({
                 'name':                             menu_field_name.value,
                 'ticks':                            $scope.ticks,
+                'startTick':                        $scope.startTick,
                 'nodes':                            $scope.dataset.nodes,
                 'edges':                            $scope.dataset.edges
             });
@@ -286,7 +291,6 @@
                 $location.replace();
 
                 SimResult.data = result;
-                console.log(result);
             });
         };
 
@@ -298,6 +302,10 @@
             var pos = $scope.control.getlastpos();
             $scope.control.addNode(type || "consumer", pos.x, pos.y, data);
         }
+
+        $scope.debug = function() {
+            console.log("dataset: ", $scope.dataset);
+        };
 
         $scope.newProducer = function (title, type) {
 
@@ -469,7 +477,7 @@
                 "top": posY + "px"
             });
         }
-    })
+    });
 
     app.controller('ShareSimulationModalCtrl', function($scope, $modalInstance, $location, $log, id, message){
 
@@ -517,7 +525,7 @@
             }
 
             $modalInstance.close({
-                'ticksToConsumeEntities': ticksToConsumeEntities
+                'ticksToConsumeEntity': ticksToConsumeEntities
             });
         };
 
@@ -537,7 +545,7 @@
 
         $scope.submitProducer = function(selectedItem){
             $modalInstance.close({
-                'timetable': selectedItem
+                'timetableId': selectedItem
             });
         };
 
