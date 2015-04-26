@@ -1,3 +1,4 @@
+/*
 (function() {
 
     'use strict';
@@ -45,19 +46,3 @@
         }
     });
     /**/
-
-    app.directive("customTooltip", function($compile) {
-        return {
-            template: "<div class='custom-tooltip'></div>",
-            restrict: "A",
-            replace: true,
-            transclude: true,
-            link: function (scope, element, attrs) {
-
-                var graph = document.querySelector('graph');
-
-            }
-        }
-
-    });
-})();
