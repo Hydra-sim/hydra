@@ -17,8 +17,6 @@
     fill: #333;
   }
 
-  /*.node circle           {  fill: red;  }*/
-
   .node.producer circle,
   .node.train circle,
   .node.bus circle       {  fill: $producer_color; }
