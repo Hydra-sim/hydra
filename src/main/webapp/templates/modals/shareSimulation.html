@@ -5,10 +5,10 @@
     <input class="form-control copy" type="text" ng-model="message"/>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default" ng-click="copySimulation()"
+    <button class="btn btn-default primary" ng-click="copySimulation()"
             ui-zeroclip
             zeroclip-copied="complete($event)"
             zeroclip-on-error="clipError($event)"
             zeroclip-model="message">Copy</button>
-    <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
 </div>
