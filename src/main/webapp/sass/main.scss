@@ -301,6 +301,19 @@ table{
 
 }
 
+//Fix for the hover effect on flash
+.global-zeroclipboard-container:hover {
+  background-color: #1d1d1d;
+  color: white;
+  &:after {
+    display: block;
+    content: "Copy";
+    position: absolute;
+    top: 10px;
+    left: 23px;
+  }
+}
+
 .primary{
   background-color: #842168;
 }
@@ -314,7 +327,7 @@ table{
   color: #1d1d1d !important;
 }
 
-.btn:hover, .btn-default:hover, .btn-danger:hover, .btn-warning:hover{
+.btn:hover, .btn-default:hover, .btn-danger:hover, .btn-warning:hover {
   border: none;
   background-color: #1d1d1d;
   color: #ffffff;
