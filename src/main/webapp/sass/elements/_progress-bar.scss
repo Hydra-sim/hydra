@@ -1,21 +1,36 @@
-.progressBar {
+.progressBar
+{
   width: 100%;
 }
 
-input[type="range"]::-webkit-slider-thumb{
+input[type="range"]::-webkit-slider-thumb
+{
   -webkit-appearance: none !important;
   background-color: #84216b;
   opacity: 1;
   border:none;
   }
 
-  .midwayPoint
-  {
-    width: 10px;
-    height: 20px;
-  }
+.midwayPoint
+{
+  width: 10px;
+  height: 20px;
+}
 
-  .labels
+.labels
+{
+  font-weight: bold;
+}
+
+.progressButtons
+{
+
+  text-align: center;
+
+  .fa
   {
-    font-weight: bold;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 23px;
   }
+}
