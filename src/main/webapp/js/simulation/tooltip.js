@@ -1,3 +1,4 @@
+/*
 (function() {
 
     'use strict';
@@ -44,7 +45,6 @@
             });
         }
     });
-    /**/
 
     app.directive("customTooltip", function($compile) {
         return {
@@ -60,4 +60,5 @@
         }
 
     });
-})()
+})();
+/**/
