@@ -371,7 +371,9 @@
                 templateUrl: 'templates/modals/newPassengerflow.html',
                 controller: 'NewPassengerflowModalCtrl',
                 size: 'sm'
-            }).result.then(addData);
+            }).result.then(function(data) {
+                addData(data, 'passengerflow');
+            });
         };
 
         $scope.openConfigModal = function() {
