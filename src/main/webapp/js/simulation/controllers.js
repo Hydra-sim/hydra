@@ -370,18 +370,7 @@
             $modal.open({
                 templateUrl: 'templates/modals/newPassengerflow.html',
                 controller: 'NewPassengerflowModalCtrl',
-                size: 'sm',
-                resolve: {
-                    totalNumberOfEntititesList: function(){
-                        return $scope.totalNumberOfEntititesList;
-                    },
-                    numberOfEntitiesList: function(){
-                        return $scope.numberOfEntitiesList;
-                    },
-                    timeBetweenArrivalsList: function(){
-                        return $scope.timeBetweenArrivalsList;
-                    }
-                }
+                size: 'sm'
             }).result.then(addData);
         };
 
@@ -498,7 +487,7 @@
             };
 
             $modalInstance.close();
-        }
+        };
 
         $scope.cancel = function(){
             $modalInstance.dismiss('close');
@@ -555,11 +544,7 @@
 
     });
 
-    app.controller("NewPassengerflowModalCtrl", function($scope, $modal, $modalInstance, totalNumberOfEntititesList, numberOfEntitiesList, timeBetweenArrivalsList){
-        $scope.totalNumberOfEntititesList = totalNumberOfEntititesList;
-        $scope.numberOfEntitiesList = numberOfEntitiesList;
-        $scope.timeBetweenArrivalsList = timeBetweenArrivalsList;
-
+    app.controller("NewPassengerflowModalCtrl", function($scope, $modal, $modalInstance){
         $scope.options = [
             {label: "Seconds", value: "1"},
             {label: "Minutes", value: "2"},
@@ -567,9 +552,6 @@
         ];
 
         $scope.submitPassengerflow =  function(totalNumberOfEntities, numberOfEntities, timeBetweenArrivals , timeSelect){
-            $scope.totalNumberOfEntititesList.push(totalNumberOfEntities);
-            $scope.numberOfEntitiesList.push(numberOfEntities);
-
             if(timeSelect.item.label == "Minutes"){
                 timeBetweenArrivals *= 60;
             }
@@ -578,9 +560,10 @@
             }
 
             $modalInstance.close({
-                'timeBetweenArrivals': timeBetweenArrivals
+                'timeBetweenArrivals': timeBetweenArrivals,
+                'personsPerArrival': numberOfEntities
             });
-        }
+        };
 
         $scope.cancel = function(){
             $modalInstance.dismiss('cancel');
@@ -625,6 +608,7 @@
             consumerGroupNames.push( consumerGroupName );
             numberOfConsumersInGroups.push( numberOfConsumersInGroup );
             ticksToConsumeEntitiesGroups.push( ticksToConsumeEntitiesGroup );
+
             $modalInstance.close();
         };
 

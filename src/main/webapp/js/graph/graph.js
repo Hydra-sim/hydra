@@ -39,11 +39,12 @@
                     };
 
                     var icons = {
-                        'train' : '\uf238',
-                        'bus': '\uf207',
-                        'desktop': '\uf108',
-                        'arrows-h': '\uf07e',
-                        'suitcase': '\uf0f2'
+                        'train' : {icon: '\uf238'},
+                        'bus': {icon: '\uf207'},
+                        'desktop': {icon: '\uf108'},
+                        'arrows-h': {icon: '\uf07e'},
+                        'suitcase': {icon: '\uf0f2'},
+                        'parking': {icon: 'P', font: 'Arial'}
                     };
 
                     scope.safeApply = function(fn) {
@@ -311,13 +312,15 @@
 
                         newCircleWrappers
                             .append('text')
-                            .attr('font-family', 'FontAwesome')
+                            .attr('font-family', function(d) {
+                                return icons[d.type].font || 'FontAwesome';
+                            })
                             .attr('font-size', function(d) { return 1.4 +'em'} )
                             .attr("text-anchor", "middle")
                             .attr("alignment-baseline", "central")
                             .attr('fill', 'white')
                             .text(function(d) {
-                                return icons[d.type] || '\uf118';
+                                return icons[d.type].icon || '\uf118';
                             });
 
                         // remove old nodes
