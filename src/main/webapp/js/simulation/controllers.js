@@ -35,7 +35,7 @@
                     $scope.timetableIds.push(result.producers[j].timetable.id);
                 }
 
-            } else {
+            } else if(result.passwordProtected && !simAuth){
 
                 $location.path("simulation/" + $routeParams.id + "/auth")
             }
