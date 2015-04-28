@@ -42,7 +42,7 @@
                         'train' : {icon: '\uf238'},
                         'bus': {icon: '\uf207'},
                         'desktop': {icon: '\uf108'},
-                        'door': {icon: '\uf07e', font: 'Flaticon'},
+                        'door': {icon: '', font: 'Flaticon'},
                         'suitcase': {icon: '\uf0f2'},
                         'parking': {icon: 'P', font: 'Arial'}
                     };
@@ -313,7 +313,7 @@
                         newCircleWrappers
                             .append('text')
                             .attr('font-family', function(d) {
-                                return icons[d.type].font || 'FontAwesome';
+                                return icons[d.type].font || 'FontAwesome' ;
                             })
                             .attr('font-size', function(d) { return 1.4 +'em'} )
                             .attr("text-anchor", "middle")
