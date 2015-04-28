@@ -7,7 +7,8 @@
         'unit.controllers',
         'graph',
         'simulation',
-        'zeroclipboard'
+        'zeroclipboard',
+        'tooltip'
     ]);
 
     app.config(['uiZeroclipConfigProvider', function(uiZeroclipConfigProvider) {
