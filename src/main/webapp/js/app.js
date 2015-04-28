@@ -44,6 +44,7 @@
 
             .when('/map',               {controller: 'UploadMapCtrl',           templateUrl: "templates/map.html"})
             .when('/tooltip',           {controller: 'TooltipTestCtrl',         templateUrl: "templates/tooltip/testTooltip.html"})
+            .when('/documentation',     {templateUrl: 'templates/fullDocumentation.html' })
 
             .otherwise({redirectTo : '/'})
     });
