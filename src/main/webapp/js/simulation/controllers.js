@@ -399,14 +399,6 @@
             });
         };
 
-        $scope.choosePreset = function(){
-            $modal.open({
-                templateUrl: 'templates/modals/choosePreset.html',
-                controller:  'ChoosePresetModalCtrl',
-                size: 'sm'
-            });
-        };
-
     });
 
     app.controller('ChangePasswordCtrl', function( $scope, $modalInstance, $rootScope, $location, id, Simulation ) {
@@ -585,18 +577,6 @@
         }
 
     });
-
-    app.controller('ChoosePresetModalCtrl', function($scope, $modalInstance){
-        $scope.loadPreset = function(preset){
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
-
-
 
     app.controller('ConfigModalModalCtrl', function ($scope, $modalInstance, startTime, endTime) {
 

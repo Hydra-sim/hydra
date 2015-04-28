@@ -1,13 +1,16 @@
 <div class="modal-header">
-    <h1 class="modal-title">CHOOSE PRESET</h1>
+    <h1 class="modal-title">CHOOSE LOCATION</h1>
 
-    <p>A preset is a predefined simulation that can be run as is or modified to your liking.</p>
+    <p>A location is a predefined simulation that can be run as is or modified to your liking.</p>
 </div>
 <div class="modal-body">
-    <label>Presets</label>
-    <select class="form-control" ng-model="preset" ng-options="pre as pre.name for preset in presets"></select>
+    <label>Locations</label>
+    <select class="form-control" ng-model="presetList.item">
+            <option label="New Simulation">New Simulation</option>
+            <option ng-repeat="preset in presets" value="{{preset.id}}">{{preset.name}}</option>
+    </select>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default primary" ng-click="loadPreset(preset)" type="submit">Select</button>
+    <button class="btn btn-default primary" ng-click="loadPreset(presetList)" type="submit">Select</button>
     <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
 </div>

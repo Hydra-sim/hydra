@@ -10,12 +10,18 @@
         'zeroclipboard'
     ]);
 
-    app.controller('ApplicationCtrl', function($scope, $rootScope, $location, menu_field_name) {
+    app.controller('ApplicationCtrl', function($scope, $rootScope, $location, $modal, menu_field_name) {
 
         $rootScope.menu_field_button = "New Simulation";
         $rootScope.menu_field_button_icon = "fa-plus-circle";
         $rootScope.menu_field_button_click = function() {
-            $location.path('/simulation/new');
+
+                $modal.open({
+                    templateUrl: 'templates/modals/choosePreset.html',
+                    controller:  'ChoosePresetModalCtrl',
+                    size: 'sm'
+                });
+            //$location.path('/simulation/new');
         };
 
         $rootScope.menu_field_name = menu_field_name;
@@ -46,6 +52,27 @@
 
         $scope.isCollapsed = true;
 
+    });
+
+    app.controller('ChoosePresetModalCtrl', function($scope, $modalInstance, $location, Preset){
+        function updatePresetScope() {
+            $scope.presets = Preset.query({});
+        }
+        updatePresetScope();
+
+        $scope.loadPreset = function(presetList){
+            if(presetList.item == "New Simulation"){
+                $location.path("/simulation/new");
+            }
+            else{
+                $location.path("/simulation/" + presetList.item[0]);
+            }
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
     });
 
 })();
