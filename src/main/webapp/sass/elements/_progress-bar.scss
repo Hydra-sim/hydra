@@ -1,20 +1,20 @@
+$theme-base: #84216b;
+$theme-hl: #a3e7d6;
+
+
 .progressBar
 {
   width: 100%;
+
+
 }
 
 input[type="range"]::-webkit-slider-thumb
 {
   -webkit-appearance: none !important;
-  background-color: #84216b;
+  background-color: $theme-base;
   opacity: 1;
-  border:none;
-  }
-
-.midwayPoint
-{
-  width: 10px;
-  height: 20px;
+  border: none;
 }
 
 .labels
@@ -33,4 +33,11 @@ input[type="range"]::-webkit-slider-thumb
     margin-right: 20px;
     font-size: 23px;
   }
+}
+
+.thumbInfo
+{
+  background-color: $theme-base;
+  width: 50px;
+  height: 50px;
 }
