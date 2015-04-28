@@ -25,7 +25,7 @@
         */
     });
 
-    app.directive('tooltip', function($compile) {
+    app.directive('custom-tooltip', function($compile) {
         return {
             // required to make it work as an element
             restricted: 'E',
