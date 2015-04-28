@@ -25,7 +25,7 @@
         */
     });
 
-    app.directive('custom-tooltip', function($compile) {
+    app.directive('customTooltip', function($compile) {
         return {
             // required to make it work as an element
             restricted: 'E',
@@ -42,10 +42,16 @@
                 var posX = 200;
                 var posY = 500;
 
-                element.empty();
-                element.append(
-                    $compile("<div class='inner-tooltip' ng-include='" + scope.templateUrl + "'></div>")
-                    (scope));
+                scope.$watch('templateUrl', function(newVal) {
+                    if(newVal) {
+                        element.empty();
+                        element.append(
+                            $compile("<div class='inner-tooltip' ng-include='" + scope.templateUrl + "'></div>")(scope)
+                        );
+                    }
+                }, true);
+
+                /*
                 element.css({
                     "position": "absolute",
                     "display": "block",
@@ -53,6 +59,7 @@
                     "left": posX + "px",
                     "top": posY + "px"
                 });
+                */
             }
         };
     });
