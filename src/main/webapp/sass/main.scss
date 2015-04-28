@@ -626,6 +626,14 @@ a:hover{
   outline: none;
 }
 
+.helpContainer .flaticon-open203:before{
+  width: 100%;
+  height: 100%;
+  content: "\e000";
+  display: block;
+  font-size: 18px;
+}
+
 .collapse:not(.in){
   padding-bottom: 40px !important;
 }

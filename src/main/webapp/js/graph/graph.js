@@ -42,7 +42,7 @@
                         'train' : {icon: '\uf238'},
                         'bus': {icon: '\uf207'},
                         'desktop': {icon: '\uf108'},
-                        'flaticon-open203': {icon: 'e000'},
+                        'door': {icon: '\uf07e', font: 'Flaticon'},
                         'suitcase': {icon: '\uf0f2'},
                         'parking': {icon: 'P', font: 'Arial'}
                     };
