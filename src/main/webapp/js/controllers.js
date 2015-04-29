@@ -62,7 +62,7 @@
         updatePresetScope();
 
         $scope.loadPreset = function(presetList){
-            if(presetList.item == "New Simulation"){
+            if(presetList.item == "New Location"){
                 $location.path("/simulation/new");
             }
             else{
