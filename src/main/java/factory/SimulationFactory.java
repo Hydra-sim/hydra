@@ -35,6 +35,8 @@ public class SimulationFactory {
             } else if (isConsumerGroup(node)) {
                 ConsumerGroup consumerGroup = new ConsumerGroup(node.consumerGroupName, node.numberOfConsumers, node.ticksToConsumeEntity);
                 nodes.add(consumerGroup);
+            } else {
+                throw new RuntimeException("Unknown node type (" + node.type + ")!");
             }
         }
 
@@ -85,7 +87,8 @@ public class SimulationFactory {
         return  node.type.equals("consumer") ||
                 node.type.equals("desktop") ||
                 node.type.equals("arrows-h") ||
-                node.type.equals("suitcase");
+                node.type.equals("suitcase") ||
+                node.type.equals("parking");
     }
 
     private boolean isProducer(SimulationNode node) {
