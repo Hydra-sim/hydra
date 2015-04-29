@@ -3,15 +3,11 @@
         <tbody>
             <tr>
                 <th>Name</th>
-                <th>Date created</th>
                 <th></th>
             </tr>
             <tr ng-repeat="timetable in timetables">
                 <td>
                     <a ng-href="#/timetable/{{timetable.id}}/">{{timetable.name}}</a>
-                </td>
-                <td>
-                    <p class="title_date_tr">{{timetable.date | date}}</p>
                 </td>
                 <td class="text-right">
                     <button class="btn btn-danger" ng-click="deleteTimetable(timetable.id)">Delete</button>

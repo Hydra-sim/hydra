@@ -88,7 +88,8 @@ public class SimulationFactory {
                 node.type.equals("desktop") ||
                 node.type.equals("arrows-h") ||
                 node.type.equals("suitcase") ||
-                node.type.equals("parking");
+                node.type.equals("parking") ||
+                node.type.equals("door");
     }
 
     private boolean isProducer(SimulationNode node) {
