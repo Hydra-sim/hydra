@@ -9,6 +9,7 @@ import org.junit.Test;
 import presets.OSLPreset;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -351,4 +352,35 @@ public class SimulationEngineIntegrationTest {
         return new Simulation("Test", nodes, relationshipList, ticks);
     }
     //endregion
+
+    @Test
+    public void bugTest1() {
+
+        //InputStream inputStream = SimulationEngineIntegrationTest.class.getResourceAsStream("/Users/kristinesundtlorentzen/Dropbox/School/2015/hydra/src/main/resources/monday-friday.csv");
+        Timetable timetable = new Timetable(new ArrayList<TimetableEntry>() {{
+            add(new TimetableEntry(55000, 400));
+        }}, "Test");
+
+        List<Node> nodes = new ArrayList<Node>() {{
+            add(new Producer(timetable));
+            add(new Consumer(10));
+        }};
+
+        List<Relationship> relationships = new ArrayList<Relationship>() {{
+            add(new Relationship(nodes.get(0), nodes.get(1), 1.0));
+        }};
+
+        Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, 50400, 14400, 0);
+
+        simulationHelper.setSimulation(simulation);
+        simulationHelper.simulate(simulation);
+
+        Simulation simulationResult = simulationHelper.getSimulation();
+
+        assertEquals(2, simulationResult.getNodes().size());
+        assertEquals(1, simulationResult.getRelationships().size());
+        assertTrue(simulationResult.getResult().getEntitiesConsumed() > 1);
+        assertEquals(0, simulationResult.getResult().getEntitiesInQueue());
+        assertTrue(simulationResult.getResult().getMaxWaitingTimeInTicks() > 0);
+    }
 }
