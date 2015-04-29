@@ -359,27 +359,6 @@
             });
         };
 
-        $scope.newConsumerGroup = function() {
-
-            $modal.open({
-                templateUrl: 'templates/modals/newConsumerGroup.html',
-                controller: 'ConsumerGroupModalCtrl',
-                size: 'sm',
-                resolve: {
-                    consumerGroupNames: function () {
-                        return $scope.consumerGroupNames;
-                    },
-                    numberOfConsumersInGroups: function () {
-                        return $scope.numberOfConsumersInGroups;
-                    },
-                    ticksToConsumeEntitiesGroups: function() {
-                        return $scope.ticksToConsumeEntitiesGroups;
-                    }
-                }
-
-            }).result.then(addData);
-        };
-
         $scope.newPassengerflow = function(){
             $modal.open({
                 templateUrl: 'templates/modals/newPassengerflow.html',
@@ -516,6 +495,9 @@
     });
 
     app.controller('NewConsumerModalCtrl', function($scope, $modalInstance, ticksToConsumeEntitiesList, type){
+
+        $scope.groupable = !!(type.toLowerCase() == 'new bagdrop' || type.toLowerCase() == 'new terminal');
+
         $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
         $scope.modalTitle = type;
         $scope.options = [
@@ -601,26 +583,6 @@
             var time = {startTime: $scope.startTime, endTime: $scope.endTime};
 
             $modalInstance.close(time);
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
-
-    app.controller('ConsumerGroupModalCtrl', function($scope, $modalInstance, consumerGroupNames, numberOfConsumersInGroups,
-                                                      ticksToConsumeEntitiesGroups) {
-
-        $scope.consumerGroupNames = consumerGroupNames;
-        $scope.numberOfConsumersInGroups = numberOfConsumersInGroups;
-        $scope.ticksToConsumeEntitiesGroups = ticksToConsumeEntitiesGroups;
-
-        $scope.submitConsumerGroup = function(consumerGroupName, numberOfConsumersInGroup, ticksToConsumeEntitiesGroup){
-            consumerGroupNames.push( consumerGroupName );
-            numberOfConsumersInGroups.push( numberOfConsumersInGroup );
-            ticksToConsumeEntitiesGroups.push( ticksToConsumeEntitiesGroup );
-
-            $modalInstance.close();
         };
 
         $scope.cancel = function () {
