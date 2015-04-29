@@ -74,9 +74,11 @@ public class StartupBean {
             add(new TmpFileListItem("timetables/flybussekspressen/monday-friday.csv", "Flybussekspressen: Monday - Friday"));
             add(new TmpFileListItem("timetables/flybussekspressen/saturday.csv", "Flybussekspressen: Saturday"));
             add(new TmpFileListItem("timetables/flybussekspressen/sunday.csv", "Flybussekspressen: Sunday"));
-            
+
+
             add(new TmpFileListItem("timetables/flytoget/moday-friday.csv", "Flytoget: Monday - Friday"));
             add(new TmpFileListItem("timetables/flytoget/sunday.csv", "Flytoget: Sunday"));
+
 
             add(new TmpFileListItem("timetables/nettbuss/monday-friday_express.csv", "Nettbus Timesekspress: Monday - Friday "));
             add(new TmpFileListItem("timetables/nettbuss/monday-friday_shuttle.csv", "Nettbuss Shuttle: Monday-Friday"));
@@ -92,6 +94,7 @@ public class StartupBean {
             add(new TmpFileListItem("timetables/sas_flybussen/monday-friday.csv", "SAS Flybussen: Monday-Friday"));
             add(new TmpFileListItem("timetables/sas_flybussen/saturday.csv", "SAS Flybussen: Saturday"));
             add(new TmpFileListItem("timetables/sas_flybussen/sunday.csv", "SAS Flybussen: Sunday"));
+
         }};
 
         timetables.stream().forEach((item) -> {
