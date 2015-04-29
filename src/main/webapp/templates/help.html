@@ -1,18 +1,26 @@
 <div class="helpContainer" ng-controller="CollapseCtrl">
     <button class="btn btn-warning" ng-click="isCollapsed = !isCollapsed">Help</button>
     <div collapse="isCollapsed" class="helpBox">
-        <h4>Simulations:</h4>
-        <p>In the simulations tab you can see a list of all previous simulation.
-            Click on simulation name to view simulation results. You can also delete, edit, share and set password on the simulations .
-        </p>
-        <h4>Timetables:</h4>
-        <p>In the timetables tab you can see a list of all timetables .
-            Click on timetable name to edit timetable. You can also create new timetables and delete them.
-        </p>
-        <h4>Locations:</h4>
-        <p>In the presets tab you can see a list of all locations. A location is a pre-defined simulation that you can run as is or edit to customize it.
-            You can edit, delete or create a new location.
-        </p>
-        <a ng-href="#/documentation">Full documentation</a>
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <h4>Simulations:</h4>
+                <p>In the simulations tab you can see a list of all previous simulation.
+                    Click on simulation name to view simulation results. You can also delete, edit, share and set password on the simulations .
+                </p>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <h4>Timetables:</h4>
+                <p>In the timetables tab you can see a list of all timetables .
+                    Click on timetable name to edit timetable. You can also create new timetables and delete them.
+                </p>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <h4>Locations:</h4>
+                <p>In the presets tab you can see a list of all locations. A location is a pre-defined simulation that you can run as is or edit to customize it.
+                    You can edit, delete or create a new location.
+                </p>
+            </div>
+            <a ng-href="#/documentation">Full documentation</a>
+        </div>
     </div>
 </div>
