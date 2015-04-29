@@ -62,7 +62,11 @@
 
     });
 
-    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult, SimulationData, $log) {
+    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult, SimulationData, cfpLoadingBar) {
+
+        $scope.loaded = false;
+
+        cfpLoadingBar.start();
 
         SimulationData.get({}, {'id': SimResult.data.id}, function (result) {
 
@@ -79,6 +83,10 @@
             $scope.toMinutes = (to - ($scope.toHours * 60 * 60)) / 60;
 
             $scope.maxWaitingTimeInMinutes = $scope.simulation.result.maxWaitingTimeInTicks / 60;
+
+            cfpLoadingBar.complete();
+
+            $scope.loaded = true;
         });
 
         $rootScope.menu_field_button = "";
@@ -238,7 +246,7 @@
         };
     });
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, SimResult, Simulation, menu_field_name, $log) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, SimResult, Simulation, menu_field_name) {
 
         $scope.updateTicks = function() {
             $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
