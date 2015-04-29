@@ -17,10 +17,11 @@ var config = {
 var vendorJsFiles = [
     config.bowerDir + 'angular/angular.js',
     config.bowerDir + 'angular-bootstrap/ui-bootstrap-tpls.min.js',
-    config.bowerDir + 'angular-loading-bar/src/loading-bar.js',
+    config.bowerDir + 'angular-loading-bar/build/loading-bar.min.js',
     config.bowerDir + 'angular-resource/angular-resource.js',
     config.bowerDir + 'angular-route/angular-route.js',
     config.bowerDir + 'angular-zeroclipboard/src/angular-zeroclipboard.js',
+    config.bowerDir + 'angular-animate/angular-animate.min.js',
     config.bowerDir + 'd3/d3.min.js',
     config.bowerDir + 'ng-file-upload/angular-file-upload-shim.min.js',
     config.bowerDir + 'ng-file-upload/angular-file-upload.min.js',
