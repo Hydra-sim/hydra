@@ -876,5 +876,12 @@ body{ background: white; }
   height: 5px !important;
 }
 
+//Margin fix for modals
+.more-margin{
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
 
-
+.quantity-field{
+  width: 50px;
+}
