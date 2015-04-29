@@ -34,10 +34,6 @@ header {
   padding: 25px;
 }
 
-.container{
-  width: 100%;
-}
-
 .modal-backdrop {
   position: fixed;
   bottom: 0;
@@ -696,10 +692,15 @@ a:hover{
   text-align: center;
 }
 
+/* FULL DOCUMENTATION PAGE */
 .icon-container-documentation{
   margin-top: 20px;
   margin-left: 10px;
 }
 .icon-container-documentation .flaticon-open203:before{
   font-size: 14px;
+}
+
+.add-margin-bottom{
+  margin-bottom: 20px;
 }
