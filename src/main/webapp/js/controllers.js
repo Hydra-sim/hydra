@@ -55,6 +55,7 @@
     });
 
     app.controller('ChoosePresetModalCtrl', function($scope, $modalInstance, $location, Preset){
+
         function updatePresetScope() {
             $scope.presets = Preset.query({});
         }
