@@ -1,21 +1,17 @@
 <div class="result-container">
-    <h1>RESULT</h1>
-    <div class="row">
-        <p class="col-lg-12">Simulation runtime</p>
-    </div>
-    <div class="row">
-        <p class="col-lg-12">from: {{startTime | date:'HH:mm'}} to: {{endTime | date:'HH:mm'}}</p>
-    </div>
-    <div class="row">
-        <p class="col-lg-12">Entities consumed: {{entitiesConsumed}}</p>
-    </div>
-    <div class="row">
-        <p class="col-lg-12">Entities in queue: {{entitiesInQueue}}</p>
-    </div>
-    <div class="row">
-        <p class="col-lg-12">Max waiting time: {{maxWaitingTimeInTicks}} between something and something</p>
-    </div>
-    <div class="row">
-        <p class="col-lg-12">The situation at {{endTime | date:'HH:mm'}}</p>
-    </div>
+
+    <h2>Result</h2>
+
+    <p>Simulation Runtime</p>
+
+    <p>From {{ fromHours }}:{{ fromMinutes }} to {{ toHours }}:{{ toMinutes }}</p>
+
+    <p>Max waiting time: {{ maxWaitingTimeInMinutes }} minutes.</p>
+
+    <p>(Between node and node)</p>
+
+    <p>Graph</p>
+
+    <div ng-include src="'templates/simulation/simulationProgressBar.html'"></div>
+
 </div>

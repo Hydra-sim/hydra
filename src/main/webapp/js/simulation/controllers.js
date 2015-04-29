@@ -62,30 +62,38 @@
 
     });
 
-    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult) {
-        $scope.producerTooltip =  'Next arrival: 14:20 \n Passengers: 40 \n Persons delivered: 120 \n Persons remaining: 0';
-        $scope.consumerTooltip = "Number in line: 10 \n Longest waiting time: 40 seconds";
-        $scope.parkingTooltip = "Number arrived: 6";
+    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult, SimulationData, $log) {
 
-        $scope.startTime                = SimResult.data.startTime;
-        $scope.endTime                  = SimResult.data.endTime;
-        $scope.entitiesConsumed         = SimResult.data.entitiesConsumed;
-        $scope.entitiesInQueue          = SimResult.data.entitiesInQueue;
-        $scope.maxWaitingTimeInTicks    = SimResult.data.maxWaitingTimeInTicks;
+        SimulationData.get({}, {'id': SimResult.data.id}, function (result) {
+
+            $scope.simulation = result;
+
+            var from  = $scope.simulation.startTick;
+
+            $scope.fromHours = from / 60 / 60;
+            $scope.fromMinutes = (from - ($scope.fromHours * 60 * 60)) / 60;
+
+            var to = from + $scope.simulation.ticks;
+
+            $scope.toHours = to / 60 / 60;
+            $scope.toMinutes = (to - ($scope.toHours * 60 * 60)) / 60;
+
+            $scope.maxWaitingTimeInMinutes = $scope.simulation.result.maxWaitingTimeInTicks / 60;
+        });
 
         $rootScope.menu_field_button = "";
         $rootScope.menu_field_button_icon = "";
         $rootScope.menu_field_button_click = function() {};
     });
 
-    app.controller('SimulationShowCtrl', function($scope, $rootScope, $routeParams, Simulation) {
-        Simulation.get({}, {"id": $routeParams.id}, function(data) {
-            console.log(data);
+    app.controller('SimulationShowCtrl', function($scope, $rootScope, $routeParams, SimResult) {
 
-            $scope.entitiesConsumed         = data.result.entitiesConsumed;
-            $scope.entitiesInQueue          = data.result.entitiesInQueue;
-            $scope.maxWaitingTimeInTicks    = data.result.maxWaitingTimeInTicks;
-        });
+        var data = SimResult.data;
+
+        $scope.entitiesConsumed         = data.result.entitiesConsumed;
+        $scope.entitiesInQueue          = data.result.entitiesInQueue;
+        $scope.maxWaitingTimeInTicks    = data.result.maxWaitingTimeInTicks;
+
 
         $rootScope.menu_field_button = "";
         $rootScope.menu_field_button_icon = "";
@@ -122,8 +130,6 @@
                     default:
                         func = null;
                 }
-
-                $log.info($rootScope.simulationAuth);
 
                 if (result.passwordProtected) {              // It really does find it
 
@@ -232,7 +238,7 @@
         };
     });
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, Simulation, SimResult, menu_field_name) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, SimResult, Simulation, menu_field_name, $log) {
 
         $scope.updateTicks = function() {
             $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
@@ -274,7 +280,6 @@
         function submit() {
 
             $scope.debug();
-            console.log($scope);
 
             $scope.updateTicks();
 
@@ -287,6 +292,7 @@
             });
 
             sim.$save().then(function(result) {
+
                 $location.path('/result');
                 $location.replace();
 

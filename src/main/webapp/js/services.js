@@ -13,6 +13,10 @@
             });
     }]);
 
+    app.factory('SimulationData', ['$resource', function($resource) {
+        return $resource('api/simulation/:simulationId/simulationData', {simulationId: '@id'});
+    }]);
+
     app.factory('Timetable', ['$resource', function($resource) {
         return $resource('api/timetable/:timetableId', {timetableId: '@id'},
             {
@@ -24,11 +28,9 @@
         return $resource('api/preset/:presetId', {presetId: '@id'});
     }]);
 
-
     app.factory('Authentication', ['$resource', function($resource) {
         return $resource('api/auth/');
     }]);
-
 
     app.factory('SimResult', function() {
         return {
