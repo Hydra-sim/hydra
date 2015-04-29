@@ -1,41 +1,57 @@
-<div class="container add-margin-bottom">
+<div ng-controller="FullDocumentationCtrl" class="container add-margin-bottom">
     <h1>Full documentation</h1>
     <p>Here you can find information and instructions on how to use the simulation tool, and how the result works.</p>
-    <h2>Table of Contents</h2>
-    <!--Will fix into real toc-->
-    <p>Simulations </br> Timetables </br> Locations </br> SETUP </br> Short Commands </br> Icons</p>
+    <div class="table-of-contents">
+        <h2>Table of Contents</h2>
+        <a class="mouse-pointer" ng-click="scrollTo('info-simulations')">Simulations</a></br>
+        <a class="mouse-pointer" ng-click="scrollTo('info-timetables')">Timetables</a></br>
+        <a class="mouse-pointer" ng-click="scrollTo('info-locations')">Locations</a></br>
+        <a class="mouse-pointer" ng-click="scrollTo('info-setup')">Setting up a simulation</a></br>
+        <a class="mouse-pointer" ng-click="scrollTo('info-short-commands')">Short Commands</a></br>
+        <a class="mouse-pointer" ng-click="scrollTo('info-icons')">Icons</a>
+    </div>
 
-    <h3>Simulations</h3>
+    <h3 id="info-simulations">Simulations</h3>
     <p>In the simulations tab you can see a list of all previous simulation.
-        Click on simulation name to view simulation results. You can also delete, edit, share and set password on the simulations .
+        Click on simulation name to view simulation results. You can also delete, edit, share and set password on the simulations.
+        Passwords are set by clicking on the "lock-icon", and are used to prevent other users of the system to change your simulation.
     </p>
 
-    <h3>Timetables</h3>
+    <h3 id="info-timetables">Timetables</h3>
     <p>In the timetables tab you can see a list of all timetables .
         Click on timetable name to edit timetable. You can also create new timetables and delete them.
+        Timetables has to values, the time the bus/train arrives, and how many passengers that arrives. Both can be edited later on.
+        Several pre-set timetables are included in the solution. They are set on different weekdays, so if you want a simulation to
+        show traffic for the weekend, choose the appropriate timetable.
     </p>
 
-    <h3>Locations</h3>
+    <h3 id="info-locations">Locations</h3>
     <p>In the presets tab you can see a list of all locations. A location is a pre-defined simulation that you can run as is or edit to customize it.
         You can edit, delete or create a new location.
+        When you set up a new simulation, you get the option of working on a location for the simulation. If you choose to use a location, a
+        predefined working area with nodes will be set up for you. If you choose not to use a location your working are will be empty.
     </p>
 
-    <h3>SETUP</h3>
-    <p>Right click on the screen to add a new item. A popup for entering information for the unit/units
-        will appear and you enter it and pres add then the unit will be added.
+    <h3 id="info-setup">Setting up a simulation</h3>
+    <p>Right click on the screen to add a new item. You will then get a radial menu wherey you can choose which type of node
+        you want to add. A popup for entering information for the node will then be presented. There are different input-fields
+        to fill in depending on the node. A typical bus/train will only demand a timetable to be connected. While a terminal or door
+        will demand information on how long it takes a passenger to enter, and if you want to make a single instance of the node, or
+        include more in the area of the node. </br>
         To create a direction for the passengers to go, you click shift + drag
         from an item to another item. You will then be able to enter in how many percent of the passengeres
-        that should walk in that direction.
+        that should walk in that direction. If you do not enter anything the percentage will be set to equal of all the different
+        directions the passenger can go from the node selected.
     </p>
-    <h4>Short commands:</h4>
-    <p>Drag a node to move it.
-        Scroll too zoom working area, drag working area too move around.
-        Click on a node or edge to select it.
-        Click shift+backspace to delete selected edge / selected node and all connected edges.
-        Shift+drag from one node to another to add an edge.
-    </p>
-
-    <h3>ICONS</h3>
+    <h4 id="info-short-commands">Short commands:</h4>
+    <ul>
+        <li>Drag a node to move it.</li>
+        <li>Scroll too zoom working area, drag working area too move around.</li>
+        <li>Click on a node or edge to select it.</li>
+        <li>Click shift+backspace to delete selected edge / selected node and all connected edges.</li>
+        <li>Shift+drag from one node to another to add an edge.</li>
+    </ul>
+    <h3 id="info-icons">ICONS</h3>
     <div class="icon-container-documentation">
         <div class="row">
             <div class="col-sm-1">

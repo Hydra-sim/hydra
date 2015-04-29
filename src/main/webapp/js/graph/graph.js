@@ -44,7 +44,8 @@
                         'desktop': {icon: '\uf108'},
                         'door': {icon: '', font: 'Flaticon'},
                         'suitcase': {icon: '\uf0f2'},
-                        'parking': {icon: 'P', font: 'Arial'}
+                        'parking': {icon: 'P', font: 'Arial'},
+                        'passengerflow': {icon: '\uf0c0'}
                     };
 
                     scope.safeApply = function(fn) {
