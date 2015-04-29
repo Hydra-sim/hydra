@@ -5,8 +5,8 @@
 </div>
 <div class="modal-body">
     <label>Locations</label>
-    <select class="form-control" ng-model="presetList.item" ng-init="presetList.item='newSim'">
-            <option label="New Simulation" value="newSim">New Simulation</option>
+    <select class="form-control" ng-model="presetList.item" ng-init="presetList.item='New Simulation'">
+            <option label="New Simulation" value="New Simulation">New Simulation</option>
             <option ng-repeat="preset in presets" value="{{preset.id}}">{{preset.name}}</option>
     </select>
 </div>
