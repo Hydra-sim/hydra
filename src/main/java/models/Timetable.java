@@ -5,7 +5,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -84,36 +86,28 @@ public class Timetable {
     }
     //endregion
 
-    public static Timetable getTimetableFromCsv(String path, String name) {
+    public static Timetable getTimetableFromCsv(InputStream is, String name) {
 
         List<TimetableEntry> entries = new ArrayList<>();
 
-        // ClassLoader classLoader = getClass().getClassLoader();
-        // File file = new File(classLoader.getResource(path).getFile());
-        File file = new File(path);
+        Scanner scanner = new Scanner(is);
 
-        try (Scanner scanner = new Scanner(file)) {
+        scanner.nextLine(); //Column names
 
-            scanner.nextLine(); //Column names
+        while(scanner.hasNextLine()) {
 
-            while(scanner.hasNextLine()) {
+            String[] data = scanner.nextLine().split(",");
 
-                String[] data = scanner.nextLine().split(",");
+            String[] times = data[0].split(":");
 
-                String[] times = data[0].split(":");
+            int hours = Integer.parseInt(times[0]);
+            int minutes = Integer.parseInt(times[1]);
+            int seconds = Integer.parseInt(times[2]);
 
-                int hours = Integer.parseInt(times[0]);
-                int minutes = Integer.parseInt(times[1]);
-                int seconds = Integer.parseInt(times[2]);
+            int tick = (hours * 60 * 60) + (minutes * 60) + seconds;
 
-                int tick = (hours * 60 * 60) + (minutes * 60) + seconds;
-
-                int passengers = Integer.parseInt(data[1]);
-                entries.add(new TimetableEntry(tick, passengers));
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            int passengers = Integer.parseInt(data[1]);
+            entries.add(new TimetableEntry(tick, passengers));
         }
 
         return new Timetable(entries, name);

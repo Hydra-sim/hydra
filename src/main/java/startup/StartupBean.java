@@ -9,6 +9,9 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,6 +68,42 @@ public class StartupBean {
         SimulationHelper simulationHelper = new SimulationHelper();
         simulationHelper.simulate(simulation3);
         entityManager.persist(simulationHelper.getSimulation());
-        
+
+        // Timetables
+
+        final String timetablePath = "timetable.csv";
+        InputStream is = StartupBean.class.getResourceAsStream(timetablePath);
+        Timetable t = Timetable.getTimetableFromCsv(is, "example");
+
+//        Timetable t = Timetable.getTimetableFromCsv(timetablePath, "Test timetable");
+        /*
+        String filePath = Thread.currentThread().getContextClassLoader().getResource("../resources/timetables/flybussekspressen/monday-friday.csv").getFile();
+
+        entityManager.persist(
+                Timetable.getTimetableFromCsv(filePath, "Flybussekspressen: Monday-Friday")
+        );//*/
+
+        /*
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/flybussekspressen/saturday.csv", "Flybussekspressen: Saturday"));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/flybussekspressen/sunday.csv", "Flybussekspressen: Sunday"));
+
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/flytoget/moday-friday.csv", "Flytoget: Monday - Friday"));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/flytoget/sunday.csv", "Flytoget: Sunday"));
+
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/nettbuss/monday-friday_express.csv", "Nettbus Timesekspress: Monday - Friday "));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/nettbuss/saturday_express.csv", "Nettbuss Timesekspress: Saturday"));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/nettbuss/sunday_express.csv", "Nettbuss Timesekspress: Sunday"));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/nettbuss/monday-friday_shuttle.csv", "Nettbuss Shuttle: Monday-Friday"));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/nettbuss/saturday_shuttle.csv", "Nettbuss Shuttle: Saturday"));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/nettbuss/sunday_shuttle.csv", "Nettbus Shuttle: Sunday"));
+
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/nsb/monday-friday.csv", "NSB: Monday-Friday"));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/nsb/saturday.csv", "NSB: Saturday"));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/nsb/sunday.csv", "NSB: Sunday"));
+
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/sas-flybussen/monday-friday.csv", "SAS Flybussen: Monday-Friday"));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/sas-flybussen/saturday.csv", "SAS Flybussen: Saturday"));
+        entityManager.persist(Timetable.getTimetableFromCsv("src/main/resources/timetables/sas-flybussen/sunday.csv", "SAS Flybussen: Sunday"));
+        */
     }
 }
