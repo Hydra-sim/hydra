@@ -62,7 +62,7 @@
 
     });
 
-    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResultg, cfpLoadingBar) {
+    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult, cfpLoadingBar) {
 
         $scope.loaded = false;
 
