@@ -72,6 +72,10 @@
 
     app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult, cfpLoadingBar) {
 
+        $scope.simulation = {
+            nodes: [],
+            relationships: []
+        };
         $scope.loaded = false;
 
         cfpLoadingBar.start();
