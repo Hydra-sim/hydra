@@ -80,7 +80,8 @@ public class SimulationFactory {
     }
 
     private boolean isConsumerGroup(SimulationNode node) {
-        return node.type.equals("consumerGroup");
+
+        return node.type.contains("consumerGroup");
     }
 
     private boolean isConsumer(SimulationNode node) {

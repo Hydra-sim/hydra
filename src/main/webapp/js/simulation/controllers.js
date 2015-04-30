@@ -352,12 +352,11 @@
 
                 if(data.hasOwnProperty('numberOfConsumers')) {
 
-                    addData(data, 'consumerGroup')
+                    type = 'consumerGroup-' + type;
 
-                } else {
-
-                    addData(data, type)
                 }
+
+                addData(data, type)
             });
         };
 
