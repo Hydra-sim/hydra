@@ -20,6 +20,10 @@
 
     }]);
 
+    app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {   // Turn off spinner in top left corner of
+        cfpLoadingBarProvider.includeSpinner = false;                       // loading bar
+    }]);
+
     app.config(function ($routeProvider) {
         $routeProvider
             .when('/',                  {controller: 'ApplicationCtrl',         templateUrl: 'templates/index.html'})
