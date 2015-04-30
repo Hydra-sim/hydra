@@ -82,6 +82,11 @@
 
     /* Full documentation page */
     app.controller('FullDocumentationCtrl', function($scope, $location, $anchorScroll){
+
+        $rootScope.menu_field_button = "";
+        $rootScope.menu_field_button_icon = "";
+        $rootScope.menu_field_button_click = function() { };
+
         $scope.scrollTo = function(id) {
             $location.hash(id);
             $anchorScroll();
