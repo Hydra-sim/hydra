@@ -81,7 +81,7 @@
     });
 
     /* Full documentation page */
-    app.controller('FullDocumentationCtrl', function($scope, $location, $anchorScroll){
+    app.controller('FullDocumentationCtrl', function($scope, $location, $anchorScroll, $rootScope){
 
         $rootScope.menu_field_button = "";
         $rootScope.menu_field_button_icon = "";
