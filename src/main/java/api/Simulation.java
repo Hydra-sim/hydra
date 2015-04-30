@@ -140,6 +140,7 @@ public class Simulation {
         return Response.ok(new TrueFalse(true)).build();
     }
 
+    /*
     @GET
     @Path("/{id}/simulationData")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -158,4 +159,5 @@ public class Simulation {
             return Response.serverError().build();
         }
     }
+    */
 }

@@ -13,10 +13,6 @@
             });
     }]);
 
-    app.factory('SimulationData', ['$resource', function($resource) {
-        return $resource('api/simulation/:simulationId/simulationData', {simulationId: '@id'});
-    }]);
-
     app.factory('Timetable', ['$resource', function($resource) {
         return $resource('api/timetable/:timetableId', {timetableId: '@id'},
             {
