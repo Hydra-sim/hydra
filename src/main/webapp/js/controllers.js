@@ -12,9 +12,7 @@
         'angular-loading-bar',
         'ngAnimate'
 
-    ]).config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {   // Turn off spinner in top left corner of
-        cfpLoadingBarProvider.includeSpinner = false;                       // loading bar
-    }]);
+    ]);
 
     app.controller('ApplicationCtrl', function($scope, $rootScope, $location, $modal, menu_field_name) {
 

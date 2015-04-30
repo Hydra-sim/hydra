@@ -8,7 +8,8 @@
         'graph',
         'simulation',
         'zeroclipboard',
-        'tooltip'
+        'tooltip',
+        'angular-loading-bar'
     ]);
 
     app.config(['uiZeroclipConfigProvider', function(uiZeroclipConfigProvider) {
@@ -18,6 +19,10 @@
             swfPath: 'vendor/zeroclipboard/dist/ZeroClipboard.swf'
         });
 
+    }]);
+
+    app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {   // Turn off spinner in top left corner of
+        cfpLoadingBarProvider.includeSpinner = false;                       // loading bar
     }]);
 
     app.config(function ($routeProvider) {
@@ -45,7 +50,7 @@
             .when('/map',               {controller: 'UploadMapCtrl',           templateUrl: "templates/map.html"})
             .when('/tooltip',           {controller: 'TooltipTestCtrl',         templateUrl: "templates/tooltip/testTooltip.html"})
             .when('/documentation',     {controller: 'FullDocumentationCtrl',   templateUrl: 'templates/fullDocumentation.html' })
-            .when('/loadingscreen',    {templateUrl: 'templates/simulation/loadingscreen.html'})
+            .when('/loadingscreen',     {templateUrl: 'templates/simulation/loadingscreen.html'})
 
             .otherwise({redirectTo : '/'})
     });

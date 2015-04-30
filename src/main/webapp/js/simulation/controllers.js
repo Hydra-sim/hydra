@@ -68,9 +68,14 @@
 
         cfpLoadingBar.start();
 
-        SimulationData.get({}, {'id': SimResult.data.id}, function (result) {
+        SimResult.data.then(function(result) {
 
             $scope.simulation = result;
+            console.log(result);
+
+            // Close the loading bar
+            cfpLoadingBar.complete();
+            $scope.loaded = true;
 
             var from  = $scope.simulation.startTick;
 
@@ -84,9 +89,6 @@
 
             $scope.maxWaitingTimeInMinutes = $scope.simulation.result.maxWaitingTimeInTicks / 60;
 
-            cfpLoadingBar.complete();
-
-            $scope.loaded = true;
         });
 
         $rootScope.menu_field_button = "";
@@ -288,7 +290,6 @@
         function submit() {
 
             $scope.debug();
-
             $scope.updateTicks();
 
             var sim = new Simulation({
@@ -299,13 +300,9 @@
                 'edges':                            $scope.dataset.edges
             });
 
-            sim.$save().then(function(result) {
-
-                $location.path('/result');
-                $location.replace();
-
-                SimResult.data = result;
-            });
+            SimResult.data = sim.$save();
+            $location.path('/result');
+            $location.replace();
         };
 
         $scope.dataset = { nodes: [], edges: [] };
