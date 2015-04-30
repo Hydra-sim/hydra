@@ -12,6 +12,6 @@
     "karma-mocha-reporter": "^1.0.0",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-sinon": "^1.0.4",
-    "redbird": "^0.3.5"
+    "redbird": "^0.4.7"
   }
 }
