@@ -24,7 +24,9 @@
   .node.consumer circle,
   .node.desktop circle,
   .node.door circle,
-  .node.suitcase circle  {  fill: $consumer_color; }
+  .node.suitcase circle,
+  .node.consumerGroup-desktop circle,
+  .node.consumerGroup-suitcase circle     {  fill: $consumer_color; }
 
   .node.parking circle   {  fill: $node_parking_color; }
 
