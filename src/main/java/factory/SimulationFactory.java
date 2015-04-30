@@ -25,17 +25,21 @@ public class SimulationFactory {
         List<Relationship> relationships = new ArrayList<>();
 
         for (SimulationNode node : input.nodes) {
+
             if (isProducer(node)) {
-                Timetable timetable = timetableDao.get(node.timetableId);
-                nodes.add(createProducer(node, timetable));
+
+                nodes.add(createProducer(node));
 
             } else if (isConsumer(node)) {
+
                 nodes.add(createConsumer(node));
 
             } else if (isConsumerGroup(node)) {
-                ConsumerGroup consumerGroup = new ConsumerGroup(node.consumerGroupName, node.numberOfConsumers, node.ticksToConsumeEntity);
-                nodes.add(consumerGroup);
+
+                nodes.add(createConsumerGroup(node));
+
             } else {
+
                 throw new RuntimeException("Unknown node type (" + node.type + ")!");
             }
         }
@@ -67,15 +71,27 @@ public class SimulationFactory {
                 .findFirst();
     }
 
+    private ConsumerGroup createConsumerGroup(SimulationNode node) {
+
+        ConsumerGroup consumerGroup = new ConsumerGroup(node.numberOfConsumers, node.ticksToConsumeEntity);
+        consumerGroup.setTmpId(node.id);
+        consumerGroup.setType(node.type);
+        return consumerGroup;
+    }
+
     private Consumer createConsumer(SimulationNode node) {
         Consumer consumer = new Consumer(node.ticksToConsumeEntity, node.x, node.y);
         consumer.setTmpId(node.id);
+        consumer.setType(node.type);
         return consumer;
     }
 
-    private Producer createProducer(SimulationNode node, Timetable timetable) {
+    private Producer createProducer(SimulationNode node) throws Exception {
+
+        Timetable timetable = timetableDao.get(node.timetableId);
         Producer producer = new Producer(timetable, node.x, node.y);
         producer.setTmpId(node.id);
+        producer.setType(node.type);
         return producer;
     }
 

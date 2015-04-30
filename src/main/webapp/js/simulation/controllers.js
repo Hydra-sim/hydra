@@ -10,6 +10,18 @@
 
             var simAuth = false;
 
+            $scope.dataset = { nodes: [], edges: [] };
+
+            $scope.control = {};
+            $scope.addData = addData;
+            function addData(data, type) {
+                var pos = $scope.control.getlastpos();
+                $scope.control.addNode(type || "consumer", pos.x, pos.y, data);
+            }
+
+            console.log(result);
+
+
             for(var i = 0; i < $rootScope.simulationAuth.length; i++) {
 
                 if($rootScope.simulationAuth[i] == $routeParams.id) simAuth = true;
@@ -17,23 +29,19 @@
 
             if(result.passwordProtected && simAuth) {
 
+                menu_field_name.setValue(result.name);
                 $scope.id = result.id;
 
-                menu_field_name.setValue(result.name);
-
                 $scope.ticks = result.ticks;
+                $scope.startTick = result.startTick;
+                $scope.dataset.nodes = result.nodes;
+                $scope.dataset.edges = result.edges;
 
-                $scope.ticksToConsumeEntitiesList = [];
+                for(var node in $scope.dataset.nodes) {
 
-                for (var j = 0; j < result.consumers.length; j++) {
-                    $scope.ticksToConsumeEntitiesList.push(result.consumers[j].ticksToConsumeEntities);
+                    addData(node, node.type);
                 }
 
-                $scope.timetableIds = [];
-
-                for (var j = 0; j < result.producers.length; j++) {
-                    $scope.timetableIds.push(result.producers[j].timetable.id);
-                }
 
             } else if(result.passwordProtected && !simAuth){
 
@@ -266,18 +274,6 @@
 
         $scope.updateTicks();
 
-        $scope.ticksToConsumeEntitiesList = [];
-        $scope.timetableIds = [];
-
-        $scope.consumerGroupNames = [];
-        $scope.numberOfConsumersInGroups = [];
-        $scope.ticksToConsumeEntitiesGroups = [];
-
-        $scope.totalNumberOfEntititesList = [];
-        $scope.numberOfEntitiesList = [];
-        $scope.timeBetweenArrivalsList = [];
-
-
         // For dropdown in add consumer/passengerflow
         $scope.options = [];
 
@@ -303,7 +299,7 @@
             SimResult.data = sim.$save();
             $location.path('/result');
             $location.replace();
-        };
+        }
 
         $scope.dataset = { nodes: [], edges: [] };
 
@@ -719,6 +715,5 @@
             posY: 200
         });
     });
-
 
 })();
