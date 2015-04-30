@@ -45,7 +45,9 @@
                         'door': {icon: '', font: 'Flaticon'},
                         'suitcase': {icon: '\uf0f2'},
                         'parking': {icon: 'P', font: 'Arial'},
-                        'passengerflow': {icon: '\uf0c0'}
+                        'passengerflow': {icon: '\uf0c0'},
+                        'consumerGroup-desktop': {icon: '\uf108'},
+                        'consumerGroup-suitcase': {icon: '\uf0f2'}
                     };
 
                     scope.safeApply = function(fn) {
