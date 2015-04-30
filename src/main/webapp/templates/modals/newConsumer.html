@@ -9,12 +9,12 @@
             <select class="form-control ng-prestine ng-valid" ng-init="timeSelectConsumer.item = options[0]" ng-model="timeSelectConsumer.item" ng-options="opt as opt.label for opt in options"></select>
         </div>
         <div class="form-group" ng-show="groupable">
-            <label>Make multiple</label>
             <input type="checkbox" ng-model="group">
+            <label>Make multiple</label>
         </div>
         <div class="form-group more-margin" ng-show="group">
             <label>Quantity: </label>
-            <input class="quantity-field" ng-model="numberOfConsumers" type="number">
+            <input class="quantity-field form-control" ng-model="numberOfConsumers" type="number">
         </div>
     </form>
     <div class="modal-footer">

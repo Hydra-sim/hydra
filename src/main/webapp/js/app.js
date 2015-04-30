@@ -8,7 +8,8 @@
         'graph',
         'simulation',
         'zeroclipboard',
-        'tooltip'
+        'tooltip',
+        'angular-loading-bar'
     ]);
 
     app.config(['uiZeroclipConfigProvider', function(uiZeroclipConfigProvider) {
@@ -49,7 +50,7 @@
             .when('/map',               {controller: 'UploadMapCtrl',           templateUrl: "templates/map.html"})
             .when('/tooltip',           {controller: 'TooltipTestCtrl',         templateUrl: "templates/tooltip/testTooltip.html"})
             .when('/documentation',     {controller: 'FullDocumentationCtrl',   templateUrl: 'templates/fullDocumentation.html' })
-            .when('/loadingscreen',    {templateUrl: 'templates/simulation/loadingscreen.html'})
+            .when('/loadingscreen',     {templateUrl: 'templates/simulation/loadingscreen.html'})
 
             .otherwise({redirectTo : '/'})
     });
