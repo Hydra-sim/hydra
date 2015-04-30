@@ -344,15 +344,20 @@
                 controller: 'NewConsumerModalCtrl',
                 size: 'sm',
                 resolve: {
-                    ticksToConsumeEntitiesList: function () {
-                        return $scope.ticksToConsumeEntitiesList;
-                    },
                     type: function(){
                         return title;
                     }
                 }
             }).result.then(function(data) {
-                addData(data, type)
+
+                if(data.hasOwnProperty('numberOfConsumers')) {
+
+                    addData(data, 'consumerGroup')
+
+                } else {
+
+                    addData(data, type)
+                }
             });
         };
 
@@ -491,11 +496,10 @@
         }
     });
 
-    app.controller('NewConsumerModalCtrl', function($scope, $modalInstance, ticksToConsumeEntitiesList, type){
+    app.controller('NewConsumerModalCtrl', function($scope, $modalInstance, type){
 
         $scope.groupable = !!(type.toLowerCase() == 'new bagdrop' || type.toLowerCase() == 'new terminal');
 
-        $scope.ticksToConsumeEntitiesList = ticksToConsumeEntitiesList;
         $scope.modalTitle = type;
         $scope.options = [
             {label: "Seconds", value: "1"},
@@ -503,19 +507,36 @@
             {label: "Hours", value: "3"}
         ];
 
-        $scope.submitConsumer = function(amountOfTime, timeSelectConsumer){
+        $scope.submitConsumer = function(amountOfTime, timeSelectConsumer, numberOfConsumers){
+
             var ticksToConsumeEntities = amountOfTime; // Seconds by default
 
-            if(timeSelectConsumer.item.label == "Minutes") { // Minutes
-                ticksToConsumeEntities *= 60;
+            switch(timeSelectConsumer.item.label) {
 
-            } else if(timeSelectConsumer.item.label == "Hours") { // Hours
-                ticksToConsumeEntities *= 60 * 60;
+                case "Minutes":
+                    ticksToConsumeEntities *= 60;
+                    break;
+
+                case "Hours":
+                    ticksToConsumeEntities *= 60 * 60;
+                    break;
             }
 
-            $modalInstance.close({
-                'ticksToConsumeEntity': ticksToConsumeEntities
-            });
+            if($scope.group) {
+
+                $modalInstance.close({
+
+                    'ticksToConsumeEntity': ticksToConsumeEntities,
+                    'numberOfConsumers': numberOfConsumers
+                });
+
+            } else {
+
+                $modalInstance.close({
+
+                    'ticksToConsumeEntity': ticksToConsumeEntities
+                });
+            }
         };
 
         $scope.cancel = function () {

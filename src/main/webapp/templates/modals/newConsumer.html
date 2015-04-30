@@ -14,11 +14,11 @@
         </div>
         <div class="form-group more-margin" ng-show="group">
             <label>Quantity: </label>
-            <input class="quantity-field" type="number">
+            <input class="quantity-field" ng-model="numberOfConsumers" type="number">
         </div>
     </form>
     <div class="modal-footer">
-        <button class="btn btn-default primary" ng-click="submitConsumer(amountOfTime, timeSelectConsumer)" type="submit">Add</button>
+        <button class="btn btn-default primary" ng-click="submitConsumer(amountOfTime, timeSelectConsumer, numberOfConsumers)" type="submit">Add</button>
         <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
     </div>
 </div>
