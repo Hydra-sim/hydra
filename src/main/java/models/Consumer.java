@@ -47,7 +47,7 @@ public class Consumer extends Node{
     public Consumer(String name, int ticksToConsumeEntities) {
 
         this.name = name;
-        this.ticksToConsumeEntities = ticksToConsumeEntities;
+        setTicksToConsumeEntities(ticksToConsumeEntities);
         this.entitesConsumed = new ArrayList<>();
         this.entitesInQueue = new ArrayList<>();
         this.consumerDataList = new ArrayList<>();
@@ -61,7 +61,9 @@ public class Consumer extends Node{
     }
 
     public void setTicksToConsumeEntities(int ticksToConsumeEntities) {
-        this.ticksToConsumeEntities = ticksToConsumeEntities;
+
+        if(ticksToConsumeEntities == 0) this.ticksToConsumeEntities = 1;
+        else this.ticksToConsumeEntities = ticksToConsumeEntities;
     }
 
     public List<Entity> getEntitesConsumed() {

@@ -88,7 +88,7 @@ public class StartupBean {
 
         List<Node> nodes = new ArrayList<>();
 
-        Producer producer = new Producer( );
+        Producer producer = new Producer();
 
         Consumer consumer = new Consumer(10);
 

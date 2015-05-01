@@ -6,6 +6,7 @@ import models.Entity;
 import javax.ejb.Singleton;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A manager with helper method(s) for {@link models.Consumer}
@@ -54,14 +55,14 @@ public class ConsumerHelper {
      *
      * @param con the consumer on which the entities are to be moved
      */
-    public void consumeEntity(Consumer con) {
+    public void consumeEntity(Consumer con, int tick) {
 
         List<Entity> entities = con.getEntitesInQueue();
         List<Entity> entitiesConsumed = new ArrayList<>();
 
-        for(int i = 0; i < con.getTicksToConsumeEntities(); i++) {
+        if(!entities.isEmpty()){
 
-            if(!entities.isEmpty()) {
+            if(tick == 0 || tick % con.getTicksToConsumeEntities() == 0){
 
                 entitiesConsumed.add(con.getEntitesInQueue().get(0));
                 entities.remove(0);
@@ -72,9 +73,7 @@ public class ConsumerHelper {
 
         List<Entity> entitiesConsumedBeforeSimulation = con.getEntitesConsumed();
 
-        for(Entity entity : entitiesConsumed) {
-            entitiesConsumedBeforeSimulation.add(entity);
-        }
+        entitiesConsumedBeforeSimulation.addAll(entitiesConsumed.stream().collect(Collectors.toList()));
 
         con.setEntitesConsumed(entitiesConsumedBeforeSimulation);
     }

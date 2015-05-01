@@ -4,7 +4,7 @@
 <div class="modal-body">
     <form novalidate name="newProduser">
         <label>Timetable</label>
-        <select class="form-control" ng-model="selectedItem.item" required="" ng-init="selectedItem.item='0'">
+        <select class="form-control" ng-model="selectedItem.item" required="" ng-init="selectedItem.item='0'" focus-me="true">
             <option label="Choose Timetable" value="0">Choose a timetable</option>
             <option ng-repeat="timetable in timetables">{{timetable.name}}</option>
         </select>

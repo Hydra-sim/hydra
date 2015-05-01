@@ -5,7 +5,7 @@
 </div>
 <div class="modal-body">
     <label>Locations</label>
-    <select class="form-control" ng-model="presetList.item" ng-init="presetList.item='No Location'">
+    <select class="form-control" ng-model="presetList.item" ng-init="presetList.item='No Location'" focus-me="true">
             <option label="No Location" value="No Location">No Location</option>
             <option ng-repeat="preset in presets" value="{{preset.id}}">{{preset.name}}</option>
     </select>

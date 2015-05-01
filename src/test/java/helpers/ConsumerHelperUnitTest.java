@@ -48,7 +48,7 @@ public class ConsumerHelperUnitTest {
         consumerHelper.addEntity(con, new Entity());
         assertEquals(1, con.getEntitesInQueue().size());
 
-        consumerHelper.consumeEntity(con);
+        consumerHelper.consumeEntity(con, 1);
         assertEquals(0, con.getEntitesInQueue().size());
         assertEquals(1, con.getEntitesConsumed().size());
     }
