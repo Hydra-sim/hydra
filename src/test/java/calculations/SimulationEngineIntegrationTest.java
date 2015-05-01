@@ -43,18 +43,20 @@ public class SimulationEngineIntegrationTest {
     @Test
     public void testQueueing() {
 
-        int numberOfEntitesToProduce = 2;
-        int numberOfEntitiesToConsume = 1;
+        int numberOfEntitesToProduce = 4;
+        int ticksToConsumeEntities = 1;
+        int ticks = 2;
 
         // Create simulation
 
         Producer producer = createProducer(1, numberOfEntitesToProduce);
-        Consumer consumer = new Consumer(numberOfEntitiesToConsume);
+        Consumer consumer = new Consumer(ticksToConsumeEntities);
         Relationship relationship = new Relationship(producer, consumer, 1.0);
 
-        Simulation simulation = intializeSimulation(producer, consumer, relationship, 1);
+        Simulation simulation = intializeSimulation(producer, consumer, relationship, ticks);
 
         simulationHelper.simulate(simulation);
+        simulation = simulationHelper.getSimulation();
 
         // Assert that there is a queue
 
@@ -62,7 +64,7 @@ public class SimulationEngineIntegrationTest {
 
         // Assert that correct amount is left in queue
 
-        assertEquals(numberOfEntitesToProduce - numberOfEntitiesToConsume, simulation.getResult().getEntitiesInQueue());
+        assertEquals(numberOfEntitesToProduce - (ticksToConsumeEntities * ticks), simulation.getResult().getEntitiesInQueue());
     }
 
     /**
@@ -73,17 +75,19 @@ public class SimulationEngineIntegrationTest {
     public void testConsumtion() {
 
         int numberOfEntitesToProduce = 2;
-        int numberOfEntitiesToConsume = 1;
+        int ticksToConsumeEntities = 1;
+        int ticks = 2;
 
         // Create simulation
 
         Producer producer = createProducer(1, numberOfEntitesToProduce);
-        Consumer consumer = new Consumer(numberOfEntitiesToConsume);
+        Consumer consumer = new Consumer(ticksToConsumeEntities);
         Relationship relationship = new Relationship(producer, consumer, 1.0);
 
-        Simulation simulation = intializeSimulation(producer, consumer, relationship, 1);
+        Simulation simulation = intializeSimulation(producer, consumer, relationship, ticks);
 
         simulationHelper.simulate(simulation);
+        simulation = simulationHelper.getSimulation();
 
         // Assert that entites have been consumed
 
@@ -91,7 +95,7 @@ public class SimulationEngineIntegrationTest {
 
         // Assert that correct amount have been consumed
 
-        assertEquals(numberOfEntitiesToConsume, simulation.getResult().getEntitiesConsumed());
+        assertEquals((ticksToConsumeEntities * ticks), simulation.getResult().getEntitiesConsumed());
     }
 
     private Producer createProducer(int numberOfArrivals, int numberOfPassengers) {

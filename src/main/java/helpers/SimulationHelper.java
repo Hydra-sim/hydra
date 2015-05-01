@@ -54,7 +54,7 @@ public class SimulationHelper {
 
             addEntitiesFromConsumers();
 
-            consumeEntities();
+            consumeEntities(i);
 
             maxWaitingTime = calculateWaitingTime(maxWaitingTime);
 
@@ -102,7 +102,7 @@ public class SimulationHelper {
      * @return The number of entities consumed so far in the simulation + the number of entities consumed during the
      *         running of the method.
      */
-    public void consumeEntities() {
+    public void consumeEntities(int tick) {
 
         // Will be true both for Consumers and ConsumerGroups
         simulation.getNodes().stream().filter(this::isConsumer).forEach(
@@ -125,11 +125,14 @@ public class SimulationHelper {
 
                 }
 
-                consumerGroup.getConsumers().forEach(consumerHelper::consumeEntity);
+                for(Consumer consumer : consumerGroup.getConsumers()) {
+
+                    consumerHelper.consumeEntity(consumer, tick);
+                }
 
             } else {
 
-                consumerHelper.consumeEntity((Consumer) node);
+                consumerHelper.consumeEntity((Consumer) node, tick);
             }
         });
     }

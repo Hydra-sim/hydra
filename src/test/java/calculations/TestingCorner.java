@@ -29,7 +29,7 @@ public class TestingCorner {
         Simulation simulation = new Simulation();
         List<Node> nodes = new ArrayList<>();
 
-        Consumer consumer = new Consumer(4);
+        Consumer consumer = new Consumer(1);
 
         List<Entity> entities = new ArrayList<>();
         entities.add(new Entity());
@@ -44,15 +44,14 @@ public class TestingCorner {
 
         simulation.setNodes(nodes);
 
-
         simulationHelper.setSimulation(simulation);
 
-        simulationHelper.consumeEntities();
+        simulationHelper.consumeEntities(1);
 
         Consumer consumerResult = (Consumer) simulationHelper.getSimulation().getNodes().get(0);
 
-        assertEquals(4, consumerResult.getEntitesConsumed().size());
-        assertEquals(1, consumerResult.getEntitesInQueue().size());
+        assertEquals(1, consumerResult.getEntitesConsumed().size());
+        assertEquals(4, consumerResult.getEntitesInQueue().size());
     }
 
     @Test
@@ -68,7 +67,7 @@ public class TestingCorner {
         entities.add(new Entity());
         entities.add(new Entity());
 
-        ConsumerGroup consumerGroup = new ConsumerGroup(1, 4);
+        ConsumerGroup consumerGroup = new ConsumerGroup(1, 1);
         consumerGroup.setEntitesInQueue(entities);
 
         nodes.add(consumerGroup);
@@ -77,13 +76,13 @@ public class TestingCorner {
 
         simulationHelper.setSimulation(simulation);
 
-        simulationHelper.consumeEntities();
+        simulationHelper.consumeEntities(1);
 
 
         ConsumerGroup consumerGroupResult = (ConsumerGroup) simulationHelper.getSimulation().getNodes().get(0);
 
-        assertEquals(4, consumerGroupResult.getConsumers().get(0).getEntitesConsumed().size());
-        assertEquals(1, consumerGroupResult.getConsumers().get(0).getEntitesInQueue().size());
+        assertEquals(1, consumerGroupResult.getConsumers().get(0).getEntitesConsumed().size());
+        assertEquals(4, consumerGroupResult.getConsumers().get(0).getEntitesInQueue().size());
     }
 
     @Test
@@ -193,5 +192,62 @@ public class TestingCorner {
         assertTrue(consumerrResult.getNodeDataList().size() > 0);
         assertTrue(consumerrResult.getConsumerDataList().size() > 0);
 
+    }
+
+    @Test
+    public void testLessQueueWhenHigherConsumerValue() {
+
+        List<TimetableEntry> timetableEntries = new ArrayList<TimetableEntry>() {{
+
+            add(new TimetableEntry( 0, 5000 ));
+            add(new TimetableEntry( 10, 5000 ));
+            add(new TimetableEntry( 20, 5000 ));
+        }};
+
+        Timetable timetable = new Timetable(timetableEntries, "test");
+
+        // FIRST SIM
+
+        List<Node> n1 = new ArrayList<Node>() {{
+
+            add(new Producer(timetable));
+            add(new Consumer(10));
+        }};
+
+        List<Relationship> r1 = new ArrayList<Relationship>() {{
+
+            add(new Relationship(n1.get(0), n1.get(1), 1.0));
+        }};
+
+        Simulation sim1 = new Simulation("Sim1", n1, r1, 1000);
+
+        // SECOND SIM
+        List<Node> n2 = new ArrayList<Node>() {{
+
+            add(new Producer(timetable));
+            add(new Consumer(600));
+        }};
+
+        List<Relationship> r2 = new ArrayList<Relationship>() {{
+
+            add(new Relationship(n2.get(0), n2.get(1), 1.0));
+        }};
+
+        Simulation sim2 = new Simulation("Sim2", n2, r2, 1000);
+
+        simulationHelper.simulate(sim1);
+        sim1 = simulationHelper.getSimulation();
+
+        simulationHelper.simulate(sim2);
+        sim2 = simulationHelper.getSimulation();
+
+        // waiting time (sim1 higher than sim1)
+        assertTrue(sim1.getResult().getMaxWaitingTimeInTicks() == sim2.getResult().getMaxWaitingTimeInTicks());
+
+        // entities in queue (sim1 higher than sim2)
+        assertTrue(sim1.getResult().getEntitiesInQueue() < sim2.getResult().getEntitiesInQueue());
+
+        // entities consumed (sim1 lower than sim2)
+        assertTrue(sim1.getResult().getEntitiesConsumed() > sim2.getResult().getEntitiesConsumed());
     }
 }
