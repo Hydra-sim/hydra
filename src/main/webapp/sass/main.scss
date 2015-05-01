@@ -277,6 +277,11 @@ table{
   background-color: $Avinor_Grey;
 }
 
+.btn-default[disabled]{
+  background-color: $Avinor_LightPurple;
+  color: white;
+}
+
 .btn-danger{
   color: white;
 }
