@@ -11,10 +11,6 @@
 @import 'elements/progress-bar';
 @import 'elements/tooltip';
 
-html {
-  height: 100%;
-}
-
 body {
   min-height: 100%;
   margin-top: $header_height;
