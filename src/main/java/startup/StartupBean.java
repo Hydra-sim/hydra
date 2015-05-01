@@ -44,30 +44,6 @@ public class StartupBean {
         simulation2.setPassword("password");
         entityManager.persist(simulation2);
 
-        // Simulation with data
-
-        List<Node> nodes = new ArrayList<>();
-
-        Timetable timetable = new Timetable();
-        timetable.getArrivals().add(new TimetableEntry(0, 50));
-        timetable.getArrivals().add(new TimetableEntry(10, 50));
-        timetable.getArrivals().add(new TimetableEntry(20, 50));
-
-        Producer producer = new Producer(timetable);
-
-        Consumer consumer = new Consumer(10);
-
-        nodes.add(producer);
-        nodes.add(consumer);
-
-        List<Relationship> relationships = new ArrayList<>();
-        relationships.add(new Relationship(producer, consumer, 1.0));
-
-        Simulation simulation3 = new Simulation("Simulation with data which has been simulated", new Date(), nodes, relationships, 0, 100, 25);
-        SimulationHelper simulationHelper = new SimulationHelper();
-        simulationHelper.simulate(simulation3);
-        entityManager.persist(simulationHelper.getSimulation());
-
         // Timetables
 
         List<TmpFileListItem> timetables = new LinkedList<TmpFileListItem>() {{
@@ -104,6 +80,28 @@ public class StartupBean {
 
             entityManager.persist(t);
         });
+
+        // Simulation with data
+
+        InputStream is = StartupBean.class.getResourceAsStream(timetables.get(0).getFilename());
+        Timetable t = Timetable.getTimetableFromCsv(is, timetables.get(0).getName());
+
+        List<Node> nodes = new ArrayList<>();
+
+        Producer producer = new Producer( );
+
+        Consumer consumer = new Consumer(10);
+
+        nodes.add(producer);
+        nodes.add(consumer);
+
+        List<Relationship> relationships = new ArrayList<>();
+        relationships.add(new Relationship(producer, consumer, 1.0));
+
+        Simulation simulation3 = new Simulation("Simulation with data which has been simulated", new Date(), nodes, relationships, 0, 100, 25);
+        SimulationHelper simulationHelper = new SimulationHelper();
+        simulationHelper.simulate(simulation3);
+        entityManager.persist(simulationHelper.getSimulation());
 
     }
 }
