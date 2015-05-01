@@ -24,11 +24,15 @@
         };
     });
 
-    app.directive('menuFieldName', function(){
-       return{
-           restrict: 'E',
-           template: "<input type='textbox' ng-model='menu_field_name.value' ng-class='{disabled: menu_field_name.enabled == false}' select-on-click/>"
-       };
+    app.directive('menuFieldName', function($location, menu_field_name){
+        return{
+            restrict: 'E',
+            template: "<input type='textbox' ng-disabled='{{ readonly }}' ng-model='value' ng-class='{disabled: enabled == false}' select-on-click/>",
+            scope: {
+                readonly: "=",
+                value: "=",
+                enabled: "="
+            }
+        };
     });
-
 })();

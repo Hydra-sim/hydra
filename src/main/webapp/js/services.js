@@ -45,6 +45,7 @@
         return {
             value: '',
             enabled: false,
+            readonly: false,
             disable: function() {
                 this.enabled = false;
                 this.value = "";

@@ -70,13 +70,15 @@
 
     });
 
-    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult, cfpLoadingBar) {
+    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult, cfpLoadingBar, menu_field_name) {
 
         $scope.simulation = {
             nodes: [],
             relationships: []
         };
         $scope.loaded = false;
+
+        menu_field_name.readonly = true;
 
         cfpLoadingBar.start();
 
@@ -718,5 +720,4 @@
             posY: 200
         });
     });
-
 })();
