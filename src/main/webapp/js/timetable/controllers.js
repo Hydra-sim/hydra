@@ -110,7 +110,7 @@
         };
     });
 
-    app.controller('TimetableListCtrl', function($scope, $rootScope, Timetable) {
+    app.controller('TimetableListCtrl', function($scope, $rootScope, $modal, Timetable) {
         function updateTimetableScope() {
             $scope.timetables = Timetable.query({});
         }
@@ -119,7 +119,23 @@
         $rootScope.$on('updateTimetable', updateTimetableScope);
 
         $scope.deleteTimetable = function(id) {
-            Timetable.delete({}, {"id": id}, updateTimetableScope);
+            var modalInstance = $scope.confirmation();
+
+            modalInstance.result.then(function () {
+                Timetable.delete({}, {"id": id}, updateTimetableScope);
+            });
+        }
+
+        $scope.confirmation = function() {
+            $scope.confirmed = false;
+
+            var modalInstance = $modal.open({
+                templateUrl: 'templates/modals/confirmation.html',
+                controller: 'ConfirmationModalCtrl',
+                size: 'sm'
+            });
+
+            return modalInstance;
         };
     });
 
