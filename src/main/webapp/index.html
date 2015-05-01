@@ -50,13 +50,10 @@
                         <a ng-href="#/"><img src="img/logo.png" alt="" /></a>
                     </div>
                 <div class="col-md-4 menu-field-name">
-                    <input type="textbox" ng-model="menu_field_name.value" ng-class="{disabled: menu_field_name.enabled == false}" />
+                    <menu-field-name></menu-field-name>
                 </div>
                 <div class="col-md-4">
-                    <div class="pull-right menu-field-button" ng-click="menu_field_button_click()">
-                        <span class="hidden-xs">{{menu_field_button}} </span>
-                        <span class="fa {{menu_field_button_icon}}" ></span>
-                    </div>
+                  <menu-field-button></menu-field-button>
                 </div>
             </div>
             </div>
@@ -79,5 +76,6 @@
         <script src="js/simulation/controllers.js"></script>
         <script src="js/simulation/radialmenu.js"></script>
         <script src="js/simulation/tooltip.js"></script>
+        <script src="js/directives.js"></script>
     </body>
 </html>

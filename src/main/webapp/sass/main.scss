@@ -108,7 +108,7 @@ footer p{
   text-align: center;
 }
 
-.menu-field-name > * {
+.menu-field-name input {
   background: none;
   border: 0;
   text-align: center;
@@ -116,11 +116,11 @@ footer p{
   border-bottom: 1px dashed $Avinor_Grey;
 }
 
-.menu-field-name > *.disabled {
+.menu-field-name input.disabled {
   display: none;
 }
 
-.menu-field-name:hover > *, .menu-field-name > *:focus {
+.menu-field-name:hover input, .menu-field-name input:focus {
   border-bottom: 1px dashed white;
   color: white;
 }
@@ -275,6 +275,11 @@ table{
 }
 .btn-default, .btn-primary{
   background-color: $Avinor_Grey;
+}
+
+.btn-default[disabled]{
+  background-color: $Avinor_LightPurple;
+  color: white;
 }
 
 .btn-danger{
@@ -467,6 +472,7 @@ p{
 
 a:hover{
   text-decoration: underline;
+  color: $Avinor_Black;
 }
 
 .circle{
@@ -878,5 +884,10 @@ body{ background: white; }
 
 .quantity-field{
   width: 80px;
+}
+
+//Placement fix for upload link timetable
+.margin-fix-upload-timetable{
+  margin-right: 13px;
 }
 
