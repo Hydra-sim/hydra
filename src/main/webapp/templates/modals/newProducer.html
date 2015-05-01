@@ -4,11 +4,12 @@
 <div class="modal-body">
     <form novalidate name="newProducer">
         <label>Timetable</label>
-        <select class="form-control" ng-model="selectedItem" ng-options="timetable.id as timetable.name for timetable in timetables" required focus-me="true">
+        <select class="form-control" placeholder="Choose a timetable" ng-model="selectedItem" ng-options="timetable.id as timetable.name for timetable in timetables" required focus-me="true">
+       <option value="">Choose a timetable</option>
         </select>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default primary" ng-click="submitProducer(selectedItem)" type="submit">Add</button>
+    <button class="btn btn-default primary" ng-click="submitProducer(selectedItem)" type="submit" ng-disabled="!selectedItem">Add</button>
     <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
 </div>
