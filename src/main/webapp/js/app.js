@@ -9,7 +9,8 @@
         'simulation',
         'zeroclipboard',
         'tooltip',
-        'angular-loading-bar'
+        'angular-loading-bar',
+        'unit.directives'
     ]);
 
     app.config(['uiZeroclipConfigProvider', function(uiZeroclipConfigProvider) {
