@@ -24,14 +24,31 @@
         };
     });
 
-    app.directive('menuFieldName', function($location, menu_field_name){
+    app.directive('menuFieldName', function(){
         return{
             restrict: 'E',
-            template: "<input type='textbox' ng-disabled='{{ readonly }}' ng-model='value' ng-class='{disabled: enabled == false}' select-on-click/>",
+            template: "<input type='textbox' ng-model='value' ng-class='{disabled: enabled == false}' select-on-click/>",
             scope: {
-                readonly: "=",
                 value: "=",
                 enabled: "="
+            },
+
+            link: function(scope, element, attrs) {
+                scope.safeApply = function(fn) {
+                    var phase = this.$root.$$phase;
+                    if(phase == '$apply' || phase == '$digest') {
+                        if(fn && (typeof(fn) === 'function')) {
+                            fn();
+                        }
+                    } else {
+                        this.$apply(fn);
+                    }
+                };
+
+                attrs.$observe('readonly', function(test) {
+                    console.log(test);
+                    element[0].disabled = test;
+                });
             }
         };
     });

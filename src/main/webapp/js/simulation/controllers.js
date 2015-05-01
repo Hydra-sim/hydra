@@ -269,6 +269,8 @@
             $scope.ticks = ($scope.endTime.getHours() * 60 * 60) + ($scope.endTime.getMinutes() * 60) - $scope.startTick;
         };
 
+        menu_field_name.readonly = false;
+
         //Default values
         $scope.startTime = new Date();
         $scope.startTime.setHours(6);
