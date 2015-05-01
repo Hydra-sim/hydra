@@ -17,4 +17,18 @@
         };
     });
 
+    app.directive('menuFieldButton', function() {
+        return{
+            restrict: 'E',
+            template:   "<div class='pull-right menu-field-button' ng-click='menu_field_button_click()'><span class='hidden-xs'>{{menu_field_button}} </span><span class='fa {{menu_field_button_icon}}'></span> </div>"
+        };
+    });
+
+    app.directive('menuFieldName', function(){
+       return{
+           restrict: 'E',
+           template: "<input type='textbox' ng-model='menu_field_name.value' ng-class='{disabled: menu_field_name.enabled == false}' select-on-click/>"
+       };
+    });
+
 })();

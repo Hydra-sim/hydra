@@ -108,7 +108,7 @@ footer p{
   text-align: center;
 }
 
-.menu-field-name > * {
+.menu-field-name input {
   background: none;
   border: 0;
   text-align: center;
@@ -116,11 +116,11 @@ footer p{
   border-bottom: 1px dashed $Avinor_Grey;
 }
 
-.menu-field-name > *.disabled {
+.menu-field-name input.disabled {
   display: none;
 }
 
-.menu-field-name:hover > *, .menu-field-name > *:focus {
+.menu-field-name:hover input, .menu-field-name input:focus {
   border-bottom: 1px dashed white;
   color: white;
 }
