@@ -1,6 +1,8 @@
 package models;
 
 import helpers.SimulationHelper;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.mindrot.jbcrypt.BCrypt;
@@ -58,6 +60,7 @@ public class Simulation
     private List<Node> nodes;
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Relationship> relationships;
 
     private int startTick;

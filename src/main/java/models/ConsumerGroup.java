@@ -1,5 +1,8 @@
 package models;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -16,6 +19,7 @@ public class ConsumerGroup extends Consumer{
     //region attributes
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Consumer> consumers;
 
     //endregion

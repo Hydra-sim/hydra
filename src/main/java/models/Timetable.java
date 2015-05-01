@@ -1,5 +1,7 @@
 package models;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -45,6 +47,7 @@ public class Timetable {
      * entities.
      */
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<TimetableEntry> arrivals;
     //endregion
 
