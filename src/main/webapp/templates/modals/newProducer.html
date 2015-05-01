@@ -2,13 +2,20 @@
     <h1 class="modal-title" ng-controller="SimulationNewCtrl"> {{ modalTitle }} </h1>
 </div>
 <div class="modal-body">
-    <form novalidate>
+    <form novalidate name="newProduser">
         <label>Timetable</label>
-        <select class="form-control" ng-model="selectedItem" ng-options="timetable.id as timetable.name for timetable in timetables">
+        <select class="form-control" ng-model="selectedItem.item" required="" ng-init="selectedItem.item='0'">
+            <option label="Choose Timetable" value="0">Choose a timetable</option>
+            <option ng-repeat="timetable in timetables">{{timetable.name}}</option>
         </select>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default primary" ng-click="submitProducer(selectedItem)" type="submit">Add</button>
+    <button class="btn btn-default primary"
+            ng-click="submitProducer(selectedItem)"
+            type="submit"
+            ng-disabled="selectedItem.item == '0'">
+        Add
+    </button>
     <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
 </div>
