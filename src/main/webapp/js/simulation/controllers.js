@@ -208,7 +208,7 @@
 
         $scope.shareSimulation = function (id) {
 
-            var path = $location.url();
+
 
             $modal.open({
                 templateUrl: 'templates/modals/shareSimulation.html',
@@ -219,7 +219,7 @@
                         return id;
                     },
                     message: function(){
-                        return 'www.pj6000.me/hydra/#' + path + 'simulation/' + id;
+                        return  $location.absUrl() + 'simulation/' + id;
                     }
                 }
             });
@@ -477,7 +477,6 @@
         $scope.copySimulation = function(){
 
             $scope.complete = function(e) {
-                console.log('copy complete', e);
                 $scope.copied = true
             };
             $scope.$watch('input', function(v) {
