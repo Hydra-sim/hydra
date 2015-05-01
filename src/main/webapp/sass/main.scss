@@ -472,6 +472,7 @@ p{
 
 a:hover{
   text-decoration: underline;
+  color: $Avinor_Black;
 }
 
 .circle{
@@ -883,5 +884,10 @@ body{ background: white; }
 
 .quantity-field{
   width: 80px;
+}
+
+//Placement fix for upload link timetable
+.margin-fix-upload-timetable{
+  margin-right: 13px;
 }
 
