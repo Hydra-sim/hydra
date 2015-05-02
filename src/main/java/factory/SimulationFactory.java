@@ -76,6 +76,8 @@ public class SimulationFactory {
         ConsumerGroup consumerGroup = new ConsumerGroup(node.numberOfConsumers, node.ticksToConsumeEntity);
         consumerGroup.setTmpId(node.id);
         consumerGroup.setType(node.type);
+        consumerGroup.setX(node.x);
+        consumerGroup.setY(node.y);
         return consumerGroup;
     }
 
