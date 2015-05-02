@@ -1,8 +1,8 @@
+<form novalidate name="newPassengerflow" ng-submit="submitPassengerflow(totalNumberOfEntities, numberOfEntities, timeBetweenArrivals, timeSelect)">
 <div class="modal-header">
     <h1 class="modal-title">NEW PEOPLE</h1>
 </div>
 <div class="modal-body">
-    <form novalidate name="newPassengerflow">
         <div class="form-group">
             <label>Persons per arrival</label>
             <input type="number" class="form-control" min="0" ng-model="numberOfEntities" required focus-me="true">
@@ -13,7 +13,6 @@
             <select class="form-control" ng-init="timeSelect.item = options[0]" ng-model="timeSelect.item" ng-options="opt as opt.label for opt in options">
             </select>
         </div>
-    </form>
 </div>
 <div class="modal-footer">
     <button class="btn btn-default primary"
@@ -23,3 +22,4 @@
     <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
 </div>
 </div>
+</form>
