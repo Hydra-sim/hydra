@@ -1,8 +1,6 @@
 package models;
 
 import models.data.ProducerData;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
@@ -25,6 +23,9 @@ public class Producer extends Node{
     List<ProducerData> producerDataList;
 
     //region constructors
+    public Producer() {
+        this(new Timetable());
+    }
 
     public Producer(Timetable timetable) {
         this.timetable = timetable;
@@ -35,11 +36,9 @@ public class Producer extends Node{
         this.timetable = timetable;
         this.setX(x);
         this.setY(y);
+        this.producerDataList = new ArrayList<>();
     }
 
-    public Producer() {
-        this(new Timetable());
-    }
 
     //endregion
 

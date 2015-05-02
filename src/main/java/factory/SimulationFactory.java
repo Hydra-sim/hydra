@@ -88,9 +88,25 @@ public class SimulationFactory {
         return consumer;
     }
 
-    private Producer createProducer(SimulationNode node) throws Exception {
+    private Producer createProducer(SimulationNode node) {
 
-        Timetable timetable = timetableDao.get(node.timetableId);
+        Timetable timetable = null;
+
+        try {
+
+            timetable = timetableDao.get(node.timetableId);
+
+        } catch (Exception e) {
+
+            timetable = new Timetable(new ArrayList<TimetableEntry>(){{
+
+                add(new TimetableEntry(10, 100));
+                add(new TimetableEntry(20, 100));
+                add(new TimetableEntry(30, 100));
+
+            }}, "Timetable");
+        }
+
         Producer producer = new Producer(timetable, node.x, node.y);
         producer.setTmpId(node.id);
         producer.setType(node.type);

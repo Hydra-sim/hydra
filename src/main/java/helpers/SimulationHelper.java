@@ -5,7 +5,6 @@ import models.data.ConsumerData;
 import models.data.NodeData;
 import models.data.ProducerData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,12 +16,9 @@ public class SimulationHelper {
 
     ConsumerHelper consumerHelper;
 
-    List<Integer> breakpoints;
-
     public SimulationHelper() {
 
         consumerHelper = new ConsumerHelper();
-        breakpoints = new ArrayList<>();
     }
 
     /**
@@ -42,7 +38,6 @@ public class SimulationHelper {
         consumerHelper = new ConsumerHelper();
 
         int maxWaitingTime = 0;
-        calculateBreakpoints();
 
         for(int i = simulation.getStartTick(); i < simulation.getStartTick() + simulation.getTicks(); i++) {
 
@@ -58,14 +53,7 @@ public class SimulationHelper {
 
             maxWaitingTime = calculateWaitingTime(maxWaitingTime);
 
-            for(int breakpoint : breakpoints) {
-
-                if(breakpoint == i) {
-
-                    updateNodeData(breakpoint);
-                }
-            }
-            if(breakpoints.contains(i)) {
+            if(isBreakpoint(simulation, i)) {
 
                 updateNodeData(i);
             }
@@ -78,19 +66,6 @@ public class SimulationHelper {
                         maxWaitingTime
                 )
         );
-    }
-
-    private void calculateBreakpoints() {
-
-        if(simulation.getTickBreakpoints() != 0) {
-
-            int ticksBetweenBreakpoints = simulation.getTicks() / simulation.getTickBreakpoints();
-
-            for(int i = simulation.getStartTick(); i < simulation.getTicks(); i += ticksBetweenBreakpoints) {
-
-                breakpoints.add(i);
-            }
-        }
     }
 
     // Some of these are temporarily public for testing. TODO: Make private once testing is complete
@@ -347,4 +322,10 @@ public class SimulationHelper {
     private boolean isConsumerGroup(Node node) {return node instanceof ConsumerGroup;}
 
     private boolean isProducer(Node node) {return node instanceof Producer;}
+
+    private boolean isBreakpoint(Simulation simulation, int i) {
+
+        return (simulation.getTickBreakpoints() > 0 && i % simulation.getTickBreakpoints() == 0);
+    }
+
 }
