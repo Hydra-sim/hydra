@@ -34,9 +34,10 @@
             },
 
             link: function(scope, element, attrs) {
+                var inputfield = element[0].firstChild;
+
                 attrs.$observe('readonly', function(test) {
-                    console.log(test);
-                    element[0].disabled = test;
+                    inputfield.disabled = (test == "true");
                 });
             }
         };
