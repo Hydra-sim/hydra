@@ -891,3 +891,20 @@ body{ background: white; }
   margin-right: 13px;
 }
 
+//Buttons on simulationpage
+.button-container-simulation{
+
+}
+
+.button-container-simulation button{
+  display: block;
+}
+
+// Placement of buttons in simulation new
+
+.button-container-simulation{
+  position: absolute;
+  z-index: 10000;
+  margin-top: 15px;
+  right: 15px;
+}
