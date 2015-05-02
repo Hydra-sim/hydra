@@ -1,8 +1,11 @@
-<button class="btn-google-style fa fa-cog" ng-click="openConfigModal()"></button>
-<button class="btn-google-style fa fa-code" ng-click="debug()"> Debug</button>
-<button class="btn-google-style" ng-click="submit()">Submit</button>
-<button class="btn-google-style fa fa-upload"></button>
-<button class="btn-google-style fa fa-times"></button>
+<div class="pull-right button-container-simulation">
+    <button class="btn-google-style fa fa-cog" ng-click="openConfigModal()"></button>
+    <button class="btn-google-style fa fa-code" ng-click="debug()"></button>
+    <button class="btn-google-style fa fa-play" ng-click="submit()"></button>
+    <button class="btn-google-style fa fa-upload"></button>
+    <button class="btn-google-style fa fa-times"></button>
+</div>
+
 
 <graph nodes="dataset.nodes" edges="dataset.edges" height="500px" control="control" >
     <radialmenu control="control">
