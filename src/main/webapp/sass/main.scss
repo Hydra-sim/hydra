@@ -899,3 +899,16 @@ body{ background: white; }
 .button-container-simulation button{
   display: block;
 }
+
+// Placement of buttons in simulation new
+
+.button-container-simulation{
+  position: absolute;
+  z-index: 10000;
+  margin-top: 15px;
+  right: 15px;
+}
+
+.test-container button{
+  display: block;
+}
