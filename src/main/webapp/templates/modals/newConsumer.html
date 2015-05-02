@@ -1,8 +1,8 @@
-<div class="modal-header">
-    <h1 class="modal-title" ng-controller="SimulationNewCtrl"> {{ modalTitle }} </h1>
-</div>
-<div class="modal-body">
-    <form name="newConsumer" novalidate>
+<form name="newConsumer" novalidate ng-submit="submitConsumer(amountOfTime, timeSelectConsumer, numberOfConsumers)">
+    <div class="modal-header">
+        <h1 class="modal-title" ng-controller="SimulationNewCtrl"> {{ modalTitle }} </h1>
+    </div>
+    <div class="modal-body">
         <div class="form-group">
             <label>Time to process</label>
             <input type="number" class="form-control ng-prestine ng-valid" ng-model="amountOfTime" min="1" required="" focus-me="true">
@@ -16,7 +16,6 @@
             <label>Quantity: </label>
             <input class="quantity-field form-control" ng-model="numberOfConsumers" type="number">
         </div>
-    </form>
     <div class="modal-footer">
         <button class="btn btn-default primary"
                 ng-click="submitConsumer(amountOfTime, timeSelectConsumer, numberOfConsumers)"
@@ -24,3 +23,4 @@
         <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
     </div>
 </div>
+</form>

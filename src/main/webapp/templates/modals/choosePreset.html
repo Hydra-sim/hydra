@@ -1,6 +1,5 @@
 <div class="modal-header">
     <h1 class="modal-title">CHOOSE LOCATION</h1>
-
     <p>If you dont want to use a location for this simulation choose "No location" in the menu below.</p>
 </div>
 <div class="modal-body">
@@ -11,6 +10,8 @@
     </select>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default primary" ng-click="loadPreset(presetList)" type="submit">Select</button>
+    <button class="btn btn-default primary"
+            ng-enter="loadPreset(presetList)"
+            ng-click="loadPreset(presetList)" type="submit">Select</button>
     <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
 </div>
