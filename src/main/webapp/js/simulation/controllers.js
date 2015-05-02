@@ -239,6 +239,9 @@
 
             $scope.maxWaitingTimeInMinutes = $scope.simulation.result.maxWaitingTimeInTicks / 60;
 
+            $scope.entitiesConsumed = $scope.simulation.result.entitiesConsumed;
+            $scope.entitiesInQueue = $scope.simulation.result.entitiesInQueue;
+
         });
 
         $rootScope.menu_field_button = "";
