@@ -62,7 +62,7 @@ public class ConsumerHelper {
 
         if(!entities.isEmpty()){
 
-            if(tick == 0 || tick % con.getTicksToConsumeEntities() == 0){
+            if(tick == 0 || tick % con.getTicksToConsumeEntity() == 0){
 
                 entitiesConsumed.add(con.getEntitesInQueue().get(0));
                 entities.remove(0);

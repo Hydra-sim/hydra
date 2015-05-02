@@ -56,6 +56,7 @@ public class Simulation {
         }
         catch(Exception e)
         {
+            e.printStackTrace();
             return Response.serverError().build();
         }
     }

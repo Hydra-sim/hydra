@@ -16,7 +16,7 @@ public class Consumer extends Node{
 
     private String name;
 
-    private int ticksToConsumeEntities;
+    private int ticksToConsumeEntity;
 
     @Transient
     private List<ConsumerData> consumerDataList;
@@ -32,22 +32,22 @@ public class Consumer extends Node{
         this(0);
     }
 
-    public Consumer(int ticksToConsumeEntities) {
+    public Consumer(int ticksToConsumeEntity) {
 
-        this("Untitled", ticksToConsumeEntities);
+        this("Untitled", ticksToConsumeEntity);
     }
 
-    public Consumer(int ticksToConsumeEntities, int x, int y) {
+    public Consumer(int ticksToConsumeEntity, int x, int y) {
 
-        this("Untitled", ticksToConsumeEntities);
+        this("Untitled", ticksToConsumeEntity);
         this.setX(x);
         this.setY(y);
     }
 
-    public Consumer(String name, int ticksToConsumeEntities) {
+    public Consumer(String name, int ticksToConsumeEntity) {
 
         this.name = name;
-        setTicksToConsumeEntities(ticksToConsumeEntities);
+        setTicksToConsumeEntity(ticksToConsumeEntity);
         this.entitesConsumed = new ArrayList<>();
         this.entitesInQueue = new ArrayList<>();
         this.consumerDataList = new ArrayList<>();
@@ -56,14 +56,14 @@ public class Consumer extends Node{
 
     //region getters and setters
 
-    public int getTicksToConsumeEntities() {
-        return ticksToConsumeEntities;
+    public int getTicksToConsumeEntity() {
+        return ticksToConsumeEntity;
     }
 
-    public void setTicksToConsumeEntities(int ticksToConsumeEntities) {
+    public void setTicksToConsumeEntity(int ticksToConsumeEntity) {
 
-        if(ticksToConsumeEntities == 0) this.ticksToConsumeEntities = 1;
-        else this.ticksToConsumeEntities = ticksToConsumeEntities;
+        if(ticksToConsumeEntity == 0) this.ticksToConsumeEntity = 1;
+        else this.ticksToConsumeEntity = ticksToConsumeEntity;
     }
 
     public List<Entity> getEntitesConsumed() {
@@ -103,6 +103,6 @@ public class Consumer extends Node{
 
     public String toString() {
 
-        return "Entites consumed pr. tick: " + ticksToConsumeEntities;
+        return "Entites consumed pr. tick: " + ticksToConsumeEntity;
     }
 }

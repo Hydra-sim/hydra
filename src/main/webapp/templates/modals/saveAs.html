@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h3>Save as</h3>
+</div>
+<div class="modal-body">
+    <form novalidate>
+        <div class="form-group">
+            <input type='text' class="form-control" ng-model="simulationName" focus-me="true"/>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default primary" ng-click="saveAs()" type="submit">Submit</button>
+    <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
+</div>
