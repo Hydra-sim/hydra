@@ -8,7 +8,6 @@ import models.Timetable;
 public class SimulationNode {
     public int id;
     public String type;
-    public String name;
     public int x;
     public int y;
 
@@ -24,18 +23,6 @@ public class SimulationNode {
     // ConsumerGroup
     public String consumerGroupName;
     public int numberOfConsumers;
-
-    public int entitiesTransfered;
-    public int entitiesRecieved;
-    public int tmpId;
-
-    public Object[] nodeDataList;
-    public Object[] producerDataList;
-    public Object[] consumerDataList;
-
-    public Object[] entitesConsumed;
-    public Object[] entitesInQueue;
-    public Object[] entitiesReady;
 
     public Timetable timetable;
 }
