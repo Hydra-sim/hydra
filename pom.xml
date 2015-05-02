@@ -64,7 +64,7 @@
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.3m</version>
-        </dependency>g
+        </dependency>
         <!-- Import the Common Annotations API (JSR-250) -->
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>

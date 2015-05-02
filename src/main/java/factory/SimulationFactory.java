@@ -60,7 +60,7 @@ public class SimulationFactory {
                 relationships,
                 input.startTick,
                 input.ticks,
-                input.breakpoints
+                100
         );
     }
 
