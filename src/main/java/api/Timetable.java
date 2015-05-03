@@ -125,14 +125,14 @@ public class Timetable {
 
     @POST
     @Consumes("multipart/form-data")
-    public Response uploadFile(@MultipartForm FileUploadForm form) {
+    public Response uploadFile(@MultipartForm FileUploadForm form)
+    {
+        models.Timetable timetable = models.Timetable.getTimetableFromCsv(
+                form.getInputStream(),
+                form.name
+        );
 
-        InputStream is =  form.getInputStream();
-
-        models.Timetable timetable = models.Timetable.getTimetableFromCsv(is, "Untitled upload");
         timetableDao.add(timetable);
-
         return Response.ok().build();
-
     }
 }

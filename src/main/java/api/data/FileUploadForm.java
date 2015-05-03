@@ -15,6 +15,9 @@ public class FileUploadForm {
     @PartType("application/octet-stream")
     private byte[] data;
 
+    @FormParam("name")
+    public String name;
+
     public InputStream getInputStream() {
         return new ByteArrayInputStream(data);
     }

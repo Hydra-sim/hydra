@@ -110,7 +110,7 @@
         };
     });
 
-    app.controller('TimetableListCtrl', function($scope, $rootScope, $modal, Timetable) {
+    app.controller('TimetableListCtrl', function($scope, $rootScope, $modal, Timetable, Upload) {
         function updateTimetableScope() {
             $scope.timetables = Timetable.query({});
         }
@@ -136,7 +136,11 @@
                 controller: 'UploadTimetableModalCtrl',
                 size: 'sm'
             }).result.then(function(result) {
-                console.log(result);
+                Upload.upload({
+                    url: 'api/timetable',
+                    fields: {'name': result.name},
+                    file: result.file[0]
+                }).success(updateTimetableScope);
             });
         }
     });
