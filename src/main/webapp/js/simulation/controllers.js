@@ -432,11 +432,31 @@
                 .text(function(d) {
                     if(d.type == "bus" || d.type == "train") {
                         return _.find(timetable, function(t) { return t.id == d.timetableId; }).name;
+                    } else if(d.type == "passengerflow"){
+                        var time = "1 second";
+                        if(d.timeBetweenArrivals > 1){
+                            time = d.timeBetweenArrivals + " seconds";
+                        }
+                        if(d.timeBetweenArrivals > 60){
+                            time = d.timeBetweenArrivals/60 + " minutes";
+                        }
+                        if(d.timeBetweenArrivals == 60){
+                            time = "1 minute";
+                        }
+                        if(d.timeBetweenArrivals > 3600){
+                            time = d.timeBetweenArrivals/3600 + " hours";
+                        }
+                        if(d.timeBetweenArrivals == 3600){
+                            time = "1 hour";
+                        }
+                        return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
+                            " Time between arrivals: " + time;
                     }
+
 
                     return d.type;
                 });
-        }
+        };
 
         // For dropdown in add consumer/passengerflow
         $scope.options = [];
