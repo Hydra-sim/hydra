@@ -160,8 +160,8 @@
                         </goals>
                         <phase>${frontendBuild}</phase>
                         <configuration>
-                            <nodeVersion>v0.10.18</nodeVersion>
-                            <npmVersion>1.3.8</npmVersion>
+                            <nodeVersion>v0.10.31</nodeVersion>
+                            <npmVersion>1.4.27</npmVersion>
                         </configuration>
                     </execution>
                     <execution>

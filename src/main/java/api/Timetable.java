@@ -1,10 +1,16 @@
 package api;
 
+import api.data.FileUploadForm;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+
 import javax.ejb.EJB;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * This class handles all REST-ful calls for {@link models.Timetable}
@@ -115,5 +121,18 @@ public class Timetable {
         }
 
         return Response.ok().build();
+    }
+
+    @POST
+    @Consumes("multipart/form-data")
+    public Response uploadFile(@MultipartForm FileUploadForm form) {
+
+        InputStream is =  form.getInputStream();
+
+        models.Timetable timetable = models.Timetable.getTimetableFromCsv(is, "Untitled upload");
+        timetableDao.add(timetable);
+
+        return Response.ok().build();
+
     }
 }

@@ -1,5 +1,9 @@
 package calculations;
 
+import api.data.SimulationEdge;
+import api.data.SimulationFormData;
+import api.data.SimulationNode;
+import factory.SimulationFactory;
 import helpers.ProducerHelper;
 import helpers.SimulationHelper;
 import models.*;
@@ -168,7 +172,6 @@ public class TestingCorner {
         timetable.getArrivals().add(new TimetableEntry(20, 50));
 
         Producer producer = new Producer(timetable);
-
         Consumer consumer = new Consumer(10);
 
         nodes.add(producer);
@@ -177,18 +180,21 @@ public class TestingCorner {
         List<Relationship> relationships = new ArrayList<>();
         relationships.add(new Relationship(producer, consumer, 1.0));
 
-        Simulation simulation3 = new Simulation("Simulation with data which has been simulated", new Date(), nodes, relationships, 0, 100, 25);
+        Simulation simulation = new Simulation("Simulation with data which has been simulated",
+                                                new Date(), nodes, relationships, 0, 100, 25);
+
         SimulationHelper simulationHelper = new SimulationHelper();
-        simulationHelper.simulate(simulation3);
+        simulationHelper.simulate(simulation);
+        simulation = simulationHelper.getSimulation();
 
         // producer
-        Producer producerResult = (Producer) simulationHelper.getSimulation().getNodes().get(0);
+        Producer producerResult = (Producer) simulation.getNodes().get(0);
         assertTrue(producerResult.getNodeDataList().size() > 0);
         assertTrue(producerResult.getProducerDataList().size() > 0);
 
         // consumer
 
-        Consumer consumerrResult = (Consumer) simulationHelper.getSimulation().getNodes().get(1);
+        Consumer consumerrResult = (Consumer) simulation.getNodes().get(1);
         assertTrue(consumerrResult.getNodeDataList().size() > 0);
         assertTrue(consumerrResult.getConsumerDataList().size() > 0);
 
@@ -249,5 +255,47 @@ public class TestingCorner {
 
         // entities consumed (sim1 lower than sim2)
         assertTrue(sim1.getResult().getEntitiesConsumed() > sim2.getResult().getEntitiesConsumed());
+    }
+
+    @Test
+    public void testSimulationFactoryWithBreakpoints() throws Exception {
+
+        SimulationFormData formData = new SimulationFormData();
+
+        formData.name = "Test";
+        formData.startTick = 0;
+        formData.ticks = 100;
+        formData.breakpoints = 10;
+
+        formData.nodes = new ArrayList<>();
+
+        SimulationNode producer = new SimulationNode();
+        producer.type = "train";
+        producer.timetableId = 95;
+        formData.nodes.add(producer);
+
+        SimulationNode consumer = new SimulationNode();
+        consumer.type = "door";
+        consumer.ticksToConsumeEntity = 10;
+        formData.nodes.add(consumer);
+
+        formData.edges = new ArrayList<SimulationEdge>() {{
+
+            SimulationEdge edge = new SimulationEdge();
+            edge.source = formData.nodes.get(0);
+            edge.target = formData.nodes.get(1);
+            edge.weight = 1.0;
+            add(edge);
+        }};
+
+        SimulationFactory simulationFactory = new SimulationFactory();
+
+        Simulation simulation = simulationFactory.createSimulation(formData);
+
+        simulationHelper.simulate(simulation);
+        simulation = simulationHelper.getSimulation();
+
+        assertTrue(simulation.getNodes().get(0).getNodeDataList().size() > 0);
+
     }
 }

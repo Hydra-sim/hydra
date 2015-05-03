@@ -68,10 +68,6 @@ public class Simulation
     private boolean preset;
     private boolean passwordProtected;
     private String password;
-    //endregion
-
-    // region transient attributes
-
     private int tickBreakpoints;
 
     // endregion
