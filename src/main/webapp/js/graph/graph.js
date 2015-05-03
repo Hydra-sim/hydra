@@ -319,7 +319,15 @@
                             .on("click", function() {
                                 selectItem(d3.select(this), "circle");
                             })
-                            .call(drag);
+                            .call(drag)
+                            .on("mouseover", function(){return tooltip.style("visibility", "visible");})
+                            .on("mousemove", function(d){
+                                return tooltip
+                                    .style("top", (event.pageY-10)+"px")
+                                    .style("left",(event.pageX+10)+"px")
+                                    .text(d.type);
+                            })
+                            .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
                         newCircleWrappers
                             .append("circle")
@@ -341,14 +349,6 @@
 
                         // remove old nodes
                         circles.exit().remove();
-
-                        // selcting node tooltip
-                        d3.select(".graph g")
-                            .on("mouseover", function(){return tooltip.style("visibility", "visible");})
-                            .on("mousemove", function(){
-                                return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text("Test of tooltip");
-                            })
-                            .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
                     }
                     update();
