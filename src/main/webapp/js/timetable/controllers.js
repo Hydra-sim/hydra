@@ -119,24 +119,31 @@
         $rootScope.$on('updateTimetable', updateTimetableScope);
 
         $scope.deleteTimetable = function(id) {
-            var modalInstance = $scope.confirmation();
-
-            modalInstance.result.then(function () {
-                Timetable.delete({}, {"id": id}, updateTimetableScope);
-            });
-        }
-
-        $scope.confirmation = function() {
-            $scope.confirmed = false;
-
             var modalInstance = $modal.open({
                 templateUrl: 'templates/modals/confirmation.html',
                 controller: 'ConfirmationModalCtrl',
                 size: 'sm'
             });
 
-            return modalInstance;
+            modalInstance.result.then(function () {
+                Timetable.delete({}, {"id": id}, updateTimetableScope);
+            });
         };
+
+        $scope.uploadTimetable = function() {
+            $modal.open({
+                templateUrl: 'templates/modals/uploadTimetable.html',
+                controller: 'UploadTimetableModalCtrl',
+                size: 'sm'
+            });
+        }
+    });
+
+    app.controller('UploadTimetableModalCtrl', function($scope, $modalInstance) {
+
+
+        $scope.confirm = $modalInstance.close;
+        $scope.cancel  = $modalInstance.dismiss;
     });
 
 })();
