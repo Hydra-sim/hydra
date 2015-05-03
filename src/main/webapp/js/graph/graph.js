@@ -58,8 +58,8 @@
                         .style("visibility", "hidden")
                         .style("background", "#1d1d1d")
                         .style("box-shadow", "0 0 5px #999999")
-                        .style("border-radius","10px")
-                        .style("padding", "5px")
+                        .style("border-radius", "5px")
+                        .style("padding", "10px")
                         .style("color", "white")
                         .text("a simple tooltip");
 
