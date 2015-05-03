@@ -50,6 +50,19 @@
                         'consumerGroup-suitcase': {icon: '\uf0f2'}
                     };
 
+                    // creating tooltip
+                    var tooltip = d3.select("body")
+                        .append("div")
+                        .style("position", "absolute")
+                        .style("z-index", "10")
+                        .style("visibility", "hidden")
+                        .style("background", "#1d1d1d")
+                        .style("box-shadow", "0 0 5px #999999")
+                        .style("border-radius", "5px")
+                        .style("padding", "10px")
+                        .style("color", "white");
+
+
                     scope.safeApply = function(fn) {
                         var phase = this.$root.$$phase;
                         if(phase == '$apply' || phase == '$digest') {
@@ -326,30 +339,15 @@
                                 return icons[d.type].icon || '\uf118';
                             });
 
-                        // creating tooltip
-                        var tooltip = d3.select("body")
-                            .data(circles)
-                            .append("div")
-                            .style("position", "absolute")
-                            .style("z-index", "10")
-                            .style("visibility", "hidden")
-                            .style("background", "#1d1d1d")
-                            .style("box-shadow", "0 0 5px #999999")
-                            .style("border-radius", "5px")
-                            .style("padding", "10px")
-                            .style("color", "white")
-                            .text(function (d) {
-                                //trying to get the type of the node
-                                return "'" + d.type + "'";
-                            });
-
                         // remove old nodes
                         circles.exit().remove();
 
                         // selcting node tooltip
                         d3.select(".graph g")
                             .on("mouseover", function(){return tooltip.style("visibility", "visible");})
-                            .on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+                            .on("mousemove", function(){
+                                return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text("Test of tooltip");
+                            })
                             .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
                     }
