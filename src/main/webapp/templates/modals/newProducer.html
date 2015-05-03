@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
         <label>Timetable</label>
-        <select  class="form-control" name="timetable" placeholder="Choose a timetable" ng-model="selectedItem"
+        <select  class="form-control"  ng-model="selectedItem"
                  ng-options="timetable.id as timetable.name for timetable in timetables"
                  required focus-me="true">
         <option value="" selected disabled>Choose a timetable</option>
@@ -12,7 +12,8 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-default primary"
-            ng-click="submitProducer(selectedItem)" type="submi)"
+            ng-click="submitProducer(selectedItem)" type="submit"
+            ng-enter="submitProducer(selectedItem)"
             ng-disabled="newProducer.$invalid">Add</button>
     <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
 </div>
