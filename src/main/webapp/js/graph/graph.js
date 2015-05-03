@@ -23,7 +23,8 @@
                     selectedClass: '@',
                     connectClass: '@',
                     circleWrapperClass: '@',
-                    control: '='
+                    control: '=',
+                    extraTooltip: '&'
                 },
 
                 // observe and manipulate the DOM
@@ -174,6 +175,13 @@
                     scope.$watchCollection('nodes', update, true);
                     scope.$watchCollection('edges', update, true);
 
+                    // Setup for tooltip
+                    var tooltip = null;
+                    scope.$watch('extraTooltip', function() {
+                        tooltip = scope.extraTooltip();
+                        update();
+                    });
+
                     // svg nodes and edges
                     var paths = container.append("g").selectAll("g");
                     var circles = container.append("g").selectAll("g");
@@ -260,10 +268,6 @@
                         });
                     svg.call(zoom);
 
-                    // creating tooltip
-                    var tooltip = d3.behavior.tooltip()
-                        .text(function(d) { return d.type; });
-
                     // Update function, updating nodes and edges
                     function update() {
                         function transformFunction(d){return "translate(" + d.x + "," + d.y + ")";}
@@ -310,8 +314,11 @@
                             .on("click", function() {
                                 selectItem(d3.select(this), "circle");
                             })
-                            .call(drag)
-                            .call(tooltip);
+                            .call(drag);
+
+                        if(tooltip != "undefined" && tooltip != null) {
+                            newCircleWrappers.call(tooltip);
+                        }
 
                         newCircleWrappers
                             .append("circle")

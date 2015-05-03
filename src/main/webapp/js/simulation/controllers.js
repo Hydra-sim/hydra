@@ -423,6 +423,15 @@
 
         $scope.updateTicks();
 
+        // Tooltip
+        $scope.extraTooltip = function() {
+            return d3.behavior
+                .tooltip()
+                .text(function(d) {
+                    return d.type;
+                });
+        }
+
         // For dropdown in add consumer/passengerflow
         $scope.options = [];
 
