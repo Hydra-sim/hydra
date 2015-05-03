@@ -1,8 +1,13 @@
 package models;
 
 import models.data.ConsumerData;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +23,8 @@ public class Consumer extends Node{
 
     private int ticksToConsumeEntity;
 
-    @Transient
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<ConsumerData> consumerDataList;
 
     @Transient

@@ -419,6 +419,8 @@
         $scope.endTime.setHours(8);
         $scope.endTime.setMinutes(0);
 
+        $scope.breakpoints = 900; // Every 15 minutes
+
         $scope.updateTicks();
 
         // For dropdown in add consumer/passengerflow
@@ -440,7 +442,8 @@
                 'ticks':                            $scope.ticks,
                 'startTick':                        $scope.startTick,
                 'nodes':                            $scope.dataset.nodes,
-                'edges':                            $scope.dataset.edges
+                'edges':                            $scope.dataset.edges,
+                'breakpoints':                      $scope.breakpoints
             });
 
             SimResult.data = sim.$save();

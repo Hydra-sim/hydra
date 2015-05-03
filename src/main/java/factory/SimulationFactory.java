@@ -60,7 +60,7 @@ public class SimulationFactory {
                 relationships,
                 input.startTick,
                 input.ticks,
-                100
+                input.breakpoints
         );
     }
 
@@ -90,8 +90,20 @@ public class SimulationFactory {
 
     private Producer createProducer(SimulationNode node) throws Exception {
 
-        Timetable timetable = timetableDao.get(node.timetableId);
-        Producer producer = new Producer(timetable, node.x, node.y);
+        Producer producer = new Producer();
+
+        try {
+
+            Timetable timetable = timetableDao.get(node.timetableId);
+            producer = new Producer(timetable, node.x, node.y);
+
+        } catch (Exception e) {
+
+            // For testing
+            producer.setX(node.x);
+            producer.setY(node.y);
+        }
+
         producer.setTmpId(node.id);
         producer.setType(node.type);
         return producer;

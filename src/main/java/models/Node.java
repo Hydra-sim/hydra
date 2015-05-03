@@ -1,6 +1,8 @@
 package models;
 
 import models.data.NodeData;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,16 +28,15 @@ abstract public class Node {
 
     private int x, y;
 
-    @Transient
     private int entitiesTransfered;
 
-    @Transient
     private int entitiesRecieved;
 
     @Transient
     private List<Entity> entitiesReady;
 
-    @Transient
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<NodeData> nodeDataList;
 
     @Transient

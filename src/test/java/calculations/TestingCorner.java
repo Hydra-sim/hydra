@@ -1,6 +1,5 @@
 package calculations;
 
-import api.data.SimulationEdge;
 import api.data.SimulationFormData;
 import api.data.SimulationNode;
 import factory.SimulationFactory;
@@ -270,32 +269,40 @@ public class TestingCorner {
         formData.nodes = new ArrayList<>();
 
         SimulationNode producer = new SimulationNode();
-        producer.type = "train";
+        producer.type = "producer";
         producer.timetableId = 95;
         formData.nodes.add(producer);
 
         SimulationNode consumer = new SimulationNode();
-        consumer.type = "door";
+        consumer.type = "consumer";
         consumer.ticksToConsumeEntity = 10;
         formData.nodes.add(consumer);
 
-        formData.edges = new ArrayList<SimulationEdge>() {{
-
-            SimulationEdge edge = new SimulationEdge();
-            edge.source = formData.nodes.get(0);
-            edge.target = formData.nodes.get(1);
-            edge.weight = 1.0;
-            add(edge);
-        }};
+        formData.edges = new ArrayList<>();
 
         SimulationFactory simulationFactory = new SimulationFactory();
 
         Simulation simulation = simulationFactory.createSimulation(formData);
 
+        Timetable timetable = new Timetable(new ArrayList<TimetableEntry>() {{
+
+            add(new TimetableEntry(25, 500));
+            add(new TimetableEntry(50, 500));
+            add(new TimetableEntry(75, 500));
+
+        }}, "Timetable");
+
+        List<Relationship> relationships = new ArrayList<>();
+        relationships.add( new Relationship(simulation.getNodes().get(0), simulation.getNodes().get(1), 1.0) );
+        simulation.setRelationships(relationships);
+
+        simulation.getNodes().stream().filter(
+                node -> node instanceof Producer).forEach(
+                node -> ((Producer) node).setTimetable(timetable));
+
         simulationHelper.simulate(simulation);
         simulation = simulationHelper.getSimulation();
 
         assertTrue(simulation.getNodes().get(0).getNodeDataList().size() > 0);
-
     }
 }
