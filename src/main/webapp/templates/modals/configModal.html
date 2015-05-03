@@ -1,13 +1,14 @@
+<form novalidate>
 <div class="modal-header">
     <h1 class="modal-title">CONFIGURE SIMULATION</h1>
 </div>
 <div class="modal-body">
-    <form novalidate>
-        <div class="container-fluid text-center">
+
+        <div class="text-center">
             <div class="form-group row">
                 <div class="col-md-6">
                     <label for="startTime">Start time</label>
-                    <timepicker class = "timepicker" id="startTime" ng-model="startTime" show-meridian="false"></timepicker>
+                    <timepicker style="text-align:center" class = "timepicker" id="startTime" ng-model="startTime" show-meridian="false"></timepicker>
                 </div>
                 <div class="col-md-6">
                     <label for="endTime">End time</label>
@@ -15,10 +16,9 @@
                 </div>
             </div>
         </div>
-    </form>
-
-    <div class="modal-footer">
-        <button class="btn btn-default primary" ng-click="submitConfig(days, hours, minutes)" type="submit">Submit</button>
-        <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
-    </div>
 </div>
+<div class="modal-footer">
+    <button class="btn btn-default primary" ng-click="submitConfig(days, hours, minutes)" type="submit">Submit</button>
+    <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
+</div>
+</form>

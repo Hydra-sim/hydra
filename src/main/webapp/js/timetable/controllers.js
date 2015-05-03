@@ -68,7 +68,6 @@
     });
 
     app.controller('TimetableNewCtrl', function($scope, $rootScope, $log, $modalInstance, Timetable) {
-
         $scope.name = "";
 
         var arrivalTime = new Date();

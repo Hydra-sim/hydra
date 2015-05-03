@@ -386,6 +386,10 @@ table{
   box-shadow: none;
 }
 
+.modal-body .timepicker .btn:hover{
+  color: $Avinor_LightPurpl
+}
+
 .modal-body .timepicker {
   margin-bottom: 10px !important;
 
@@ -553,7 +557,7 @@ a:hover{
 }
 
 .modal-body span{
-  text-align: left;
+  text-align: center;
   margin: auto;
   display:block;
   font-weight: bold;
@@ -579,6 +583,9 @@ a:hover{
   color: $Avinor_LightPurple;
 }
 
+.container-fluid .col-md-6:nth-of-type(2) input{
+  margin-top: 30px;
+}
 
 .copyModal{
   background-color: transparent;
