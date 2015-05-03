@@ -401,7 +401,7 @@
         };
     });
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, SimResult, Simulation, menu_field_name) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, SimResult, Simulation, menu_field_name, Timetable) {
 
         $scope.updateTicks = function() {
             $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
@@ -425,9 +425,15 @@
 
         // Tooltip
         $scope.extraTooltip = function() {
+            var timetable = Timetable.query({});
+
             return d3.behavior
                 .tooltip()
                 .text(function(d) {
+                    if(d.type == "bus" || d.type == "train") {
+                        return _.find(timetable, function(t) { return t.id == d.timetableId; }).name;
+                    }
+
                     return d.type;
                 });
         }
@@ -700,11 +706,7 @@
     app.controller('NewProducerModalCtrl', function($scope, $modalInstance, Timetable, timetableIds, type){
         $scope.timetableIds = timetableIds;
         $scope.modalTitle = type;
-
-        function updateTimetableScope() {
-            $scope.timetables = Timetable.query({});
-        }
-        updateTimetableScope();
+        $scope.timetables = Timetable.query({});
 
         $scope.submitProducer = function(selectedItem){
             $modalInstance.close({
@@ -715,7 +717,6 @@
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-
     });
 
     app.controller("NewPassengerflowModalCtrl", function($scope, $modal, $modalInstance){
