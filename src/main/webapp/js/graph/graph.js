@@ -50,6 +50,19 @@
                         'consumerGroup-suitcase': {icon: '\uf0f2'}
                     };
 
+                    // creating tooltip
+                    var tooltip = d3.select("body")
+                        .append("div")
+                        .style("position", "absolute")
+                        .style("z-index", "10")
+                        .style("visibility", "hidden")
+                        .style("background", "#1d1d1d")
+                        .style("box-shadow", "0 0 5px #999999")
+                        .style("border-radius","10px")
+                        .style("padding", "5px")
+                        .style("color", "white")
+                        .text("a simple tooltip");
+
                     scope.safeApply = function(fn) {
                         var phase = this.$root.$$phase;
                         if(phase == '$apply' || phase == '$digest') {
@@ -328,6 +341,13 @@
 
                         // remove old nodes
                         circles.exit().remove();
+
+                        // selcting node tooltip
+                        d3.select(".graph g")
+                            .on("mouseover", function(){return tooltip.style("visibility", "visible");})
+                            .on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+                            .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
                     }
                     update();
                 }
