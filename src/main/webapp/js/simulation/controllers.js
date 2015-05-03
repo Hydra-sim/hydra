@@ -449,7 +449,7 @@
                         if(d.timeBetweenArrivals == 3600){
                             time = "1 hour";
                         }
-                        return "Persons per arrival: " + d.personsPerArrival +
+                        return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
                             " Time between arrivals: " + time;
                     }
 
