@@ -23,8 +23,9 @@ var vendorJsFiles = [
     config.bowerDir + 'angular-zeroclipboard/src/angular-zeroclipboard.js',
     config.bowerDir + 'angular-animate/angular-animate.min.js',
     config.bowerDir + 'd3/d3.min.js',
-    config.bowerDir + 'ng-file-upload/angular-file-upload-shim.min.js',
-    config.bowerDir + 'ng-file-upload/angular-file-upload.min.js',
+    config.bowerDir + 'ng-file-upload/FileAPI.min.js',
+    config.bowerDir + 'ng-file-upload/ng-file-upload-shim.min.js',
+    config.bowerDir + 'ng-file-upload/ng-file-upload.min.js',
     config.bowerDir + 'underscore/underscore-min.js',
     config.bowerDir + 'zeroclipboard/dist/ZeroClipboard.min.js'
 ];
