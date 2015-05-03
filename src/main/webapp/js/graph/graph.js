@@ -50,19 +50,6 @@
                         'consumerGroup-suitcase': {icon: '\uf0f2'}
                     };
 
-                    // creating tooltip
-                    var tooltip = d3.select("body")
-                        .append("div")
-                        .style("position", "absolute")
-                        .style("z-index", "10")
-                        .style("visibility", "hidden")
-                        .style("background", "#1d1d1d")
-                        .style("box-shadow", "0 0 5px #999999")
-                        .style("border-radius", "5px")
-                        .style("padding", "10px")
-                        .style("color", "white");
-
-
                     scope.safeApply = function(fn) {
                         var phase = this.$root.$$phase;
                         if(phase == '$apply' || phase == '$digest') {
@@ -273,6 +260,10 @@
                         });
                     svg.call(zoom);
 
+                    // creating tooltip
+                    var tooltip = d3.behavior.tooltip()
+                        .text(function(d) { return d.type; });
+
                     // Update function, updating nodes and edges
                     function update() {
                         function transformFunction(d){return "translate(" + d.x + "," + d.y + ")";}
@@ -320,14 +311,7 @@
                                 selectItem(d3.select(this), "circle");
                             })
                             .call(drag)
-                            .on("mouseover", function(){return tooltip.style("visibility", "visible");})
-                            .on("mousemove", function(d){
-                                return tooltip
-                                    .style("top", (event.pageY-10)+"px")
-                                    .style("left",(event.pageX+10)+"px")
-                                    .text(d.type);
-                            })
-                            .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+                            .call(tooltip);
 
                         newCircleWrappers
                             .append("circle")
