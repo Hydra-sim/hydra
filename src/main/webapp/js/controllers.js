@@ -3,15 +3,13 @@
     'use strict';
 
     var app = angular.module('unit.controllers', [
-
         'ngRoute',
         'services',
         'ui.bootstrap',
-        'angularFileUpload',
+        'ngFileUpload',
         'zeroclipboard',
         'angular-loading-bar',
         'ngAnimate'
-
     ]);
 
     app.controller('ApplicationCtrl', function($scope, $rootScope, $location, $modal, menu_field_name) {

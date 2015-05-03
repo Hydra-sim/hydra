@@ -135,14 +135,19 @@
                 templateUrl: 'templates/modals/uploadTimetable.html',
                 controller: 'UploadTimetableModalCtrl',
                 size: 'sm'
+            }).result.then(function(result) {
+                console.log(result);
             });
         }
     });
 
     app.controller('UploadTimetableModalCtrl', function($scope, $modalInstance) {
-
-
-        $scope.confirm = $modalInstance.close;
+        $scope.confirm = function() {
+            $modalInstance.close({
+                name: $scope.name,
+                file: $scope.file
+            });
+        };
         $scope.cancel  = $modalInstance.dismiss;
     });
 

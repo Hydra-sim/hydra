@@ -10,7 +10,8 @@
         'zeroclipboard',
         'tooltip',
         'angular-loading-bar',
-        'unit.directives'
+        'unit.directives',
+        'ngFileUpload'
     ]);
 
     app.config(['uiZeroclipConfigProvider', function(uiZeroclipConfigProvider) {
