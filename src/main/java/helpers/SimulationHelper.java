@@ -130,6 +130,8 @@ public class SimulationHelper {
 
                 if (arrival.getTime() == currentTick) {
 
+                    source.setNumberOfArrivals(source.getNumberOfArrivals() + 1);
+
                     for(int i = 0; i < arrival.getPassengers(); i++) {
 
                         for(Relationship relationship : simulation.getRelationships()) {
