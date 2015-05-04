@@ -262,11 +262,12 @@
                 .tooltip()
                 .text(function(d) {
                     if(d.type == "bus" || d.type == "train") {
-                        return d.timetable.name + "<br/>" + "Brought " + d.entitiesTransfered + " passengers to the location.";
+                        return d.timetable.name + "<br/>" +
+                            "Brought " + d.entitiesTransfered + " passengers to the location." + "<br/>" +
+                            "Number of arrivals: " + d.numberOfArrivals + "<br/>";
                     } else if(d.type == "passengerflow"){
                         return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
                             "Time between arrivals: " + ticksToTime(d.timeBetweenArrivals) + "<br/>" +
-                            "Number of arrivals: " + d.numberOfArrivals + "<br/>" +
                             "Brought " + d.entitiesTransfered + " passengers to the location.";
                     } else if(d.type == "parking"){
                         return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity) +
@@ -274,7 +275,7 @@
                             //TODO: Fix when buslogic in algorithm is fixed (number of buses recieved and number of passengers transfered
                     } else {
                         return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
-                            "Passengers in queue at simulation end: " + d.entitiesInQueue.length();
+                            "Passengers in queue at simulation end: " + d.entitiesInQueue.length;
                     }
                 });
         };
@@ -481,10 +482,14 @@
                     } else if(d.type == "passengerflow"){
                         return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
                             " Time between arrivals: " + ticksToTime(d.timeBetweenArrivals);
-                    } else if(d.type == "parking"){
+                    } else if(d.type == "parking") {
                         return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity);
                     } else {
-                        return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity);
+                        var printForConsumer =  "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity);
+                        if(d.type.indexOf("consumerGroup") != -1) {
+                            printForConsumer += "<br/>" + "Quantity: " + d.numberOfConsumers;
+                        }
+                        return printForConsumer;
                     }
                 });
         };
