@@ -244,6 +244,52 @@
 
         });
 
+        //Function for ticks to seconds/minutes/hours
+        function ticksToTime(ticks){
+            if(ticks == 3600)   return "1 hour";
+            if(ticks == 60)     return "1 minute";
+            if(ticks == 1)      return "1 second";
+
+            if(ticks > 3600)    return ticks/3600 + " hours";
+            if(ticks > 60)      return ticks/60 + " minutes";
+            if(ticks > 1)       return ticks + " seconds";
+        }
+
+        // Tooltip
+        $scope.extraTooltip = function() {
+
+            return d3.behavior
+                .tooltip()
+                .text(function(d) {
+                    console.log(d.maxWaitingTime);
+                    switch (d.type) {
+                        case "bus":
+                        case "train":
+                            return d.timetable.name + "<br/>" +
+                                "Brought " + d.entitiesTransfered + " passengers to the location." + "<br/>" +
+                                "Number of arrivals: " + d.numberOfArrivals + "<br/>";
+
+
+                        case "passengerflow":
+                            return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
+                                "Time between arrivals: " + ticksToTime(d.timeBetweenArrivals) + "<br/>" +
+                                "Brought " + d.entitiesTransfered + " passengers to the location.";
+
+
+                        case "parking":
+                            return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
+                                "Brought " + d.entititesTransfered + " passengeres to the location.";
+                        //TODO: Fix when buslogic in algorithm is fixed (number of buses recieved and number of passengers transfered
+
+                        default:
+                            return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
+                                "Passengers in queue at simulation end: " + d.entitiesInQueue.length + "<br/>" +
+                                "Max waiting time: " + ticksToTime(d.maxWaitingTime);
+
+                    }
+                });
+        };
+
         $rootScope.menu_field_button = "";
         $rootScope.menu_field_button_icon = "";
         $rootScope.menu_field_button_click = function() {};
@@ -446,10 +492,14 @@
                     } else if(d.type == "passengerflow"){
                         return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
                             " Time between arrivals: " + ticksToTime(d.timeBetweenArrivals);
-                    } else if(d.type == "parking"){
+                    } else if(d.type == "parking") {
                         return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity);
                     } else {
-                        return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity);
+                        var printForConsumer =  "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity);
+                        if(d.type.indexOf("consumerGroup") != -1) {
+                            printForConsumer += "<br/>" + "Quantity: " + d.numberOfConsumers;
+                        }
+                        return printForConsumer;
                     }
                 });
         };

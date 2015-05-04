@@ -41,7 +41,7 @@ public class TestingCorner {
         entities.add(new Entity());
         entities.add(new Entity());
 
-        consumer.setEntitesInQueue(entities);
+        consumer.setEntitiesInQueue(entities);
 
         nodes.add(consumer);
 
@@ -53,8 +53,8 @@ public class TestingCorner {
 
         Consumer consumerResult = (Consumer) simulationHelper.getSimulation().getNodes().get(0);
 
-        assertEquals(1, consumerResult.getEntitesConsumed().size());
-        assertEquals(4, consumerResult.getEntitesInQueue().size());
+        assertEquals(1, consumerResult.getEntitiesConsumed().size());
+        assertEquals(4, consumerResult.getEntitiesInQueue().size());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class TestingCorner {
         entities.add(new Entity());
 
         ConsumerGroup consumerGroup = new ConsumerGroup(1, 1);
-        consumerGroup.setEntitesInQueue(entities);
+        consumerGroup.setEntitiesInQueue(entities);
 
         nodes.add(consumerGroup);
         simulation.setNodes(nodes);
@@ -84,8 +84,8 @@ public class TestingCorner {
 
         ConsumerGroup consumerGroupResult = (ConsumerGroup) simulationHelper.getSimulation().getNodes().get(0);
 
-        assertEquals(1, consumerGroupResult.getConsumers().get(0).getEntitesConsumed().size());
-        assertEquals(4, consumerGroupResult.getConsumers().get(0).getEntitesInQueue().size());
+        assertEquals(1, consumerGroupResult.getConsumers().get(0).getEntitiesConsumed().size());
+        assertEquals(4, consumerGroupResult.getConsumers().get(0).getEntitiesInQueue().size());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class TestingCorner {
 
         assertEquals(10, sourceResult.getEntitiesTransfered());
         assertEquals(10, targetResult.getEntitiesRecieved());
-        assertEquals(10, targetResult.getEntitesInQueue().size());
+        assertEquals(10, targetResult.getEntitiesInQueue().size());
     }
 
     @Test
@@ -157,7 +157,7 @@ public class TestingCorner {
         Consumer targetResult = (Consumer) simulationHelper.getSimulation().getNodes().get(1);
 
         assertEquals(0, sourceResult.getEntitiesReady().size());
-        assertEquals(5, targetResult.getEntitesInQueue().size());
+        assertEquals(5, targetResult.getEntitiesInQueue().size());
     }
 
     @Test

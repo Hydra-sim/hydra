@@ -25,7 +25,7 @@ public class ConsumerHelperUnitTest {
         Consumer con = new Consumer();
 
         consumerHelper.addEntity(con, new Entity());
-        assertEquals(1, con.getEntitesInQueue().size());
+        assertEquals(1, con.getEntitiesInQueue().size());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class ConsumerHelperUnitTest {
 
         int ticks = 1;
         consumerHelper.increaseWaitingTime(con, ticks);
-        assertEquals(ticks, con.getEntitesInQueue().get(0).getWaitingTimeInTicks());
+        assertEquals(ticks, con.getEntitiesInQueue().get(0).getWaitingTimeInTicks());
     }
 
     @Test
@@ -46,11 +46,11 @@ public class ConsumerHelperUnitTest {
         Consumer con = new Consumer(1);
 
         consumerHelper.addEntity(con, new Entity());
-        assertEquals(1, con.getEntitesInQueue().size());
+        assertEquals(1, con.getEntitiesInQueue().size());
 
         consumerHelper.consumeEntity(con, 1);
-        assertEquals(0, con.getEntitesInQueue().size());
-        assertEquals(1, con.getEntitesConsumed().size());
+        assertEquals(0, con.getEntitiesInQueue().size());
+        assertEquals(1, con.getEntitiesConsumed().size());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class ConsumerHelperUnitTest {
         consumerHelper.addEntity(consumer, new Entity(0));
         consumerHelper.addEntity(consumer, new Entity(1));
 
-        assertEquals(2, consumer.getEntitesInQueue().size());
+        assertEquals(2, consumer.getEntitiesInQueue().size());
         assertEquals(1, consumerHelper.getMaxWaitingTime(consumer));
     }
 
@@ -70,8 +70,8 @@ public class ConsumerHelperUnitTest {
 
         Consumer consumer = new Consumer();
 
-        consumer.getEntitesInQueue().add(new Entity());
-        consumer.getEntitesConsumed().add(new Entity());
+        consumer.getEntitiesInQueue().add(new Entity());
+        consumer.getEntitiesConsumed().add(new Entity());
 
         assertEquals(2, consumerHelper.getTotalSentToConsumer(consumer));
     }
