@@ -57,7 +57,10 @@ public class SimulationHelper {
 
                 updateNodeData(i);
             }
+
+            findMaxWaitingTime();
         }
+
 
         simulation.setResult(
                 new SimulationResult(
@@ -66,6 +69,21 @@ public class SimulationHelper {
                         maxWaitingTime
                 )
         );
+    }
+
+    private void findMaxWaitingTime() {
+
+        simulation.getNodes().stream().filter(this::isConsumer).forEach(
+                node -> {
+
+            Consumer consumer = (Consumer) node;
+            int max = consumerHelper.getMaxWaitingTime(consumer);
+
+            if(max > consumer.getMaxWaitingTime()) {
+
+                consumer.setMaxWaitingTime(max);
+            }
+        });
     }
 
     // Some of these are temporarily public for testing. TODO: Make private once testing is complete

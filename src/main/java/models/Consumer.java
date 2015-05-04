@@ -27,6 +27,8 @@ public class Consumer extends Node{
     @Fetch(FetchMode.SUBSELECT)
     private List<ConsumerData> consumerDataList;
 
+    private int maxWaitingTime;
+
     @Transient
     private List<Entity> entitiesConsumed;
 
@@ -57,6 +59,7 @@ public class Consumer extends Node{
         this.entitiesConsumed = new ArrayList<>();
         this.entitiesInQueue = new ArrayList<>();
         this.consumerDataList = new ArrayList<>();
+        this.maxWaitingTime = 0;
     }
     //endregion
 
@@ -103,6 +106,14 @@ public class Consumer extends Node{
 
     public void setConsumerDataList(List<ConsumerData> consumerDataList) {
         this.consumerDataList = consumerDataList;
+    }
+
+    public int getMaxWaitingTime() {
+        return maxWaitingTime;
+    }
+
+    public void setMaxWaitingTime(int maxWaitingTime) {
+        this.maxWaitingTime = maxWaitingTime;
     }
 
     //endregion
