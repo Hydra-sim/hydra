@@ -16,7 +16,7 @@
         };
     });
 
-    app.controller('TimetableEditCtrl', function($scope, $routeParams, $rootScope, $location, $log, Timetable) {
+    app.controller('TimetableEditCtrl', function($scope, $routeParams, $rootScope, $location, $log, $modalInstance, Timetable) {
 
         Timetable.get({}, {"id": $routeParams.id}, function(result) {
             $scope.id = result.id;
@@ -58,12 +58,15 @@
             });
             Timetable.update({"id": $scope.id}, timetable).$promise.then(function() {
                 $rootScope.$emit('updateTimetable');
-                $location.path('/timetable');
+               // $location.path('/timetable');
             });
+
+            $modalInstance.close();
         };
 
         $scope.cancel = function () {
-            $location.path('/timetable');
+           // $location.path('/timetable');
+            $modalInstance.close();
         };
     });
 
@@ -128,6 +131,14 @@
                 Timetable.delete({}, {"id": id}, updateTimetableScope);
             });
         };
+
+        $scope.editTimetable = function() {
+            $modal.open({
+                templateUrl: 'templates/timetable/new.html',
+                controller: 'TimetableEditCtrl',
+                size: 'sm'
+            });
+        }
 
         $scope.uploadTimetable = function() {
             $modal.open({
