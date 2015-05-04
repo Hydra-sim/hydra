@@ -63,13 +63,13 @@ public class ConsumerGroup extends Consumer{
         this.consumers = consumers;
     }
 
-    public List<Entity> getEntitesConsumed() {
+    public List<Entity> getEntitiesConsumed() {
 
         List<Entity> entitesConsumed = new ArrayList<>();
 
         for(Consumer consumer : consumers) {
 
-            entitesConsumed.addAll(consumer.getEntitesConsumed());
+            entitesConsumed.addAll(consumer.getEntitiesConsumed());
         }
 
         return entitesConsumed;

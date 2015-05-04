@@ -22,9 +22,9 @@ public class ConsumerHelper {
      */
     public void addEntity(Consumer con, Entity entity) {
 
-        List<Entity> conEntities = con.getEntitesInQueue();
+        List<Entity> conEntities = con.getEntitiesInQueue();
         conEntities.add(entity);
-        con.setEntitesInQueue(conEntities);
+        con.setEntitiesInQueue(conEntities);
     }
 
     /**
@@ -35,7 +35,7 @@ public class ConsumerHelper {
      */
     public static void increaseWaitingTime(Consumer con, int ticks) {
 
-        for (Entity entity : con.getEntitesInQueue()) {
+        for (Entity entity : con.getEntitiesInQueue()) {
 
             entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + ticks);
         }
@@ -57,25 +57,25 @@ public class ConsumerHelper {
      */
     public void consumeEntity(Consumer con, int tick) {
 
-        List<Entity> entities = con.getEntitesInQueue();
+        List<Entity> entities = con.getEntitiesInQueue();
         List<Entity> entitiesConsumed = new ArrayList<>();
 
         if(!entities.isEmpty()){
 
             if(tick == 0 || tick % con.getTicksToConsumeEntity() == 0){
 
-                entitiesConsumed.add(con.getEntitesInQueue().get(0));
+                entitiesConsumed.add(con.getEntitiesInQueue().get(0));
                 entities.remove(0);
             }
         }
 
-        con.setEntitesInQueue(entities);
+        con.setEntitiesInQueue(entities);
 
-        List<Entity> entitiesConsumedBeforeSimulation = con.getEntitesConsumed();
+        List<Entity> entitiesConsumedBeforeSimulation = con.getEntitiesConsumed();
 
         entitiesConsumedBeforeSimulation.addAll(entitiesConsumed.stream().collect(Collectors.toList()));
 
-        con.setEntitesConsumed(entitiesConsumedBeforeSimulation);
+        con.setEntitiesConsumed(entitiesConsumedBeforeSimulation);
     }
 
     /**
@@ -88,7 +88,7 @@ public class ConsumerHelper {
 
         int maxWaitingTime = 0;
 
-        for(Entity entity : con.getEntitesInQueue()) {
+        for(Entity entity : con.getEntitiesInQueue()) {
 
             if(entity.getWaitingTimeInTicks() > maxWaitingTime) maxWaitingTime = entity.getWaitingTimeInTicks();
         }
@@ -104,6 +104,6 @@ public class ConsumerHelper {
      */
     public int getTotalSentToConsumer(Consumer consumer) {
 
-        return consumer.getEntitesConsumed().size() + consumer.getEntitesInQueue().size();
+        return consumer.getEntitiesConsumed().size() + consumer.getEntitiesInQueue().size();
     }
 }

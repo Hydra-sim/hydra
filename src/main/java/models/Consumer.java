@@ -28,10 +28,10 @@ public class Consumer extends Node{
     private List<ConsumerData> consumerDataList;
 
     @Transient
-    private List<Entity> entitesConsumed;
+    private List<Entity> entitiesConsumed;
 
     @Transient
-    private List<Entity> entitesInQueue;
+    private List<Entity> entitiesInQueue;
 
     //region constructors
     public Consumer() {
@@ -54,8 +54,8 @@ public class Consumer extends Node{
 
         this.name = name;
         setTicksToConsumeEntity(ticksToConsumeEntity);
-        this.entitesConsumed = new ArrayList<>();
-        this.entitesInQueue = new ArrayList<>();
+        this.entitiesConsumed = new ArrayList<>();
+        this.entitiesInQueue = new ArrayList<>();
         this.consumerDataList = new ArrayList<>();
     }
     //endregion
@@ -72,21 +72,21 @@ public class Consumer extends Node{
         else this.ticksToConsumeEntity = ticksToConsumeEntity;
     }
 
-    public List<Entity> getEntitesConsumed() {
-        return entitesConsumed;
+    public List<Entity> getEntitiesConsumed() {
+        return entitiesConsumed;
     }
 
-    public void setEntitesConsumed(List<Entity> entitesConsumed) {
-        this.entitesConsumed = entitesConsumed;
+    public void setEntitiesConsumed(List<Entity> entitiesConsumed) {
+        this.entitiesConsumed = entitiesConsumed;
     }
 
-    public List<Entity> getEntitesInQueue() {
-        return entitesInQueue;
+    public List<Entity> getEntitiesInQueue() {
+        return entitiesInQueue;
     }
 
-    public void setEntitesInQueue(List<Entity> entitesInQueue) {
+    public void setEntitiesInQueue(List<Entity> entitiesInQueue) {
 
-        this.entitesInQueue = entitesInQueue;
+        this.entitiesInQueue = entitiesInQueue;
     }
 
     public String getName() {

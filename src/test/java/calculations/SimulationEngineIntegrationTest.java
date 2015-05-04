@@ -285,7 +285,7 @@ public class SimulationEngineIntegrationTest {
 
                 ConsumerGroup cg = (ConsumerGroup) node;
 
-                assertTrue(cg.getEntitesConsumed().size() > 0);
+                assertTrue(cg.getEntitiesConsumed().size() > 0);
 
                 break;
             }
