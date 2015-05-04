@@ -47,9 +47,20 @@ public class StartupBean {
         // Timetables
 
         List<TmpFileListItem> timetables = new LinkedList<TmpFileListItem>() {{
-            add(new TmpFileListItem("timetables/flybussekspressen/monday-friday.csv", "Flybussekspressen: Monday - Friday"));
-            add(new TmpFileListItem("timetables/flybussekspressen/saturday.csv", "Flybussekspressen: Saturday"));
-            add(new TmpFileListItem("timetables/flybussekspressen/sunday.csv", "Flybussekspressen: Sunday"));
+            add(new TmpFileListItem("timetables/flybussekspressen/F1/monday-friday.csv", "Flybussekspressen: F1 Monday - Friday"));
+            add(new TmpFileListItem("timetables/flybussekspressen/F1/saturday.csv", "Flybussekspressen: F1 Saturday"));
+            add(new TmpFileListItem("timetables/flybussekspressen/F1/sunday.csv", "Flybussekspressen: F1 Sunday"));
+
+            add(new TmpFileListItem("timetables/flybussekspressen/F3/monday-friday.csv", "Flybussekspressen: F3 Monday - Friday"));
+            add(new TmpFileListItem("timetables/flybussekspressen/F3/saturday.csv", "Flybussekspressen: F3 Saturday"));
+            add(new TmpFileListItem("timetables/flybussekspressen/F3/sunday.csv", "Flybussekspressen: F3 Sunday"));
+
+            add(new TmpFileListItem("timetables/flybussekspressen/F4/monday-friday.csv", "Flybussekspressen: F4 Monday - Friday"));
+            add(new TmpFileListItem("timetables/flybussekspressen/F4/saturday-sunday.csv", "Flybussekspressen: F4 Saturday - Sunday"));
+
+            add(new TmpFileListItem("timetables/flybussekspressen/F11/monday-friday.csv", "Flybussekspressen: F11 Monday - Friday"));
+            add(new TmpFileListItem("timetables/flybussekspressen/F11/saturday.csv", "Flybussekspressen: F11 Saturday"));
+            add(new TmpFileListItem("timetables/flybussekspressen/F11/sunday.csv", "Flybussekspressen: F11 Sunday"));
 
             add(new TmpFileListItem("timetables/flytoget/monday-friday.csv", "Flytoget: Monday - Friday"));
             add(new TmpFileListItem("timetables/flytoget/sunday.csv", "Flytoget: Sunday"));
