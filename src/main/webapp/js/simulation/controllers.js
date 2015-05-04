@@ -244,6 +244,41 @@
 
         });
 
+        //Function for ticks to seconds/minutes/hours
+        function ticksToTime(ticks){
+            if(ticks == 3600)   return "1 hour";
+            if(ticks == 60)     return "1 minute";
+            if(ticks == 1)      return "1 second";
+
+            if(ticks > 3600)    return ticks/3600 + " hours";
+            if(ticks > 60)      return ticks/60 + " minutes";
+            if(ticks > 1)       return ticks + " seconds";
+        }
+
+        // Tooltip
+        $scope.extraTooltip = function() {
+
+            return d3.behavior
+                .tooltip()
+                .text(function(d) {
+                    if(d.type == "bus" || d.type == "train") {
+                        return d.timetable.name + "<br/>" + "Brought " + d.entitiesTransfered + " passengers to the location.";
+                    } else if(d.type == "passengerflow"){
+                        return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
+                            "Time between arrivals: " + ticksToTime(d.timeBetweenArrivals) + "<br/>" +
+                            "Number of arrivals: " + d.numberOfArrivals + "<br/>" +
+                            "Brought " + d.entitiesTransfered + " passengers to the location.";
+                    } else if(d.type == "parking"){
+                        return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity) +
+                            "Brought " + d.entititesTransfered + " passengeres to the location.";
+                            //TODO: Fix when buslogic in algorithm is fixed (number of buses recieved and number of passengers transfered
+                    } else {
+                        return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
+                            "Passengers in queue at simulation end: " + d.entitiesInQueue.length();
+                    }
+                });
+        };
+
         $rootScope.menu_field_button = "";
         $rootScope.menu_field_button_icon = "";
         $rootScope.menu_field_button_click = function() {};
