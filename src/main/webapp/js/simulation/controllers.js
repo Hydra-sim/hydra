@@ -261,21 +261,29 @@
             return d3.behavior
                 .tooltip()
                 .text(function(d) {
-                    if(d.type == "bus" || d.type == "train") {
-                        return d.timetable.name + "<br/>" +
-                            "Brought " + d.entitiesTransfered + " passengers to the location." + "<br/>" +
-                            "Number of arrivals: " + d.numberOfArrivals + "<br/>";
-                    } else if(d.type == "passengerflow"){
-                        return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
-                            "Time between arrivals: " + ticksToTime(d.timeBetweenArrivals) + "<br/>" +
-                            "Brought " + d.entitiesTransfered + " passengers to the location.";
-                    } else if(d.type == "parking"){
-                        return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity) +
-                            "Brought " + d.entititesTransfered + " passengeres to the location.";
-                            //TODO: Fix when buslogic in algorithm is fixed (number of buses recieved and number of passengers transfered
-                    } else {
-                        return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
-                            "Passengers in queue at simulation end: " + d.entitiesInQueue.length;
+                    switch (d.type) {
+                        case "bus":
+                        case "train":
+                            return d.timetable.name + "<br/>" +
+                                "Brought " + d.entitiesTransfered + " passengers to the location." + "<br/>" +
+                                "Number of arrivals: " + d.numberOfArrivals + "<br/>";
+
+
+                        case "passengerflow":
+                            return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
+                                "Time between arrivals: " + ticksToTime(d.timeBetweenArrivals) + "<br/>" +
+                                "Brought " + d.entitiesTransfered + " passengers to the location.";
+
+
+                        case "parking":
+                            return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
+                                "Brought " + d.entititesTransfered + " passengeres to the location.";
+                        //TODO: Fix when buslogic in algorithm is fixed (number of buses recieved and number of passengers transfered
+
+                        default:
+                            return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
+                                "Passengers in queue at simulation end: " + d.entitiesInQueue.length;
+
                     }
                 });
         };
