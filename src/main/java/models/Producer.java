@@ -25,6 +25,8 @@ public class Producer extends Node{
     @Fetch(FetchMode.SUBSELECT)
     List<ProducerData> producerDataList;
 
+    int numberOfArrivals;
+
     //region constructors
     public Producer() {
         this(new Timetable());
@@ -40,6 +42,7 @@ public class Producer extends Node{
         this.setX(x);
         this.setY(y);
         this.producerDataList = new ArrayList<>();
+        this.numberOfArrivals = 0;
     }
 
 
@@ -61,6 +64,14 @@ public class Producer extends Node{
 
     public void setProducerDataList(List<ProducerData> producerDataList) {
         this.producerDataList = producerDataList;
+    }
+
+    public int getNumberOfArrivals() {
+        return numberOfArrivals;
+    }
+
+    public void setNumberOfArrivals(int numberOfArrivals) {
+        this.numberOfArrivals = numberOfArrivals;
     }
 
     //endregion
