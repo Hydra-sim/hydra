@@ -261,6 +261,7 @@
             return d3.behavior
                 .tooltip()
                 .text(function(d) {
+                    console.log(d.maxWaitingTime);
                     switch (d.type) {
                         case "bus":
                         case "train":
@@ -282,7 +283,8 @@
 
                         default:
                             return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
-                                "Passengers in queue at simulation end: " + d.entitiesInQueue.length;
+                                "Passengers in queue at simulation end: " + d.entitiesInQueue.length + "<br/>" +
+                                "Max waiting time: " + ticksToTime(d.maxWaitingTime);
 
                     }
                 });
