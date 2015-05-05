@@ -62,15 +62,11 @@ public class ConsumerHelper {
 
         if(tick == -1) {
 
-            System.out.println(entities.size());
-
             while (!entities.isEmpty()){
 
                 entitiesConsumed.add(con.getEntitiesInQueue().get(0));
                 entities.remove(0);
             }
-
-            System.out.println(entitiesConsumed.size());
 
         } else {
 
