@@ -90,12 +90,12 @@
         tooltip.open = open;
         function open() {
             tooltip_el.style("visibility", "visible");
-        };
+        }
 
         tooltip.close = close;
         function close() {
             tooltip_el.style("visibility", "hidden");
-        };
+        }
 
         return d3.rebind(tooltip, event, "on");
     };
