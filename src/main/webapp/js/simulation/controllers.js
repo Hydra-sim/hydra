@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationEditCtrl', function ($scope, $routeParams, $rootScope, $location, $modal, Simulation, SimResult, menu_field_name) {
+    app.controller('SimulationEditCtrl', function ($scope, $routeParams, $rootScope, $location, $modal, Simulation, SimResult, menu_field_name, menu_field_button) {
 
         $scope.dataset = { nodes: [], edges: [] };
 
@@ -74,9 +74,9 @@
             });
         };
 
-        $rootScope.menu_field_button = "Submit";
-        $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
-        $rootScope.menu_field_button_click = function () {
+        menu_field_button.value = "Submit";
+        menu_field_button.icon = "fa-arrow-circle-right";
+        menu_field_button.click = function () {
             var sim = new Simulation({
                 'name': menu_field_name.value,
                 'ticks': $scope.ticks,
@@ -206,7 +206,7 @@
         };
     });
 
-    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult, cfpLoadingBar, menu_field_name) {
+    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult, cfpLoadingBar, menu_field_name, menu_field_button) {
 
         $scope.simulation = {
             nodes: [],
@@ -289,12 +289,10 @@
                 });
         };
 
-        $rootScope.menu_field_button = "";
-        $rootScope.menu_field_button_icon = "";
-        $rootScope.menu_field_button_click = function() {};
+        menu_field_button.reset();
     });
 
-    app.controller('SimulationShowCtrl', function($scope, $rootScope, $routeParams, SimResult) {
+    app.controller('SimulationShowCtrl', function($scope, menu_field_button, $routeParams, SimResult) {
 
         var data = SimResult.data;
 
@@ -302,10 +300,7 @@
         $scope.entitiesInQueue          = data.result.entitiesInQueue;
         $scope.maxWaitingTimeInTicks    = data.result.maxWaitingTimeInTicks;
 
-
-        $rootScope.menu_field_button = "";
-        $rootScope.menu_field_button_icon = "";
-        $rootScope.menu_field_button_click = function() {};
+        menu_field_button.reset();
     });
 
     app.controller('SimulationListCtrl', function ($scope, $rootScope, $log, Simulation, $location, $modal) {
@@ -446,7 +441,7 @@
         };
     });
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, SimResult, Simulation, menu_field_name, Timetable) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, SimResult, Simulation, menu_field_name, Timetable, menu_field_button) {
 
         $scope.updateTicks = function() {
             $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
@@ -508,9 +503,9 @@
 
         menu_field_name.setValue("Untitled simulation");
 
-        $rootScope.menu_field_button = "Submit";
-        $rootScope.menu_field_button_icon = "fa-arrow-circle-right";
-        $rootScope.menu_field_button_click = submit;
+        menu_field_button.value = "Submit";
+        menu_field_button.icon = "fa-arrow-circle-right";
+        menu_field_button.click = submit;
         $scope.submit = submit;
         function submit() {
 
@@ -874,7 +869,7 @@
         }
     });
 
-    app.controller('AuthPathCtrl', function($scope, $rootScope, $routeParams, $location, Authentication, menu_field_name) {
+    app.controller('AuthPathCtrl', function($scope, $rootScope, $routeParams, $location, Authentication, menu_field_name, menu_field_button) {
 
         $scope.id = $routeParams.id;
 
@@ -905,9 +900,7 @@
         menu_field_name.setValue("");
         menu_field_name.disable();
 
-        $rootScope.menu_field_button = "";
-        $rootScope.menu_field_button_icon = "";
-        $rootScope.menu_field_button_click = function () {};
+        menu_field_button.reset();
     });
 
     app.controller('SaveAsModalCtrl', function($scope, $modalInstance, simulationName, menu_field_name){
@@ -926,11 +919,8 @@
         };
     });
 
-    app.controller('SimulationAnimationCtrl', function($routeParams, $rootScope) {
+    app.controller('SimulationAnimationCtrl', function($routeParams, menu_field_button) {
         this.simulationId = $routeParams.id;
-
-        $rootScope.menu_field_button = "";
-        $rootScope.menu_field_button_icon = "";
-        $rootScope.menu_field_button_click = function () {};
+        menu_field_button.reset();
     });
 })();

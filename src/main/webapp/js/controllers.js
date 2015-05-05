@@ -12,11 +12,13 @@
         'ngAnimate'
     ]);
 
-    app.controller('ApplicationCtrl', function($scope, $rootScope, $location, $modal, menu_field_name) {
+    app.controller('ApplicationCtrl', function($scope, $rootScope, $location, $modal, menu_field_name, menu_field_button) {
 
-        $rootScope.menu_field_button = "New Simulation";
-        $rootScope.menu_field_button_icon = "fa-plus-circle";
-        $rootScope.menu_field_button_click = function() {
+        $rootScope.menu_field_button = menu_field_button;
+
+        menu_field_button.value = "New Simulation";
+        menu_field_button.icon = "fa-plus-circle";
+        menu_field_button.click = function() {
 
                 $modal.open({
                     templateUrl: 'templates/modals/choosePreset.html',
@@ -78,12 +80,8 @@
         };
     });
 
-    /* Full documentation page */
-    app.controller('FullDocumentationCtrl', function($scope, $location, $anchorScroll, $rootScope){
-
-        $rootScope.menu_field_button = "";
-        $rootScope.menu_field_button_icon = "";
-        $rootScope.menu_field_button_click = function() { };
+    app.controller('FullDocumentationCtrl', function($scope, $location, $anchorScroll, menu_field_button){
+        menu_field_button.reset();
 
         $scope.scrollTo = function(id) {
             $location.hash(id);

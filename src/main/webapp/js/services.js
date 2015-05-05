@@ -60,6 +60,19 @@
         };
     });
 
+    app.factory('menu_field_button', function() {
+        return {
+            value: "",
+            icon: "",
+            click: function() {},
+            reset: function() {
+                this.value = "";
+                this.icon = "";
+                this.click = function() {};
+            }
+        };
+    });
+
     app.factory('Session', function($http) {
 
         var Session = {

@@ -5,13 +5,11 @@
     var app = angular.module('unit.controllers');
 
 
-    app.controller('PresetCtrl', function($scope, $rootScope) {
-        $rootScope.menu_field_button = "";
-        $rootScope.menu_field_button_icon = "";
-        $rootScope.menu_field_button_click = function () {};
+    app.controller('PresetCtrl', function($scope, menu_field_button) {
+        menu_field_button.reset();
     });
 
-    app.controller('PresetListCtrl', function($scope, $rootScope, $modal, Preset) {
+    app.controller('PresetListCtrl', function($scope, menu_field_name, $modal, Preset) {
         function updatePresetScope() {
             $scope.presets = Preset.query({});
         }
@@ -38,6 +36,6 @@
             return modalInstance;
         };
 
-        $rootScope.menu_field_name.disable();
+        menu_field_name.disable();
     });
 })();
