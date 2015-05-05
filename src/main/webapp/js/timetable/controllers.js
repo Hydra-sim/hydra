@@ -16,9 +16,9 @@
         };
     });
 
-    app.controller('TimetableEditCtrl', function($scope, $routeParams, $rootScope, $location, $log, $modalInstance, Timetable) {
-            $scope.btnName = "Save";
-        Timetable.get({}, {"id": $routeParams.id}, function(result) {
+    app.controller('TimetableEditCtrl', function($scope, $rootScope, $location, $log, $modalInstance, Timetable, id) {
+        $scope.btnName = "Save";
+        Timetable.get({}, {"id": id}, function(result) {
             $scope.id = result.id;
 
             $scope.arrivals = [];
@@ -133,11 +133,16 @@
             });
         };
 
-        $scope.editTimetable = function() {
+        $scope.editTimetable = function(id) {
             $modal.open({
                 templateUrl: 'templates/timetable/show.html',
                 controller: 'TimetableEditCtrl',
-                size: 'sm'
+                size: 'sm',
+                resolve: {
+                id: function(){
+                    return id;
+                }
+            }
             });
         };
 
