@@ -51,7 +51,7 @@ public class SimulationEngineIntegrationTest {
 
         Producer producer = createProducer(1, numberOfEntitesToProduce);
         Consumer consumer = new Consumer(ticksToConsumeEntities);
-        Relationship relationship = new Relationship(producer, consumer, 1.0);
+        Relationship relationship = new Relationship(producer, consumer, 100);
 
         Simulation simulation = intializeSimulation(producer, consumer, relationship, ticks);
 
@@ -82,7 +82,7 @@ public class SimulationEngineIntegrationTest {
 
         Producer producer = createProducer(1, numberOfEntitesToProduce);
         Consumer consumer = new Consumer(ticksToConsumeEntities);
-        Relationship relationship = new Relationship(producer, consumer, 1.0);
+        Relationship relationship = new Relationship(producer, consumer, 100);
 
         Simulation simulation = intializeSimulation(producer, consumer, relationship, ticks);
 
@@ -171,14 +171,14 @@ public class SimulationEngineIntegrationTest {
     @Test
     public void testSimulateWeightEqual() {
 
-        testSimulateWeight(0.5, 0.5, 10);
+        testSimulateWeight(50, 50, 10);
     }
 
     
     @Test
     public void testSimulateWeightNotEqual() {
 
-        testSimulateWeight(0.7, 0.3, 10);
+        testSimulateWeight(70, 30, 10);
     }
 
     
@@ -259,10 +259,10 @@ public class SimulationEngineIntegrationTest {
 
         List<Relationship> relationships = new ArrayList<>();
 
-        Relationship producerRelationship = new Relationship(producer, consumerGroup, 1.0);
+        Relationship producerRelationship = new Relationship(producer, consumerGroup, 100);
         relationships.add(producerRelationship);
 
-        Relationship consumerGroupRelationship = new Relationship(consumerGroup, consumer, 1.0);
+        Relationship consumerGroupRelationship = new Relationship(consumerGroup, consumer, 100);
         relationships.add(consumerGroupRelationship);
 
         // Adding the Nodes to Lists
@@ -294,7 +294,7 @@ public class SimulationEngineIntegrationTest {
     //endregion
 
     //region helping methods
-    private void testSimulateWeight(double weight1, double weight2, int ticks) {
+    private void testSimulateWeight(int weight1, int weight2, int ticks) {
 
         Simulation simulation = setUpStandardSimulationOneProducerTwoConsumers(1, 1, 0, 1, ticks, weight1, weight2);
         simulationHelper.simulate(simulation);
@@ -305,13 +305,13 @@ public class SimulationEngineIntegrationTest {
                 node -> node instanceof Consumer).map(
                 node -> (Consumer) node).collect(Collectors.toList());
 
-        assertEquals(ticks * weight1, con.getTotalSentToConsumer(consumers.get(0)), 0.0);
-        assertEquals(ticks * weight2, con.getTotalSentToConsumer(consumers.get(1)), 0.0);
+        assertEquals(ticks * weight1 / 100, con.getTotalSentToConsumer(consumers.get(0)), 0);
+        assertEquals(ticks * weight2 / 100, con.getTotalSentToConsumer(consumers.get(1)), 0);
     }
 
     private Simulation setUpStandardSimulationOneProducerTwoConsumers(int ticksToConsumeEntities, int entitiesToProduce, int startTick,
                                                                       int tickBetweenArrivals, int ticks,
-                                                                      double consumerWeight1, double consumerWeight2) {
+                                                                      int consumerWeight1, int consumerWeight2) {
 
         Producer producer = new Producer();
         Consumer consumer1 = new Consumer(ticksToConsumeEntities);
@@ -341,7 +341,7 @@ public class SimulationEngineIntegrationTest {
 
         Consumer consumer = new Consumer(ticksToConsumeEntities);
         Producer producer = new Producer();
-        Relationship relationship = new Relationship(producer, consumer, 1.0);
+        Relationship relationship = new Relationship(producer, consumer, 100);
 
         List<Relationship> relationshipList = new ArrayList<>();
         relationshipList.add(relationship);
@@ -371,7 +371,7 @@ public class SimulationEngineIntegrationTest {
         }};
 
         List<Relationship> relationships = new ArrayList<Relationship>() {{
-            add(new Relationship(nodes.get(0), nodes.get(1), 1.0));
+            add(new Relationship(nodes.get(0), nodes.get(1), 100));
         }};
 
         Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, 50400, 14400, 0);
