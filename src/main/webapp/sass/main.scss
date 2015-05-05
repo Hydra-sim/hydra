@@ -600,41 +600,52 @@ a:hover{
   bottom: 5px;
   left:0px;
   width:100%;
-}
 
+  .btn-help {
+    background-color: $yellow;
+    border: none;
+    border-radius: 0;
+    color: $Avinor_Black;
+    width: 50px;
+    margin-right: 40px;
+    float: right;
+  }
 
-.helpContainer hr{
-  display: block;
-  margin: 0px;
-  height: 10px;
-  background-color: $yellow;
-  border: none;
-  float: left;
-  width: 100%;
-}
+  .btn-help:focus{
+    outline: none;
+  }
 
+  .flaticon-open203:before{
+    width: 100%;
+    height: 100%;
+    content: "\e000";
+    display: block;
+    font-size: 18px;
+    margin-top: -5px;
+  }
 
-.helpContainer .btn-warning {
-  background-color: $yellow;
-  border: none;
-  border-radius: 0;
-  color: $Avinor_Black;
-  width: 50px;
-  margin-right: 40px;
-  float: right;
-}
+  .row{
+    margin-bottom: 20px;
+  }
 
-.helpContainer .btn-warning:focus{
-  outline: none;
-}
+  a{
+    margin-bottom: 10px;
+  }
 
-.helpContainer .flaticon-open203:before{
-  width: 100%;
-  height: 100%;
-  content: "\e000";
-  display: block;
-  font-size: 18px;
-  margin-top: -5px;
+  a:hover{
+    color: $Avinor_LightPurple;
+    text-decoration: underline;
+  }
+
+  .row h5{
+    display: inline;
+    margin-left: 10px;
+    font-size:14px;
+  }
+
+  h2{
+    margin: 0px 0px 10px 0px;
+  }
 }
 
 .collapse:not(.in){
@@ -648,9 +659,16 @@ a:hover{
   display: block;
   float: left;
   width: 100%;
+  clear: both;
 }
 
-.collapse.in.helpBox, .collapse.helpBox{
+.test{
+  background-color: $yellow;
+  width: 100%;
+  height: 100%;
+}
+
+.in.helpBox, .helpBox{
   background-color: $yellow;
   border: none;
   border-radius: 0;
@@ -662,36 +680,11 @@ a:hover{
   background-color: $yellow !important;
 }
 
-.helpContainer .row{
-  margin-bottom: 20px;
-}
-
-.helpContainer a{
-  margin-bottom: 10px;
-}
-
-.helpContainer a:hover{
-  color: $Avinor_LightPurple;
-  text-decoration: underline;
-}
-
-.helpContainer .row h5{
-  display: inline;
-  margin-left: 10px;
-  font-size:14px;
-}
-
-.helpContainer h2{
-  margin: 0px 0px 10px 0px;
-}
-
 .helpBox{
-  padding: 20px 40px 60px 40px;
+  padding: 20px 35px 50px 35px;
   width: 100%;
+  display: inline-block;
 }
-
-// Passengerflow helpmenu
-
 
 /*RESULT PAGE*/
 

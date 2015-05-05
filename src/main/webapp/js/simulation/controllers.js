@@ -250,18 +250,17 @@
             if(ticks == 60)     return "1 minute";
             if(ticks == 1)      return "1 second";
 
-            if(ticks > 3600)    return ticks/3600 + " hours";
-            if(ticks > 60)      return ticks/60 + " minutes";
+            if(ticks > 3600)    return (ticks/3600).toFixed(2) + " hours";
+            if(ticks > 60)      return (ticks/60).toFixed(2) + " minutes";
             if(ticks > 1)       return ticks + " seconds";
         }
 
-        // Tooltip
+        // Tooltip for resultpage
         $scope.extraTooltip = function() {
 
             return d3.behavior
                 .tooltip()
                 .text(function(d) {
-                    console.log(d.maxWaitingTime);
                     switch (d.type) {
                         case "bus":
                         case "train":
