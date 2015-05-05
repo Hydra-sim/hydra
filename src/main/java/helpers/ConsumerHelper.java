@@ -62,11 +62,16 @@ public class ConsumerHelper {
 
         if(tick == -1) {
 
+            System.out.println(entities.size());
+
             while (!entities.isEmpty()){
 
                 entitiesConsumed.add(con.getEntitiesInQueue().get(0));
                 entities.remove(0);
             }
+
+            System.out.println(entitiesConsumed.size());
+
         } else {
 
             if (!entities.isEmpty()) {
@@ -84,10 +89,10 @@ public class ConsumerHelper {
         List<Entity> entitiesConsumedBeforeSimulation = con.getEntitiesConsumed();
 
         entitiesConsumedBeforeSimulation.addAll(entitiesConsumed.stream().collect(Collectors.toList()));
-
         con.setEntitiesConsumed(entitiesConsumedBeforeSimulation);
 
         con.setEntitiesReady(entitiesConsumed);
+
     }
 
     /**

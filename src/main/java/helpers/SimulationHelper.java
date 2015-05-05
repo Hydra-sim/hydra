@@ -145,7 +145,9 @@ public class SimulationHelper {
 
             } else {
 
-                consumerHelper.consumeEntity((Consumer) node, tick);
+                if(!node.getType().equals(PARKING)) {
+                    consumerHelper.consumeEntity((Consumer) node, tick);
+                }
             }
         });
     }
