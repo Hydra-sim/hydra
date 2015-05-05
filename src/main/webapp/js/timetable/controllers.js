@@ -137,7 +137,7 @@
             $modal.open({
                 templateUrl: 'templates/timetable/show.html',
                 controller: 'TimetableEditCtrl',
-                size: 'sm',
+                size: 'lg',
                 resolve: {
                 id: function(){
                     return id;

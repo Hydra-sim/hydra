@@ -386,12 +386,14 @@ table{
   box-shadow: none;
 }
 
+
 .modal-body .timepicker .btn:hover{
   color: $Avinor_LightPurple;
 }
 
 .modal-body .timepicker {
   margin-bottom: 10px !important;
+  width: 100%;
 
   &.timepicker--tiny {
 
@@ -419,6 +421,7 @@ table{
   }
 
   input {
+    width:100% !important;
     margin: 0;
   }
 
