@@ -65,14 +65,21 @@ public class StartupBean {
             add(new TmpFileListItem("timetables/flytoget/monday-friday.csv", "Flytoget: Monday - Friday"));
             add(new TmpFileListItem("timetables/flytoget/sunday.csv", "Flytoget: Sunday"));
 
-            add(new TmpFileListItem("timetables/nettbuss/timesekspressen-mon-fri.csv", "Nettbuss Timesekspress: Monday - Friday "));
-            add(new TmpFileListItem("timetables/nettbuss/timesekspressen-saturday.csv", "Nettbuss Timesekspress: Saturday"));
-            add(new TmpFileListItem("timetables/nettbuss/timesekspressen-sunday.csv", "Nettbuss Timesekspress: Sunday"));
+            add(new TmpFileListItem("timetables/nettbuss/timesekspressen/monday-friday.csv", "Nettbuss Timesekspress: TE15 Monday - Friday"));
+            add(new TmpFileListItem("timetables/nettbuss/timesekspressen/saturday.csv", "Nettbuss Timesekspress: TE15 Saturday"));
+            add(new TmpFileListItem("timetables/nettbuss/timesekspressen/sunday.csv", "Nettbuss Timesekspress: TE15 Sunday"));
 
-            add(new TmpFileListItem("timetables/nettbuss/shuttle-mon-fri.csv", "Nettbuss Shuttle: Monday - Friday"));
-            add(new TmpFileListItem("timetables/nettbuss/shuttle-saturday.csv", "Nettbuss Shuttle: Saturday"));
-            add(new TmpFileListItem("timetables/nettbuss/shuttle-sunday.csv", "Nettbuss Shuttle: Sunday"));
-            add(new TmpFileListItem("timetables/nettbuss/express.csv", "Nettbuss Express"));
+            add(new TmpFileListItem("timetables/nettbuss/shuttlebus/S22/monday-friday.csv", "Nettbuss Shuttle: S22 Monday - Friday"));
+            add(new TmpFileListItem("timetables/nettbuss/shuttlebus/S22/saturday.csv", "Nettbuss Shuttle: S22 Saturday"));
+            add(new TmpFileListItem("timetables/nettbuss/shuttlebus/S22/sunday.csv", "Nettbuss Shuttle: S22 Sunday"));
+            add(new TmpFileListItem("timetables/nettbuss/shuttlebus/S33/monday-sunday.csv", "Nettbuss Shuttle: S33"));
+            add(new TmpFileListItem("timetables/nettbuss/shuttlebus/S44/monday-friday.csv", "Nettbuss Shuttle S44: Monday - Friday"));
+            add(new TmpFileListItem("timetables/nettbuss/shuttlebus/S44/saturday-sunday.csv", "Nettbuss Shuttle S44: Saturday - Sunday"));
+            add(new TmpFileListItem("timetables/nettbuss/shuttlebus/S55/monday-sunday.csv", "Nettbuss Shuttle S55"));
+
+            add(new TmpFileListItem("timetables/nettbuss/express/NX170/monday-sunday.csv", "Nettbuss Express NX170"));
+            add(new TmpFileListItem("timetables/nettbuss/express/NX145/monday-sunday.csv", "Nettbuss Express NX145"));
+            add(new TmpFileListItem("timetables/nettbuss/express/NX147/monday-sunday.csv", "Nettbuss Express NX147"));
 
             add(new TmpFileListItem("timetables/nsb/monday-friday.csv", "NSB: Monday - Friday"));
             add(new TmpFileListItem("timetables/nsb/saturday.csv", "NSB: Saturday"));
