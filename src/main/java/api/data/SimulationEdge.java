@@ -7,5 +7,5 @@ public class SimulationEdge {
     public int id;
     public SimulationNode source;
     public SimulationNode target;
-    public double weight;
+    public int weight;
 }

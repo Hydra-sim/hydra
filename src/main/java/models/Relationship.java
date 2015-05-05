@@ -1,8 +1,5 @@
 package models;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 
 /**
@@ -29,7 +26,7 @@ public class Relationship implements Comparable<Relationship>{
     @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Node target;
 
-    private double weight;
+    private int weight;
 
     //endregion
 
@@ -37,10 +34,10 @@ public class Relationship implements Comparable<Relationship>{
 
     public Relationship() {
 
-        this(new Producer(), new Consumer(), 0.0);
+        this(new Producer(), new Consumer(), 0);
     }
 
-    public Relationship(Node source, Node target, double weight) {
+    public Relationship(Node source, Node target, int weight) {
         this.source = source;
         this.target = target;
         this.weight = weight;
@@ -74,11 +71,11 @@ public class Relationship implements Comparable<Relationship>{
         this.target = target;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 

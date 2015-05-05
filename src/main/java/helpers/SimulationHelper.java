@@ -197,7 +197,7 @@ public class SimulationHelper {
                     if(relationship.getTarget() == transferData.target) {
 
                         if(source.getEntitiesTransfered() == 0
-                           || (double) transferData.entitiesRecieved / source.getEntitiesTransfered() <= relationship.getWeight()){
+                           || ((double) transferData.entitiesRecieved / source.getEntitiesTransfered()) * 100 <= relationship.getWeight()){
 
                             setTransferData(source, transferData, relationship);
 

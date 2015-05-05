@@ -64,16 +64,16 @@ public class OSLPreset {
         for(int i = 0; i < doors.size(); i++) {
 
             if(i == 0) {
-                relationships.add(new Relationship(busStops, doors.get(i), 0.8 ) );
+                relationships.add(new Relationship(busStops, doors.get(i), 80 ) );
             } else {
-                relationships.add(new Relationship(busStops, doors.get(1), 0.05 ) );
+                relationships.add(new Relationship(busStops, doors.get(1), 5 ) );
             }
-            relationships.add(new Relationship(doors.get(i), terminals, 1.0));
+            relationships.add(new Relationship(doors.get(i), terminals, 100));
         }
 
         //Sets the rest of the relationships
-        relationships.add( new Relationship(terminals, bagDrops, 1.0));
-        relationships.add( new Relationship(bagDrops, securityCheck, 1.0));
+        relationships.add( new Relationship(terminals, bagDrops, 100));
+        relationships.add( new Relationship(bagDrops, securityCheck, 100));
 
         List<Node> nodes = new ArrayList<>();
         // All the consumers

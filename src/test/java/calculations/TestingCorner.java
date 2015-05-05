@@ -103,7 +103,7 @@ public class TestingCorner {
         nodes.add(target);
 
         List<Relationship> relationships = new ArrayList<>();
-        relationships.add(new Relationship(source, target, 1.0));
+        relationships.add(new Relationship(source, target, 100));
 
         simulation.setNodes(nodes);
         simulation.setRelationships(relationships);
@@ -143,7 +143,7 @@ public class TestingCorner {
         Consumer target = new Consumer(0);
 
         List<Relationship> relationships = new ArrayList<>();
-        relationships.add(new Relationship(source, target, 1.0));
+        relationships.add(new Relationship(source, target, 100));
 
         nodes.add(target);
 
@@ -178,7 +178,7 @@ public class TestingCorner {
         nodes.add(consumer);
 
         List<Relationship> relationships = new ArrayList<>();
-        relationships.add(new Relationship(producer, consumer, 1.0));
+        relationships.add(new Relationship(producer, consumer, 100));
 
         Simulation simulation = new Simulation("Simulation with data which has been simulated",
                                                 new Date(), nodes, relationships, 0, 100, 25);
@@ -222,7 +222,7 @@ public class TestingCorner {
 
         List<Relationship> r1 = new ArrayList<Relationship>() {{
 
-            add(new Relationship(n1.get(0), n1.get(1), 1.0));
+            add(new Relationship(n1.get(0), n1.get(1), 100));
         }};
 
         Simulation sim1 = new Simulation("Sim1", n1, r1, 1000);
@@ -236,7 +236,7 @@ public class TestingCorner {
 
         List<Relationship> r2 = new ArrayList<Relationship>() {{
 
-            add(new Relationship(n2.get(0), n2.get(1), 1.0));
+            add(new Relationship(n2.get(0), n2.get(1), 100));
         }};
 
         Simulation sim2 = new Simulation("Sim2", n2, r2, 1000);
@@ -294,7 +294,7 @@ public class TestingCorner {
         }}, "Timetable");
 
         List<Relationship> relationships = new ArrayList<>();
-        relationships.add( new Relationship(simulation.getNodes().get(0), simulation.getNodes().get(1), 1.0) );
+        relationships.add( new Relationship(simulation.getNodes().get(0), simulation.getNodes().get(1), 100) );
         simulation.setRelationships(relationships);
 
         simulation.getNodes().stream().filter(

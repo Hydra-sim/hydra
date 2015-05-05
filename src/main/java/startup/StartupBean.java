@@ -125,7 +125,7 @@ public class StartupBean {
         nodes.add(consumer);
 
         List<Relationship> relationships = new ArrayList<>();
-        relationships.add(new Relationship(producer, consumer, 1.0));
+        relationships.add(new Relationship(producer, consumer, 100));
 
         Simulation simulation3 = new Simulation("Simulation with data which has been simulated", new Date(), nodes, relationships, 0, 100, 25);
         SimulationHelper simulationHelper = new SimulationHelper();

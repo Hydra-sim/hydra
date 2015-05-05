@@ -135,7 +135,7 @@ public class Simulation
         }
 
         if(!weighted) {
-            double weight = (double) 1 / relationships.size();
+            int weight = relationships.size() * 100;
 
             relationships.stream().filter(relationship
                     -> relationship.getSource() == node).forEach(relationship
