@@ -8,7 +8,6 @@
         'graph',
         'simulation',
         'zeroclipboard',
-        'tooltip',
         'angular-loading-bar',
         'unit.directives',
         'ngFileUpload'
