@@ -1,10 +1,7 @@
 package helpers;
 
 import models.*;
-import models.data.ConsumerData;
-import models.data.NodeData;
-import models.data.ProducerData;
-import models.data.TransferData;
+import models.data.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,6 +50,8 @@ public class SimulationHelper {
                     .forEach(node -> ConsumerHelper.increaseWaitingTime((Consumer) node));
 
             addEntitiesFromProducer(i);
+
+            getEntitiesQueueing(i);
 
             addEntitiesFromConsumers();
 
@@ -152,19 +151,17 @@ public class SimulationHelper {
     }
     
     private void consumeAllInQueueOnBusStop() {
-        
-        for(Node node : simulation.getNodes()) {
-            
-            if(isConsumer(node)) {
-                
-                Consumer consumer = (Consumer) node; 
-                
-                if(consumer.getType().equals(PARKING)) {
-                    
-                    consumerHelper.consumeAllEntities(consumer);
-                }
+
+        simulation.getNodes().stream().filter(this::isConsumer).forEach(
+                node -> {
+
+            Consumer consumer = (Consumer) node;
+
+            if (consumer.getType().equals(PARKING)) {
+
+                consumerHelper.consumeAllEntities(consumer);
             }
-        }
+        });
     }
 
     /**
@@ -192,24 +189,22 @@ public class SimulationHelper {
 
     private void updatebusStop_inUse( int currentTick) {
 
-        for(Node node : simulation.getNodes()) {
+        simulation.getNodes().stream().filter(this::isConsumer).forEach(
+                node -> {
 
-            if(isConsumer(node)) {
+            Consumer consumer = (Consumer) node;
 
-                Consumer consumer = (Consumer) node;
+            if (consumer.getType().equals(PARKING)) {
 
-                if(consumer.getType().equals(PARKING)) {
+                if (consumer.getBusStop_tickArrival() != -1) {
 
-                    if(consumer.getBusStop_tickArrival() != -1) {
+                    if (currentTick - consumer.getBusStop_tickArrival() == consumer.getTicksToConsumeEntity()) {
 
-                        if(currentTick - consumer.getBusStop_tickArrival() == consumer.getTicksToConsumeEntity()) {
-
-                            consumer.setBusStop_inUse(false);
-                        }
+                        consumer.setBusStop_inUse(false);
                     }
                 }
             }
-        }
+        });
     }
 
     private void transferEntities(Producer source, TimetableEntry arrival, int currentTick) {
@@ -236,26 +231,10 @@ public class SimulationHelper {
 
         if (busStop) {
 
-            Collections.sort(currentRelationships);
+            simulation.getEntitiesQueueing().add( new QueueElement(arrival.getPassengers(), currentRelationships));
 
-            for (Relationship relationship : currentRelationships) {
+            source.setEntitiesTransfered(source.getEntitiesTransfered() + arrival.getPassengers());
 
-                Consumer target = (Consumer) relationship.getTarget();
-
-                if (!target.isBusStop_inUse()) {
-
-                    target.setBusStop_inUse(true);
-                    target.setBusStop_tickArrival(currentTick);
-
-                    for(int i = 0; i < arrival.getPassengers(); i++) {
-
-                        consumerHelper.addEntity(target, new Entity());
-
-                        target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
-                        source.setEntitiesTransfered(source.getEntitiesTransfered() + 1);
-                    }
-                }
-            }
 
         } else {
 
@@ -288,6 +267,50 @@ public class SimulationHelper {
                 }
             }
         }
+    }
+
+    private void getEntitiesQueueing(int currentTick) {
+
+        int groupsToRemove = 0;
+
+        for(QueueElement group : simulation.getEntitiesQueueing()) {
+
+            Collections.sort(group.getRelationships());
+
+            boolean transfered = false;
+
+            for(Relationship relationship : group.getRelationships()) {
+
+                Consumer target = (Consumer) relationship.getTarget();
+
+                if(!target.isBusStop_inUse()) {
+
+                    target.setBusStop_inUse(true);
+                    target.setBusStop_tickArrival(currentTick);
+
+                    for(int i = 0; i < group.getEntities(); i++) {
+
+                        consumerHelper.addEntity(target, new Entity());
+
+                        target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+                    }
+
+                    transfered = true;
+
+                }
+
+                if(transfered) {
+                    groupsToRemove++;
+                    break;
+                }
+            }
+        }
+
+        for(int i = 0; i < groupsToRemove; i++) {
+
+            simulation.getEntitiesQueueing().remove(0);
+        }
+
     }
 
     private void setTransferData(Producer source, TransferData transferData, Relationship relationship) {

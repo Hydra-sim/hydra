@@ -1,6 +1,7 @@
 package models;
 
 import helpers.SimulationHelper;
+import models.data.QueueElement;
 import models.data.TransferData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -50,7 +51,6 @@ public class Simulation
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-
     /**
      * Result of the simulation
      */
@@ -60,8 +60,9 @@ public class Simulation
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Node> nodes;
 
+    @Transient
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Producer> nodesQueueing;
+    private List<QueueElement> entitiesQueueing;
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -69,7 +70,6 @@ public class Simulation
 
     @Transient
     private List<TransferData> transferData;
-
 
     private int startTick;
     private int ticks;
@@ -112,7 +112,7 @@ public class Simulation
         this.tickBreakpoints = tickBreakpoints;
 
         this.transferData = new ArrayList<>();
-        this.nodesQueueing = new ArrayList<>();
+        this.entitiesQueueing = new ArrayList<>();
 
         this.nodes.forEach(this::distributeWeightIfNotSpecified);
 
@@ -259,12 +259,12 @@ public class Simulation
         this.transferData = transferData;
     }
 
-    public List<Producer> getNodesQueueing() {
-        return nodesQueueing;
+    public List<QueueElement> getEntitiesQueueing() {
+        return entitiesQueueing;
     }
 
-    public void setNodesQueueing(List<Producer> nodesQueueing) {
-        this.nodesQueueing = nodesQueueing;
+    public void setEntitiesQueueing(List<QueueElement> entitiesQueueing) {
+        this.entitiesQueueing = entitiesQueueing;
     }
 
     //endregion

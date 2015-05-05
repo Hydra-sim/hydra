@@ -51,11 +51,20 @@
         };
 
         $scope.ok = function () {
+            var timetableArrivals = [];
+
+            for(var i = 0; i < $scope.arrivals.length; i++) {
+
+                var ticks = ($scope.arrivals[i].time.getHours() * 60 * 60) + ($scope.arrivals[i].time.getMinutes() * 60);
+                timetableArrivals.push({time: ticks, passengers: $scope.arrivals[i].passengers});
+            }
+
             var timetable = new Timetable({
                 id: $scope.id,
                 name: $scope.name,
-                arrivals: $scope.arrivals
+                arrivals: timetableArrivals
             });
+
             Timetable.update({"id": $scope.id}, timetable).$promise.then(function() {
                 $rootScope.$emit('updateTimetable');
             });

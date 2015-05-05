@@ -326,14 +326,16 @@ public class TestingCorner {
 
             add( new Producer( timetable ) );
 
-            for(int i = 0; i < 2; i++) {
-                add( new Consumer( 2 )  {{
+            Consumer consumer1 = new Consumer(2);
+            consumer1.setType("parking");
 
-                    setType("parking");
-                }});
-            }
+            Consumer consumer2 = new Consumer(2);
+            consumer2.setType("parking");
 
-            add( new Consumer( 1 ) );
+            add(consumer1);
+            add(consumer2);
+
+            add(new Consumer(1));
         }};
 
         List<Relationship> relationships = new ArrayList<Relationship>() {{
@@ -352,7 +354,8 @@ public class TestingCorner {
         simulationHelper.simulate(simulation);
         simulation = simulationHelper.getSimulation();
 
-        assertTrue(simulation.getNodes().get(3).getEntitiesRecieved() > 0);
-        assertEquals(0, simulation.getNodesQueueing().size());
+        assertEquals(600, simulation.getNodes().get(3).getEntitiesRecieved());
+        assertEquals(0, simulation.getEntitiesQueueing().size());
+        assertEquals(600, simulation.getNodes().get(0).getEntitiesTransfered());
     }
 }
