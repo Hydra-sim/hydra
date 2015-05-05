@@ -81,9 +81,20 @@ public class StartupBean {
             add(new TmpFileListItem("timetables/nettbuss/express/NX145/monday-sunday.csv", "Nettbuss Express NX145"));
             add(new TmpFileListItem("timetables/nettbuss/express/NX147/monday-sunday.csv", "Nettbuss Express NX147"));
 
-            add(new TmpFileListItem("timetables/nsb/monday-friday.csv", "NSB: Monday - Friday"));
-            add(new TmpFileListItem("timetables/nsb/saturday.csv", "NSB: Saturday"));
-            add(new TmpFileListItem("timetables/nsb/sunday.csv", "NSB: Sunday"));
+            add(new TmpFileListItem("timetables/nsb/eidsvoll-kongsberg/monday-friday.csv", "NSB Eidsvoll - Kongsberg: Monday - Friday"));
+            add(new TmpFileListItem("timetables/nsb/eidsvoll-kongsberg/saturday-sunday.csv", "NSB Eidsvoll - Kongsberg: Monday - Friday"));
+            add(new TmpFileListItem("timetables/nsb/kongsberg-eidsvoll/monday-sunday.csv", "NSB Kongsberg - Eidsvoll"));
+
+            add(new TmpFileListItem("timetables/nsb/lillehammer-skien/monday-friday.csv", "NSB Lillehamer - Skien: Monday - Friday"));
+            add(new TmpFileListItem("timetables/nsb/lillehammer-skien/saturday.csv", "NSB Lillehamer - Skien: Saturday"));
+            add(new TmpFileListItem("timetables/nsb/lillehammer-skien/sunday.csv", "NSB Lillehamer - Skien: Sunday"));
+            add(new TmpFileListItem("timetables/nsb/skien-lillehammer/monday-friday.csv", "NSB Skien - Lillehamer: Monday - Friday"));
+            add(new TmpFileListItem("timetables/nsb/skien-lillehammer/saturday.csv", "NSB Skien - Lillehamer: Saturday"));
+            add(new TmpFileListItem("timetables/nsb/skien-lillehammer/sunday.csv", "NSB Skien - Lillehamer: Sunday"));
+
+            add(new TmpFileListItem("timetables/nsb/trondheim-oslo/monday-friday.csv", "NSB Trondheim - Oslo: Monday - Friday"));
+            add(new TmpFileListItem("timetables/nsb/trondheim-oslo/saturday.csv", "NSB Trondheim - Oslo: Saturday"));
+            add(new TmpFileListItem("timetables/nsb/trondheim-oslo/sunday.csv", "NSB Trondheim - Oslo: Sunday"));
 
             add(new TmpFileListItem("timetables/sasflybussen/monday-friday.csv", "SAS Flybussen: Monday - Friday"));
             add(new TmpFileListItem("timetables/sasflybussen/saturday.csv", "SAS Flybussen: Saturday"));
