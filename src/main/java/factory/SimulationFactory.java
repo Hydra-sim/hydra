@@ -3,6 +3,7 @@ package factory;
 import api.data.SimulationEdge;
 import api.data.SimulationFormData;
 import api.data.SimulationNode;
+import helpers.ProducerHelper;
 import models.*;
 
 import javax.ejb.EJB;
@@ -38,7 +39,11 @@ public class SimulationFactory {
 
                 nodes.add(createConsumerGroup(node));
 
-            } else {
+            } else if (isPassengerflow(node)) {
+
+                nodes.add(createPassengerflow(node, input));
+
+            } else{
 
                 throw new RuntimeException("Unknown node type (" + node.type + ")!");
             }
@@ -109,6 +114,20 @@ public class SimulationFactory {
         return producer;
     }
 
+    private Node createPassengerflow(SimulationNode node, SimulationFormData formData) {
+
+        Producer producer = new Producer(new Timetable(), node.x, node.y);
+
+        ProducerHelper producerHelper = new ProducerHelper();
+        producerHelper.generateTimetable(producer, formData.startTick, node.timeBetweenArrivals,
+                (formData.ticks / node.timeBetweenArrivals), node.personsPerArrival);
+
+        producer.setTmpId(node.id);
+        producer.setType(node.type);
+
+        return producer;
+    }
+
     private boolean isConsumerGroup(SimulationNode node) {
 
         return node.type.contains("consumerGroup");
@@ -127,5 +146,9 @@ public class SimulationFactory {
         return  node.type.equals("producer") ||
                 node.type.equals("train") ||
                 node.type.equals("bus");
+    }
+
+    private boolean isPassengerflow(SimulationNode node) {
+        return node.type.contains("passengerflow");
     }
 }
