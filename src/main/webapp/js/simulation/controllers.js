@@ -910,36 +910,6 @@
         $rootScope.menu_field_button_click = function () {};
     });
 
-    app.controller('TooltipProducerCtrl', function($scope, $tooltip, Timetable){
-
-        $tooltip.open({
-            templateUrl: 'templates/tooltip/inner-tooltip-producer.html',
-            controller: 'TooltipProdCtrl',
-            poxX: 200,
-            posY: 200
-        });
-    });
-
-    app.controller('TooltipPassengerflowCtrl', function($scope, $tooltip){
-
-        $tooltip.open({
-            templateUrl: 'templates/tooltip/inner-tooltip-passengerflow.html',
-            controller: 'TooltipPassflowCtrl',
-            poxX: 200,
-            posY: 200
-        });
-    });
-
-    app.controller('TooltipConsumerCtrl', function($scope, $tooltip){
-
-        $tooltip.open({
-            templateUrl: 'templates/tooltip/inner-tooltip-consumer.html',
-            controller: 'TooltipConsCtrl',
-            poxX: 200,
-            posY: 200
-        });
-    });
-
     app.controller('SaveAsModalCtrl', function($scope, $modalInstance, simulationName, menu_field_name){
 
         $scope.simulationName = simulationName;

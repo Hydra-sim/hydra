@@ -50,7 +50,6 @@
             .when('/preset/:id/',       {templateUrl: 'templates/preset/show.html'})
 
             .when('/map',               {controller: 'UploadMapCtrl',           templateUrl: "templates/map.html"})
-            .when('/tooltip',           {controller: 'TooltipTestCtrl',         templateUrl: "templates/tooltip/testTooltip.html"})
             .when('/documentation',     {controller: 'FullDocumentationCtrl',   templateUrl: 'templates/fulldocumentation.html' })
             .when('/loadingscreen',     {templateUrl: 'templates/simulation/loadingscreen.html'})
 
