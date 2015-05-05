@@ -1,6 +1,7 @@
 package models;
 
 import helpers.SimulationHelper;
+import models.data.TransferData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
@@ -63,6 +64,11 @@ public class Simulation
     @Fetch(FetchMode.SUBSELECT)
     private List<Relationship> relationships;
 
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    private List<TransferData> transferData;
+
+
     private int startTick;
     private int ticks;
     private boolean preset;
@@ -102,6 +108,8 @@ public class Simulation
         this.startTick = startTick;
         this.ticks = ticks;
         this.tickBreakpoints = tickBreakpoints;
+
+        this.transferData = new ArrayList<>();
 
         this.nodes.forEach(this::distributeWeightIfNotSpecified);
 
@@ -238,6 +246,14 @@ public class Simulation
 
     public void setTickBreakpoints(int tickBreakpoints) {
         this.tickBreakpoints = tickBreakpoints;
+    }
+
+    public List<TransferData> getTransferData() {
+        return transferData;
+    }
+
+    public void setTransferData(List<TransferData> transferData) {
+        this.transferData = transferData;
     }
 
     //endregion

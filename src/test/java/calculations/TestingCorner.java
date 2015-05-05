@@ -109,6 +109,7 @@ public class TestingCorner {
         simulation.setRelationships(relationships);
 
         simulationHelper.setSimulation(simulation);
+        simulationHelper.initTransferData();
         simulationHelper.addEntitiesFromProducer(0);
 
         Producer sourceResult = (Producer) simulationHelper.getSimulation().getNodes().get(0);

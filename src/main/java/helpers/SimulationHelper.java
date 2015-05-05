@@ -4,8 +4,10 @@ import models.*;
 import models.data.ConsumerData;
 import models.data.NodeData;
 import models.data.ProducerData;
+import models.data.TransferData;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by knarf on 20/04/15.
@@ -38,6 +40,8 @@ public class SimulationHelper {
         consumerHelper = new ConsumerHelper();
 
         int maxWaitingTime = 0;
+
+        initTransferData();
 
         for(int i = simulation.getStartTick(); i < simulation.getStartTick() + simulation.getTicks(); i++) {
 
@@ -79,11 +83,22 @@ public class SimulationHelper {
             Consumer consumer = (Consumer) node;
             int max = consumerHelper.getMaxWaitingTime(consumer);
 
-            if(max > consumer.getMaxWaitingTime()) {
+            if (max > consumer.getMaxWaitingTime()) {
 
                 consumer.setMaxWaitingTime(max);
             }
         });
+    }
+
+    public void initTransferData() {
+
+        for(Relationship relationship : simulation.getRelationships()) {
+
+            Node source = relationship.getSource();
+            Node target = relationship.getTarget();
+
+            simulation.getTransferData().add(new TransferData(0, 0, target, source));
+        }
     }
 
     // Some of these are temporarily public for testing. TODO: Make private once testing is complete
@@ -140,49 +155,68 @@ public class SimulationHelper {
     public void addEntitiesFromProducer(int currentTick) {
 
         simulation.getNodes().stream().filter(this::isProducer).forEach(
-                producer -> {
+                node -> {
 
-                    Producer source = (Producer) producer;
+            Producer producer = (Producer) node;
 
-                    for (TimetableEntry arrival : source.getTimetable().getArrivals()) {
+            producer.getTimetable().getArrivals().stream().filter(
+                    arrival -> arrival.getTime() == currentTick).forEach(
+                    arrival -> forEachPassenger(producer, arrival));
+        });
+    }
 
-                        if (arrival.getTime() == currentTick) {
+    private void forEachPassenger(Producer producer, TimetableEntry arrival) {
 
-                            source.setNumberOfArrivals(source.getNumberOfArrivals() + 1);
+        producer.setNumberOfArrivals(producer.getNumberOfArrivals() + 1);
 
-                            for (int i = 0; i < arrival.getPassengers(); i++) {
+        for(int i = 0; i < arrival.getPassengers(); i++) {
 
-                                for (Relationship relationship : simulation.getRelationships()) {
+            transferEntity(producer);
+        }
+    }
 
-                                    boolean transferred = false;
+    private void transferEntity(Producer source) {
 
-                                    if (relationship.getSource() == source) {
+        List<Relationship> currentRelationships = simulation.getRelationships().stream().filter(
+                relationship -> relationship.getSource() == source).collect(Collectors.toList());
 
-                                        int recieved = relationship.getTarget().getEntitiesRecieved();
+        boolean transfered = false;
 
-                                        double currentWeight = (double) recieved / relationship.getSource().getEntitiesTransfered();
+        for(TransferData transferData : simulation.getTransferData()) {
 
-                                        if (relationship.getSource().getEntitiesTransfered() == 0
-                                                || currentWeight <= relationship.getWeight()) {
+            if(transfered) break;
 
-                                            Consumer target = (Consumer) relationship.getTarget();
+            if(transferData.source == source) {
 
-                                            consumerHelper.addEntity(target, new Entity());
-                                            target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
-                                            producer.setEntitiesTransfered(producer.getEntitiesTransfered() + 1);
+                for( Relationship relationship : currentRelationships) {
 
-                                            transferred = true;
-                                            break;
+                    if(transfered) break;
 
-                                        }
-                                    }
+                    if(relationship.getTarget() == transferData.target) {
 
-                                    if (transferred) break;
-                                }
-                            }
+                        if(source.getEntitiesTransfered() == 0
+                           || (double) transferData.entitiesRecieved / source.getEntitiesTransfered() <= relationship.getWeight()){
+
+                            setTransferData(source, transferData, relationship);
+
+                            transfered = true;
                         }
                     }
-                });
+                }
+            }
+        }
+    }
+
+    private void setTransferData(Producer source, TransferData transferData, Relationship relationship) {
+
+        Consumer target = (Consumer) relationship.getTarget();
+        consumerHelper.addEntity(target, new Entity());
+
+        transferData.entitiesRecieved += 1;
+        transferData.entitiesTransfered += 1;
+
+        target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+        source.setEntitiesTransfered(source.getEntitiesTransfered() + 1);
     }
 
     public void addEntitiesFromConsumers() {
