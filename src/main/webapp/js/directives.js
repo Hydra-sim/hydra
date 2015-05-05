@@ -20,7 +20,12 @@
     app.directive('menuFieldButton', function() {
         return{
             restrict: 'E',
-            template:   "<div class='pull-right menu-field-button' ng-click='menu_field_button_click()'><span class='hidden-xs'>{{menu_field_button}} </span><span class='fa {{menu_field_button_icon}}'></span> </div>"
+            template:   "<div class='pull-right menu-field-button' ng-click='click()'><span class='hidden-xs'>{{value}} </span><span class='fa {{icon}}'></span> </div>",
+            scope: {
+                click: "&",
+                icon: "=",
+                value: "="
+            }
         };
     });
 
