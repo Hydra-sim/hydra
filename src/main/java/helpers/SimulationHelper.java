@@ -4,8 +4,10 @@ import models.*;
 import models.data.ConsumerData;
 import models.data.NodeData;
 import models.data.ProducerData;
+import models.data.TransferData;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by knarf on 20/04/15.
@@ -39,11 +41,14 @@ public class SimulationHelper {
 
         int maxWaitingTime = 0;
 
+        initTransferData();
+
         for(int i = simulation.getStartTick(); i < simulation.getStartTick() + simulation.getTicks(); i++) {
 
             // Increase waiting time
-            simulation.getNodes().stream().filter(this::isConsumer).forEach(
-                    node -> ConsumerHelper.increaseWaitingTime((Consumer) node));
+            simulation.getNodes().stream()
+                    .filter(this::isConsumer)
+                    .forEach(node -> ConsumerHelper.increaseWaitingTime((Consumer) node));
 
             addEntitiesFromProducer(i);
 
@@ -73,17 +78,28 @@ public class SimulationHelper {
 
     private void findMaxWaitingTime() {
 
-        simulation.getNodes().stream().filter(this::isConsumer).forEach(
-                node -> {
+        simulation.getNodes().stream()
+                .filter(this::isConsumer)
+                .forEach(node -> {
+                    Consumer consumer = (Consumer) node;
+                    int max = consumerHelper.getMaxWaitingTime(consumer);
 
-            Consumer consumer = (Consumer) node;
-            int max = consumerHelper.getMaxWaitingTime(consumer);
+                    if (max > consumer.getMaxWaitingTime()) {
 
-            if(max > consumer.getMaxWaitingTime()) {
+                        consumer.setMaxWaitingTime(max);
+                    }
+                });
+    }
 
-                consumer.setMaxWaitingTime(max);
-            }
-        });
+    public void initTransferData() {
+
+        for(Relationship relationship : simulation.getRelationships()) {
+
+            Node source = relationship.getSource();
+            Node target = relationship.getTarget();
+
+            simulation.getTransferData().add(new TransferData(0, 0, target, source));
+        }
     }
 
     // Some of these are temporarily public for testing. TODO: Make private once testing is complete
@@ -98,36 +114,36 @@ public class SimulationHelper {
     public void consumeEntities(int tick) {
 
         // Will be true both for Consumers and ConsumerGroups
-        simulation.getNodes().stream().filter(this::isConsumer).forEach(
-                node -> {
+        simulation.getNodes().stream()
+                .filter(this::isConsumer)
+                .forEach(node -> {
+                    if (isConsumerGroup(node)) {
+                        ConsumerGroup consumerGroup = (ConsumerGroup) node;
 
-            if (isConsumerGroup(node)) {
-                ConsumerGroup consumerGroup = (ConsumerGroup) node;
+                        List<Entity> entitiesToDistribute = consumerGroup.getEntitiesInQueue();
 
-                List<Entity> entitiesToDistribute = consumerGroup.getEntitiesInQueue();
+                        while (!entitiesToDistribute.isEmpty()) {
 
-                while (!entitiesToDistribute.isEmpty()) {
+                            for (Consumer consumer : consumerGroup.getConsumers()) {
 
-                    for (Consumer consumer : consumerGroup.getConsumers()) {
+                                List<Entity> entitiesInQueue = consumer.getEntitiesInQueue();
+                                entitiesInQueue.add(entitiesToDistribute.get(0));
+                                entitiesToDistribute.remove(0);
+                                consumer.setEntitiesInQueue(entitiesInQueue);
+                            }
 
-                        List<Entity> entitiesInQueue = consumer.getEntitiesInQueue();
-                        entitiesInQueue.add(entitiesToDistribute.get(0));
-                        entitiesToDistribute.remove(0);
-                        consumer.setEntitiesInQueue(entitiesInQueue);
+                        }
+
+                        for(Consumer consumer : consumerGroup.getConsumers()) {
+
+                            consumerHelper.consumeEntity(consumer, tick);
+                        }
+
+                    } else {
+
+                        consumerHelper.consumeEntity((Consumer) node, tick);
                     }
-
-                }
-
-                for(Consumer consumer : consumerGroup.getConsumers()) {
-
-                    consumerHelper.consumeEntity(consumer, tick);
-                }
-
-            } else {
-
-                consumerHelper.consumeEntity((Consumer) node, tick);
-            }
-        });
+                });
     }
 
     /**
@@ -139,50 +155,70 @@ public class SimulationHelper {
      */
     public void addEntitiesFromProducer(int currentTick) {
 
-        simulation.getNodes().stream().filter(this::isProducer).forEach(
-                producer -> {
+        simulation.getNodes().stream()
+                .filter(this::isProducer)
+                .forEach(node -> {
+                    Producer producer = (Producer) node;
 
-                    Producer source = (Producer) producer;
+                    producer.getTimetable().getArrivals().stream()
+                            .filter(arrival -> arrival.getTime() == currentTick)
+                            .forEach(arrival -> forEachPassenger(producer, arrival));
+                });
+    }
 
-                    for (TimetableEntry arrival : source.getTimetable().getArrivals()) {
+    private void forEachPassenger(Producer producer, TimetableEntry arrival) {
 
-                        if (arrival.getTime() == currentTick) {
+        producer.setNumberOfArrivals(producer.getNumberOfArrivals() + 1);
 
-                            source.setNumberOfArrivals(source.getNumberOfArrivals() + 1);
+        for(int i = 0; i < arrival.getPassengers(); i++) {
 
-                            for (int i = 0; i < arrival.getPassengers(); i++) {
+            transferEntity(producer);
+        }
+    }
 
-                                for (Relationship relationship : simulation.getRelationships()) {
+    private void transferEntity(Producer source) {
 
-                                    boolean transferred = false;
+        List<Relationship> currentRelationships = simulation.getRelationships().stream()
+                .filter(relationship -> relationship.getSource() == source)
+                .collect(Collectors.toList());
 
-                                    if (relationship.getSource() == source) {
+        boolean transfered = false;
 
-                                        int recieved = relationship.getTarget().getEntitiesRecieved();
+        for(TransferData transferData : simulation.getTransferData()) {
 
-                                        double currentWeight = (double) recieved / relationship.getSource().getEntitiesTransfered();
+            if(transfered) break;
 
-                                        if (relationship.getSource().getEntitiesTransfered() == 0
-                                                || currentWeight <= relationship.getWeight()) {
+            if(transferData.source == source) {
 
-                                            Consumer target = (Consumer) relationship.getTarget();
+                for( Relationship relationship : currentRelationships) {
 
-                                            consumerHelper.addEntity(target, new Entity());
-                                            target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
-                                            producer.setEntitiesTransfered(producer.getEntitiesTransfered() + 1);
+                    if(transfered) break;
 
-                                            transferred = true;
-                                            break;
+                    if(relationship.getTarget() == transferData.target) {
 
-                                        }
-                                    }
+                        if(source.getEntitiesTransfered() == 0
+                           || (double) transferData.entitiesRecieved / source.getEntitiesTransfered() <= relationship.getWeight()){
 
-                                    if (transferred) break;
-                                }
-                            }
+                            setTransferData(source, transferData, relationship);
+
+                            transfered = true;
                         }
                     }
-                });
+                }
+            }
+        }
+    }
+
+    private void setTransferData(Producer source, TransferData transferData, Relationship relationship) {
+
+        Consumer target = (Consumer) relationship.getTarget();
+        consumerHelper.addEntity(target, new Entity());
+
+        transferData.entitiesRecieved += 1;
+        transferData.entitiesTransfered += 1;
+
+        target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+        source.setEntitiesTransfered(source.getEntitiesTransfered() + 1);
     }
 
     public void addEntitiesFromConsumers() {
@@ -194,33 +230,32 @@ public class SimulationHelper {
         // have, and runs the code if either this is true, or it is the first entity sent from the sending
         // consumer
         // Get the data about the entity that is to be sent
-        simulation.getRelationships().stream().filter(
-                relationship -> relationship.getSource().getEntitiesReady().size() != 0).forEach(
-                relationship -> {
+        simulation.getRelationships().stream()
+                .filter(relationship -> relationship.getSource().getEntitiesReady().size() != 0)
+                .forEach(relationship -> {
+                    while(!relationship.getSource().getEntitiesReady().isEmpty()) {
+                        // The percentage of entities already sent from our sending consumer to the receiving consumer
+                        double currentWeight = (double) relationship.getTarget().getEntitiesRecieved() / relationship.getSource().getEntitiesTransfered();
 
-            while(!relationship.getSource().getEntitiesReady().isEmpty()) {
-                // The percentage of entities already sent from our sending consumer to the receiving consumer
-                double currentWeight = (double) relationship.getTarget().getEntitiesRecieved() / relationship.getSource().getEntitiesTransfered();
+                        // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                        // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                        // consumer
+                        if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
 
-                // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-                // have, and runs the code if either this is true, or it is the first entity sent from the sending
-                // consumer
-                if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
+                            // Get the data about the entity that is to be sent
+                            Entity entity = relationship.getSource().getEntitiesReady().get(0);
 
-                    // Get the data about the entity that is to be sent
-                    Entity entity = relationship.getSource().getEntitiesReady().get(0);
+                            Consumer target = (Consumer) relationship.getTarget();
 
-                    Consumer target = (Consumer) relationship.getTarget();
+                            List<Entity> entities = target.getEntitiesInQueue();
+                            entities.add(entity);
+                            target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+                            target.setEntitiesInQueue(entities);
 
-                    List<Entity> entities = target.getEntitiesInQueue();
-                    entities.add(entity);
-                    target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
-                    target.setEntitiesInQueue(entities);
-
-                    relationship.getSource().getEntitiesReady().remove(0);
-                }
-            }
-        });
+                            relationship.getSource().getEntitiesReady().remove(0);
+                        }
+                    }
+                });
     }
 
     /**
