@@ -38,6 +38,12 @@
             .when('/simulation/:id' +
                     '/auth',            {controller: 'AuthPathCtrl',            templateUrl: "templates/modals/passwordAuth.html"})
 
+            .when('/simulation/:id/animation', {
+                controller: 'SimulationAnimationCtrl',
+                controllerAs: 'ctrl',
+                templateUrl: 'templates/simulation/animation.html'
+            })
+
             // Timetable
             .when('/timetable',         {controller: 'TimetableCtrl',           templateUrl: 'templates/timetable/index.html'})
             .when('/timetable/new',     {templateUrl: 'templates/timetable/new.html'})

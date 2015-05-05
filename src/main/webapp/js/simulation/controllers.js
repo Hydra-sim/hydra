@@ -925,4 +925,12 @@
             $modalInstance.dismiss();
         };
     });
+
+    app.controller('SimulationAnimationCtrl', function($routeParams, $rootScope) {
+        this.simulationId = $routeParams.id;
+
+        $rootScope.menu_field_button = "";
+        $rootScope.menu_field_button_icon = "";
+        $rootScope.menu_field_button_click = function () {};
+    });
 })();
