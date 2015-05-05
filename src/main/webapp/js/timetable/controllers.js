@@ -132,13 +132,14 @@
             });
         };
 
-        $scope.editTimetable = function() {
+        $scope.editTimetable = function(id) {
             $modal.open({
-                templateUrl: 'templates/timetable/new.html',
+                templateUrl: 'templates/timetable/show.html',
                 controller: 'TimetableEditCtrl',
                 size: 'sm'
             });
         }
+
 
         $scope.uploadTimetable = function() {
             $modal.open({
