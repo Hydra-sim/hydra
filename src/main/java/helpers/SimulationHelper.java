@@ -6,14 +6,16 @@ import models.data.NodeData;
 import models.data.ProducerData;
 import models.data.TransferData;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by knarf on 20/04/15.
  */
 public class SimulationHelper {
 
+    public static final String PARKING = "parking";
     Simulation simulation;
 
     ConsumerHelper consumerHelper;
@@ -55,6 +57,8 @@ public class SimulationHelper {
             addEntitiesFromConsumers();
 
             consumeEntities(i);
+
+            consumeAllInQueueOnBusStop();
 
             maxWaitingTime = calculateWaitingTime(maxWaitingTime);
 
@@ -115,35 +119,52 @@ public class SimulationHelper {
 
         // Will be true both for Consumers and ConsumerGroups
         simulation.getNodes().stream()
-                .filter(this::isConsumer)
-                .forEach(node -> {
-                    if (isConsumerGroup(node)) {
-                        ConsumerGroup consumerGroup = (ConsumerGroup) node;
+            .filter(this::isConsumer)
+            .forEach(node -> {
 
-                        List<Entity> entitiesToDistribute = consumerGroup.getEntitiesInQueue();
+            if (isConsumerGroup(node)) {
+                ConsumerGroup consumerGroup = (ConsumerGroup) node;
 
-                        while (!entitiesToDistribute.isEmpty()) {
+                List<Entity> entitiesToDistribute = consumerGroup.getEntitiesInQueue();
 
-                            for (Consumer consumer : consumerGroup.getConsumers()) {
+                while (!entitiesToDistribute.isEmpty()) {
 
-                                List<Entity> entitiesInQueue = consumer.getEntitiesInQueue();
-                                entitiesInQueue.add(entitiesToDistribute.get(0));
-                                entitiesToDistribute.remove(0);
-                                consumer.setEntitiesInQueue(entitiesInQueue);
-                            }
+                    for (Consumer consumer : consumerGroup.getConsumers()) {
 
-                        }
-
-                        for(Consumer consumer : consumerGroup.getConsumers()) {
-
-                            consumerHelper.consumeEntity(consumer, tick);
-                        }
-
-                    } else {
-
-                        consumerHelper.consumeEntity((Consumer) node, tick);
+                        List<Entity> entitiesInQueue = consumer.getEntitiesInQueue();
+                        entitiesInQueue.add(entitiesToDistribute.get(0));
+                        entitiesToDistribute.remove(0);
+                        consumer.setEntitiesInQueue(entitiesInQueue);
                     }
-                });
+
+                }
+
+                for(Consumer consumer : consumerGroup.getConsumers()) {
+
+                    consumerHelper.consumeEntity(consumer, tick);
+                }
+
+            } else {
+
+                consumerHelper.consumeEntity((Consumer) node, tick);
+            }
+        });
+    }
+    
+    private void consumeAllInQueueOnBusStop() {
+        
+        for(Node node : simulation.getNodes()) {
+            
+            if(isConsumer(node)) {
+                
+                Consumer consumer = (Consumer) node; 
+                
+                if(consumer.getType().equals(PARKING)) {
+                    
+                    consumerHelper.consumeAllEntities(consumer);
+                }
+            }
+        }
     }
 
     /**
@@ -155,53 +176,113 @@ public class SimulationHelper {
      */
     public void addEntitiesFromProducer(int currentTick) {
 
-        simulation.getNodes().stream()
-                .filter(this::isProducer)
-                .forEach(node -> {
-                    Producer producer = (Producer) node;
+        updatebusStop_inUse(currentTick);
 
-                    producer.getTimetable().getArrivals().stream()
-                            .filter(arrival -> arrival.getTime() == currentTick)
-                            .forEach(arrival -> forEachPassenger(producer, arrival));
-                });
+        simulation.getNodes().stream().filter(
+                this::isProducer).forEach(node -> {
+
+            Producer source = (Producer) node;
+
+            source.getTimetable().getArrivals().stream().filter(
+                    arrival -> arrival.getTime() == currentTick).forEach(
+                    arrival -> transferEntities(source, arrival, currentTick));
+        });
+
     }
 
-    private void forEachPassenger(Producer producer, TimetableEntry arrival) {
+    private void updatebusStop_inUse( int currentTick) {
 
-        producer.setNumberOfArrivals(producer.getNumberOfArrivals() + 1);
+        for(Node node : simulation.getNodes()) {
 
-        for(int i = 0; i < arrival.getPassengers(); i++) {
+            if(isConsumer(node)) {
 
-            transferEntity(producer);
+                Consumer consumer = (Consumer) node;
+
+                if(consumer.getType().equals(PARKING)) {
+
+                    if(consumer.getBusStop_tickArrival() != -1) {
+
+                        if(currentTick - consumer.getBusStop_tickArrival() == consumer.getTicksToConsumeEntity()) {
+
+                            consumer.setBusStop_inUse(false);
+                        }
+                    }
+                }
+            }
         }
     }
 
-    private void transferEntity(Producer source) {
+    private void transferEntities(Producer source, TimetableEntry arrival, int currentTick) {
 
-        List<Relationship> currentRelationships = simulation.getRelationships().stream()
-                .filter(relationship -> relationship.getSource() == source)
-                .collect(Collectors.toList());
+        source.setNumberOfArrivals(source.getNumberOfArrivals() + 1);
 
-        boolean transfered = false;
+        boolean busStop = false;
 
-        for(TransferData transferData : simulation.getTransferData()) {
+        List<Relationship> currentRelationships = new ArrayList<>();
 
-            if(transfered) break;
+        for(Relationship relationship : simulation.getRelationships()) {
 
-            if(transferData.source == source) {
+            if(relationship.getSource() == source) {
 
-                for( Relationship relationship : currentRelationships) {
+                if(relationship.getTarget().getType().equals(PARKING)) {
+
+                    busStop = true;
+                }
+
+                currentRelationships.add(relationship);
+            }
+        }
+
+
+        if (busStop) {
+
+            Collections.sort(currentRelationships);
+
+            for (Relationship relationship : currentRelationships) {
+
+                Consumer target = (Consumer) relationship.getTarget();
+
+                if (!target.isBusStop_inUse()) {
+
+                    target.setBusStop_inUse(true);
+                    target.setBusStop_tickArrival(currentTick);
+
+                    for(int i = 0; i < arrival.getPassengers(); i++) {
+
+                        consumerHelper.addEntity(target, new Entity());
+
+                        target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+                        source.setEntitiesTransfered(source.getEntitiesTransfered() + 1);
+                    }
+                }
+            }
+
+        } else {
+
+            for(int i = 0; i < arrival.getPassengers(); i++) {
+
+                boolean transfered = false;
+
+                for(TransferData transferData : simulation.getTransferData()) {
 
                     if(transfered) break;
 
-                    if(relationship.getTarget() == transferData.target) {
+                    if(transferData.source == source) {
 
-                        if(source.getEntitiesTransfered() == 0
-                           || ((double) transferData.entitiesRecieved / source.getEntitiesTransfered()) * 100 <= relationship.getWeight()){
+                        for( Relationship relationship : currentRelationships) {
 
-                            setTransferData(source, transferData, relationship);
+                            if(transfered) break;
 
-                            transfered = true;
+                            if(relationship.getTarget() == transferData.target) {
+
+                                if(source.getEntitiesTransfered() == 0
+                                        || ((double) transferData.entitiesRecieved / source.getEntitiesTransfered()) * 100 <= relationship.getWeight()){
+
+                                    setTransferData(source, transferData, relationship);
+
+                                    transfered = true;
+                                }
+                            }
                         }
                     }
                 }
@@ -231,31 +312,33 @@ public class SimulationHelper {
         // consumer
         // Get the data about the entity that is to be sent
         simulation.getRelationships().stream()
-                .filter(relationship -> relationship.getSource().getEntitiesReady().size() != 0)
-                .forEach(relationship -> {
-                    while(!relationship.getSource().getEntitiesReady().isEmpty()) {
-                        // The percentage of entities already sent from our sending consumer to the receiving consumer
-                        double currentWeight = (double) relationship.getTarget().getEntitiesRecieved() / relationship.getSource().getEntitiesTransfered();
+            .filter(relationship -> relationship.getSource().getEntitiesReady().size() != 0)
+            .forEach(relationship -> {
 
-                        // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-                        // have, and runs the code if either this is true, or it is the first entity sent from the sending
-                        // consumer
-                        if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
+            while(!relationship.getSource().getEntitiesReady().isEmpty()) {
 
-                            // Get the data about the entity that is to be sent
-                            Entity entity = relationship.getSource().getEntitiesReady().get(0);
+                // The percentage of entities already sent from our sending consumer to the receiving consumer
+                double currentWeight = (double) relationship.getTarget().getEntitiesRecieved() / relationship.getSource().getEntitiesTransfered();
 
-                            Consumer target = (Consumer) relationship.getTarget();
+                // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                // consumer
+                if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
 
-                            List<Entity> entities = target.getEntitiesInQueue();
-                            entities.add(entity);
-                            target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
-                            target.setEntitiesInQueue(entities);
+                    // Get the data about the entity that is to be sent
+                    Entity entity = relationship.getSource().getEntitiesReady().get(0);
 
-                            relationship.getSource().getEntitiesReady().remove(0);
-                        }
-                    }
-                });
+                    Consumer target = (Consumer) relationship.getTarget();
+
+                    List<Entity> entities = target.getEntitiesInQueue();
+                    entities.add(entity);
+                    target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+                    target.setEntitiesInQueue(entities);
+
+                    relationship.getSource().getEntitiesReady().remove(0);
+                }
+            }
+        });
     }
 
     /**

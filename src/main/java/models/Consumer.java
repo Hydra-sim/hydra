@@ -1,12 +1,7 @@
 package models;
 
 import models.data.ConsumerData;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +19,12 @@ public class Consumer extends Node{
     private int ticksToConsumeEntity;
 
     private int maxWaitingTime;
+
+    @Transient
+    private boolean busStop_inUse;
+
+    @Transient
+    private int busStop_tickArrival;
 
     @Transient
     private List<ConsumerData> consumerDataList;
@@ -59,6 +60,8 @@ public class Consumer extends Node{
         this.entitiesInQueue = new ArrayList<>();
         this.consumerDataList = new ArrayList<>();
         this.maxWaitingTime = 0;
+        this.busStop_inUse = false;
+        this.busStop_tickArrival = -1;
     }
     //endregion
 
@@ -113,6 +116,23 @@ public class Consumer extends Node{
 
     public void setMaxWaitingTime(int maxWaitingTime) {
         this.maxWaitingTime = maxWaitingTime;
+    }
+
+    public boolean isBusStop_inUse() {
+        return busStop_inUse;
+    }
+
+    public void setBusStop_inUse(boolean busStop_inUse) {
+        this.busStop_inUse = busStop_inUse;
+        this.busStop_tickArrival = -1;
+    }
+
+    public int getBusStop_tickArrival() {
+        return busStop_tickArrival;
+    }
+
+    public void setBusStop_tickArrival(int busStop_tickArrival) {
+        this.busStop_tickArrival = busStop_tickArrival;
     }
 
     //endregion

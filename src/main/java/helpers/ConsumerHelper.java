@@ -60,12 +60,22 @@ public class ConsumerHelper {
         List<Entity> entities = con.getEntitiesInQueue();
         List<Entity> entitiesConsumed = new ArrayList<>();
 
-        if(!entities.isEmpty()){
+        if(tick == -1) {
 
-            if(tick == 0 || tick % con.getTicksToConsumeEntity() == 0){
+            while (!entities.isEmpty()){
 
                 entitiesConsumed.add(con.getEntitiesInQueue().get(0));
                 entities.remove(0);
+            }
+        } else {
+
+            if (!entities.isEmpty()) {
+
+                if (tick == 0 || tick % con.getTicksToConsumeEntity() == 0) {
+
+                    entitiesConsumed.add(con.getEntitiesInQueue().get(0));
+                    entities.remove(0);
+                }
             }
         }
 
@@ -76,6 +86,18 @@ public class ConsumerHelper {
         entitiesConsumedBeforeSimulation.addAll(entitiesConsumed.stream().collect(Collectors.toList()));
 
         con.setEntitiesConsumed(entitiesConsumedBeforeSimulation);
+
+        con.setEntitiesReady(entitiesConsumed);
+    }
+
+    /**
+     * Moves as many entities as consumer can consume from queue to consumed
+     *
+     * @param con the consumer on which the entities are to be moved
+     */
+    public void consumeAllEntities(Consumer con) {
+
+        consumeEntity(con, -1);
     }
 
     /**

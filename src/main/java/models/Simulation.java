@@ -60,6 +60,9 @@ public class Simulation
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Node> nodes;
 
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Producer> nodesQueueing;
+
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private List<Relationship> relationships;
@@ -109,6 +112,7 @@ public class Simulation
         this.tickBreakpoints = tickBreakpoints;
 
         this.transferData = new ArrayList<>();
+        this.nodesQueueing = new ArrayList<>();
 
         this.nodes.forEach(this::distributeWeightIfNotSpecified);
 
@@ -253,6 +257,14 @@ public class Simulation
 
     public void setTransferData(List<TransferData> transferData) {
         this.transferData = transferData;
+    }
+
+    public List<Producer> getNodesQueueing() {
+        return nodesQueueing;
+    }
+
+    public void setNodesQueueing(List<Producer> nodesQueueing) {
+        this.nodesQueueing = nodesQueueing;
     }
 
     //endregion

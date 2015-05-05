@@ -306,4 +306,53 @@ public class TestingCorner {
 
         assertTrue(simulation.getNodes().get(0).getNodeDataList().size() > 0);
     }
+
+    @Test
+    public void testBusStop() {
+
+        Timetable timetable = new Timetable(new ArrayList<TimetableEntry>(){{
+
+            add( new TimetableEntry( 0, 100 ) );
+            add( new TimetableEntry( 1, 100 ) );
+            add( new TimetableEntry( 3, 100 ) );
+
+            add( new TimetableEntry( 0, 100 ) );
+            add( new TimetableEntry( 1, 100 ) );
+            add( new TimetableEntry( 3, 100 ) );
+
+        }}, "Test");
+
+        List<Node> nodes = new ArrayList<Node>() {{
+
+            add( new Producer( timetable ) );
+
+            for(int i = 0; i < 2; i++) {
+                add( new Consumer( 2 )  {{
+
+                    setType("parking");
+                }});
+            }
+
+            add( new Consumer( 1 ) );
+        }};
+
+        List<Relationship> relationships = new ArrayList<Relationship>() {{
+
+            add( new Relationship( nodes.get( 0 ), nodes.get( 1 ), 70   ) );
+            add( new Relationship( nodes.get( 0 ), nodes.get( 2 ), 30   ) );
+            add( new Relationship( nodes.get( 1 ), nodes.get( 3 ), 100  ) );
+            add( new Relationship( nodes.get( 2 ), nodes.get( 3 ), 100  ) );
+        }};
+
+        int startTick = 0;
+        int ticks = 10;
+        int tickBreakpoints = 1;
+
+        Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
+        simulationHelper.simulate(simulation);
+        simulation = simulationHelper.getSimulation();
+
+        assertTrue(simulation.getNodes().get(3).getEntitiesRecieved() > 0);
+        assertEquals(0, simulation.getNodesQueueing().size());
+    }
 }
