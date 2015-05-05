@@ -517,6 +517,10 @@ a:hover{
 }
 
 
+.modal-dialog.modal-lg{
+  width:500px;
+}
+
 /* MODAL */
 
 .modal-content{
@@ -567,7 +571,7 @@ a:hover{
 }
 
 .modal-body .vertical-scrollable{
-  max-height: 500px;
+  max-height: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -906,4 +910,10 @@ body{ background: white; }
   z-index: 10000;
   margin-top: 15px;
   right: 15px;
+}
+
+@media (min-width: 992px){
+.modal-lg {
+  width: 600px;
+}
 }
