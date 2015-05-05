@@ -67,19 +67,17 @@
             this
                 .on("mouseover", function(){
                     dispatch({type: "open"});
-                    return tooltip_el.style("visibility", "visible");
+                    open();
                 })
                 .on("mousemove", function(d){
-                    var text = text_method(d);
-
-                    return tooltip_el
+                    tooltip_el
                         .style("top", (d3.event.pageY-10)+"px")
                         .style("left",(d3.event.pageX+10)+"px")
-                        .html(text);
+                        .html(text_method(d));
                 })
                 .on("mouseout", function(){
                     dispatch({type: "close"});
-                    return tooltip_el.style("visibility", "hidden");
+                    close();
                 });
         }
 
@@ -87,6 +85,16 @@
         tooltip.text = function(method) {
             text_method = method;
             return tooltip;
+        };
+
+        tooltip.open = open;
+        function open() {
+            tooltip_el.style("visibility", "visible");
+        };
+
+        tooltip.close = close;
+        function close() {
+            tooltip_el.style("visibility", "hidden");
         };
 
         return d3.rebind(tooltip, event, "on");
