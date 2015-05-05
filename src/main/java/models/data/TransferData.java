@@ -24,6 +24,10 @@ public class TransferData {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Node source;
 
+    public TransferData() {
+
+    }
+
     public TransferData(int entitiesTransfered, int entitiesRecieved, Node target, Node source) {
         this.entitiesTransfered = entitiesTransfered;
         this.entitiesRecieved = entitiesRecieved;

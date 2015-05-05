@@ -19,6 +19,10 @@ public class NodeData {
     public int entitiesRecieved;
     public int entitiesReady;
 
+    public NodeData() {
+
+    }
+
     public NodeData(int entitiesTransfered, int entitiesRecieved, int entitiesReady) {
         this.entitiesTransfered = entitiesTransfered;
         this.entitiesRecieved = entitiesRecieved;

@@ -20,6 +20,10 @@ public class ConsumerData {
     public int entitiesConsumed;
     public int maxWaitingTime;
 
+    public ConsumerData() {
+
+    }
+
     public ConsumerData(int entitiesInQueue, int entitiesConsumed, int maxWaitingTime) {
         this.entitiesInQueue = entitiesInQueue;
         this.entitiesConsumed = entitiesConsumed;
