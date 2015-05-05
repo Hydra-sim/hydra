@@ -4,10 +4,7 @@ import models.data.ProducerData;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +18,7 @@ public class Producer extends Node{
     @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     Timetable timetable;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
+    @Transient
     List<ProducerData> producerDataList;
 
     int numberOfArrivals;

@@ -64,8 +64,7 @@ public class Simulation
     @Fetch(FetchMode.SUBSELECT)
     private List<Relationship> relationships;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
+    @Transient
     private List<TransferData> transferData;
 
 

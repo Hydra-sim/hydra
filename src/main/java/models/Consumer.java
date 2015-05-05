@@ -23,11 +23,10 @@ public class Consumer extends Node{
 
     private int ticksToConsumeEntity;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    private List<ConsumerData> consumerDataList;
-
     private int maxWaitingTime;
+
+    @Transient
+    private List<ConsumerData> consumerDataList;
 
     @Transient
     private List<Entity> entitiesConsumed;

@@ -28,15 +28,16 @@ abstract public class Node {
 
     private int x, y;
 
+    @Transient
     private int entitiesTransfered;
 
+    @Transient
     private int entitiesRecieved;
 
     @Transient
     private List<Entity> entitiesReady;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
+    @Transient
     private List<NodeData> nodeDataList;
 
     @Transient
