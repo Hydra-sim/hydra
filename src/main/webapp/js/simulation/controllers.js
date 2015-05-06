@@ -294,7 +294,7 @@
                         default:
                             return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
                                 "Passengers in queue at simulation end: " + d.entitiesInQueue.length + "<br/>" +
-                                "Passengers that went through: " + d.entitiesConsumed + "<br/>" +
+                                "Passengers that went through: " + d.entitiesConsumed.length + "<br/>" +
                                 "Max waiting time: " + ticksToTime(d.maxWaitingTime);
 
                     }
