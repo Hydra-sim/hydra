@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     connect = require('gulp-connect'),
     uglify = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps'),
+    ngAnnotate = require('gulp-ng-annotate'),
     concat = require('gulp-concat'),
     redbird = require('redbird');
 
@@ -35,7 +36,7 @@ var vendorJsFiles = [
 ];
 
 
-gulp.task('default', ['bower', 'sass', 'vendor.js']);
+gulp.task('default', ['bower', 'sass', 'vendor.js', 'js']);
 
 gulp.task('bower', function() {
     return bower()
@@ -46,8 +47,7 @@ gulp.task('bower', function() {
 gulp.task('vendor.js', ['bower'], function() {
    return gulp.src(vendorJsFiles)
        .pipe(sourcemaps.init())
-          .pipe(uglify())
-          .pipe(concat('vendor.js'))
+            .pipe(concat('vendor.js'))
        .pipe(sourcemaps.write())
        .pipe(gulp.dest(config.bowerDir));
 });
@@ -66,6 +66,12 @@ gulp.task('html', function () {
 
 gulp.task('js', function () {
     gulp.src(config.jsFiles)
+        .pipe(sourcemaps.init())
+            .pipe(ngAnnotate())
+            .pipe(uglify())
+            .pipe(concat('default.js'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(config.bowerDir))
         .pipe(connect.reload());
 });
 
