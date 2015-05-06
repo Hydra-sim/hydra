@@ -227,15 +227,17 @@
             cfpLoadingBar.complete();
             $scope.loaded = true;
 
-            var from  = $scope.simulation.startTick;
+            var from  = ticksToTime($scope.simulation.startTick);
+            var to = ticksToTime($scope.simulation.startTick + $scope.simulation.ticks);
 
-            $scope.fromHours = from / 60 / 60;
-            $scope.fromMinutes = (from - ($scope.fromHours * 60 * 60)) / 60;
+            console.log(from);
+            console.log(to);
 
-            var to = from + $scope.simulation.ticks;
+            $scope.fromHours = parseInt(from);
+            $scope.fromMinutes = Number( ( ( parseFloat( from ) % $scope.fromHours ) * 60 ).toFixed(2) );
 
-            $scope.toHours = to / 60 / 60;
-            $scope.toMinutes = (to - ($scope.toHours * 60 * 60)) / 60;
+            $scope.toHours = parseInt(to);
+            $scope.toMinutes = Number( ( ( parseFloat( to ) % $scope.toHours ) * 60 ).toFixed(2) );
 
             $scope.maxWaitingTimeInMinutes = $scope.simulation.result.maxWaitingTimeInTicks / 60;
 
