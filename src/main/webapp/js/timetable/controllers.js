@@ -47,7 +47,7 @@
         $scope.addLine = function() {
 
             $scope.arrivals.push({ time: 0, passengers: 0 });
-            $scope.totalArrivals = $scope.arrivals.length;
+           // $scope.totalArrivals = $scope.arrivals.length;
         };
 
         $scope.ok = function () {
@@ -56,7 +56,11 @@
             for(var i = 0; i < $scope.arrivals.length; i++) {
 
                 var ticks = ($scope.arrivals[i].time.getHours() * 60 * 60) + ($scope.arrivals[i].time.getMinutes() * 60);
-                timetableArrivals.push({time: ticks, passengers: $scope.arrivals[i].passengers});
+                timetableArrivals.push(
+                    {
+                        time: ticks,
+                        passengers: $scope.arrivals[i].passengers
+                    });
             }
 
             var timetable = new Timetable({
@@ -75,7 +79,7 @@
         };
 
         $scope.cancel = function () {
-            $modalInstance.close();
+            $modalInstance.dismiss('cancel');
         };
     });
 
