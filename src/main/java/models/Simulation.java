@@ -153,9 +153,10 @@ public class Simulation
             boolean restSpent = false;
             int weight = 100 / currentRelationships.size();
             int rest = 100 - weight * currentRelationships.size(); // for number of relationships that 100 is not divisible for
-            if(rest == 0) restSpent = true;
 
             for (Relationship relationship : currentRelationships) {
+
+                if(rest == 0) restSpent = true;
 
                 if(restSpent) {
 
