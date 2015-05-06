@@ -53,8 +53,16 @@
   overflow-x: hidden;
 }
 
+.modal-body .container-fluid{
+  padding: 0;
+}
+
 .vertical-scrollable input {
   text-align: center;
+}
+
+.vertical-scrollable .row{
+  margin: 0;
 }
 
 .modal-body .container-fluid a {
