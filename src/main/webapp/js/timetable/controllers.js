@@ -11,7 +11,7 @@
             $modal.open({
                 templateUrl: 'templates/timetable/new.html',
                 controller:  'TimetableNewCtrl',
-                size:        'sm'
+                size:        'lg'
             });
         };
     });
