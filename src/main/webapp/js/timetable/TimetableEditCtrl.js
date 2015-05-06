@@ -36,8 +36,8 @@
 
         $scope.addLine = function() {
             var arrivalTime = new Date();
-            arrivalTime.setHours( 0 );
-            arrivalTime.setMinutes( 0 );
+            arrivalTime.setHours( 23 );
+            arrivalTime.setMinutes( 59 );
 
             $scope.arrivals.push({ time: arrivalTime, passengers: 0 });
 

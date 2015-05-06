@@ -65,10 +65,9 @@
   margin: 0;
 }
 
-.vertical-scrollable .anchor{
-  display: none;
+#anchor{
+  display: block;
   position: absolute;
-  bottom: 0;
 }
 
 .modal-body .container-fluid a {

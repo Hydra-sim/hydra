@@ -345,14 +345,20 @@
                     }).join('');
             }
 
+            function colorFromValue(val){
+                var h = Math.floor((100 - val) * 120 / 100);
+                var s = Math.abs(val - 50) / 50;
+
+                return hsv2rgb(h, s, 1);
+            }
+
             return d3.behavior.border()
                 .color(function (d) {
-                    if(typeof d.entitiesInQueue !== "undefined") {
-                        var val = d.entitiesInQueue.length;
-                        var h = Math.floor((100 - val) * 120 / 100);
-                        var s = Math.abs(val - 50) / 50;
-
-                        return hsv2rgb(h, s, 1);
+                    if(typeof d.entitiesInQueue !== "undefined" && d.type !== "parking") {
+                        return colorFromValue(d.entitiesInQueue.length);
+                    }
+                    if(typeof d.numberOfBusesInQueue !== "undefined" ){
+                        return colorFromValue(d.numberOfBusesInQueue * 50);
                     }
                 })
                 .width(function (d) {
