@@ -338,36 +338,40 @@ public class SimulationHelper {
             .filter(relationship -> relationship.getSource().getEntitiesReady().size() != 0)
             .forEach(relationship -> {
 
-                for(TransferData transferData : simulation.getTransferData()) {
+                // The percentage of entities already sent from our sending consumer to the receiving consumer
+                // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                // consumer
+                // Get the data about the entity that is to be sent
+                simulation.getTransferData().stream().filter(
+                        transferData -> transferData.source == relationship.getSource() && transferData.target == relationship.getTarget()).forEach(
+                        transferData -> {
 
-                    if(transferData.source == relationship.getSource() && transferData.target == relationship.getTarget()) {
+                    while (!relationship.getSource().getEntitiesReady().isEmpty()) {
 
-                        while (!relationship.getSource().getEntitiesReady().isEmpty()) {
+                        // The percentage of entities already sent from our sending consumer to the receiving consumer
+                        double currentWeight = (double) transferData.entitiesRecieved / relationship.getSource().getEntitiesTransfered();
 
-                            // The percentage of entities already sent from our sending consumer to the receiving consumer
-                            double currentWeight = (double) transferData.entitiesRecieved / relationship.getSource().getEntitiesTransfered();
+                        // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                        // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                        // consumer
+                        if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
 
-                            // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-                            // have, and runs the code if either this is true, or it is the first entity sent from the sending
-                            // consumer
-                            if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
+                            // Get the data about the entity that is to be sent
+                            Entity entity = relationship.getSource().getEntitiesReady().get(0);
 
-                                // Get the data about the entity that is to be sent
-                                Entity entity = relationship.getSource().getEntitiesReady().get(0);
+                            Consumer target = (Consumer) relationship.getTarget();
 
-                                Consumer target = (Consumer) relationship.getTarget();
+                            List<Entity> entities = target.getEntitiesInQueue();
+                            entities.add(entity);
+                            target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+                            target.setEntitiesInQueue(entities);
 
-                                List<Entity> entities = target.getEntitiesInQueue();
-                                entities.add(entity);
-                                target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
-                                target.setEntitiesInQueue(entities);
-
-                                relationship.getSource().getEntitiesReady().remove(0);
-                                relationship.getSource().setEntitiesTransfered(relationship.getSource().getEntitiesTransfered() + 1);
-                            }
+                            relationship.getSource().getEntitiesReady().remove(0);
+                            relationship.getSource().setEntitiesTransfered(relationship.getSource().getEntitiesTransfered() + 1);
                         }
                     }
-                }
+                });
         });
     }
 

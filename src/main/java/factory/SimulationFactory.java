@@ -111,6 +111,7 @@ public class SimulationFactory {
 
         producer.setTmpId(node.id);
         producer.setType(node.type);
+
         return producer;
     }
 
@@ -124,6 +125,7 @@ public class SimulationFactory {
 
         producer.setTmpId(node.id);
         producer.setType(node.type);
+        producer.setPersonsPerArrival(node.personsPerArrival);
 
         return producer;
     }
