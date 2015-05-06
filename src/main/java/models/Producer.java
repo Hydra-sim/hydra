@@ -22,6 +22,12 @@ public class Producer extends Node{
     @Transient
     List<ProducerData> producerDataList;
 
+    @Transient
+    int personsPerArrival;
+
+    @Transient
+    int timeBetweenArrivals;
+
     int numberOfArrivals;
 
     //region constructors
@@ -69,6 +75,22 @@ public class Producer extends Node{
 
     public void setNumberOfArrivals(int numberOfArrivals) {
         this.numberOfArrivals = numberOfArrivals;
+    }
+
+    public int getPersonsPerArrival() {
+        return personsPerArrival;
+    }
+
+    public void setPersonsPerArrival(int personsPerArrival) {
+        this.personsPerArrival = personsPerArrival;
+    }
+
+    public int getTimeBetweenArrivals() {
+        return timeBetweenArrivals;
+    }
+
+    public void setTimeBetweenArrivals(int timeBetweenArrivals) {
+        this.timeBetweenArrivals = timeBetweenArrivals;
     }
 
     //endregion

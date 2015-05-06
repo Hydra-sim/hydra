@@ -37,5 +37,7 @@ public class ProducerHelper {
         }
 
         producer.setTimetable(timetable);
+        producer.setNumberOfArrivals(timetable.getArrivals().size());
+        producer.setTimeBetweenArrivals(tickBetweenArrivals);
     }
 }
