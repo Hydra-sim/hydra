@@ -10,6 +10,7 @@
 @import 'elements/progress-bar';
 @import 'elements/tooltip';
 @import 'elements/help-page';
+@import 'elements/tab-menu';
 
 body {
   min-height: 100%;
@@ -38,51 +39,6 @@ header {
 .logo img {
   height: 50px;
   margin-left: -20px;
-}
-
-.tabMenu {
-  margin-top: 20px;
-  width: 100%;
-  height: 60px;
-}
-
-.tabMenu ul {
-  width: 100%;
-  height: 60px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.tabMenu ul li {
-  width: 200px;
-  height: 100%;
-  margin: 0px 10px 0px 0px;
-  display: inline-block;
-  background-color: $Avinor_Grey;
-}
-
-.tabMenu .active {
-  background-color: $Avinor_LightPurple;
-  color: white;
-}
-
-.tabMenu div {
-  display: block;
-  width: 100%;
-  height: 100%;
-  color: $Avinor_Black;
-  font-family: "Avinor";
-  font-size: 1.5em;
-  text-align: center;
-  line-height: 3;
-}
-
-.tabMenu div:hover {
-  background-color: $Avinor_LightPurple;
-  color: white;
-  cursor: pointer;
-
 }
 
 footer {
