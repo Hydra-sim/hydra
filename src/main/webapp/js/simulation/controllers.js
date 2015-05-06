@@ -276,7 +276,9 @@
                         case "train":
                             return d.timetable.name + "<br/>" +
                                 "Brought " + d.entitiesTransfered + " passengers to the location." + "<br/>" +
-                                "Number of arrivals: " + d.numberOfArrivals + "<br/>";
+                                "Number of arrivals: " + d.numberOfArrivals + "<br/>" +
+                                "Number of buses in queue: " + d.numberOfBusesInQueue;
+                        //TODO: Legge number of buses in queue bare på buss
 
 
                         case "passengerflow":
@@ -289,7 +291,6 @@
                             console.log("d:" + d);
                             return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
                                     "Brought " + d.entitiesTransfered + " passengeres to the location.";
-                        //TODO: Fix when buslogic in algorithm is fixed (number of buses recieved and number of passengers transfered
 
                         default:
                             return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
