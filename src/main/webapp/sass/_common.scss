@@ -14,3 +14,9 @@
   -ms-user-select: $value;
   user-select: $value;
 }
+
+@mixin delay($delay) {
+  -webkit-animation-delay: $delay;
+  -moz-animation-delay: $delay;
+  animation-delay: $delay;
+}
