@@ -768,20 +768,6 @@ body {
 
 //Loading icon from: http://codepen.io/dghez/pen/Czuqn
 
-//Overriding loading bar
-.bar {
-  background: $yellow !important;
-  height: 5px !important;
-}
-
-#loading-bar .peg {
-  -moz-box-shadow: $yellow 1px 0 20px 1px;
-  -ms-box-shadow: $yellow 1px 0 20px 1px;
-  -webkit-box-shadow: $yellow 1px 0 20px 1px;
-  box-shadow: $yellow 1px 0 20px 1px;
-  height: 5px !important;
-}
-
 //Margin fix for modals
 .more-margin {
   margin-top: 5px !important;
