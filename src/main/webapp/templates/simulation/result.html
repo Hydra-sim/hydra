@@ -10,11 +10,9 @@
 
     <p>Max waiting time: {{ maxWaitingTimeInMinutes | number:2 }} minutes.</p>
 
-    <p>(Between node and node)</p>
-
     <p>Number of passengers through the simulation: {{ entitiesConsumed }}</p>
     <p>Passengers still in queue at simulation end: {{ entitiesInQueue }}</p>in
-    <p>Busses in queue at simulation end: {{ entitiesQueueing.length }}</p>
+    <p>Busses queueing at simulation end: {{ bussesInQueue }}</p>
 
     <a href="#/simulation/{{simulation.id}}/animation">animation</a>
 
