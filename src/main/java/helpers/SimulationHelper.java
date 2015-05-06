@@ -69,6 +69,18 @@ public class SimulationHelper {
             findMaxWaitingTime();
         }
 
+        for(QueueElement queueElement : simulation.getEntitiesQueueing()) {
+
+            for(Relationship relationship : queueElement.getRelationships()) {
+
+                Producer source = (Producer) relationship.getSource();
+
+                source.setNumberOfBusesInQueue(source.getNumberOfBusesInQueue() + 1);
+
+                break;
+            }
+        }
+
 
         simulation.setResult(
                 new SimulationResult(

@@ -352,7 +352,6 @@ public class TestingCorner {
 
         Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
         simulationHelper.simulate(simulation);
-        simulation = simulationHelper.getSimulation();
 
         assertEquals(0, simulation.getEntitiesQueueing().size());
         assertEquals(600, simulation.getNodes().get(0).getEntitiesTransfered());

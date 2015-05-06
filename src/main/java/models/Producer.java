@@ -30,6 +30,8 @@ public class Producer extends Node{
 
     int numberOfArrivals;
 
+    int numberOfBusesInQueue;
+
     //region constructors
     public Producer() {
         this(new Timetable());
@@ -46,6 +48,7 @@ public class Producer extends Node{
         this.setY(y);
         this.producerDataList = new ArrayList<>();
         this.numberOfArrivals = 0;
+        this.numberOfBusesInQueue = 0;
     }
 
 
@@ -91,6 +94,14 @@ public class Producer extends Node{
 
     public void setTimeBetweenArrivals(int timeBetweenArrivals) {
         this.timeBetweenArrivals = timeBetweenArrivals;
+    }
+
+    public int getNumberOfBusesInQueue() {
+        return numberOfBusesInQueue;
+    }
+
+    public void setNumberOfBusesInQueue(int numberOfBusesInQueue) {
+        this.numberOfBusesInQueue = numberOfBusesInQueue;
     }
 
     //endregion
