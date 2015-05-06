@@ -347,11 +347,13 @@
 
             return d3.behavior.border()
                 .color(function (d) {
-                    var val = d.entitiesInQueue.length;
-                    var h = Math.floor((100 - val) * 120 / 100);
-                    var s = Math.abs(val - 50) / 50;
+                    if(typeof d.entitiesInQueue !== "undefined") {
+                        var val = d.entitiesInQueue.length;
+                        var h = Math.floor((100 - val) * 120 / 100);
+                        var s = Math.abs(val - 50) / 50;
 
-                    return hsv2rgb(h, s, 1);
+                        return hsv2rgb(h, s, 1);
+                    }
                 })
                 .width(function (d) {
                     return "5px";
