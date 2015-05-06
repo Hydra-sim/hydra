@@ -13,7 +13,9 @@ var config = {
     bowerDir: rootWebDir + 'vendor/',
     sassFiles:  rootWebDir + 'sass/**/*.scss',
     sassInputFile: rootWebDir + 'sass/main.scss',
-    cssOutputDir: rootWebDir + 'css/'
+    cssOutputDir: rootWebDir + 'css/',
+    htmlFiles: rootWebDir + '/**/*.html',
+    jsFiles: rootWebDir + '/js/**/*.js'
 };
 
 var vendorJsFiles = [
@@ -58,20 +60,20 @@ gulp.task('sass', ['bower'], function () {
 });
 
 gulp.task('html', function () {
-    gulp.src(rootWebDir + '/**/*.html')
+    gulp.src(config.htmlFiles)
         .pipe(connect.reload());
 });
 
 gulp.task('js', function () {
-    gulp.src(rootWebDir + '/**/*.js')
+    gulp.src(config.jsFiles)
         .pipe(connect.reload());
 });
 
 gulp.task('watch', ['default'], function () {
     gulp.watch('./bower.json', ['bower']);
     gulp.watch(config.sassFiles, ['sass']);
-    gulp.watch(rootWebDir + '/**/*.html', ['html']);
-    gulp.watch(rootWebDir + '/js/*.js', ['js']);
+    gulp.watch(config.htmlFiles, ['html']);
+    gulp.watch(config.jsFiles, ['js']);
 });
 
 gulp.task('connect', ['watch'], function() {
