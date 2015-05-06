@@ -294,7 +294,7 @@ public class TestingCorner {
         }}, "Timetable");
 
         List<Relationship> relationships = new ArrayList<>();
-        relationships.add( new Relationship(simulation.getNodes().get(0), simulation.getNodes().get(1), 100) );
+        relationships.add(new Relationship(simulation.getNodes().get(0), simulation.getNodes().get(1), 100));
         simulation.setRelationships(relationships);
 
         simulation.getNodes().stream().filter(
@@ -397,6 +397,80 @@ public class TestingCorner {
         assertEquals(simulation.getNodes().get(1).getEntitiesRecieved(), simulation.getNodes().get(2).getEntitiesRecieved());
         assertEquals(100, simulation.getRelationships().get(0).getWeight()
                         + simulation.getRelationships().get(1).getWeight() );
+
+    }
+
+    @Test
+    public void testBusParkingTwoBusesOneHour() {
+
+        testBusParkingTwoBuses(1, 7, 9);
+    }
+
+    @Test
+    public void testBusParkingTwoBusesTwoHours() {
+
+        testBusParkingTwoBuses(2, 9, 10);
+    }
+
+    private void testBusParkingTwoBuses(int hours, int bus1Queue, int bus2Queue) {
+
+        int consumptionTime = hours * 60 * 60;
+
+        Timetable timetable = new Timetable(new ArrayList<TimetableEntry>(){{
+
+            add( new TimetableEntry( ( 6   * 60 * 60 ) + (  2   * 60) , 44  ) );
+            add( new TimetableEntry( ( 6   * 60 * 60 ) + ( 22   * 60) , 89  ) );
+            add( new TimetableEntry( ( 6   * 60 * 60 ) + ( 29   * 60) , 154 ) );
+            add( new TimetableEntry( ( 6   * 60 * 60 ) + ( 42   * 60) , 180 ) );
+            add( new TimetableEntry( ( 6   * 60 * 60 ) + ( 49   * 60) , 168 ) );
+            add( new TimetableEntry( ( 7   * 60 * 60 ) + (  2   * 60) , 246 ) );
+            add( new TimetableEntry( ( 7   * 60 * 60 ) + (  9   * 60) , 237 ) );
+            add( new TimetableEntry( ( 7   * 60 * 60 ) + ( 22   * 60) , 84  ) );
+            add( new TimetableEntry( ( 7   * 60 * 60 ) + ( 29   * 60) , 175 ) );
+            add( new TimetableEntry( ( 7   * 60 * 60 ) + ( 42   * 60) , 150 ) );
+            add( new TimetableEntry( ( 7   * 60 * 60 ) + ( 49   * 60) , 43  ) );
+
+        }}, "Flytoget");
+
+        List<Node> nodes = new ArrayList<Node>() {{
+
+            add(new Producer(timetable));
+            add(new Producer(timetable));
+
+            Consumer busStop1 = new Consumer(consumptionTime);
+            busStop1.setType("parking");
+
+            Consumer busStop2 = new Consumer(consumptionTime);
+            busStop2.setType("parking");
+
+            Consumer busStop3 = new Consumer(consumptionTime);
+            busStop3.setType("parking");
+            /*
+
+            */
+
+            add(busStop1);
+            add(busStop2);
+            add(busStop3);
+        }};
+
+        List<Relationship> relationships = new ArrayList<Relationship>() {{
+
+            add(new Relationship(nodes.get(0), nodes.get(2), 50));
+            add(new Relationship(nodes.get(0), nodes.get(3), 50));
+            add(new Relationship(nodes.get(1), nodes.get(4), 100));
+
+        }};
+
+        int startTick = 21600;
+        int ticks = 7200;
+        int tickBreakpoint = 900;
+
+        Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoint);
+        simulationHelper.simulate(simulation);
+
+        assertEquals( bus1Queue , ((Producer) simulation.getNodes().get(0)).getNumberOfBusesInQueue());
+        assertEquals( bus2Queue , ((Producer) simulation.getNodes().get(1)).getNumberOfBusesInQueue());
 
     }
 }
