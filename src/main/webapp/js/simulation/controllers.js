@@ -346,6 +346,9 @@
             }
 
             function colorFromValue(val){
+                if(val > 100){
+                    val = 100;
+                }
                 var h = Math.floor((100 - val) * 120 / 100);
                 var s = Math.abs(val - 50) / 50;
 

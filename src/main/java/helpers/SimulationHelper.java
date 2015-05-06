@@ -150,6 +150,12 @@ public class SimulationHelper {
                 for(Consumer consumer : consumerGroup.getConsumers()) {
 
                     consumerHelper.consumeEntity(consumer, tick);
+
+                    if(!consumer.getEntitiesReady().isEmpty()) {
+                        consumerGroup.getEntitiesReady().add(consumer.getEntitiesReady().get(0));
+                        consumer.getEntitiesReady().remove(0);
+                    }
+
                 }
 
             } else {
@@ -338,6 +344,53 @@ public class SimulationHelper {
 
     public void addEntitiesFromConsumers() {
 
+        for(Node node : simulation.getNodes()) {
+
+            if(isConsumer(node)) {
+
+                for(Relationship relationship : simulation.getRelationships()) {
+
+                    if(relationship.getSource() == node) {
+
+                        if(!node.getEntitiesReady().isEmpty()) {
+
+                            for (TransferData transferData : simulation.getTransferData()) {
+
+                                if (transferData.source == relationship.getSource() && transferData.target == relationship.getTarget()) {
+
+                                    while (!relationship.getSource().getEntitiesReady().isEmpty()) {
+
+                                        Node source = relationship.getSource();
+
+                                        // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                                        // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                                        // consumer
+                                        if (source.getEntitiesTransfered() == 0
+                                                || ((double) transferData.entitiesRecieved / source.getEntitiesTransfered()) * 100 <= relationship.getWeight()) {
+
+                                            // Get the data about the entity that is to be sent
+                                            Entity entity = relationship.getSource().getEntitiesReady().get(0);
+
+                                            Consumer target = (Consumer) relationship.getTarget();
+
+                                            List<Entity> entities = target.getEntitiesInQueue();
+                                            entities.add(entity);
+                                            target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+                                            target.setEntitiesInQueue(entities);
+
+                                            relationship.getSource().getEntitiesReady().remove(0);
+                                            relationship.getSource().setEntitiesTransfered(relationship.getSource().getEntitiesTransfered() + 1);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
         // Current consumer sending entities
 
         // The percentage of entities already sent from our sending consumer to the receiving consumer
@@ -360,13 +413,13 @@ public class SimulationHelper {
 
                     while (!relationship.getSource().getEntitiesReady().isEmpty()) {
 
-                        // The percentage of entities already sent from our sending consumer to the receiving consumer
-                        double currentWeight = (double) transferData.entitiesRecieved / relationship.getSource().getEntitiesTransfered();
+                        Node source = relationship.getSource();
 
                         // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
                         // have, and runs the code if either this is true, or it is the first entity sent from the sending
                         // consumer
-                        if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
+                        if (source.getEntitiesTransfered() == 0
+                                || ((double) transferData.entitiesRecieved / source.getEntitiesTransfered()) * 100 <= relationship.getWeight()) {
 
                             // Get the data about the entity that is to be sent
                             Entity entity = relationship.getSource().getEntitiesReady().get(0);
@@ -384,6 +437,7 @@ public class SimulationHelper {
                     }
                 });
         });
+        */
     }
 
     /**
@@ -417,19 +471,32 @@ public class SimulationHelper {
 
             if(isConsumer(node)) {
 
-                if(isConsumerGroup(node)) {
+                boolean endNode = true;
 
-                    ConsumerGroup consumerGroup = (ConsumerGroup) node;
-                    for(Consumer consumer : consumerGroup.getConsumers()) {
+                for(Relationship relationship : simulation.getRelationships()) {
 
-                        entitiesConsumed += consumer.getEntitiesConsumed().size();
+                    if(relationship.getSource() == node) {
+
+                        endNode = false;
                     }
+                }
 
-                } else {
+                if(endNode) {
 
-                    Consumer consumer = (Consumer) node;
-                    entitiesConsumed += consumer.getEntitiesConsumed().size();
+                    if (isConsumerGroup(node)) {
 
+                        ConsumerGroup consumerGroup = (ConsumerGroup) node;
+                        for (Consumer consumer : consumerGroup.getConsumers()) {
+
+                            entitiesConsumed += consumer.getEntitiesConsumed().size();
+                        }
+
+                    } else {
+
+                        Consumer consumer = (Consumer) node;
+                        entitiesConsumed += consumer.getEntitiesConsumed().size();
+
+                    }
                 }
             }
         }

@@ -83,6 +83,10 @@
                 controller: 'FullDocumentationCtrl',
                 templateUrl: 'templates/fulldocumentation.html'
             })
+            .when('/colortest', {
+                controller: 'ColorTestCtrl',
+                templateUrl: 'templates/colortest.html'
+            })
 
             // Otherwise redirect to frontpage
             .otherwise({redirectTo : '/'})
