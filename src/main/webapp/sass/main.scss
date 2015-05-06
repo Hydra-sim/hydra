@@ -180,61 +180,6 @@ table {
 }
 
 /* Modal css*/
-.modal-backdrop {
-  position: fixed;
-  bottom: 0;
-}
-
-.modal-dialog.modal-lg {
-  width: 500px;
-}
-
-.modal-body .timepicker .btn:hover {
-  color: $Avinor_LightPurple;
-}
-
-.modal-body .timepicker {
-  margin-bottom: 10px !important;
-  width: 100%;
-
-  &.timepicker--tiny {
-
-    .btn,
-    tr:first-child,
-    tr:nth-child( 3 ) {
-      display: none;
-    }
-  }
-
-  a {
-    margin: 0;
-  }
-
-  .btn {
-    height: 30px;
-    min-width: 100%;
-    margin: 0;
-
-    &,
-    &:hover {
-      background: transparent;
-      text-decoration: none;
-    }
-  }
-
-  input {
-    width: 100% !important;
-    margin: 0;
-  }
-
-  td:nth-child( 2 ) {
-    font-size: 22px;
-  }
-}
-
-.multi-input-section {
-  margin-top: 10px;
-}
 
 h1 {
   font-size: 24px;
@@ -488,41 +433,8 @@ body {
 
 //Loading icon from: http://codepen.io/dghez/pen/Czuqn
 
-//Margin fix for modals
-.more-margin {
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
-}
-
-.quantity-field {
-  width: 80px;
-}
-
 //Placement fix for upload link timetable
 .margin-fix-upload-timetable {
   margin-right: 13px;
 }
 
-//Buttons on simulationpage
-.button-container-simulation {
-
-}
-
-.button-container-simulation button {
-  display: block;
-}
-
-// Placement of buttons in simulation new
-
-.button-container-simulation {
-  position: absolute;
-  z-index: 10000;
-  margin-top: 15px;
-  right: 15px;
-}
-
-@media (min-width: 992px) {
-  .modal-lg {
-    width: 600px;
-  }
-}

@@ -129,3 +129,23 @@
   color: white;
   box-shadow: none;
 }
+
+//Buttons on simulationpage
+.button-container-simulation button {
+  display: block;
+}
+
+// Placement of buttons in simulation new
+
+.button-container-simulation {
+  position: absolute;
+  z-index: 10000;
+  margin-top: 15px;
+  right: 15px;
+}
+
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 600px;
+  }
+}
