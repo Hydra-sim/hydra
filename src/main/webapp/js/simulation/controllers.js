@@ -270,7 +270,6 @@
             return d3.behavior
                 .tooltip()
                 .text(function(d) {
-
                     switch (d.type) {
                         case "bus":
                         case "train":
@@ -290,13 +289,19 @@
                         case "parking":
                             console.log("d:" + d);
                             return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
-                                    "Brought " + d.entitiesTransfered + " passengeres to the location.";
+                                "Brought " + d.entitiesTransfered + " passengeres to the location.";
 
-                        default:
+                        case "desktop":
+                        case "door":
+                        case "suitcase":
                             return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
                                 "Passengers in queue at simulation end: " + d.entitiesInQueue.length + "<br/>" +
                                 "Passengers that went through: " + d.entitiesConsumed.length + "<br/>" +
                                 "Max waiting time: " + ticksToTime(d.maxWaitingTime);
+
+                        default:
+                            console.log(d);
+                            return d.weight + "%";
 
                     }
                 });
@@ -501,12 +506,14 @@
                             " Time between arrivals: " + ticksToTime(d.timeBetweenArrivals);
                     } else if(d.type == "parking") {
                         return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity);
-                    } else {
+                    } else if(d.type == "desktop" || d.type == "door" || d.type == "suitcase") {
                         var printForConsumer =  "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity);
                         if(d.type.indexOf("consumerGroup") != -1) {
                             printForConsumer += "<br/>" + "Quantity: " + d.numberOfConsumers;
                         }
                         return printForConsumer;
+                    } else {
+                        return "Test";
                     }
                 });
         };
