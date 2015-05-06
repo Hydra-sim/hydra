@@ -1,0 +1,144 @@
+/* MODAL */
+
+.modal-content {
+  border: none;
+  border-radius: 0px;
+}
+
+.modal-header {
+  text-align: center;
+}
+
+.modal-body .form-group {
+  margin: 0px 0px 0px 0px;
+}
+
+.modal-body .form-control {
+  margin: 0px 0px 10px 0px;
+}
+
+.modal-body .col-md-6.ng-binding {
+  text-align: left;
+}
+
+.modal-footer {
+  text-align: center;
+}
+
+.modal-header .modal-title {
+  margin-top: 10px;
+}
+
+.modal-header .modal-title input {
+  width: 100%;
+  font-family: "Avinor-bold";
+  font-size: 24px;
+  text-align: center;
+  color: $Avinor_Black;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px dashed $Avinor_Black;
+}
+
+.modal-body span {
+  text-align: center;
+  margin: auto;
+  display: block;
+  font-weight: bold;
+}
+
+.modal-body .vertical-scrollable {
+  max-height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.vertical-scrollable input {
+  text-align: center;
+}
+
+.modal-body .container-fluid a {
+  float: right;
+  margin-right: 0px;
+}
+
+.modal-body .container-fluid a:hover {
+  text-decoration: underline;
+  color: $Avinor_LightPurple;
+}
+
+.copyModal {
+  background-color: transparent;
+}
+
+.copyModal span {
+  float: right;
+  display: inline-block;;
+  margin-right: 10px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  bottom: 0;
+}
+
+.modal-dialog.modal-lg {
+  width: 500px;
+}
+
+.modal-body .timepicker .btn:hover {
+  color: $Avinor_LightPurple;
+}
+
+.modal-body .timepicker {
+  margin-bottom: 10px !important;
+  width: 100%;
+
+  &.timepicker--tiny {
+
+    .btn,
+    tr:first-child,
+    tr:nth-child( 3 ) {
+      display: none;
+    }
+  }
+
+  a {
+    margin: 0;
+  }
+
+  .btn {
+    height: 30px;
+    min-width: 100%;
+    margin: 0;
+
+    &,
+    &:hover {
+      background: transparent;
+      text-decoration: none;
+    }
+  }
+
+  input {
+    width: 100% !important;
+    margin: 0;
+  }
+
+  td:nth-child( 2 ) {
+    font-size: 22px;
+  }
+}
+
+.multi-input-section {
+  margin-top: 10px;
+}
+
+//Margin fix for modals
+.more-margin {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+
+.quantity-field {
+  width: 80px;
+}

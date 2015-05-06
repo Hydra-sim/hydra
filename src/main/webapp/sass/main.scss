@@ -9,6 +9,10 @@
 @import 'elements/radialmenu';
 @import 'elements/progress-bar';
 @import 'elements/tooltip';
+@import 'elements/help-page';
+@import 'elements/tab-menu';
+@import 'elements/buttons';
+@import 'elements/modals';
 
 body {
   min-height: 100%;
@@ -29,59 +33,9 @@ header {
   padding: 25px;
 }
 
-.modal-backdrop {
-  position: fixed;
-  bottom: 0;
-}
-
 .logo img {
   height: 50px;
   margin-left: -20px;
-}
-
-.tabMenu {
-  margin-top: 20px;
-  width: 100%;
-  height: 60px;
-}
-
-.tabMenu ul {
-  width: 100%;
-  height: 60px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.tabMenu ul li {
-  width: 200px;
-  height: 100%;
-  margin: 0px 10px 0px 0px;
-  display: inline-block;
-  background-color: $Avinor_Grey;
-}
-
-.tabMenu .active {
-  background-color: $Avinor_LightPurple;
-  color: white;
-}
-
-.tabMenu div {
-  display: block;
-  width: 100%;
-  height: 100%;
-  color: $Avinor_Black;
-  font-family: "Avinor";
-  font-size: 1.5em;
-  text-align: center;
-  line-height: 3;
-}
-
-.tabMenu div:hover {
-  background-color: $Avinor_LightPurple;
-  color: white;
-  cursor: pointer;
-
 }
 
 footer {
@@ -154,36 +108,7 @@ footer p {
   }
 }
 
-.split-tabs {
-  overflow: hidden;
-  border: 1px solid #bbb;
-  margin-top: 20px;
-  & > div,
-  & > ul {
-    float: left;
-    width: 50%;
-    max-height: 300px;
-    overflow: scroll;
-  }
-  & > ul {
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    li {
-      margin: 0;
-      border-top: 1px solid #ddd;
-      &:first-child {
-        border-top: none;
-      }
-      a {
-        border-radius: 0;
-      }
-    }
-  }
-  .tab-content {
-    padding: 10px 20px;
-  }
-}
-
+/* Table on frontpage */
 table {
   margin-bottom: 55px !important;
 }
@@ -211,6 +136,7 @@ table {
   margin-top: 12px;
 }
 
+/* Map for uploading*/
 .mapImageWrapper {
   position: relative;
   overflow: hidden;
@@ -253,184 +179,7 @@ table {
   border: 3px solid rgba(white, 0.6);
 }
 
-/*BUTTON STYLES*/
-
-.btn, .btn-default, .btn-danger, .btn-warning, .btn-info, .btn-primary {
-  min-width: 80px;
-  text-align: center;
-  font-family: "Avinor";
-  font-size: 14px;
-  height: 40px;
-  color: black;
-  margin: 0px 10px 0px 0px;
-  border: none;
-  border-radius: 0px;
-  -webkit-border-radius: 0px;
-  -moz-border-radius: 0px;
-  -o-border-radius: 0px;
-  -ms-border-radius: 0px;
-  box-shadow: none;
-}
-
-.btn-default, .btn-primary {
-  background-color: $Avinor_Grey;
-}
-
-.btn-default[disabled] {
-  background-color: $Avinor_LightPurple;
-  color: white;
-}
-
-.btn-danger {
-  color: white;
-}
-
-.btn-icon {
-  background: transparent;
-  font-size: 40px;
-  margin-top: -26px;
-  margin-left: -20px;
-  color: $Avinor_Grey;
-
-  &.locked {
-    color: black;
-  }
-
-}
-
-//Buttons for the upload and removing of maps (Google style)
-.btn-google-style {
-  display: inline-block;
-  background-color: #f5f5f5;
-  background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
-  background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
-  background-image: -ms-linear-gradient(top, #f5f5f5, #f1f1f1);
-  background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
-  background-image: linear-gradient(top, #f5f5f5, #f1f1f1);
-  color: #444;
-
-  border: 1px solid #dcdcdc;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-
-  cursor: default;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  height: 40px;
-  line-height: 27px;
-  min-width: 40px;
-  padding: 0 8px;
-  text-decoration: none;
-}
-
-.btn-google-style:hover {
-  background-color: #F8F8F8;
-  background-image: -webkit-linear-gradient(top, #f8f8f8, #f1f1f1);
-  background-image: -moz-linear-gradient(top, #f8f8f8, #f1f1f1);
-  background-image: -ms-linear-gradient(top, #f8f8f8, #f1f1f1);
-  background-image: -o-linear-gradient(top, #f8f8f8, #f1f1f1);
-  background-image: linear-gradient(top, #f8f8f8, #f1f1f1);
-  cursor: pointer;
-
-  border: 1px solid #C6C6C6;
-  color: #333;
-
-  -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, .1);
-  -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, .1);
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, .1);
-}
-
-.btn-google-style:active {
-  -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, .3);
-  -moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, .3);
-  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, .3);
-  color: black;
-}
-
-//Rishabn google buttons: http://cssdeck.com/labs/google-buttons
-
-//Fix for the hover effect on flash
-.global-zeroclipboard-container:hover {
-  background-color: $Avinor_Black;
-  color: white;
-  &:after {
-    display: block;
-    content: "Copy";
-    position: absolute;
-    top: 10px;
-    left: 23px;
-  }
-}
-
-.primary {
-  background-color: $Avinor_LightPurple;
-  color: white;
-}
-
-.secondary {
-  background-color: $Avinor_Grey;
-}
-
-.btn-icon:hover {
-  background: transparent !important;
-  color: $Avinor_Black !important;
-}
-
-.btn:hover, .btn-default:hover, .btn-danger:hover, .btn-warning:hover {
-  border: none;
-  background-color: $Avinor_Black;
-  color: white;
-  box-shadow: none;
-}
-
-.modal-body .timepicker .btn:hover {
-  color: $Avinor_LightPurple;
-}
-
-.modal-body .timepicker {
-  margin-bottom: 10px !important;
-  width: 100%;
-
-  &.timepicker--tiny {
-
-    .btn,
-    tr:first-child,
-    tr:nth-child( 3 ) {
-      display: none;
-    }
-  }
-
-  a {
-    margin: 0;
-  }
-
-  .btn {
-    height: 30px;
-    min-width: 100%;
-    margin: 0;
-
-    &,
-    &:hover {
-      background: transparent;
-      text-decoration: none;
-    }
-  }
-
-  input {
-    width: 100% !important;
-    margin: 0;
-  }
-
-  td:nth-child( 2 ) {
-    font-size: 22px;
-  }
-}
-
-.multi-input-section {
-  margin-top: 10px;
-}
+/* Modal css*/
 
 h1 {
   font-size: 24px;
@@ -518,215 +267,12 @@ a:hover {
   background-color: $Avinor_Black;
 }
 
-.modal-dialog.modal-lg {
-  width: 500px;
-}
-
-/* MODAL */
-
-.modal-content {
-  border: none;
-  border-radius: 0px;
-}
-
-.modal-header {
-  text-align: center;
-}
-
-.modal-body .form-group {
-  margin: 0px 0px 0px 0px;
-}
-
-.modal-body .form-control {
-  margin: 0px 0px 10px 0px;
-}
-
-.modal-body .col-md-6.ng-binding {
-  text-align: left;
-}
-
-.modal-footer {
-  text-align: center;
-}
-
-.modal-header .modal-title {
-  margin-top: 10px;
-}
-
-.modal-header .modal-title input {
-  width: 100%;
-  font-family: "Avinor-bold";
-  font-size: 24px;
-  text-align: center;
-  color: $Avinor_Black;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px dashed $Avinor_Black;
-}
-
-.modal-body span {
-  text-align: center;
-  margin: auto;
-  display: block;
-  font-weight: bold;
-}
-
-.modal-body .vertical-scrollable {
-  max-height: 300px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
-.vertical-scrollable input {
-  text-align: center;
-}
-
-.modal-body .container-fluid a {
-  float: right;
-  margin-right: 0px;
-}
-
-.modal-body .container-fluid a:hover {
-  text-decoration: underline;
-  color: $Avinor_LightPurple;
-}
-
-.copyModal {
-  background-color: transparent;
-}
-
-.copyModal span {
-  float: right;
-  display: inline-block;;
-  margin-right: 10px;
-}
-
-/*HELP FUNCTION*/
-
-.helpContainer {
-  position: fixed;
-  bottom: 5px;
-  left: 0px;
-  width: 100%;
-
-  .btn-help {
-    background-color: $yellow;
-    border: none;
-    border-radius: 0;
-    color: $Avinor_Black;
-    width: 50px;
-    margin-right: 40px;
-    float: right;
-  }
-
-  .btn-help:focus {
-    outline: none;
-  }
-
-  .flaticon-open203:before {
-    width: 100%;
-    height: 100%;
-    content: "\e000";
-    display: block;
-    font-size: 18px;
-    margin-top: -5px;
-  }
-
-  .row {
-    margin-bottom: 20px;
-  }
-
-  a {
-    margin-bottom: 10px;
-  }
-
-  a:hover {
-    color: $Avinor_LightPurple;
-    text-decoration: underline;
-  }
-
-  .row h5 {
-    display: inline;
-    margin-left: 10px;
-    font-size: 14px;
-  }
-
-  h2 {
-    margin: 0px 0px 10px 0px;
-  }
-}
-
-.collapse:not(.in) {
-  padding-bottom: 40px !important;
-}
-
-.collapse.in, .collapse {
-  border: none;
-  border-radius: 0;
-  background-color: $yellow;
-  display: block;
-  float: left;
-  width: 100%;
-  clear: both;
-}
-
-.test {
-  background-color: $yellow;
-  width: 100%;
-  height: 100%;
-}
-
-.in.helpBox, .helpBox {
-  background-color: $yellow;
-  border: none;
-  border-radius: 0;
-  height: 100%;
-  margin: 0;
-}
-
-.collapsing.helpBox {
-  background-color: $yellow !important;
-}
-
-.helpBox {
-  padding: 20px 35px 50px 35px;
-  width: 100%;
-  display: inline-block;
-}
-
 /*RESULT PAGE*/
 
 .result-container {
   width: 100%;
   text-align: center;
 }
-
-/* FULL DOCUMENTATION PAGE */
-.icon-container-documentation {
-  margin-top: 20px;
-  margin-left: 10px;
-}
-
-.icon-container-documentation .flaticon-open203:before {
-  font-size: 14px;
-}
-
-.add-margin-bottom {
-  margin-bottom: 20px;
-}
-
-.mouse-pointer:hover {
-  cursor: pointer;
-}
-
-.table-of-contents {
-  background-color: $Avinor_Grey;
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
-  width: 300px;
-}
-
 /* Loading screen */
 
 $squarew: 15px;
@@ -887,55 +433,8 @@ body {
 
 //Loading icon from: http://codepen.io/dghez/pen/Czuqn
 
-//Overriding loading bar
-.bar {
-  background: $yellow !important;
-  height: 5px !important;
-}
-
-#loading-bar .peg {
-  -moz-box-shadow: $yellow 1px 0 20px 1px;
-  -ms-box-shadow: $yellow 1px 0 20px 1px;
-  -webkit-box-shadow: $yellow 1px 0 20px 1px;
-  box-shadow: $yellow 1px 0 20px 1px;
-  height: 5px !important;
-}
-
-//Margin fix for modals
-.more-margin {
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
-}
-
-.quantity-field {
-  width: 80px;
-}
-
 //Placement fix for upload link timetable
 .margin-fix-upload-timetable {
   margin-right: 13px;
 }
 
-//Buttons on simulationpage
-.button-container-simulation {
-
-}
-
-.button-container-simulation button {
-  display: block;
-}
-
-// Placement of buttons in simulation new
-
-.button-container-simulation {
-  position: absolute;
-  z-index: 10000;
-  margin-top: 15px;
-  right: 15px;
-}
-
-@media (min-width: 992px) {
-  .modal-lg {
-    width: 600px;
-  }
-}
