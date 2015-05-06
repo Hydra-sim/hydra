@@ -24,7 +24,8 @@
                     connectClass: '@',
                     circleWrapperClass: '@',
                     control: '=',
-                    extraTooltip: '&'
+                    extraTooltip: '&',
+                    extraBorder: '&'
                 },
 
                 // observe and manipulate the DOM
@@ -182,6 +183,13 @@
                         update();
                     });
 
+                    // Setup for border
+                    var border = null;
+                    scope.$watch('extraBorder', function() {
+                        border = scope.extraBorder();
+                        update();
+                    });
+
                     // svg nodes and edges
                     var paths = container.append("g").selectAll("g");
                     var circles = container.append("g").selectAll("g");
@@ -321,14 +329,19 @@
                             })
                             .call(drag);
 
-                        if(tooltip != "undefined" && tooltip != null) {
+                        if(tooltip != "undefined" && tooltip != null)
                             newCircleWrappers.call(tooltip);
+
+                        if(border != "undefined" && border != null) {
+                            newCircleWrappers
+                                .append("circle")
+                                .attr("r", String(consts.nodeRadius))
+                                .call(border);
+                        } else {
+                            newCircleWrappers
+                                .append("circle")
+                                .attr("r", String(consts.nodeRadius));
                         }
-
-                        newCircleWrappers
-                            .append("circle")
-                            .attr("r", String(consts.nodeRadius));
-
 
                         newCircleWrappers
                             .append('text')
