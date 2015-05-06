@@ -1,3 +1,4 @@
+/* HELP MODAL */
 .helpContainer {
   position: fixed;
   bottom: 5px;
@@ -81,4 +82,31 @@
   padding: 20px 35px 50px 35px;
   width: 100%;
   display: inline-block;
+}
+
+/* FULL DOCUMENTATION PAGE */
+
+.icon-container-documentation {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.icon-container-documentation .flaticon-open203:before {
+  font-size: 14px;
+}
+
+.add-margin-bottom {
+  margin-bottom: 20px;
+}
+
+.mouse-pointer:hover {
+  cursor: pointer;
+}
+
+.table-of-contents {
+  background-color: $Avinor_Grey;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  width: 300px;
 }
