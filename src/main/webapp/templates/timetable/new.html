@@ -13,7 +13,7 @@
                 <div class="col-md-6"><span>Passengers</span></div>
             </div>
             <div class="multi-input-section">
-                <div class="row" ng-repeat="arrival in arrivals">
+                <div class="row" ng-repeat="arrival in arrivals | orderBy: 'time'">
                     <div class="col-md-6">
                         <timepicker class="timepicker timepicker--tiny" id="arrivalTime" ng-model="arrival.time" mousewheel="false" show-meridian="false"></timepicker>
                     </div>
