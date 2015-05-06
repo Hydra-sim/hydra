@@ -206,7 +206,7 @@
         };
     });
 
-    app.controller('SimulationResultCtrl', function($scope, $rootScope, SimResult, cfpLoadingBar, menu_field_name, menu_field_button) {
+    app.controller('SimulationResultCtrl', function($scope, $rootScope, $filter, SimResult, cfpLoadingBar, menu_field_name, menu_field_button) {
 
         $scope.simulation = {
             nodes: [],
@@ -230,14 +230,21 @@
             var from  = ticksToTime($scope.simulation.startTick);
             var to = ticksToTime($scope.simulation.startTick + $scope.simulation.ticks);
 
-            console.log(from);
-            console.log(to);
+            var fromHours = parseInt(from);
+            var fromMinutes = Number( ( ( parseFloat( from ) % fromHours ) * 60 ).toFixed(2) );
+            $scope.from = new Date();
+            $scope.from.setHours( fromHours );
+            $scope.from.setMinutes( fromMinutes );
+            $scope.from.setSeconds(0);
+            $scope.fromPrint = $filter('date')($scope.from, "HH:mm");
 
-            $scope.fromHours = parseInt(from);
-            $scope.fromMinutes = Number( ( ( parseFloat( from ) % $scope.fromHours ) * 60 ).toFixed(2) );
-
-            $scope.toHours = parseInt(to);
-            $scope.toMinutes = Number( ( ( parseFloat( to ) % $scope.toHours ) * 60 ).toFixed(2) );
+            var toHours = parseInt(to);
+            var toMinutes = Number( ( ( parseFloat( to ) % toHours ) * 60 ).toFixed(2) );
+            $scope.to = new Date();
+            $scope.to.setHours( toHours );
+            $scope.to.setMinutes( toMinutes );
+            $scope.to.setSeconds(0);
+            $scope.toPrint = $filter('date')($scope.to, "HH:mm");
 
             $scope.maxWaitingTimeInMinutes = $scope.simulation.result.maxWaitingTimeInTicks / 60;
 
