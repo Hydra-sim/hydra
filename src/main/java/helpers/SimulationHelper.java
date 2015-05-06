@@ -81,7 +81,6 @@ public class SimulationHelper {
             }
         }
 
-
         simulation.setResult(
                 new SimulationResult(
                         getEntitesConsumed(),
@@ -283,7 +282,7 @@ public class SimulationHelper {
 
     private void getEntitiesQueueing(int currentTick) {
 
-        int groupsToRemove = 0;
+        List<QueueElement> groupsToRemove = new ArrayList<>();
 
         for(QueueElement group : simulation.getEntitiesQueueing()) {
 
@@ -312,15 +311,15 @@ public class SimulationHelper {
                 }
 
                 if(transfered) {
-                    groupsToRemove++;
+                    groupsToRemove.add(group);
                     break;
                 }
             }
         }
 
-        for(int i = 0; i < groupsToRemove; i++) {
+        for(QueueElement group : groupsToRemove) {
 
-            simulation.getEntitiesQueueing().remove(0);
+            simulation.getEntitiesQueueing().remove(group);
         }
 
     }

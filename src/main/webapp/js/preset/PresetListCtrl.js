@@ -4,11 +4,6 @@
 
     var app = angular.module('unit.controllers');
 
-
-    app.controller('PresetCtrl', function($scope, menu_field_button) {
-        menu_field_button.reset();
-    });
-
     app.controller('PresetListCtrl', function($scope, menu_field_name, $modal, Preset) {
         function updatePresetScope() {
             $scope.presets = Preset.query({});
