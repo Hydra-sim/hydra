@@ -123,26 +123,50 @@ public class Simulation
 
     /**
      * Automatically distributes weight to the {@link models.Relationship relationships} if they are all 0.0
-     * @param node the node we wish to distribute weight on
+     * @param source the node we wish to distribute weight on
      */
-    public void distributeWeightIfNotSpecified(Node node) {
+    public void distributeWeightIfNotSpecified(Node source) {
 
-        boolean weighted = false;
+        boolean needsDistribution = false;
+
+        List<Relationship> currentRelationships = new ArrayList<>();
 
         for(Relationship relationship : relationships) {
 
-            if(relationship.getSource() == node) {
+            if(relationship.getSource() == source) {
 
-                if (relationship.getWeight() != 0.0) weighted = true;
+                if(relationship.getWeight() == 0) {
+
+                    currentRelationships.add(relationship);
+                    needsDistribution = true;
+
+                } else {
+
+                    needsDistribution = false;
+                    break;
+                }
             }
         }
 
-        if(!weighted) {
-            int weight = relationships.size() * 100;
+        if(needsDistribution) {
 
-            relationships.stream().filter(relationship
-                    -> relationship.getSource() == node).forEach(relationship
-                    -> relationship.setWeight(weight));
+            boolean restSpent = false;
+            int weight = 100 / currentRelationships.size();
+            int rest = 100 - weight * currentRelationships.size(); // for number of relationships that 100 is not divisible for
+            if(rest == 0) restSpent = true;
+
+            for (Relationship relationship : currentRelationships) {
+
+                if(restSpent) {
+
+                    relationship.setWeight(weight);
+
+                } else {
+
+                    relationship.setWeight(weight + 1);
+                    rest--;
+                }
+            }
         }
     }
     //endregion

@@ -358,4 +358,46 @@ public class TestingCorner {
         assertEquals(600, simulation.getNodes().get(0).getEntitiesTransfered());
         assertEquals(600, simulation.getNodes().get(3).getEntitiesRecieved());
     }
+
+    @Test
+    public void testPassengerFlow() {
+
+        int startTick = 0;
+
+        List<Node> nodes = new ArrayList<Node>() {{
+
+            Producer passengerFlow = new Producer();
+            passengerFlow.setType("passengerflow");
+            ProducerHelper producerHelper = new ProducerHelper();
+
+            int tickBetweenArrivals = 10;
+            int numberOfArrivals = 10;
+            int numberOfPassengers = 100;
+
+            producerHelper.generateTimetable(passengerFlow, startTick, tickBetweenArrivals, numberOfArrivals, numberOfPassengers);
+
+            add(passengerFlow);
+
+            add(new Consumer(1));
+            add(new Consumer(1));
+        }};
+
+        List<Relationship> relationships = new ArrayList<Relationship>() {{
+
+            add(new Relationship(nodes.get(0), nodes.get(1), 0));
+            add(new Relationship(nodes.get(0), nodes.get(2), 0));
+
+        }};
+
+        int ticks = 100;
+        int tickBreakpoints = 10;
+
+        Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
+        simulationHelper.simulate(simulation);
+
+        assertEquals(simulation.getNodes().get(1).getEntitiesRecieved(), simulation.getNodes().get(2).getEntitiesRecieved());
+        assertEquals(100, simulation.getRelationships().get(0).getWeight()
+                        + simulation.getRelationships().get(1).getWeight() );
+
+    }
 }
