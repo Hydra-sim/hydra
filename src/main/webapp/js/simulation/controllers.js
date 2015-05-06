@@ -292,12 +292,17 @@
                                 "Brought " + d.entitiesTransfered + " passengeres to the location.";
 
                         case "desktop":
+                        case "consumerGroup-desktop":
                         case "door":
                         case "suitcase":
-                            return "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
+                            var printForConsumer = "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
                                 "Passengers in queue at simulation end: " + d.entitiesInQueue.length + "<br/>" +
                                 "Passengers that went through: " + d.entitiesConsumed.length + "<br/>" +
                                 "Max waiting time: " + ticksToTime(d.maxWaitingTime);
+                            if(d.type.indexOf("consumerGroup") != -1) {
+                                printForConsumer += "<br/>" + "Quantity: " + d.numberOfConsumers;
+                            }
+                            return printForConsumer;
 
                         default:
                             console.log(d);
@@ -569,7 +574,7 @@
                             " Time between arrivals: " + ticksToTime(d.timeBetweenArrivals);
                     } else if(d.type == "parking") {
                         return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity);
-                    } else if(d.type == "desktop" || d.type == "door" || d.type == "suitcase") {
+                    } else if(d.type == "desktop" || d.type == "door" || d.type == "suitcase" || d.type == "consumerGroup-desktop") {
                         var printForConsumer =  "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity);
                         if(d.type.indexOf("consumerGroup") != -1) {
                             printForConsumer += "<br/>" + "Quantity: " + d.numberOfConsumers;
