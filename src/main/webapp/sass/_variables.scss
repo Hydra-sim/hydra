@@ -18,3 +18,13 @@ $Avinor_Black:  #1d1d1d;
 $Avinor_Grey: #c6c8ca;
 $Avinor_LightGrey:#f0f1f3;
 $Avinor_Azure: #8ad8c5;
+
+
+/* Values for loadingscreen square */
+$squarew: 15px;
+$squareh: 15px;
+$squaremargin: 5px;
+$loaderw: $squarew * 3 + $squaremargin *2;
+$loaderh: $squareh * 3 + $squaremargin *2;
+$delayenter: 0.3s;
+$topenter: -10px;
