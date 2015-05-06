@@ -2,7 +2,9 @@ var gulp = require('gulp'),
     bower = require('gulp-bower'),
     sass = require('gulp-sass'),
     connect = require('gulp-connect'),
-    uglify = require('gulp-uglifyjs'),
+    uglify = require('gulp-uglify'),
+    sourcemaps = require('gulp-sourcemaps'),
+    concat = require('gulp-concat'),
     redbird = require('redbird');
 
 var rootWebDir = './src/main/webapp/';
@@ -41,9 +43,10 @@ gulp.task('bower', function() {
 
 gulp.task('vendor.js', ['bower'], function() {
    return gulp.src(vendorJsFiles)
-       .pipe(uglify('vendor.js', {
-           outSourceMap: true
-       }))
+       .pipe(sourcemaps.init())
+          .pipe(uglify())
+          .pipe(concat('vendor.js'))
+       .pipe(sourcemaps.write())
        .pipe(gulp.dest(config.bowerDir));
 });
 
