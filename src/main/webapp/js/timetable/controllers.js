@@ -16,8 +16,10 @@
         };
     });
 
-    app.controller('TimetableEditCtrl', function($scope, $rootScope, $location, $log, $modalInstance, Timetable, id) {
+    app.controller('TimetableEditCtrl', function($scope, $rootScope, $location, $log, $modalInstance, $anchorScroll, $timeout, Timetable, id) {
         $scope.btnName = "Save";
+
+
         Timetable.get({}, {"id": id}, function(result) {
             $scope.id = result.id;
 
@@ -45,8 +47,17 @@
         });
 
         $scope.addLine = function() {
+            var arrivalTime = new Date();
+            arrivalTime.setHours( 0 );
+            arrivalTime.setMinutes( 0 );
 
-            $scope.arrivals.push({ time: 0, passengers: 0 });
+            $scope.arrivals.push({ time: arrivalTime, passengers: 0 });
+
+            $timeout(function(){
+                $location.hash('anchor');
+                $anchorScroll();
+            });
+
            // $scope.totalArrivals = $scope.arrivals.length;
         };
 

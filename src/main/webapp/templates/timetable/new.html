@@ -15,13 +15,14 @@
             <div class="multi-input-section">
                 <div class="row" ng-repeat="arrival in arrivals">
                     <div class="col-md-6">
-                        <timepicker class="timepicker timepicker--tiny" id="arrivalTime" ng-model="arrival.time" show-meridian="false"></timepicker>
+                        <timepicker class="timepicker timepicker--tiny" id="arrivalTime" ng-model="arrival.time" mousewheel="false" show-meridian="false"></timepicker>
                     </div>
                     <div class="col-md-6">
                         <input type="text" class="form-control text-center" ng-model="arrival.passengers"/>
                     </div>
                 </div>
             </div>
+                <span id="anchor"></span>
             </div>
             <div class="row text-center" style="margin-top: 30px">
                 <div class="col-md-6">Arrivals: {{arrivals.length}}</span></div>
