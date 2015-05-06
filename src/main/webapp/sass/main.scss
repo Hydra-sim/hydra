@@ -9,6 +9,7 @@
 @import 'elements/radialmenu';
 @import 'elements/progress-bar';
 @import 'elements/tooltip';
+@import 'elements/help-page';
 
 body {
   min-height: 100%;
@@ -599,99 +600,6 @@ a:hover {
   float: right;
   display: inline-block;;
   margin-right: 10px;
-}
-
-/*HELP FUNCTION*/
-
-.helpContainer {
-  position: fixed;
-  bottom: 5px;
-  left: 0px;
-  width: 100%;
-
-  .btn-help {
-    background-color: $yellow;
-    border: none;
-    border-radius: 0;
-    color: $Avinor_Black;
-    width: 50px;
-    margin-right: 40px;
-    float: right;
-  }
-
-  .btn-help:focus {
-    outline: none;
-  }
-
-  .flaticon-open203:before {
-    width: 100%;
-    height: 100%;
-    content: "\e000";
-    display: block;
-    font-size: 18px;
-    margin-top: -5px;
-  }
-
-  .row {
-    margin-bottom: 20px;
-  }
-
-  a {
-    margin-bottom: 10px;
-  }
-
-  a:hover {
-    color: $Avinor_LightPurple;
-    text-decoration: underline;
-  }
-
-  .row h5 {
-    display: inline;
-    margin-left: 10px;
-    font-size: 14px;
-  }
-
-  h2 {
-    margin: 0px 0px 10px 0px;
-  }
-}
-
-.collapse:not(.in) {
-  padding-bottom: 40px !important;
-}
-
-.collapse.in, .collapse {
-  border: none;
-  border-radius: 0;
-  background-color: $yellow;
-  display: block;
-  float: left;
-  width: 100%;
-  clear: both;
-}
-
-.test {
-  background-color: $yellow;
-  width: 100%;
-  height: 100%;
-}
-
-.in.helpBox, .helpBox {
-  background-color: $yellow;
-  border: none;
-  border-radius: 0;
-  height: 100%;
-  margin: 0;
-}
-
-.collapsing.helpBox {
-  background-color: $yellow !important;
-}
-
-.helpBox {
-  padding: 20px 35px 50px 35px;
-  width: 100%;
-  display: inline-block;
 }
 
 /*RESULT PAGE*/
