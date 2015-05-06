@@ -5,6 +5,7 @@ import helpers.ProducerHelper;
 import helpers.SimulationHelper;
 import models.*;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import presets.OSLPreset;
 
@@ -181,7 +182,8 @@ public class SimulationEngineIntegrationTest {
         testSimulateWeight(70, 30, 10);
     }
 
-    
+
+    @Ignore
     @Test
     public void testSimulationSpeed(){
 
@@ -247,7 +249,7 @@ public class SimulationEngineIntegrationTest {
         int entitiesToConsume = 10;
         ConsumerGroup consumerGroup = new ConsumerGroup(entitiesToConsume, 1);
 
-        Consumer consumer = new Consumer(entitiesToConsume);
+        Consumer consumer = new Consumer(1);
 
         // Making producer
 
@@ -268,13 +270,13 @@ public class SimulationEngineIntegrationTest {
         // Adding the Nodes to Lists
 
         List<Node> nodes = new ArrayList<>();
+        nodes.add(producer);
         nodes.add(consumerGroup);
         nodes.add(consumer);
-        nodes.add(producer);
 
         // Simulation (with no regular consumers)
 
-        Simulation simulation = new Simulation("Test Simulation", nodes, relationships, 1);
+        Simulation simulation = new Simulation("Test Simulation", nodes, relationships, 20);
         simulationHelper.simulate(simulation);
 
         assertEquals(entitiesToConsume, simulation.getResult().getEntitiesConsumed());
