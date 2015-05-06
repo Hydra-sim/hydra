@@ -270,6 +270,7 @@
             return d3.behavior
                 .tooltip()
                 .text(function(d) {
+
                     switch (d.type) {
                         case "bus":
                         case "train":
@@ -285,8 +286,9 @@
 
 
                         case "parking":
+                            console.log("d:" + d);
                             return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
-                                "Brought " + d.entititesTransfered + " passengeres to the location.";
+                                    "Brought " + d.entitiesTransfered + " passengeres to the location.";
                         //TODO: Fix when buslogic in algorithm is fixed (number of buses recieved and number of passengers transfered
 
                         default:

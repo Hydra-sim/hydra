@@ -105,8 +105,6 @@ public class SimulationHelper {
         }
     }
 
-    // Some of these are temporarily public for testing. TODO: Make private once testing is complete
-
     /**
      * Takes the list of entities and deletes them from the list of entities according to the number and strength of
      * the consumers registered in the simulation. Every time an entity is deleted, the method adds 1 to the number of
@@ -340,29 +338,36 @@ public class SimulationHelper {
             .filter(relationship -> relationship.getSource().getEntitiesReady().size() != 0)
             .forEach(relationship -> {
 
-            while(!relationship.getSource().getEntitiesReady().isEmpty()) {
+                for(TransferData transferData : simulation.getTransferData()) {
 
-                // The percentage of entities already sent from our sending consumer to the receiving consumer
-                double currentWeight = (double) relationship.getTarget().getEntitiesRecieved() / relationship.getSource().getEntitiesTransfered();
+                    if(transferData.source == relationship.getSource() && transferData.target == relationship.getTarget()) {
 
-                // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-                // have, and runs the code if either this is true, or it is the first entity sent from the sending
-                // consumer
-                if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
+                        while (!relationship.getSource().getEntitiesReady().isEmpty()) {
 
-                    // Get the data about the entity that is to be sent
-                    Entity entity = relationship.getSource().getEntitiesReady().get(0);
+                            // The percentage of entities already sent from our sending consumer to the receiving consumer
+                            double currentWeight = (double) transferData.entitiesRecieved / relationship.getSource().getEntitiesTransfered();
 
-                    Consumer target = (Consumer) relationship.getTarget();
+                            // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                            // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                            // consumer
+                            if (currentWeight <= relationship.getWeight() || relationship.getSource().getEntitiesTransfered() == 0) {
 
-                    List<Entity> entities = target.getEntitiesInQueue();
-                    entities.add(entity);
-                    target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
-                    target.setEntitiesInQueue(entities);
+                                // Get the data about the entity that is to be sent
+                                Entity entity = relationship.getSource().getEntitiesReady().get(0);
 
-                    relationship.getSource().getEntitiesReady().remove(0);
+                                Consumer target = (Consumer) relationship.getTarget();
+
+                                List<Entity> entities = target.getEntitiesInQueue();
+                                entities.add(entity);
+                                target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+                                target.setEntitiesInQueue(entities);
+
+                                relationship.getSource().getEntitiesReady().remove(0);
+                                relationship.getSource().setEntitiesTransfered(relationship.getSource().getEntitiesTransfered() + 1);
+                            }
+                        }
+                    }
                 }
-            }
         });
     }
 
