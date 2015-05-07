@@ -27,7 +27,7 @@
                 }
 
                 // Seems to be a bug caused by this line
-                //init(result);
+                init(result);
             });
         } else {
             // If the promise doesn't exists, reload the data from the api
