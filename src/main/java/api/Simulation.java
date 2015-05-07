@@ -141,9 +141,8 @@ public class Simulation {
         return Response.ok(new TrueFalse(true)).build();
     }
 
-    /*
     @GET
-    @Path("/{id}/simulationData")
+    @Path("/{id}/run")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response simulationData(@PathParam("id") int id) {
@@ -160,5 +159,4 @@ public class Simulation {
             return Response.serverError().build();
         }
     }
-    */
 }

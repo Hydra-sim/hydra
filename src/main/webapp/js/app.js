@@ -46,6 +46,10 @@
                 controller: 'SimulationResultCtrl',
                 templateUrl: 'templates/simulation/result.html'
             })
+            .when('/result/:id', {
+                controller: 'SimulationResultCtrl',
+                templateUrl: 'templates/simulation/result.html'
+            })
             .when('/show/:id/', {
                 controller: 'SimulationShowCtrl',
                 templateUrl: 'templates/simulation/show.html'

@@ -9,7 +9,8 @@
     app.factory('Simulation', ['$resource', function($resource) {
         return $resource('api/simulation/:simulationId', {simulationId: '@id'},
             {
-                'update': { method: 'PUT' }
+                'update': { method: 'PUT' },
+                'run': { method: 'GET', url: 'api/simulation/:simulationId/run', params: {simulationId: '@id'}}
             });
     }]);
 
@@ -29,9 +30,7 @@
     }]);
 
     app.factory('SimResult', function() {
-        return {
-            data: {}
-        }
+        return {};
     });
 
     app.factory('Map', ['$resource', function($resource) {

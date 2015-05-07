@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationResultCtrl', function($scope, $rootScope, $filter, SimResult, cfpLoadingBar, menu_field_name, menu_field_button) {
+    app.controller('SimulationResultCtrl', function($scope, $rootScope, $filter, $location, $routeParams, SimResult, Simulation, cfpLoadingBar, menu_field_name, menu_field_button) {
 
         $scope.simulation = {
             nodes: [],
@@ -16,7 +16,24 @@
 
         cfpLoadingBar.start();
 
-        SimResult.data.then(function(result) {
+        // Check that the promise exists
+        if(typeof SimResult.data !== "undefined") {
+            SimResult.data.then(function(result) {
+
+                // The id is not set
+                if(typeof $routeParams.id === "undefined") {
+                    $location.path("/result/" + result.id);
+                    $location.replace();
+                }
+
+                init(result);
+            });
+        } else {
+            // If the promise doesn't exists, reload the data from the api
+            Simulation.run({}, {id: $routeParams.id}, init);
+        }
+
+        function init(result) {
 
             $scope.simulation = result;
             console.log(result);
@@ -50,7 +67,7 @@
             $scope.entitiesInQueue = $scope.simulation.result.entitiesInQueue;
             $scope.bussesInQueue = $scope.simulation.entitiesQueueing.length
 
-        });
+        }
 
         //Function for ticks to seconds/minutes/hours
         function ticksToTime(ticks){
