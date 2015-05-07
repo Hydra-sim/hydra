@@ -110,12 +110,13 @@
                     return "5px";
                 })
                 .color(function (d) {
-                    if(typeof d.entitiesInQueue !== "undefined" && d.type !== "parking") {
+                    if(typeof d.consumerDataList !== "undefined" && d.type !== "parking") {
                         //if(d.type == "consumerGroup-desktop" || d.type == "consumerGroup-suitcase"){
                         //    return colorFromValue(d.consumerDataList[$scope.progress.position].numberOfConsumersInQueue);
                         //} else{
                             var val = d.consumerDataList[$scope.progress.position].entitiesInQueue;
-                            console.log(val);
+                            console.log($scope.progress.position, d.consumerDataList);
+                            console.log("val", val);
                             return colorFromValue(val);
                         //}
                     }
