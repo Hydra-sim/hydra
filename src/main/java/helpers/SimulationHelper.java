@@ -432,7 +432,6 @@ public class SimulationHelper {
 
                 int waitingTime = consumerHelper.getMaxWaitingTime(consumer);
                 consumer.setMaxWaitingTime(waitingTime);
-                consumer.setMaxWaitingTimeOnCurrentNode(consumer.getMaxWaitingTimeOnCurrentNode() + 1);
 
                 if(waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
             }
