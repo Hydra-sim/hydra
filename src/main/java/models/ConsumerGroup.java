@@ -36,6 +36,8 @@ public class ConsumerGroup extends Consumer{
     public ConsumerGroup(String name, int numberOfConsumers, int ticksToConsumeEntities) {
 
         setName(name);
+        setTicksToConsumeEntity(ticksToConsumeEntities);
+        
         consumers = new ArrayList<>();
 
         for(int i = 0; i < numberOfConsumers; i++) {
