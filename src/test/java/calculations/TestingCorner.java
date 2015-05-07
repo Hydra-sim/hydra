@@ -473,4 +473,40 @@ public class TestingCorner {
         assertEquals( bus2Queue , ((Producer) simulation.getNodes().get(1)).getNumberOfBusesInQueue());
 
     }
+
+    @Test
+    public void testQueueWithConsumerGroups() {
+
+        List<Node> nodes = new ArrayList<Node>() {{
+
+            add(new Producer(new Timetable(new ArrayList<TimetableEntry>() {{
+
+                add(new TimetableEntry(0, 100));
+
+            }}, "Test")));
+
+            add(new ConsumerGroup(10, 1));
+
+
+            add(new Consumer(1));
+        }};
+
+        List<Relationship> relationships = new ArrayList<Relationship>() {{
+
+            add( new Relationship( nodes.get( 0 ), nodes.get( 1 ), 0 ) );
+            add( new Relationship( nodes.get( 1 ), nodes.get( 2 ), 0 ) );
+
+        }};
+
+        int startTick = 0;
+        int ticks = 5;
+        int tickBreakpoints = 1;
+
+        Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
+        simulationHelper.simulate(simulation);
+
+        assertEquals(((ConsumerGroup) simulation.getNodes().get(1)).getNumberOfConsumersInQueue()
+                        + ((Consumer) simulation.getNodes().get(2)).getEntitiesInQueue().size(),
+                simulation.getResult().getEntitiesInQueue());
+    }
 }

@@ -472,14 +472,16 @@ public class SimulationHelper {
 
             if(isConsumer(node)) {
 
-                Consumer consumer = (Consumer) node;
-                entitiesInQueue += consumer.getEntitiesInQueue().size();
-
                 if(isConsumerGroup(node)) {
 
                     ConsumerGroup consumerGroup = (ConsumerGroup) node;
 
-                    entitiesInQueue += consumerGroup.getNumberOfConsumersInQueue(); 
+                    entitiesInQueue += consumerGroup.getNumberOfConsumersInQueue();
+
+                } else {
+
+                    Consumer consumer = (Consumer) node;
+                    entitiesInQueue += consumer.getEntitiesInQueue().size();
                 }
             }
         }
