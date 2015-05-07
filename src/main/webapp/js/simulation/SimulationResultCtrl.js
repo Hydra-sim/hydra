@@ -99,7 +99,7 @@
                                 "Passengers that went through: " + d.entitiesConsumed.length + "<br/>" +
                                 "Max waiting time: " + ticksToTime(d.maxWaitingTime);
                             if(d.type.indexOf("consumerGroup") != -1) {
-                                printForConsumer += "<br/>" + "Quantity: " + d.numberOfConsumers;
+                                printForConsumer += "<br/>" + "Quantity: " + d.consumers.length;
                             }
                             return printForConsumer;
 
