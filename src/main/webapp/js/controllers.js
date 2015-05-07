@@ -52,9 +52,14 @@
         };
     });
 
-    app.controller("CollapseCtrl", function($scope){
+    app.controller("CollapseCtrl", function($scope, $window){
 
         $scope.isCollapsed = true;
+
+        $scope.openFullDoc = function (){
+            console.log("Test");
+            $window.open("#/documentation", "_blank");
+        };
 
     });
 
@@ -86,7 +91,7 @@
         $scope.scrollTo = function(id) {
             $location.hash(id);
             $anchorScroll();
-        }
+        };
     });
 
     app.controller('ColorTestCtrl', function($scope){
