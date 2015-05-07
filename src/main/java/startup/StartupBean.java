@@ -34,18 +34,54 @@ public class StartupBean {
     public void startup() {
 
         // Creating the OSL preset and saving it to the database
-        Simulation simulation1 = new OSLPreset().createOSLPreset();
-        entityManager.persist(simulation1);
+        //Simulation simulation1 = new OSLPreset().createOSLPreset();
+        //entityManager.persist(simulation1);
 
         // For testing purposes
+        //setupTablesForPasswordTesting();
+
+        // Timetables
+
+        List<TmpFileListItem> timetables = setupTimetables();
+
+        // Simulation with data
+
+        //setupSimulationWithData(timetables);
+
+
+    }
+
+    private void setupTablesForPasswordTesting() {
         entityManager.persist(new Simulation("PassDefault"));
 
         Simulation simulation2 = new Simulation("PassTrue");
         simulation2.setPassword("password");
         entityManager.persist(simulation2);
+    }
 
-        // Timetables
+    private void setupSimulationWithData(List<TmpFileListItem> timetables) {
+        InputStream is = StartupBean.class.getResourceAsStream(timetables.get(0).getFilename());
+        Timetable t = Timetable.getTimetableFromCsv(is, timetables.get(0).getName());
 
+        List<Node> nodes = new ArrayList<>();
+
+        Producer producer = new Producer();
+
+        Consumer consumer = new Consumer(10);
+
+        nodes.add(producer);
+        nodes.add(consumer);
+
+        List<Relationship> relationships = new ArrayList<>();
+        relationships.add(new Relationship(producer, consumer, 100));
+
+        Simulation simulation3 = new Simulation("Simulation with data which has been simulated", new Date(), nodes, relationships, 0, 100, 25);
+        SimulationHelper simulationHelper = new SimulationHelper();
+        simulationHelper.simulate(simulation3);
+        entityManager.persist(simulationHelper.getSimulation());
+    }
+
+    private List<TmpFileListItem> setupTimetables() {
         List<TmpFileListItem> timetables = new LinkedList<TmpFileListItem>() {{
             add(new TmpFileListItem("timetables/flybussekspressen/F1/monday-friday.csv", "Flybussekspressen: F1 Monday - Friday"));
             add(new TmpFileListItem("timetables/flybussekspressen/F1/saturday.csv", "Flybussekspressen: F1 Saturday"));
@@ -109,28 +145,6 @@ public class StartupBean {
 
             entityManager.persist(t);
         });
-
-        // Simulation with data
-
-        InputStream is = StartupBean.class.getResourceAsStream(timetables.get(0).getFilename());
-        Timetable t = Timetable.getTimetableFromCsv(is, timetables.get(0).getName());
-
-        List<Node> nodes = new ArrayList<>();
-
-        Producer producer = new Producer();
-
-        Consumer consumer = new Consumer(10);
-
-        nodes.add(producer);
-        nodes.add(consumer);
-
-        List<Relationship> relationships = new ArrayList<>();
-        relationships.add(new Relationship(producer, consumer, 100));
-
-        Simulation simulation3 = new Simulation("Simulation with data which has been simulated", new Date(), nodes, relationships, 0, 100, 25);
-        SimulationHelper simulationHelper = new SimulationHelper();
-        simulationHelper.simulate(simulation3);
-        entityManager.persist(simulationHelper.getSimulation());
-
+        return timetables;
     }
 }
