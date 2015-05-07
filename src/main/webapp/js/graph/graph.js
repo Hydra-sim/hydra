@@ -338,16 +338,12 @@
                         if(tooltip != null)
                             newCircleWrappers.call(tooltip);
 
-                        if(border != null) {
-                            newCircleWrappers
-                                .append("circle")
-                                .attr("r", String(consts.nodeRadius))
-                                .call(border);
-                        } else {
-                            newCircleWrappers
-                                .append("circle")
-                                .attr("r", String(consts.nodeRadius));
-                        }
+                        var newCircleWrappers_circle = newCircleWrappers
+                            .append("circle")
+                            .attr("r", String(consts.nodeRadius));
+
+                        if(border != null)
+                            newCircleWrappers_circle.call(border);
 
                         newCircleWrappers
                             .append('text')
