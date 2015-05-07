@@ -1,3 +1,20 @@
-<graph nodes="" edges="" height="500px"></graph>
+<graph nodes="datasource.nodes" edges="datasource.edges" height="500px"></graph>
 
-<div ng-include src="'templates/simulation/simulationProgressBar.html'"></div>
+<form class="progressBar" style="margin: 10px">
+    <p class="labels">
+        {{startTime.toLocaleTimeString()}}
+        <span style="float: right">{{endTime.toLocaleTimeString()}}</span>
+    </p>
+
+    <div class="thumbInfo">
+        <span>{{progress.positon}}</span>
+    </div>
+
+    <input type="range" name="points" min="{{startTime}}" max="{{endTime}}" step="{{steps}}" ng-model="progress.position">
+
+    <div class="progressButtons">
+        <span class="fa fa-backward" ng-click="backward()"></span>
+        <span class="fa fa-pause" ng-click="pause()"></span>
+        <span class="fa fa-forward" ng-click="forward()"></span>
+    </div>
+</form>
