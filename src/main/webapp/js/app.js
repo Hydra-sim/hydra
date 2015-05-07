@@ -39,7 +39,7 @@
                 templateUrl: 'templates/simulation/new.html'
             })
             .when('/simulation/:id', {
-                controller: 'SimulationEditCtrl',
+                controller: 'SimulationNewCtrl',
                 templateUrl: 'templates/simulation/new.html'
             })
             .when('/result', {

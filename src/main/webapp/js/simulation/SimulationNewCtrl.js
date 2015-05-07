@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $modal, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, TmpSimulationData) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $modal, $routeParams, $rootScope, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, TmpSimulationData) {
 
         $scope.dataset = { nodes: [], edges: [] };
 
@@ -34,6 +34,26 @@
                 'breakpoints':                      $scope.breakpoints
             });
 
+            /* // Edit modal saveAs dialog
+            $modal.open({
+
+                templateUrl: 'templates/modals/saveAs.html',
+                controller: 'SaveAsModalCtrl',
+                size: 'sm',
+                resolve: {
+                    simulationName: function () {
+                        return menu_field_name.value;
+                    }
+                }
+
+            }).result.then(function (data) {
+
+                console.log(data);
+                SimResult.data = sim.$save();
+                $location.path('/result');
+                $location.replace();
+            }); //*/
+
             SimResult.data = sim.$save();
             $location.path('/result');
             $location.replace();
@@ -47,6 +67,21 @@
         $scope.updateTicks = function() {
             $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
             $scope.ticks = ($scope.endTime.getHours() * 60 * 60) + ($scope.endTime.getMinutes() * 60) - $scope.startTick;
+        };
+
+        $scope.updateTime = function (result) {
+
+            var hours = result.startTick / 60 / 60;
+            $scope.startTime.setHours(hours);
+
+            var minutes = (result.startTick - (hours * 60 * 60)) / 60;
+            $scope.startTime.setMinutes(minutes);
+
+            var hours = (result.startTick + result.ticks) / 60 / 60;
+            $scope.endTime.setHours(hours);
+
+            var minutes = ((result.startTick + result.ticks) - (hours * 60 * 60)) / 60;
+            $scope.endTime.setMinutes(minutes);
         };
 
         //Scope values
@@ -131,6 +166,42 @@
                 .tooltip()
                 .text(text);
         };
+
+        // If the id is set, try to load in the simulation data
+        if(typeof $routeParams.id !== "undefined") {
+            Simulation.get({}, {"id": $routeParams.id}, function (result) {
+
+                var simAuth = false;
+
+                console.log("loaded sim:", result);
+
+                for (var i = 0; i < $rootScope.simulationAuth.length; i++) {
+
+                    if ($rootScope.simulationAuth[i] == $routeParams.id) simAuth = true;
+                }
+
+                if (result.passwordProtected && !simAuth) {
+
+                    $location.path("simulation/" + $routeParams.id + "/auth")
+
+                } else {
+
+                    menu_field_name.setValue(result.name);
+                    $scope.id = result.id;
+
+                    $scope.ticks = result.ticks;
+                    $scope.startTick = result.startTick;
+                    $scope.dataset.nodes = result.nodes;
+                    $scope.dataset.edges = result.relationships;
+
+                    $scope.updateTime(result);
+
+                    for (var node in $scope.dataset.nodes) {
+                        addData(node, node.type);
+                    }
+                }
+            });
+        }
 
         // Modals
         $scope.newProducer = function (title, type) {
