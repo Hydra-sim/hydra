@@ -124,6 +124,7 @@
 
                     scope.internalControl = scope.control || {};
                     scope.internalControl.addNode = addNode;
+                    scope.internalControl.update = update;
 
                     // Selected circle / edge
                     var selectedItem = null;

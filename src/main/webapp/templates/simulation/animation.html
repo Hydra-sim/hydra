@@ -1,4 +1,4 @@
-<graph nodes="datasource.nodes" edges="datasource.edges" height="500px" extra-border="extraBorder()"></graph>
+<graph nodes="datasource.nodes" edges="datasource.edges" height="500px" extra-border="extraBorder()" control="control"></graph>
 
 <form class="progressBar" style="margin: 10px">
     <p class="labels">
@@ -10,6 +10,7 @@
         <span>{{progress.positon}}</span>
     </div>
 
+    <div>{{progress.position}}</div>
     <input type="range" name="points" min="{{startTime}}" max="{{endTime}}" step="{{steps}}" ng-model="progress.position">
 
     <div class="progressButtons">

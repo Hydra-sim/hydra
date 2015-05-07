@@ -13,11 +13,20 @@
         Simulation.run({}, {id: $routeParams.id}, function(result) {
             $scope.datasource.nodes = result.nodes;
             $scope.datasource.edges = result.relationships;
+
+            console.log(result);
         });
 
         $scope.steps = 1;
         $scope.progress = {};
         $scope.progress.position = 0;
+        $scope.totalSteps = 8;
+        $scope.control = {};
+
+        $scope.$watchCollection('progress', function(newvalue) {
+            console.log("update?", newvalue);
+            $scope.control.update();
+        });
 
         var intervalPromise;
 
@@ -97,21 +106,24 @@
             }
 
             return d3.behavior.border()
-                .color(function (d) {
-                    if(typeof d.entitiesInQueue !== "undefined" && d.type !== "parking") {
-                        if(d.type == "consumerGroup-desktop" || d.type == "consumerGroup-suitcase"){
-                            return colorFromValue(d.numberOfConsumersInQueue);
-                        } else{
-                            return colorFromValue(d.entitiesInQueue.length);
-                        }
-                    }
-                    if(typeof d.numberOfBusesInQueue !== "undefined" ){
-                        return colorFromValue(d.numberOfBusesInQueue * 50);
-                    }
-                })
                 .width(function (d) {
                     return "5px";
+                })
+                .color(function (d) {
+                    if(typeof d.entitiesInQueue !== "undefined" && d.type !== "parking") {
+                        //if(d.type == "consumerGroup-desktop" || d.type == "consumerGroup-suitcase"){
+                        //    return colorFromValue(d.consumerDataList[$scope.progress.position].numberOfConsumersInQueue);
+                        //} else{
+                            var val = d.consumerDataList[$scope.progress.position].entitiesInQueue;
+                            console.log(val);
+                            return colorFromValue(val);
+                        //}
+                    }
+                    //if(typeof d.numberOfBusesInQueue !== "undefined" ){
+                    //    return colorFromValue(d.consumerDataList[$scope.progress.position].numberOfBusesInQueue * 50);
+                    //}
                 });
+
         };
     });
 

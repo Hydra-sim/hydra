@@ -52,8 +52,11 @@
             var that = this,
                 dispatch = event.of(that, arguments);
 
-            this.style("stroke", bordercolor)
-                .style("stroke-width", borderwidth);
+            if(bordercolor != null)
+                this.style("stroke", bordercolor);
+
+            if(borderwidth != null)
+                this.style("stroke-width", borderwidth);
         }
 
         border.color = function(color) {
