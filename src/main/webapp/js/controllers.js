@@ -14,7 +14,7 @@
 
     app.controller('ApplicationCtrl', function($scope, $rootScope, $location, $modal, menu_field_name, menu_field_button) {
 
-        $rootScope.menu_field_button = menu_field_button;
+        $scope.menu_field_button = menu_field_button;
 
         menu_field_button.value = "New Simulation";
         menu_field_button.icon = "fa-plus-circle";
@@ -28,7 +28,7 @@
             //$location.path('/simulation/new');
         };
 
-        $rootScope.menu_field_name = menu_field_name;
+        $scope.menu_field_name = menu_field_name;
         menu_field_name.disable();
 
         $rootScope.simulationAuth = [];
