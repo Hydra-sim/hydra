@@ -90,8 +90,6 @@
 
         $scope.shareSimulation = function (id) {
 
-
-
             $modal.open({
                 templateUrl: 'templates/modals/shareSimulation.html',
                 controller: 'ShareSimulationModalCtrl',
@@ -110,7 +108,7 @@
 
         $scope.showSimulation = function (id) {
 
-            $location.path('/show/' + id);
+            $location.path('/result/' + id);
         };
 
         $scope.setPassword = function (id) {

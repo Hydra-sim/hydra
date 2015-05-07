@@ -50,10 +50,6 @@
                 controller: 'SimulationResultCtrl',
                 templateUrl: 'templates/simulation/result.html'
             })
-            .when('/show/:id/', {
-                controller: 'SimulationShowCtrl',
-                templateUrl: 'templates/simulation/show.html'
-            })
             .when('/simulation/:id/auth', {
                 controller: 'AuthPathCtrl',
                 templateUrl: "templates/modals/passwordAuth.html"
