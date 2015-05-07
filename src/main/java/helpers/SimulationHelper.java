@@ -66,7 +66,6 @@ public class SimulationHelper {
                 updateNodeData(i);
             }
 
-            findMaxWaitingTime();
         }
 
         for(QueueElement queueElement : simulation.getEntitiesQueueing()) {
@@ -88,21 +87,6 @@ public class SimulationHelper {
                         maxWaitingTime
                 )
         );
-    }
-
-    private void findMaxWaitingTime() {
-
-        simulation.getNodes().stream()
-                .filter(this::isConsumer)
-                .forEach(node -> {
-                    Consumer consumer = (Consumer) node;
-                    int max = consumerHelper.getMaxWaitingTime(consumer);
-
-                    if (max > consumer.getMaxWaitingTime()) {
-
-                        consumer.setMaxWaitingTime(max);
-                    }
-                });
     }
 
     public void initTransferData() {
@@ -434,7 +418,11 @@ public class SimulationHelper {
 
             if(isConsumer(node)) {
 
-                int waitingTime = consumerHelper.getMaxWaitingTime((Consumer) node);
+                Consumer consumer = (Consumer) node;
+
+                int waitingTime = consumerHelper.getMaxWaitingTime(consumer);
+                consumer.setMaxWaitingTime(waitingTime);
+
                 if(waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
             }
         }
