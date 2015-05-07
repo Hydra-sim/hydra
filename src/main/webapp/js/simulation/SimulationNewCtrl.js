@@ -4,16 +4,43 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $rootScope, $modal, SimResult, Simulation, menu_field_name, Timetable, menu_field_button) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $modal, SimResult, Simulation, Timetable, menu_field_name, menu_field_button) {
+
+        // Help methods
+        function debug() {
+            console.log("dataset: ", $scope.dataset);
+        }
+
+        function submit() {
+
+            $scope.debug();
+            $scope.updateTicks();
+
+            var sim = new Simulation({
+                'name':                             menu_field_name.value,
+                'ticks':                            $scope.ticks,
+                'startTick':                        $scope.startTick,
+                'nodes':                            $scope.dataset.nodes,
+                'edges':                            $scope.dataset.edges,
+                'breakpoints':                      $scope.breakpoints
+            });
+
+            SimResult.data = sim.$save();
+            $location.path('/result');
+            $location.replace();
+        }
+
+        function addData(data, type) {
+            var pos = $scope.control.getlastpos();
+            $scope.control.addNode(type || "consumer", pos.x, pos.y, data);
+        }
 
         $scope.updateTicks = function() {
             $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
             $scope.ticks = ($scope.endTime.getHours() * 60 * 60) + ($scope.endTime.getMinutes() * 60) - $scope.startTick;
         };
 
-        menu_field_name.readonly = false;
-
-        //Default values
+        //Scope values
         $scope.startTime = new Date();
         $scope.startTime.setHours(6);
         $scope.startTime.setMinutes(0);
@@ -25,6 +52,22 @@
         $scope.breakpoints = 900; // Every 15 minutes
 
         $scope.updateTicks();
+
+        $scope.options = []; // For dropdown in add consumer/passengerflow
+        $scope.submit = submit;
+        $scope.dataset = { nodes: [], edges: [] };
+        $scope.control = {};
+        $scope.addData = addData;
+        $scope.debug = debug;
+
+        // Set menu field name and button
+        menu_field_name.readonly = false;
+        menu_field_name.setValue("Untitled simulation");
+
+        menu_field_button.value = "Submit";
+        menu_field_button.icon = "fa-arrow-circle-right";
+        menu_field_button.click = debug;
+
 
         //Function for ticks to seconds/minutes/hours
         function ticksToTime(ticks){
@@ -63,47 +106,7 @@
                 });
         };
 
-        // For dropdown in add consumer/passengerflow
-        $scope.options = [];
-
-        menu_field_name.setValue("Untitled simulation");
-
-        menu_field_button.value = "Submit";
-        menu_field_button.icon = "fa-arrow-circle-right";
-        menu_field_button.click = submit;
-        $scope.submit = submit;
-        function submit() {
-
-            $scope.debug();
-            $scope.updateTicks();
-
-            var sim = new Simulation({
-                'name':                             menu_field_name.value,
-                'ticks':                            $scope.ticks,
-                'startTick':                        $scope.startTick,
-                'nodes':                            $scope.dataset.nodes,
-                'edges':                            $scope.dataset.edges,
-                'breakpoints':                      $scope.breakpoints
-            });
-
-            SimResult.data = sim.$save();
-            $location.path('/result');
-            $location.replace();
-        }
-
-        $scope.dataset = { nodes: [], edges: [] };
-
-        $scope.control = {};
-        $scope.addData = addData;
-        function addData(data, type) {
-            var pos = $scope.control.getlastpos();
-            $scope.control.addNode(type || "consumer", pos.x, pos.y, data);
-        }
-
-        $scope.debug = function() {
-            console.log("dataset: ", $scope.dataset);
-        };
-
+        // Modals
         $scope.newProducer = function (title, type) {
 
             $modal.open({
