@@ -4,14 +4,14 @@
 </div>
 <div class="modal-body">
     <label>Locations</label>
-    <select class="form-control" ng-model="presetList.item" ng-init="presetList.item='No Location'" focus-me="true">
+    <select class="form-control" ng-model="selected" ng-init="selected='No Location'" focus-me="true">
             <option label="No Location" value="No Location">No Location</option>
             <option ng-repeat="preset in presets" value="{{preset.id}}">{{preset.name}}</option>
     </select>
 </div>
 <div class="modal-footer">
     <button class="btn btn-default primary"
-            ng-enter="loadPreset(presetList)"
-            ng-click="loadPreset(presetList)" type="submit">Select</button>
+            ng-enter="loadPreset(selected)"
+            ng-click="loadPreset(selected)" type="submit">Select</button>
     <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
 </div>

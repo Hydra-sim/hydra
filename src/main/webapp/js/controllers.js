@@ -20,12 +20,17 @@
         menu_field_button.icon = "fa-plus-circle";
         menu_field_button.click = function() {
 
-                $modal.open({
-                    templateUrl: 'templates/modals/choosePreset.html',
-                    controller:  'ChoosePresetModalCtrl',
-                    size: 'sm'
-                });
-            //$location.path('/simulation/new');
+            $modal.open({
+                templateUrl: 'templates/modals/choosePreset.html',
+                controller:  'ChoosePresetModalCtrl',
+                size: 'sm'
+            }).result.then(function(result) {
+                if(typeof result == "undefined") {
+                    $location.path('/simulation/new');
+                } else {
+                    $location.path('/simulation/' + result);
+                }
+            });
         };
 
         $scope.menu_field_name = menu_field_name;
@@ -60,28 +65,6 @@
             $window.open("#/documentation", "_blank");
         };
 
-    });
-
-    app.controller('ChoosePresetModalCtrl', function($scope, $modalInstance, $location, Preset){
-
-        function updatePresetScope() {
-            $scope.presets = Preset.query({});
-        }
-        updatePresetScope();
-
-        $scope.loadPreset = function(presetList){
-            if(presetList.item == "No Location"){
-                $location.path("/simulation/new");
-            }
-            else{
-                $location.path("/simulation/" + presetList.item[0]);
-            }
-            $modalInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
     });
 
     app.controller('FullDocumentationCtrl', function($scope, $location, $anchorScroll, menu_field_button){
