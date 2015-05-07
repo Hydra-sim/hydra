@@ -146,6 +146,8 @@ public class SimulationHelper {
                     });
                 }
 
+                int queue = 0;
+
                 for(Consumer consumer : consumerGroup.getConsumers()) {
 
                     consumerHelper.consumeEntity(consumer, tick);
@@ -155,7 +157,10 @@ public class SimulationHelper {
                         consumer.getEntitiesReady().remove(0);
                     }
 
+                    queue += consumer.getEntitiesInQueue().size();
                 }
+
+                consumerGroup.setNumberOfConsumersInQueue(queue);
 
             } else {
 

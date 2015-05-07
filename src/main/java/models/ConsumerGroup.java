@@ -22,6 +22,7 @@ public class ConsumerGroup extends Consumer{
     @Fetch(FetchMode.SUBSELECT)
     private List<Consumer> consumers;
 
+    private int numberOfConsumersInQueue;
     //endregion
 
     //region constructors
@@ -37,6 +38,7 @@ public class ConsumerGroup extends Consumer{
 
         setName(name);
         setTicksToConsumeEntity(ticksToConsumeEntities);
+        this.numberOfConsumersInQueue = 0;
         
         consumers = new ArrayList<>();
 
@@ -75,6 +77,14 @@ public class ConsumerGroup extends Consumer{
         }
 
         return entitesConsumed;
+    }
+
+    public int getNumberOfConsumersInQueue() {
+        return numberOfConsumersInQueue;
+    }
+
+    public void setNumberOfConsumersInQueue(int numberOfConsumersInQueue) {
+        this.numberOfConsumersInQueue = numberOfConsumersInQueue;
     }
 
     //endregion
