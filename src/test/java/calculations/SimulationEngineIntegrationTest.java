@@ -247,7 +247,7 @@ public class SimulationEngineIntegrationTest {
         // Making ConsumerGroup
 
         int entitiesToConsume = 10;
-        ConsumerGroup consumerGroup = new ConsumerGroup(entitiesToConsume, 1);
+        ConsumerGroup consumerGroup = new ConsumerGroup(entitiesToConsume, 2);
 
         Consumer consumer = new Consumer(1);
 
@@ -280,6 +280,7 @@ public class SimulationEngineIntegrationTest {
         simulationHelper.simulate(simulation);
 
         assertEquals(entitiesToConsume, simulation.getResult().getEntitiesConsumed());
+        assertEquals(2, consumerGroup.getTicksToConsumeEntity());
 
         for(Node node : simulation.getNodes()) {
 

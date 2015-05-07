@@ -48,6 +48,7 @@
 
             $scope.entitiesConsumed = $scope.simulation.result.entitiesConsumed;
             $scope.entitiesInQueue = $scope.simulation.result.entitiesInQueue;
+            $scope.bussesInQueue = $scope.simulation.entitiesQueueing.length
 
         });
 
