@@ -19,15 +19,13 @@
         // Check that the promise exists
         if(typeof SimResult.data !== "undefined") {
             SimResult.data.then(function(result) {
-
                 // The id is not set
                 if(typeof $routeParams.id === "undefined") {
                     $location.path("/result/" + result.id);
                     $location.replace();
                 }
 
-                // Seems to be a bug caused by this line
-                init(result);
+                Simulation.run({}, {id: result.id}, init);
             });
         } else {
             // If the promise doesn't exists, reload the data from the api

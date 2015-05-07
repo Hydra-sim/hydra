@@ -43,15 +43,10 @@ public class Simulation {
         try {
             models.Simulation simulation = simulationFactory.createSimulation(input);
 
-            // Run the simulation
-            SimulationHelper simulationHelper = new SimulationHelper();
-            simulationHelper.simulate(simulation);
-
             // Persist the simulation, with results, to the database
-            simulationDao.add(simulationHelper.getSimulation());
+            simulationDao.add(simulation);
 
-
-            return Response.ok(simulationHelper.getSimulation()).build();
+            return Response.ok(simulation).build();
 
         }
         catch(Exception e)
