@@ -19,13 +19,13 @@ public class Producer extends Node{
     @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     Timetable timetable;
 
+    int timetableId;
+
     @Transient
     List<ProducerData> producerDataList;
 
-    @Transient
     int personsPerArrival;
 
-    @Transient
     int timeBetweenArrivals;
 
     int numberOfArrivals;
@@ -102,6 +102,14 @@ public class Producer extends Node{
 
     public void setNumberOfBusesInQueue(int numberOfBusesInQueue) {
         this.numberOfBusesInQueue = numberOfBusesInQueue;
+    }
+
+    public int getTimetableId() {
+        return timetableId;
+    }
+
+    public void setTimetableId(int timetableId) {
+        this.timetableId = timetableId;
     }
 
     //endregion

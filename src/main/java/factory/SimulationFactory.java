@@ -102,6 +102,7 @@ public class SimulationFactory {
 
             Timetable timetable = timetableDao.get(node.timetableId);
             producer = new Producer(timetable, node.x, node.y);
+            producer.setTimetableId(node.timetableId);
 
         } catch (Exception e) {
 
@@ -126,6 +127,7 @@ public class SimulationFactory {
 
         producer.setTmpId(node.id);
         producer.setType(node.type);
+        producer.setTimeBetweenArrivals(node.timeBetweenArrivals);
         producer.setPersonsPerArrival(node.personsPerArrival);
 
         return producer;
