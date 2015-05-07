@@ -20,6 +20,8 @@ public class Consumer extends Node{
 
     private int maxWaitingTime;
 
+    private int maxWaitingTimeOnCurrentNode;
+
     @Transient
     private boolean busStop_inUse;
 
@@ -34,6 +36,7 @@ public class Consumer extends Node{
 
     @Transient
     private List<Entity> entitiesInQueue;
+
 
     //region constructors
     public Consumer() {
@@ -60,6 +63,7 @@ public class Consumer extends Node{
         this.entitiesInQueue = new ArrayList<>();
         this.consumerDataList = new ArrayList<>();
         this.maxWaitingTime = 0;
+        this.maxWaitingTimeOnCurrentNode = 0;
         this.busStop_inUse = false;
         this.busStop_tickArrival = -1;
     }
@@ -133,6 +137,14 @@ public class Consumer extends Node{
 
     public void setBusStop_tickArrival(int busStop_tickArrival) {
         this.busStop_tickArrival = busStop_tickArrival;
+    }
+
+    public int getMaxWaitingTimeOnCurrentNode() {
+        return maxWaitingTimeOnCurrentNode;
+    }
+
+    public void setMaxWaitingTimeOnCurrentNode(int maxWaitingTimeOnCurrentNode) {
+        this.maxWaitingTimeOnCurrentNode = maxWaitingTimeOnCurrentNode;
     }
 
     //endregion

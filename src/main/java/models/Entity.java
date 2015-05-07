@@ -8,6 +8,8 @@ public class Entity implements Comparable<Entity>{
 
     private int waitingTimeInTicks;
 
+    private int waitingTimeOnCurrentNode;
+
     //region constructor
     public Entity() {
 
@@ -16,6 +18,7 @@ public class Entity implements Comparable<Entity>{
 
     public Entity(int waitingTimeInTicks) {
         this.waitingTimeInTicks = waitingTimeInTicks;
+        this.waitingTimeOnCurrentNode = 0;
     }
     //endregion
 
@@ -27,6 +30,15 @@ public class Entity implements Comparable<Entity>{
     public void setWaitingTimeInTicks(int waitingTimeInTicks) {
         this.waitingTimeInTicks = waitingTimeInTicks;
     }
+
+    public int getWaitingTimeOnCurrentNode() {
+        return waitingTimeOnCurrentNode;
+    }
+
+    public void setWaitingTimeOnCurrentNode(int waitingTimeOnCurrentNode) {
+        this.waitingTimeOnCurrentNode = waitingTimeOnCurrentNode;
+    }
+
     //endregion
 
     @Override

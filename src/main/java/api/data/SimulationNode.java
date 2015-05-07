@@ -47,4 +47,5 @@ public class SimulationNode {
     public Object busStop_tickArrival;
     public Object consumers;
     public Object numberOfConsumersInQueue;
+    public Object maxWaitingTimeOnCurrentNode;
 }

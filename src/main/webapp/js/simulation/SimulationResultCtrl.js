@@ -60,11 +60,15 @@
             $scope.to.setSeconds(0);
             $scope.toPrint = $filter('date')($scope.to, "HH:mm");
 
-            $scope.maxWaitingTimeInMinutes = $scope.simulation.result.maxWaitingTimeInTicks / 60;
+
+
+            var test = $scope.simulation.result.maxWaitingTimeInTicks;
+            $scope.maxWaitingTimeInMinutes = ticksToTime(test);
+            console.log(test);
 
             $scope.entitiesConsumed = $scope.simulation.result.entitiesConsumed;
             $scope.entitiesInQueue = $scope.simulation.result.entitiesInQueue;
-            $scope.bussesInQueue = $scope.simulation.entitiesQueueing.length
+            $scope.bussesInQueue = $scope.simulation.entitiesQueueing.length;
 
         }
 
@@ -111,9 +115,15 @@
                         case "consumerGroup-suitcase":
                         case "door":
                         case "suitcase":
+                            var maxWaitingTime;
+                            if(d.maxWaitingTime !== 0){
+                                maxWaitingTime = ticksToTime(d.maxWaitingTime);
+                            } else{
+                                maxWaitingTime = 0;
+                            }
                             var printForConsumer = "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
                                 "Passengers that went through: " + d.entitiesConsumed.length + "<br/>" +
-                                "Max waiting time: " + ticksToTime(d.maxWaitingTime);
+                                "Max waiting time: " + maxWaitingTime;
                             if(d.type.indexOf("consumerGroup") != -1) {
                                 printForConsumer += "<br/>" + "Passengers in queue at simulation end: " + d.numberOfConsumersInQueue +
                                 "<br/>" + "Quantity: " + d.consumers.length + "</br>";
