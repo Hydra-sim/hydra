@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('ShareSimulationModalCtrl', function($scope, $modalInstance, $location, $log, id, message){
+    app.controller('ShareSimulationModalCtrl', function($scope, $modalInstance, $location, id, message){
 
         $scope.id = id;
         $scope.message = message;
