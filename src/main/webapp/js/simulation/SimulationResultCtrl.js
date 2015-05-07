@@ -92,19 +92,21 @@
 
                         case "desktop":
                         case "consumerGroup-desktop":
+                        case "consumerGroup-suitcase":
                         case "door":
                         case "suitcase":
                             var printForConsumer = "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
-                                "Passengers in queue at simulation end: " + d.entitiesInQueue.length + "<br/>" +
                                 "Passengers that went through: " + d.entitiesConsumed.length + "<br/>" +
                                 "Max waiting time: " + ticksToTime(d.maxWaitingTime);
                             if(d.type.indexOf("consumerGroup") != -1) {
-                                printForConsumer += "<br/>" + "Quantity: " + d.consumers.length;
+                                printForConsumer += "<br/>" + "Passengers in queue at simulation end: " + d.numberOfConsumersInQueue +
+                                "<br/>" + "Quantity: " + d.consumers.length + "</br>";
+                            }else{
+                                printForConsumer += "<br/>" + "Passengers in queue at simulation end: " + d.entitiesInQueue.length;
                             }
                             return printForConsumer;
 
                         default:
-                            console.log(d);
                             return d.weight + "%";
 
                     }
@@ -162,7 +164,11 @@
             return d3.behavior.border()
                 .color(function (d) {
                     if(typeof d.entitiesInQueue !== "undefined" && d.type !== "parking") {
-                        return colorFromValue(d.entitiesInQueue.length);
+                        if(d.type == "consumerGroup-desktop" || d.type == "consumerGroup-suitcase"){
+                            return colorFromValue(d.numberOfConsumersInQueue);
+                        } else{
+                            return colorFromValue(d.entitiesInQueue.length);
+                        }
                     }
                     if(typeof d.numberOfBusesInQueue !== "undefined" ){
                         return colorFromValue(d.numberOfBusesInQueue * 50);

@@ -101,7 +101,9 @@
                     d.type == "desktop" ||
                     d.type == "door" ||
                     d.type == "suitcase" ||
-                    d.type == "consumerGroup-desktop"
+                    d.type == "consumerGroup-desktop" ||
+                    d.type == "consumerGroup-door" ||
+                    d.type == "consumerGroup-suitcase"
                 )
                 {
                     var printForConsumer =  "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity);
