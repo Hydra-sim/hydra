@@ -87,4 +87,15 @@
         Session.updateSession();
         return Session;
     });
+
+    app.factory('TmpSimulationData', function() {
+        return {
+            nodes: [],
+            edges: [],
+            reset: function() {
+                this.nodes = [];
+                this.edges = [];
+            }
+        };
+    })
 })();

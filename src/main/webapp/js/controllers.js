@@ -57,7 +57,6 @@
         $scope.isCollapsed = true;
 
         $scope.openFullDoc = function (){
-            console.log("Test");
             $window.open("#/documentation", "_blank");
         };
 

@@ -35,6 +35,7 @@
             // Simulation
             .when('/simulation/new', {
                 controller: 'SimulationNewCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: 'templates/simulation/new.html'
             })
             .when('/simulation/:id', {

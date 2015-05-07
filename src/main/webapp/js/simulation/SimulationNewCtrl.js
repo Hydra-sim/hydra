@@ -4,24 +4,33 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $modal, SimResult, Simulation, Timetable, menu_field_name, menu_field_button) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $modal, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, TmpSimulationData) {
+
+        $scope.dataset = { nodes: [], edges: [] };
+
+        $scope.$watchCollection('dataset.nodes', function(newvalue) {
+            TmpSimulationData.nodes = newvalue;
+        });
+
+        $scope.$watchCollection('dataset.edges', function(newvalue) {
+            TmpSimulationData.edges = newvalue;
+        });
 
         // Help methods
         function debug() {
-            console.log("dataset: ", $scope.dataset);
+            console.log("$scope.dataset", $scope.dataset);
+            console.log("TmpSimulationData", TmpSimulationData);
         }
 
         function submit() {
-
-            $scope.debug();
             $scope.updateTicks();
 
             var sim = new Simulation({
                 'name':                             menu_field_name.value,
                 'ticks':                            $scope.ticks,
                 'startTick':                        $scope.startTick,
-                'nodes':                            $scope.dataset.nodes,
-                'edges':                            $scope.dataset.edges,
+                'nodes':                            TmpSimulationData.nodes,
+                'edges':                            TmpSimulationData.edges,
                 'breakpoints':                      $scope.breakpoints
             });
 
@@ -54,8 +63,6 @@
         $scope.updateTicks();
 
         $scope.options = []; // For dropdown in add consumer/passengerflow
-        $scope.submit = submit;
-        $scope.dataset = { nodes: [], edges: [] };
         $scope.control = {};
         $scope.addData = addData;
         $scope.debug = debug;
@@ -66,7 +73,7 @@
 
         menu_field_button.value = "Submit";
         menu_field_button.icon = "fa-arrow-circle-right";
-        menu_field_button.click = debug;
+        menu_field_button.click = submit;
 
 
         //Function for ticks to seconds/minutes/hours
