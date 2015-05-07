@@ -111,9 +111,15 @@
                         case "consumerGroup-suitcase":
                         case "door":
                         case "suitcase":
+                            var maxWaitingTime;
+                            if(d.maxWaitingTime !== 0){
+                                maxWaitingTime = ticksToTime(d.maxWaitingTime);
+                            } else{
+                                maxWaitingTime = 0;
+                            }
                             var printForConsumer = "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
                                 "Passengers that went through: " + d.entitiesConsumed.length + "<br/>" +
-                                "Max waiting time: " + ticksToTime(d.maxWaitingTime);
+                                "Max waiting time: " + maxWaitingTime;
                             if(d.type.indexOf("consumerGroup") != -1) {
                                 printForConsumer += "<br/>" + "Passengers in queue at simulation end: " + d.numberOfConsumersInQueue +
                                 "<br/>" + "Quantity: " + d.consumers.length + "</br>";
