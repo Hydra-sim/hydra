@@ -1,6 +1,7 @@
 package helpers;
 
 import models.Consumer;
+import models.ConsumerGroup;
 import models.Entity;
 
 import javax.ejb.Singleton;
@@ -35,9 +36,33 @@ public class ConsumerHelper {
      */
     public static void increaseWaitingTime(Consumer con, int ticks) {
 
-        for (Entity entity : con.getEntitiesInQueue()) {
+        if(con instanceof ConsumerGroup) {
 
-            entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + ticks);
+            ConsumerGroup consumerGroup = (ConsumerGroup) con;
+
+            for(Consumer consumer : consumerGroup.getConsumers()) {
+
+                for (Entity entity : consumer.getEntitiesInQueue()) {
+
+                    entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + ticks);
+                }
+
+                ConsumerHelper consumerHelper = new ConsumerHelper();
+                int max = consumerHelper.getMaxWaitingTime(consumer);
+
+                if(max > consumerGroup.getMaxWaitingTime()) {
+
+                    consumerGroup.setMaxWaitingTime(max);
+                }
+            }
+
+
+        } else {
+
+            for (Entity entity : con.getEntitiesInQueue()) {
+
+                entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + ticks);
+            }
         }
     }
 

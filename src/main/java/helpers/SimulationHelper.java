@@ -137,15 +137,13 @@ public class SimulationHelper {
 
                 while (!entitiesToDistribute.isEmpty()) {
 
-                    for (Consumer consumer : consumerGroup.getConsumers()) {
-
-                        if(!entitiesToDistribute.isEmpty()) {
-                            List<Entity> entitiesInQueue = consumer.getEntitiesInQueue();
-                            entitiesInQueue.add(entitiesToDistribute.get(0));
-                            entitiesToDistribute.remove(0);
-                            consumer.setEntitiesInQueue(entitiesInQueue);
-                        }
-                    }
+                    consumerGroup.getConsumers().stream().filter(
+                            consumer -> !entitiesToDistribute.isEmpty()).forEach(consumer -> {
+                        List<Entity> entitiesInQueue = consumer.getEntitiesInQueue();
+                        entitiesInQueue.add(entitiesToDistribute.get(0));
+                        entitiesToDistribute.remove(0);
+                        consumer.setEntitiesInQueue(entitiesInQueue);
+                    });
                 }
 
                 for(Consumer consumer : consumerGroup.getConsumers()) {
