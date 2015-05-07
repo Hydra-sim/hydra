@@ -133,9 +133,6 @@
                 controller: 'NewProducerModalCtrl',
                 size: 'sm',
                 resolve: {
-                    timetableIds: function () {
-                        return $scope.timetableIds;
-                    },
                     type: function () {
                         return title;
                     }

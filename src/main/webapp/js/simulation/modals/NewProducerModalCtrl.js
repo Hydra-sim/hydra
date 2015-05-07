@@ -4,8 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('NewProducerModalCtrl', function($scope, $modalInstance, Timetable, timetableIds, type){
-        $scope.timetableIds = timetableIds;
+    app.controller('NewProducerModalCtrl', function($scope, $modalInstance, Timetable, type){
         $scope.modalTitle = type;
         $scope.timetables = Timetable.query({});
 
@@ -15,9 +14,7 @@
             });
         };
 
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
+        $scope.cancel = $modalInstance.dismiss;
     });
 
 })();
