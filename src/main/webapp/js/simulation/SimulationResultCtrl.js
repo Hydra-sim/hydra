@@ -60,11 +60,15 @@
             $scope.to.setSeconds(0);
             $scope.toPrint = $filter('date')($scope.to, "HH:mm");
 
-            $scope.maxWaitingTimeInMinutes = $scope.simulation.result.maxWaitingTimeInTicks / 60;
+
+
+            var test = $scope.simulation.result.maxWaitingTimeInTicks;
+            $scope.maxWaitingTimeInMinutes = ticksToTime(test);
+            console.log(test);
 
             $scope.entitiesConsumed = $scope.simulation.result.entitiesConsumed;
             $scope.entitiesInQueue = $scope.simulation.result.entitiesInQueue;
-            $scope.bussesInQueue = $scope.simulation.entitiesQueueing.length
+            $scope.bussesInQueue = $scope.simulation.entitiesQueueing.length;
 
         }
 
