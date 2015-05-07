@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('TimetableNewCtrl', function($scope, $rootScope, $log, $modalInstance, Timetable) {
+    app.controller('TimetableNewCtrl', function($scope, $rootScope, $modalInstance, Timetable) {
         $scope.btnName = "Add";
         $scope.name = "";
 

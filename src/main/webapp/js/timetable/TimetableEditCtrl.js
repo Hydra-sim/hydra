@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('TimetableEditCtrl', function($scope, $rootScope, $location, $log, $modalInstance, $anchorScroll, $timeout, Timetable, id) {
+    app.controller('TimetableEditCtrl', function($scope, $rootScope, $location, $modalInstance, $anchorScroll, $timeout, Timetable, id) {
         $scope.btnName = "Save";
 
 
@@ -25,7 +25,7 @@
                 date.setHours( hour );
                 date.setMinutes( Math.floor( time / 60 ) );
 
-                $log.info(result.arrivals);
+                console.log(result.arrivals);
                 $scope.arrivals.push({time: date, passengers: result.arrivals[i].passengers});
             }
 

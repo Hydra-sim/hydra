@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationProgressCtrl', function($scope, $log, $interval) {
+    app.controller('SimulationProgressCtrl', function($scope, $interval) {
 
         $scope.steps = 1;
         $scope.progress = {};
@@ -34,7 +34,7 @@
             intervalPromise = $interval(function () {
 
                 if($scope.progress.position >= 0 && $scope.progress.position <= 100) $scope.progress.position += value;
-                $log.info($scope.progress.position);
+                console.log($scope.progress.position);
 
             }, 100); // Milliseconds, iterations
         }
