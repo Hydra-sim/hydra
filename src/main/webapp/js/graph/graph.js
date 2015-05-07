@@ -70,6 +70,11 @@
                                 return obj.id == id;
                             });
                         });
+
+                        // Hack to hide tooltip if you delete a node
+                        if(tooltip != null)
+                            tooltip.close();
+
                         update();
                     }
 
@@ -329,10 +334,10 @@
                             })
                             .call(drag);
 
-                        if(tooltip != "undefined" && tooltip != null)
+                        if(tooltip != null)
                             newCircleWrappers.call(tooltip);
 
-                        if(border != "undefined" && border != null) {
+                        if(border != null) {
                             newCircleWrappers
                                 .append("circle")
                                 .attr("r", String(consts.nodeRadius))
