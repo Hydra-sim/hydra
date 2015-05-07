@@ -84,26 +84,43 @@
         $scope.extraTooltip = function() {
             var timetable = Timetable.query({});
 
+            function text(d) {
+                if(d.type == "bus" || d.type == "train") {
+                    return _.find(timetable, function(t) { return t.id == d.timetableId; }).name;
+                }
+                else if(d.type == "passengerflow")
+                {
+                    return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
+                           "Time between arrivals: " + ticksToTime(d.timeBetweenArrivals);
+                }
+                else if(d.type == "parking")
+                {
+                    return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity);
+                }
+                else if(
+                    d.type == "desktop" ||
+                    d.type == "door" ||
+                    d.type == "suitcase" ||
+                    d.type == "consumerGroup-desktop"
+                )
+                {
+                    var printForConsumer =  "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity);
+
+                    if(d.type.indexOf("consumerGroup") != -1) {
+                        printForConsumer += "<br/>" + "Quantity: " + d.numberOfConsumers;
+                    }
+
+                    return printForConsumer;
+                }
+                else
+                {
+                    return "Test";
+                }
+            }
+
             return d3.behavior
                 .tooltip()
-                .text(function(d) {
-                    if(d.type == "bus" || d.type == "train") {
-                        return _.find(timetable, function(t) { return t.id == d.timetableId; }).name;
-                    } else if(d.type == "passengerflow"){
-                        return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
-                            " Time between arrivals: " + ticksToTime(d.timeBetweenArrivals);
-                    } else if(d.type == "parking") {
-                        return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity);
-                    } else if(d.type == "desktop" || d.type == "door" || d.type == "suitcase" || d.type == "consumerGroup-desktop") {
-                        var printForConsumer =  "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity);
-                        if(d.type.indexOf("consumerGroup") != -1) {
-                            printForConsumer += "<br/>" + "Quantity: " + d.numberOfConsumers;
-                        }
-                        return printForConsumer;
-                    } else {
-                        return "Test";
-                    }
-                });
+                .text(text);
         };
 
         // Modals
