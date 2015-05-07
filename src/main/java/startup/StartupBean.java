@@ -3,6 +3,7 @@ package startup;
 import helpers.SimulationHelper;
 import models.*;
 import presets.OSLPreset;
+import presets.SimplePreset;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -33,6 +34,9 @@ public class StartupBean {
     @PostConstruct
     public void startup() {
 
+        // Timetables
+        Timetable test = setupTimetables();
+
         // Creating the OSL preset and saving it to the database
         //Simulation simulation1 = new OSLPreset().createOSLPreset();
         //entityManager.persist(simulation1);
@@ -40,15 +44,12 @@ public class StartupBean {
         // For testing purposes
         //setupTablesForPasswordTesting();
 
-        // Timetables
-
-        List<TmpFileListItem> timetables = setupTimetables();
-
         // Simulation with data
-
         //setupSimulationWithData(timetables);
 
-
+        // Simple preset
+        Simulation simplePreset = new SimplePreset().createPreset(test);
+        entityManager.persist(simplePreset);
     }
 
     private void setupTablesForPasswordTesting() {
@@ -81,7 +82,7 @@ public class StartupBean {
         entityManager.persist(simulationHelper.getSimulation());
     }
 
-    private List<TmpFileListItem> setupTimetables() {
+    private Timetable setupTimetables() {
         List<TmpFileListItem> timetables = new LinkedList<TmpFileListItem>() {{
             add(new TmpFileListItem("timetables/flybussekspressen/F1/monday-friday.csv", "Flybussekspressen: F1 Monday - Friday"));
             add(new TmpFileListItem("timetables/flybussekspressen/F1/saturday.csv", "Flybussekspressen: F1 Saturday"));
@@ -138,13 +139,15 @@ public class StartupBean {
 
         }};
 
-        timetables.stream().forEach((item) -> {
+        Timetable t = new Timetable();
 
+        for(TmpFileListItem item : timetables) {
             InputStream is = StartupBean.class.getResourceAsStream(item.getFilename());
-            Timetable t = Timetable.getTimetableFromCsv(is, item.getName());
+            t = Timetable.getTimetableFromCsv(is, item.getName());
 
             entityManager.persist(t);
-        });
-        return timetables;
+        }
+
+        return t;
     }
 }
