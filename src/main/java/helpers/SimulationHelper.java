@@ -354,51 +354,69 @@ public class SimulationHelper {
         // consumer
         // Get the data about the entity that is to be sent
         simulation.getNodes().stream().filter(this::isConsumer).forEach(
-                node -> {
+        node -> {
 
-                    // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-                    // have, and runs the code if either this is true, or it is the first entity sent from the sending
-                    // consumer
-                    // Get the data about the entity that is to be sent
-                    simulation.getRelationships().stream().filter(relationship ->
-                            relationship.getSource() == node).filter(relationship -> !node.getEntitiesReady().isEmpty()).forEach(relationship -> {
+            while (!node.getEntitiesReady().isEmpty()) {
 
-                        // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-                        // have, and runs the code if either this is true, or it is the first entity sent from the sending
-                        // consumer
-                        // Get the data about the entity that is to be sent
-                        simulation.getTransferData().stream().filter(
-                                transferData -> transferData.source == relationship.getSource() && transferData.target == relationship.getTarget()).forEach(
-                                transferData -> {
+                boolean isSource = false;
 
-                            while (!relationship.getSource().getEntitiesReady().isEmpty()) {
+                boolean transfered = false;
 
-                                Node source = relationship.getSource();
+                    for(Relationship relationship : simulation.getRelationships()) {
 
-                                // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-                                // have, and runs the code if either this is true, or it is the first entity sent from the sending
-                                // consumer
-                                if (source.getEntitiesTransfered() == 0
-                                        || ((double) transferData.entitiesRecieved / source.getEntitiesTransfered()) * 100 <= relationship.getWeight()) {
+                        if (relationship.getSource() == node) {
 
-                                    // Get the data about the entity that is to be sent
-                                    Entity entity = relationship.getSource().getEntitiesReady().get(0);
+                            isSource = true;
 
-                                    Consumer target = (Consumer) relationship.getTarget();
+                            // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                            // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                            // consumer
+                            // Get the data about the entity that is to be sent
+                            for(TransferData transferData : simulation.getTransferData()) {
 
-                                    List<Entity> entities = target.getEntitiesInQueue();
-                                    entities.add(entity);
-                                    target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
-                                    target.setEntitiesInQueue(entities);
+                                if(transferData.source == relationship.getSource() && transferData.target == relationship.getTarget()) {
 
-                                    relationship.getSource().getEntitiesReady().remove(0);
-                                    relationship.getSource().setEntitiesTransfered(relationship.getSource().getEntitiesTransfered() + 1);
+                                    Node source = relationship.getSource();
+
+                                    // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                                    // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                                    // consumer
+
+
+                                    if (source.getEntitiesTransfered() == 0
+                                            || ((double) transferData.entitiesRecieved / source.getEntitiesTransfered()) * 100 <= relationship.getWeight()) {
+
+                                        // Get the data about the entity that is to be sent
+                                        Entity entity = relationship.getSource().getEntitiesReady().get(0);
+
+                                        Consumer target = (Consumer) relationship.getTarget();
+
+                                        List<Entity> entities = target.getEntitiesInQueue();
+                                        entities.add(entity);
+                                        target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+                                        target.setEntitiesInQueue(entities);
+
+                                        source.getEntitiesReady().remove(0);
+                                        source.setEntitiesTransfered(relationship.getSource().getEntitiesTransfered() + 1);
+
+                                        transferData.entitiesRecieved++;
+                                        transferData.entitiesTransfered++;
+
+                                        transfered = true;
+
+                                    }
                                 }
-                            }
-                        });
-                    });
-        });
 
+                                if(transfered) break;
+                            }
+                        }
+
+                        if(transfered) break;
+                    }
+
+                    if(!isSource) break;
+                }
+            });
     }
 
     /**

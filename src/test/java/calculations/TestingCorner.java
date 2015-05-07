@@ -509,4 +509,47 @@ public class TestingCorner {
                         + ((Consumer) simulation.getNodes().get(2)).getEntitiesInQueue().size(),
                 simulation.getResult().getEntitiesInQueue());
     }
+
+    @Test
+    public void testWeightBug() {
+
+        int startTick = 0;
+        int ticks = 100;
+        int tickBreakpoints = 10;
+
+        List<Node> nodes = new ArrayList<Node>(){{
+
+            Producer producer = new Producer();
+            ProducerHelper producerHelper = new ProducerHelper();
+            producerHelper.generateTimetable(producer, startTick, 1, ticks, 1);
+            add(producer);
+
+            add(new Consumer(1));
+            add(new Consumer(1));
+
+            add(new Consumer(1));
+            add(new Consumer(1));
+            add(new Consumer(1));
+
+        }};
+
+        List<Relationship> relationships = new ArrayList<Relationship>(){{
+
+            add(new Relationship(nodes.get(0), nodes.get(1), 0));
+            add(new Relationship(nodes.get(0), nodes.get(2), 0));
+
+            add(new Relationship(nodes.get(1), nodes.get(3), 0));
+            add(new Relationship(nodes.get(1), nodes.get(4), 0));
+            add(new Relationship(nodes.get(1), nodes.get(5), 0));
+
+
+            add(new Relationship(nodes.get(2), nodes.get(3), 0));
+            add(new Relationship(nodes.get(2), nodes.get(4), 0));
+            add(new Relationship(nodes.get(2), nodes.get(5), 0));
+
+        }};
+
+        Simulation simulation = new Simulation("test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
+        simulationHelper.simulate(simulation);
+    }
 }

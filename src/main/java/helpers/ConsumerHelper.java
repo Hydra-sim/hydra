@@ -113,7 +113,6 @@ public class ConsumerHelper {
         con.setEntitiesConsumed(entitiesConsumedBeforeSimulation);
 
         con.setEntitiesReady(entitiesConsumed);
-
     }
 
     /**
