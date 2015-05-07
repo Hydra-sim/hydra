@@ -25,6 +25,10 @@
 
         $scope.$watchCollection('progress', function(newvalue) {
             console.log("update?", newvalue);
+            _.each($scope.datasource.nodes, function(value, key, list) {
+                $scope.datasource.nodes[key].progress = $scope.progress.position;
+            });
+            console.log($scope.datasource.nodes);
             $scope.control.update();
         });
 
