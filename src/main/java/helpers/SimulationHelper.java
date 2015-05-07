@@ -152,6 +152,11 @@ public class SimulationHelper {
                     consumerHelper.consumeEntity((Consumer) node, tick);
                 }
             }
+
+                for(Entity entity : ((Consumer) node).getEntitiesInQueue()) {
+
+                    entity.setWaitingTimeOnCurrentNode(entity.getWaitingTimeOnCurrentNode() + 1);
+                }
         });
     }
     
@@ -296,7 +301,10 @@ public class SimulationHelper {
 
                     for(int i = 0; i < group.getEntities(); i++) {
 
-                        consumerHelper.addEntity(target, new Entity());
+                        Entity entity = new Entity();
+                        entity.setWaitingTimeOnCurrentNode(0);
+                        consumerHelper.addEntity(target, entity);
+
 
                         target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
                     }
@@ -372,6 +380,7 @@ public class SimulationHelper {
 
                                         // Get the data about the entity that is to be sent
                                         Entity entity = relationship.getSource().getEntitiesReady().get(0);
+                                        entity.setWaitingTimeOnCurrentNode(0);
 
                                         Consumer target = (Consumer) relationship.getTarget();
 
@@ -379,6 +388,7 @@ public class SimulationHelper {
                                         entities.add(entity);
                                         target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
                                         target.setEntitiesInQueue(entities);
+
 
                                         source.getEntitiesReady().remove(0);
                                         source.setEntitiesTransfered(relationship.getSource().getEntitiesTransfered() + 1);
@@ -422,6 +432,7 @@ public class SimulationHelper {
 
                 int waitingTime = consumerHelper.getMaxWaitingTime(consumer);
                 consumer.setMaxWaitingTime(waitingTime);
+                consumer.setMaxWaitingTimeOnCurrentNode(consumer.getMaxWaitingTimeOnCurrentNode() + 1);
 
                 if(waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
             }

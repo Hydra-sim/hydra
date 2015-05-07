@@ -552,4 +552,45 @@ public class TestingCorner {
         Simulation simulation = new Simulation("test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
         simulationHelper.simulate(simulation);
     }
+
+    @Test
+    public void testQueueTimeOnNode() {
+
+        List<Node> nodes = new ArrayList<Node>() {{
+
+            Producer producer = new Producer();
+            ProducerHelper producerHelper = new ProducerHelper();
+            producerHelper.generateTimetable(producer, 0, 1, 10, 100);
+
+            add(new Consumer(10));
+            add(new Consumer(10));
+
+            add(new Consumer(10));
+            add(new Consumer(10));
+            add(new Consumer(10));
+            add(new Consumer(10));
+
+        }};
+
+        List<Relationship> relationships = new ArrayList<Relationship>() {{
+
+            add(new Relationship(nodes.get(0), nodes.get(1), 0));
+            add(new Relationship(nodes.get(0), nodes.get(2), 0));
+
+            add(new Relationship(nodes.get(1), nodes.get(3), 0));
+            add(new Relationship(nodes.get(1), nodes.get(4), 0));
+
+            add(new Relationship(nodes.get(2), nodes.get(5), 0));
+
+
+        }};
+
+        int startTick = 0;
+        int ticks = 10;
+        int tickBreakpoints = 1;
+
+        Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
+        simulationHelper.simulate(simulation);
+
+    }
 }

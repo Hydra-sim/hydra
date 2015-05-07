@@ -138,6 +138,9 @@ public class ConsumerHelper {
         for(Entity entity : con.getEntitiesInQueue()) {
 
             if(entity.getWaitingTimeInTicks() > maxWaitingTime) maxWaitingTime = entity.getWaitingTimeInTicks();
+            if(entity.getWaitingTimeOnCurrentNode() > con.getMaxWaitingTimeOnCurrentNode()) {
+                con.setMaxWaitingTimeOnCurrentNode(entity.getWaitingTimeOnCurrentNode());
+            }
         }
 
         return maxWaitingTime;
