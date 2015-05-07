@@ -286,7 +286,7 @@
                         function transformFunction(d){return "translate(" + d.x + "," + d.y + ")";}
 
                         // update existing paths
-                        paths = paths.data(scope.edges, function(d){ return "" + d.source.id + "+" + d.target.id; });
+                        paths = paths.data(scope.edges || [], function(d){ return "" + d.source.id + "+" + d.target.id; });
 
                         function d(d) {
                             var source = _.findWhere(scope.nodes, { id: d.source.id });
@@ -316,7 +316,7 @@
                         paths.exit().remove();
 
                         // update existing nodes
-                        circles = circles.data(scope.nodes, function(d){ return d.id; });
+                        circles = circles.data(scope.nodes || [], function(d){ return d.id; });
                         circles.attr("transform", transformFunction);
 
 
