@@ -321,6 +321,9 @@
                         circles.attr("transform", transformFunction);
 
 
+                        if(border != null)
+                            circles.selectAll("circle").call(border);
+
                         // add new nodes
                         var newCircleWrappers = circles
                             .enter()
@@ -338,12 +341,9 @@
                         if(tooltip != null)
                             newCircleWrappers.call(tooltip);
 
-                        var newCircleWrappers_circle = newCircleWrappers
+                        newCircleWrappers
                             .append("circle")
                             .attr("r", String(consts.nodeRadius));
-
-                        if(border != null)
-                            newCircleWrappers_circle.call(border);
 
                         newCircleWrappers
                             .append('text')

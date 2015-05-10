@@ -44,19 +44,19 @@
     // end of internal functions
 
     d3.behavior.border = function() {
-        var event = d3_eventDispatch(border, "test"),
+        var event = d3_eventDispatch(border, "update"),
             bordercolor = null,
             borderwidth = null;
 
-        function border() {
-            var that = this,
-                dispatch = event.of(that, arguments);
+        function border(selection) {
+            selection.each(function(i) {
+                var dispatch = event.of(this, arguments);
 
-            if(bordercolor != null)
-                this.style("stroke", bordercolor);
+                d3.select(this).style("stroke", bordercolor);
+                d3.select(this).style("stroke-width", borderwidth);
 
-            if(borderwidth != null)
-                this.style("stroke-width", borderwidth);
+                dispatch({type: "update"});
+            });
         }
 
         border.color = function(color) {
