@@ -1,9 +1,8 @@
-<form novalidate>
+<form novalidate  >
 <div class="modal-header">
     <h1 class="modal-title">CONFIGURE SIMULATION</h1>
 </div>
 <div class="modal-body">
-
         <div class="text-center">
             <div class="form-group row">
                 <div class="col-md-6">
@@ -18,7 +17,8 @@
         </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default primary" ng-click="submitConfig(days, hours, minutes)" type="submit">Submit</button>
+    <button class="btn btn-default primary" ng-click="submitConfig(days, hours, minutes)"
+            type="submit" ng-enter="submitConfig(days, hours, minutes)">Submit</button>
     <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
 </div>
 </form>

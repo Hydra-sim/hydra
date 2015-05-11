@@ -1,3 +1,4 @@
+<form novalidate name="saveAs" ng-submit="saveAs()">
 <div class="modal-header">
     <h3>Save as</h3>
 </div>
@@ -9,6 +10,7 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default primary" ng-click="saveAs()" type="submit">Submit</button>
+    <button class="btn btn-default primary" ng-click="saveAs()" ng-disabled="saveAs.$invalid" type="submit">Submit</button>
     <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
 </div>
+</form>
