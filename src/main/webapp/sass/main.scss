@@ -3,6 +3,7 @@
 @import 'reset';
 @import 'variables';
 @import '../vendor/fontawesome/scss/font-awesome';
+
 // Elements
 @import 'elements/graph';
 @import 'elements/slider';
@@ -14,6 +15,7 @@
 @import 'elements/buttons';
 @import 'elements/modals';
 @import 'elements/loading-screen';
+@import 'elements/menu-field-button';
 
 body {
   min-height: 100%;
@@ -79,36 +81,6 @@ footer p {
 .menu-field-name:hover input, .menu-field-name input:focus {
   border-bottom: 1px dashed white;
   color: white;
-}
-
-.menu-field-button {
-  cursor: pointer;
-  color: $Avinor_Grey;
-  margin-top: 10px;
-  margin-right: 45px;
-  position: relative;
-
-  .fa {
-    opacity: 0.5;
-    @include transition(opacity, 0.2s, ease-in-out);
-    color: $Avinor_Grey;
-    font-size: 40px;
-    display: block;
-    position: absolute;
-    right: -45px;
-    top: 0px;
-  }
-
-  &:hover .fa {
-    opacity: 1;
-    @include transition(opacity, 0.2s, ease-in-out);
-    color: white;
-  }
-
-  &:hover span:first-child {
-    text-decoration: underline;
-    color: white;
-  }
 }
 
 /* Table on frontpage */

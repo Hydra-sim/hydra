@@ -1,0 +1,32 @@
+@import '../variables';
+@import '../common';
+
+.menu-field-button {
+  cursor: pointer;
+  color: $Avinor_Grey;
+  margin-top: 10px;
+  margin-right: 45px;
+  position: relative;
+
+  .fa {
+    opacity: 0.5;
+    @include transition(opacity, 0.2s, ease-in-out);
+    color: $Avinor_Grey;
+    font-size: 40px;
+    display: block;
+    position: absolute;
+    right: -45px;
+    top: 0px;
+  }
+
+  &:hover .fa {
+    opacity: 1;
+    @include transition(opacity, 0.2s, ease-in-out);
+    color: white;
+  }
+
+  &:hover span:first-child {
+    text-decoration: underline;
+    color: white;
+  }
+}
