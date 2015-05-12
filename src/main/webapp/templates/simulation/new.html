@@ -1,4 +1,5 @@
-<div class="row">
+<div ng-include src="'templates/simulation/loadingscreen.html'" ng-show="!loaded"></div>
+<div class="row" ng-show="loaded">
     <div class="button-container-simulation">
         <button tooltip="Config" tooltip-placement="left" class="btn-google-style fa fa-cog" ng-click="openConfigModal()"></button>
         <button tooltip="Debug" tooltip-placement="left" class="btn-google-style fa fa-code" ng-click="debug()"></button>

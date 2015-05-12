@@ -1,4 +1,4 @@
-<form novalidate name="shareSimulation">
+<form novalidate name="shareSimulation" ng-submit="copySimulation()">
 <div class="modal-header">
     <h1 class="modal-tittle">SHARE SIMULATION</h1>
 </div>
@@ -6,7 +6,7 @@
     <input class="form-control copy" type="text" ng-model="message" focus-me="true"/>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default primary" ng-click="copySimulation()"
+    <button class="btn btn-default primary" ng-click="copySimulation()" ng-disabled="shareSimulation.$invalid"
             ui-zeroclip
             zeroclip-copied="complete($event)"
             zeroclip-on-error="clipError($event)"
