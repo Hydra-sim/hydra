@@ -3,6 +3,7 @@
 @import 'reset';
 @import 'variables';
 @import '../vendor/fontawesome/scss/font-awesome';
+@import 'text';
 
 // Elements
 @import 'elements/graph';
@@ -22,7 +23,6 @@ body {
   min-height: 100%;
   margin-top: $header_height;
   margin-bottom: 50px;
-  font-family: Avinor, sans-serif;
   background-color: $Avinor_LightGrey;
 }
 
@@ -129,57 +129,6 @@ table {
   border: 3px solid rgba(white, 0.6);
 }
 
-h1 {
-  font-size: 24px;
-  font-family: "Avinor-bold";
-  color: $Avinor_Black;
-}
-
-h2 {
-  font-size: 22px;
-  font-family: "Avinor-bold";
-  color: $Avinor_Black;
-}
-
-h3 {
-  font-size: 18px;
-  font-family: "Avinor-bold";
-  color: $Avinor_Black;
-}
-
-h4 {
-  font-size: 16px;
-  font-family: "Avinor-bold";
-  color: $Avinor_Black;
-}
-
-h5 {
-  font-size: 12px;
-  font-family: "Avinor-bold";
-  color: $Avinor_Black;
-}
-
-h6 {
-  font-size: 10px;
-  font-family: "Avinor-bold";
-  color: $Avinor_Black;
-}
-
-p {
-  font-size: 14px;
-  font-family: arial, sans-serif;
-  color: $Avinor_Black;
-}
-
-a {
-  color: $Avinor_LightPurple;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-  color: $Avinor_Black;
-}
 
 .circle {
   width: 35px;
