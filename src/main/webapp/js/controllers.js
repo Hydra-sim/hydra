@@ -15,7 +15,6 @@
     app.controller('ApplicationCtrl', function($scope, $rootScope, $location, $modal, menu_field_name, menu_field_button) {
 
         $scope.menu_field_button = menu_field_button;
-
         menu_field_button.value = "New Simulation";
         menu_field_button.icon = "fa-plus-circle";
         menu_field_button.click = function() {
@@ -37,6 +36,14 @@
         menu_field_name.disable();
 
         $rootScope.simulationAuth = [];
+    });
+
+    app.controller('HomeCtrl', function($scope, menu_field_button, menu_field_name){
+        $scope.menu_field_button = menu_field_button;
+        $scope.menu_field_name = menu_field_name;
+
+        menu_field_button.reset();
+        menu_field_name.disable();
     });
 
     app.controller("TabCtrl", function($scope, $rootScope, $location) {
