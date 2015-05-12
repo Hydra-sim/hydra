@@ -29,12 +29,14 @@
         $routeProvider
             .when('/', {
                 controller: 'ApplicationCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: 'templates/index.html'
             })
 
             // Simulation
             .when('/simulation',{
                 controller: 'ApplicationCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: 'templates/simulation/index.html'
             })
             .when('/simulation/new', {
@@ -44,18 +46,22 @@
             })
             .when('/simulation/:id', {
                 controller: 'SimulationNewCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: 'templates/simulation/new.html'
             })
             .when('/result', {
                 controller: 'SimulationResultCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: 'templates/simulation/result.html'
             })
             .when('/result/:id', {
                 controller: 'SimulationResultCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: 'templates/simulation/result.html'
             })
             .when('/simulation/:id/auth', {
                 controller: 'AuthPathCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: "templates/modals/passwordAuth.html"
             })
             .when('/simulation/:id/animation', {
@@ -67,33 +73,36 @@
             // Timetable
             .when('/timetable', {
                 controller: 'TimetableCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: 'templates/timetable/index.html'
             })
 
             // Preset
             .when('/preset', {
                 controller: 'PresetCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: 'templates/preset/index.html'
-            })
-            .when('/preset/:id/', {
-                templateUrl: 'templates/preset/show.html'
             })
 
             // Other
             .when('/map', {
                 controller: 'UploadMapCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: "templates/map.html"
             })
             .when('/documentation', {
                 controller: 'FullDocumentationCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: 'templates/fulldocumentation.html'
             })
             .when('/colortest', {
                 controller: 'ColorTestCtrl',
+                controllerAs: 'ctrl',
                 templateUrl: 'templates/colortest.html'
             })
             .when('/home', {
                 controller: 'ApplicationCtrl',
+                controllerAs: 'ctrl',
                 templateUrl:'templates/home.html'
             })
 
