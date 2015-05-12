@@ -42,6 +42,7 @@
     app.controller("TabCtrl", function($scope, $rootScope, $location) {
 
         $scope.tabs = [
+            {name: 'HOME', link: "/home"},
             {name: "SIMULATIONS", link: "/"},
             {name: "TIMETABLES", link: "/timetable"},
             {name: "LOCATIONS", link: "/preset"},

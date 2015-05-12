@@ -88,9 +88,13 @@
                 controller: 'ColorTestCtrl',
                 templateUrl: 'templates/colortest.html'
             })
+            .when('/home', {
+                controller: 'ApplicationCtrl',
+                templateUrl:'templates/home.html'
+            })
 
             // Otherwise redirect to frontpage
-            .otherwise({redirectTo : '/'})
+            .otherwise({redirectTo : '/home'})
     });
 
 })();
