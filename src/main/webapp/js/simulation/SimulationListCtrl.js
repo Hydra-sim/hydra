@@ -99,7 +99,7 @@
                         return id;
                     },
                     message: function(){
-                        return  $location.absUrl() + 'simulation/' + id;
+                        return  $location.absUrl() + "/" + id;
                     }
                 }
             });
