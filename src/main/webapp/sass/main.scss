@@ -1,11 +1,8 @@
-@import 'font';
-@import 'common';
+// Reset
 @import 'reset';
-@import 'variables';
-@import '../vendor/fontawesome/scss/font-awesome';
-@import 'text';
 
 // Elements
+@import 'elements/text';
 @import 'elements/graph';
 @import 'elements/slider';
 @import 'elements/radialmenu';
@@ -23,7 +20,6 @@
 
 // TODO: organize this into separate `elements` files
 @import 'elements/unsorted';
-
 
 // Don't write anything under here.
 // Create a new `elements` file or put it in the correct one if it allready exists
