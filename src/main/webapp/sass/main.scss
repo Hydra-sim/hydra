@@ -16,6 +16,7 @@
 @import 'elements/modals';
 @import 'elements/loading-screen';
 @import 'elements/menu-field-button';
+@import 'elements/menu-field-name';
 
 body {
   min-height: 100%;
@@ -55,32 +56,6 @@ footer {
 footer p {
   padding-top: 10px;
   color: $Avinor_Grey;
-}
-
-.menu-field-name, .menu-field-button {
-  font-size: 1.8em;
-  font-weight: 100;
-  margin-top: 10px;
-  text-align: center;
-}
-
-
-.menu-field-name input {
-  width: 100%;
-  background: none;
-  border: 0;
-  text-align: center;
-  color: $Avinor_Grey;
-  border-bottom: 1px dashed $Avinor_Grey;
-}
-
-.menu-field-name input.disabled {
-  display: none;
-}
-
-.menu-field-name:hover input, .menu-field-name input:focus {
-  border-bottom: 1px dashed white;
-  color: white;
 }
 
 /* Table on frontpage */
