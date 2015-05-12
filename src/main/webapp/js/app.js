@@ -33,6 +33,10 @@
             })
 
             // Simulation
+            .when('/simulation',{
+                controller: 'ApplicationCtrl',
+                templateUrl: 'templates/simulation/index.html'
+            })
             .when('/simulation/new', {
                 controller: 'SimulationNewCtrl',
                 controllerAs: 'ctrl',
@@ -94,7 +98,7 @@
             })
 
             // Otherwise redirect to frontpage
-            .otherwise({redirectTo : '/home'})
+            .otherwise({redirectTo : '/'})
     });
 
 })();
