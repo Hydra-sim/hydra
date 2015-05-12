@@ -18,44 +18,14 @@
 @import 'elements/loading-screen';
 @import 'elements/menu-field-button';
 @import 'elements/menu-field-name';
+@import 'elements/header';
+@import 'elements/footer';
 
 body {
   min-height: 100%;
   margin-top: $header_height;
   margin-bottom: 50px;
   background-color: $Avinor_LightGrey;
-}
-
-header {
-  background: $Avinor_Black;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: $header_height;
-  color: white;
-  padding: 25px;
-}
-
-.logo img {
-  height: 50px;
-  margin-left: -20px;
-}
-
-footer {
-  position: fixed;
-  background: $Avinor_Black;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  color: white;
-  padding: 10px 25px;
-  z-index: 100;
-}
-
-footer p {
-  padding-top: 10px;
-  color: $Avinor_Grey;
 }
 
 /* Table on frontpage */

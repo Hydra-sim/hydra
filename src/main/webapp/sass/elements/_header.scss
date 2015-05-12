@@ -1,0 +1,17 @@
+@import '../variables';
+
+header {
+  background: $Avinor_Black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header_height;
+  color: white;
+  padding: 25px;
+
+  .logo img {
+    height: 50px;
+    margin-left: -20px;
+  }
+}
