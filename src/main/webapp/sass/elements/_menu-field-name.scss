@@ -1,0 +1,27 @@
+@import '../variables';
+@import '../common';
+
+.menu-field-name {
+  font-size: 1.8em;
+  font-weight: 100;
+  margin-top: 10px;
+  text-align: center;
+
+  input {
+    width: 100%;
+    background: none;
+    border: 0;
+    text-align: center;
+    color: $Avinor_Grey;
+    border-bottom: 1px dashed $Avinor_Grey;
+  }
+
+  input.disabled {
+    display: none;
+  }
+}
+
+.menu-field-name:hover input, .menu-field-name input:focus {
+  border-bottom: 1px dashed white;
+  color: white;
+}
