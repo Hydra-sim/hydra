@@ -28,14 +28,12 @@
     app.config(function ($routeProvider) {
         $routeProvider
             .when('/', {
-                controller: 'ApplicationCtrl',
-                controllerAs: 'ctrl',
                 templateUrl: 'templates/index.html'
             })
 
             // Simulation
-            .when('/simulation',{
-                controller: 'ApplicationCtrl',
+            .when('/simulation', {
+                controller: 'SimulationCtrl',
                 controllerAs: 'ctrl',
                 templateUrl: 'templates/simulation/index.html'
             })
@@ -99,11 +97,6 @@
                 controller: 'ColorTestCtrl',
                 controllerAs: 'ctrl',
                 templateUrl: 'templates/colortest.html'
-            })
-            .when('/home', {
-                controller: 'ApplicationCtrl',
-                controllerAs: 'ctrl',
-                templateUrl:'templates/home.html'
             })
 
             // Otherwise redirect to frontpage

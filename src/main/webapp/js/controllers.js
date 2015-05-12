@@ -12,36 +12,15 @@
         'ngAnimate'
     ]);
 
-    app.controller('ApplicationCtrl', function($scope, $rootScope, $location, $modal, menu_field_name, menu_field_button) {
-
+    app.controller('ApplicationCtrl', function($scope, $rootScope, menu_field_name, menu_field_button) {
         $scope.menu_field_button = menu_field_button;
-        menu_field_button.value = "New Simulation";
-        menu_field_button.icon = "fa-plus-circle";
-        menu_field_button.click = function() {
-
-            $modal.open({
-                templateUrl: 'templates/modals/choosePreset.html',
-                controller:  'ChoosePresetModalCtrl',
-                size: 'sm'
-            }).result.then(function(result) {
-                if(typeof result == "undefined") {
-                    $location.path('/simulation/new');
-                } else {
-                    $location.path('/simulation/' + result);
-                }
-            });
-        };
-
         $scope.menu_field_name = menu_field_name;
         menu_field_name.disable();
 
         $rootScope.simulationAuth = [];
     });
 
-    app.controller('HomeCtrl', function($scope, menu_field_button, menu_field_name){
-        $scope.menu_field_button = menu_field_button;
-        $scope.menu_field_name = menu_field_name;
-
+    app.controller('HomeCtrl', function(menu_field_button, menu_field_name){
         menu_field_button.reset();
         menu_field_name.disable();
     });
