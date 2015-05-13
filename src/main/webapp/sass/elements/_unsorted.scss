@@ -130,3 +130,26 @@ table {
 .margin-fix-upload-timetable {
   margin-right: 13px;
 }
+
+.home-container{
+  text-align: center;
+}
+
+.home-container img{
+  margin:30px 0px 30px 0px;
+}
+
+.home-container .col-lg-6{
+  float: none;
+  margin: auto;
+}
+
+.home-container .text-container{
+  margin-top: -200px;
+}
+
+.home-container i.fa-arrow-down{
+  -ms-transform: rotate(-60deg);
+  -webkit-transform: rotate(-60deg);
+  transform: rotate(-60deg);
+}
