@@ -132,24 +132,28 @@ table {
 }
 
 .home-container{
-  text-align: center;
-}
-
-.home-container img{
-  margin:30px 0px 30px 0px;
+  text-align:center;
 }
 
 .home-container .col-lg-6{
-  float: none;
-  margin: auto;
+  margin-top: 30px;
 }
 
-.home-container .text-container{
-  margin-top: -200px;
+.home-container .col-lg-3{
+  float:right;
+  text-align: left;
+  margin-top: 100px;
 }
 
-.home-container i.fa-arrow-down{
-  -ms-transform: rotate(-60deg);
-  -webkit-transform: rotate(-60deg);
-  transform: rotate(-60deg);
+.home-container img{
+  width:30%;
+}
+
+.home-container i.fa-long-arrow-down{
+  float: right;
+  margin-top: 10px;
+  margin-right: 50px;
+  -ms-transform: rotate(-20deg);
+  -webkit-transform: rotate(-20deg);
+  transform: rotate(-20deg);
 }
