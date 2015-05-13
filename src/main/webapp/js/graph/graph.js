@@ -109,8 +109,11 @@
 
                         // Get the translation occurring because of zooming and dragging
                         var pos = zoom.translate();
-                        x -= pos[0];
-                        y -= pos[1];
+                        var scale = zoom.scale();
+                        //x -= pos[0];
+                        //y -= pos[1];
+                        x = (x - pos[0]) / scale;
+                        y = (y - pos[1]) / scale;
 
                         var newNode = {"type": type, "id": id, "x": x, "y": y};
                         _.each(data, function(value, key) { newNode[key] = value; }); // Add the data to the element
