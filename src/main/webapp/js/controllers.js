@@ -23,6 +23,13 @@
     app.controller('HomeCtrl', function(menu_field_button, menu_field_name){
         menu_field_button.reset();
         menu_field_name.disable();
+
+        var logoCol= angular.element(document.getElementsByClassName("logo-col"));
+        logoCol.css({
+            position: "absolute",
+            left: $window.innerWidth() - (logoCol.width() / 2),
+            top: $window.innerHeight() - (logoCol.height() / 2)
+        });
     });
 
     app.controller("TabCtrl", function($scope, $rootScope, $location) {
