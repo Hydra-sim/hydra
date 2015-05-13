@@ -37,7 +37,9 @@
                         circleWrapperClass: scope.circleWrapperClass || "node",
                         nodeRadius: scope.nodeRadius || 20,
                         BACKSPACE_KEY: 8,
-                        DELETE_KEY: 46
+                        DELETE_KEY: 46,
+                        KEY_C: 67,
+                        KEY_V: 86
                     };
 
                     var icons = {
@@ -103,19 +105,33 @@
                         update();
                     }
 
-                    function addNode(type, x, y, data) {
+                    function newId() {
                         // Get a new unused id
-                        var id = (_.max(scope.nodes, function(node) { return node.id; }).id || 0) + 1;
+                        return (_.max(scope.nodes, function(node) { return node.id; }).id || 0) + 1;
+                    }
 
+                    function viewSpaceToWorldSpace(x, y) {
                         // Get the translation occurring because of zooming and dragging
                         var pos = zoom.translate();
                         var scale = zoom.scale();
-                        //x -= pos[0];
-                        //y -= pos[1];
                         x = (x - pos[0]) / scale;
                         y = (y - pos[1]) / scale;
 
-                        var newNode = {"type": type, "id": id, "x": x, "y": y};
+                        return {'x': x, 'y': y};
+                    }
+
+                    function addNode(type, x, y, data) {
+                        // Get a new unused id
+                        var id = newId();
+
+                        var pos = viewSpaceToWorldSpace(x, y);
+
+                        var newNode = {
+                            "type": type,
+                            "id": id,
+                            "x": pos.x,
+                            "y": pos.y
+                        };
                         _.each(data, function(value, key) { newNode[key] = value; }); // Add the data to the element
 
                         // Add the node
@@ -125,6 +141,15 @@
                         update();
                     }
 
+                    function copyNode(node, x, y) {
+                        addNode(
+                            node.type,
+                            x,
+                            y,
+                            node.data
+                        );
+                    }
+
                     scope.internalControl = scope.control || {};
                     scope.internalControl.addNode = addNode;
                     scope.internalControl.update = update;
@@ -132,6 +157,7 @@
                     // Selected circle / edge
                     var selectedItem = null;
                     var selectedItemType = "circle";
+                    var itemToCopy = null;
 
                     function selectItem(itemToSelect, type) {
                         // Unselect old circle
@@ -152,9 +178,13 @@
                         selectedItemType = null;
                     }
 
+                    function selectedElementData() {
+                        return selectedItem[0][0].__data__;
+                    }
+
                     function deleteSelectedItem() {
                         // Keep a copy of the circle data to delete before unselecting it
-                        var data = selectedItem[0][0].__data__;
+                        var data = selectedElementData();
 
                         if(selectedItemType == "edge")
                         {
@@ -233,6 +263,10 @@
 
                     svg.on("mouseup", unselectItem);
 
+                    // Temporary saving the mouse position to use when you copy-paste a node
+                    var tmpLastMousePos = null;
+                    svg.on("mousemove", function() { tmpLastMousePos = d3.mouse(this); });
+
                     // If someone tries to delete something
                     d3.select("body").on("keydown", function(d) {
                         if (d3.event.keyCode == consts.BACKSPACE_KEY && d3.event.shiftKey
@@ -241,6 +275,20 @@
 
                             if(itemIsSelected())
                                 deleteSelectedItem();
+                        }
+                        else if (d3.event.keyCode == consts.KEY_C && d3.event.ctrlKey) {
+                            if(itemIsSelected()) {
+                                itemToCopy = selectedElementData();
+                                unselectItem();
+                                console.log("copied element", itemToCopy);
+                            }
+
+                        }
+                        else if (d3.event.keyCode == consts.KEY_V && d3.event.ctrlKey) {
+                            if(itemToCopy != null) {
+                                console.log("paste", tmpLastMousePos);
+                                copyNode(itemToCopy, tmpLastMousePos[0], tmpLastMousePos[1]);
+                            }
                         }
                     });
 
