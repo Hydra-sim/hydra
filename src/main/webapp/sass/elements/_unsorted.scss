@@ -132,28 +132,49 @@ table {
 }
 
 .home-container{
-  text-align:center;
+  text-align: center;
 }
 
-.home-container .col-lg-6{
-  margin-top: 30px;
-}
+.home-container h1{
+  font-size: 36px;
 
-.home-container .col-lg-3{
-  float:right;
-  text-align: left;
-  margin-top: 100px;
 }
 
 .home-container img{
   width:30%;
 }
 
-.home-container i.fa-long-arrow-down{
-  float: right;
-  margin-top: 10px;
-  margin-right: 50px;
-  -ms-transform: rotate(-20deg);
-  -webkit-transform: rotate(-20deg);
-  transform: rotate(-20deg);
+.home-container img.curvedArrow{
+  width:32px;
+  display:inline-block;
+}
+
+
+.home-container .col-lg-12,
+.home-container .col-md-12,
+.home-container .col-sm-12 {
+  position: absolute;
+  top:35%;
+}
+
+.home-container .col-lg-6,
+.home-container .col-md-6,
+.home-container .col-sm-6 {
+  text-align: left;
+  position:absolute;
+  left:150px;
+  top:220px;
+}
+
+
+.home-container .col-lg-4,
+.home-container .col-md-4,
+.home-container .col-sm-4{
+  position: absolute;
+  bottom: 140px;
+  right: 50px;
+}
+
+.home-container .col-lg-4 img.curvedArrow{
+  float:right;
 }
