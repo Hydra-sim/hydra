@@ -4,6 +4,7 @@
   bottom: 5px;
   left: 0px;
   width: 100%;
+  z-index: 9999;
 
   .btn-help {
     background-color: $yellow;
@@ -13,6 +14,7 @@
     width: 50px;
     margin-right: 40px;
     float: right;
+    margin-top:-40px;
   }
 
   .btn-help:focus {
@@ -109,4 +111,22 @@
   padding: 10px;
   text-align: center;
   width: 300px;
+}
+
+.helpContainer div#help-window {
+  position: initial !important;
+}
+
+div#help-window{
+  text-align:center
+}
+
+div#help-window a.close-button{
+  display: block;
+  position: inherit;
+  text-align: right;
+}
+
+div#help-window a{
+  font-size: 1.5em;
 }
