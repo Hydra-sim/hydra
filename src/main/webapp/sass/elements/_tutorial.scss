@@ -21,11 +21,29 @@
   z-index: 99999;
   padding: 20px;
   top: 60px;
+  margin: 40px 0px 40px 0px ;
 
   &:hover {
     background: white !important; // is still white
     color: black !important; // is still black
   }
+}
+
+.window:before{
+  content: ' ';
+  height: 0;
+  position: absolute;
+  width: 0;
+  border: 10px solid transparent;
+  border-top-color: white;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -15px;
+  transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
 }
 
 .hidden {

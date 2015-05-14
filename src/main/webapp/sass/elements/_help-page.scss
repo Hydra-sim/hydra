@@ -115,11 +115,23 @@
 
 .helpContainer div#help-window {
   position: initial !important;
-  margin-left:20px;
+  margin: 40px auto;
+  text-align: center;
+}
+#help-window:before{
+  display: none;
 }
 
-div#help-window{
-  text-align:center
+#help-window:after{
+  content: ' ';
+  height: 0;
+  position: absolute;
+  width: 0;
+  border: 10px solid transparent;
+  border-top-color: white;
+  top: 79%;
+  left: 50%;
+  margin-left: -15px;
 }
 
 div#help-window a.close-button{
