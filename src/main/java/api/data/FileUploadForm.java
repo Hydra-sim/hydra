@@ -22,4 +22,7 @@ public class FileUploadForm {
         return new ByteArrayInputStream(data);
     }
 
+    public byte[] getData() {
+        return data;
+    }
 }

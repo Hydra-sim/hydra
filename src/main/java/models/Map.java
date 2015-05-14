@@ -15,24 +15,11 @@ public class Map {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    private String url;
     private double scale;
-    private int zoom;
+    private String filepath;
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public double getScale() {
@@ -43,27 +30,25 @@ public class Map {
         this.scale = scale;
     }
 
-    public int getZoom() {
-        return zoom;
+    /**
+     * @todo This shouldn't be returned from the api. We need to look into not serializing it.
+     * @return
+     */
+    public String getFilepath() {
+        return filepath;
     }
 
-    public void setZoom(int zoom) {
-        this.zoom = zoom;
-    }
-
-    public Map(String url, double scale, int zoom) {
-        this.url = url;
+    public Map(String filepath, double scale) {
+        this.filepath = filepath;
         this.scale = scale;
-        this.zoom = zoom;
     }
-
-    public Map(String url) {
-
-        this("", 1.0, 0);
-    }
-
 
     public Map() {
-        this("");
+
     }
+
+    public String getUrl() {
+        return "TODO";
+    }
+
 }
