@@ -55,7 +55,7 @@ public class Map {
             models.Map map = mapFactory.createMap(form);
 
             // Create the output stream & copy the input stream to the output
-            OutputStream os = new FileOutputStream(map.getFilepath());
+            OutputStream os = new FileOutputStream(map.getFile());
             IOUtils.copy(form.getInputStream(), os);
             os.close();
 

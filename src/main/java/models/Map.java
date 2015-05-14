@@ -33,12 +33,7 @@ public class Map {
 
     /**
      * @todo This shouldn't be returned from the api. We need to look into not serializing it.
-     * @return
      */
-    public String getFilepath() {
-        return filepath;
-    }
-
     public File getFile() {
         return new File(filepath);
     }
@@ -51,9 +46,4 @@ public class Map {
     public Map() {
 
     }
-
-    public String getUrl() {
-        return "TODO";
-    }
-
 }
