@@ -126,13 +126,14 @@
 #help-window:after{
   content: ' ';
   height: 0;
-  position: absolute;
   width: 0;
   border: 10px solid transparent;
   border-top-color: white;
-  bottom: 20.5%;
-  left: 50%;
-  margin-left: -15px;
+  position: relative;
+  left: 0;
+  top: 40px;
+  margin: auto;
+  display: block;
 }
 
 div#help-window a.close-button{
