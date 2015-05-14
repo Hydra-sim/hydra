@@ -18,6 +18,70 @@
         menu_field_name.disable();
 
         $rootScope.simulationAuth = [];
+
+        $scope.closeWindow = function( $event ) {
+
+            var $this = $event.target;
+
+            var $ancestorWindow = findAncestor( $this, 'window' );
+            if ( $ancestorWindow ) {
+                addClass( $ancestorWindow, 'hidden' );
+            }
+
+            addClass( document.querySelector( '.js-overlay' ), 'hidden' );
+        };
+
+        $scope.openNextWindow = function( $event ){
+
+            var $this = $event.target;
+
+            var $ancestorWindow = findAncestor( $this, 'window' );
+            if ( $ancestorWindow !== null ) {
+                addClass( $ancestorWindow, 'hidden' );
+            }
+
+            var $ancestorBox = findAncestor( $this, 'box' );
+            if ( $ancestorBox !== null ) {
+                removeClass( $ancestorBox, 'active-section' );
+            }
+
+            var $next = $this.dataset.nextWindow ? document.querySelector( $this.dataset.nextWindow ) : null;
+            if ( $next !== null ) {
+                removeClass( $next, 'hidden' );
+                addClass( findAncestor( $next, 'box' ), 'active-section' );
+            }
+
+            var $overlay = document.querySelector( '.js-overlay' );
+            if ( $overlay !== null ) {
+                if ( !$this.dataset.nextWindow ) {
+                    addClass( $overlay, 'hidden' );
+                } else {
+                    removeClass( $overlay, 'hidden' );
+                }
+            }
+
+            return false;
+        };
+
+        function hasClass( ele, cls ) {
+            return !!ele.className.match( new RegExp( '(\\s|^)' + cls + '(\\s|$)' ) );
+        }
+
+        function addClass( ele, cls ) {
+            if ( !hasClass( ele, cls ) ) ele.className += " " + cls;
+        }
+
+        function removeClass( ele, cls ) {
+            if ( hasClass( ele, cls ) ) {
+                var reg = new RegExp( '(\\s|^)' + cls + '(\\s|$)' );
+                ele.className = ele.className.replace( reg, ' ' );
+            }
+        }
+
+        function findAncestor( el, cls ) {
+            while ( (el = el.parentElement) && !el.classList.contains( cls ) );
+            return el;
+        }
     });
 
     app.controller('HomeCtrl', function($scope, menu_field_button, menu_field_name, $modal){
@@ -69,9 +133,9 @@
 
         $scope.tabs = [
             {name: 'HOME', link: "/"},
-            {name: "SIMULATIONS", link: "/simulation"},
-            {name: "TIMETABLES", link: "/timetable"},
-            {name: "LOCATIONS", link: "/preset"},
+            {name: "SIMULATIONS", link: "/simulation", nextWindow: '#timetables-window', description: 'In the simulations tab you can see a list of all previous simulation. Click on simulation name to view simulation results. You can also delete, edit, share and set password on the simulations.'},
+            {name: "TIMETABLES", link: "/timetable", nextWindow: '#locations-window', description: 'In the timetables tab you can see a list of all timetables . Click on timetable name to edit timetable. You can also create new timetables and delete them.'},
+            {name: "LOCATIONS", link: "/preset", description: 'In the locations tab you can see a list of all locations. A location is a pre-defined simulation that you can run as is or edit to customize it. You can edit, delete or create a new location.'}
         ];
 
         $scope.select= function(item) {

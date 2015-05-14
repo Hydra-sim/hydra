@@ -1,7 +1,14 @@
 <div class="tabMenu" ng-controller="TabCtrl">
     <ul>
-        <li ng-repeat="tab in tabs" >
-            <div ng-click="select(tab)" ng-class="itemClass(tab)">{{tab.name}}</div>
+        <li ng-repeat="tab in tabs" class="box">
+            <div ng-click="select(tab)" ng-class="itemClass(tab)">
+                {{tab.name}}
+            </div>
+            <div id = "{{tab.name.toLowerCase()}}-window" class = 'window hidden'>
+                <a class = 'close-button' ng-click='closeWindow($event)'>x</a>
+                <p>{{tab.description}}</p>
+                <a class='button' ng-click='openNextWindow($event)' data-next-window='{{tab.nextWindow}}'>Next</a>
+            </div>
         </li>
     </ul>
 </div>

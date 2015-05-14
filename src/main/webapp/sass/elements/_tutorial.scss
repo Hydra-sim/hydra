@@ -1,0 +1,41 @@
+.overlay {
+  position: absolute;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+.active-section {
+  position: relative;
+  z-index: 9999;
+}
+
+.window {
+  // Important because of bad code elsewhere
+  width: 200px !important;
+  height: auto !important;
+  line-height: 1.6 !important;
+  background: white;
+  position: absolute;
+  z-index: 99999;
+  padding: 20px;
+  top: 60px;
+
+  &:hover {
+    background: white !important; // is still white
+    color: black !important; // is still black
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.close-button {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  text-decoration: none;
+  font-size: 20px;
+}
