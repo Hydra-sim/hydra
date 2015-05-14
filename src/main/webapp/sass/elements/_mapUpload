@@ -1,0 +1,45 @@
+@import "../font";
+@import "../variables";
+
+/* Map for uploading*/
+.mapImageWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.mapImageWrapperFull {
+  width: 1100px;
+  min-height: 800px;
+  overflow: hidden;
+
+  img {
+    transform-origin: top left;
+  }
+}
+
+.close-icon {
+  color: black;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.focused-form-wrapper {
+  background: $Avinor_Black;
+  padding: 10px 10px 0;
+  border-radius: 4px;
+}
+
+.mapNode {
+  width: $map_node_size;
+  height: $map_node_size;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #842168;
+  top: 50%;
+  left: 50%;
+  margin-top: $map_node_size * -0.5;
+  margin-left: $map_node_size * -0.5;
+  border: 3px solid rgba(white, 0.6);
+}

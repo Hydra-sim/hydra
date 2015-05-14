@@ -1,0 +1,35 @@
+@import "../font";
+@import "../variables";
+
+/* Table on frontpage */
+table {
+  margin-bottom: 55px !important;
+}
+
+.table-equal-width {
+  td,
+  th {
+    width: 50%;
+    border-left: 1px solid #ddd;
+    &:first-child {
+      border-left: none;
+    }
+  }
+}
+
+.table th {
+  font-size: 14px;
+  font-family: "Avinor-bold";
+  color: $Avinor_Black;
+  padding-top: 20px !important;
+}
+
+.title_date_tr {
+  display: inline-block;
+  margin-top: 12px;
+}
+
+//Placement fix for upload link timetable
+.margin-fix-upload-timetable {
+  margin-right: 13px;
+}

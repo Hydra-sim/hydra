@@ -1,7 +1,9 @@
-@import '../variables';
-@import '../font';
+@import "../font";
+@import "../variables";
 
-.home-container {
+/*LANDING-PAGE  */
+
+.home-container{
   text-align: center;
 }
 
