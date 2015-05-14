@@ -5,7 +5,6 @@
     var app = angular.module('unit.controllers');
 
     app.controller('SimulationListCtrl', function ($scope, $rootScope, Simulation, $location, $modal) {
-
         function updateSimulations() {
             $scope.simulations = Simulation.query({});
         }

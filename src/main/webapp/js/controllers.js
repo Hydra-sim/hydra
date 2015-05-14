@@ -94,8 +94,8 @@
         $scope.tabs = [
             {name: 'HOME', link: "/"},
             {name: "SIMULATIONS", link: "/simulation", nextWindow: '#timetables-window', description: 'View and manage all previous simulation or create a new one.'},
-            {name: "TIMETABLES", link: "/timetable", nextWindow: '#locations-window', description: 'View and manage  timetables or create a new one that suits your location.'},
-            {name: "LOCATIONS", link: "/preset", nextWindow: "#help-window", description: 'See and manage all saved locations or create a brand new location that can easily be reused. '}
+            {name: "TIMETABLES", link: "/timetable", nextWindow: '#locations-window', description: 'View and manage timetables or create a new one that suits your location.'},
+            {name: "LOCATIONS", link: "/preset", nextWindow: "#help-window", description: 'See and manage all saved locations or create a new one that can easily be reused. '}
         ];
 
         $scope.select= function(item) {
