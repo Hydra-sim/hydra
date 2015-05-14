@@ -132,8 +132,13 @@ table {
 }
 .home-container{
   text-align: center;
-  transform: translateY(90%);
   }
+
+.home-container .col-lg-12{
+  position: absolute;
+  top:50%;
+  margin-top: -80px;
+}
 
 .home-container h1{
   margin-bottom: -20px;
