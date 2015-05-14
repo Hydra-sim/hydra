@@ -1,0 +1,24 @@
+@import '../variables';
+@import '../font';
+
+.home-container {
+  text-align: center;
+}
+
+.home-container .col-lg-12{
+  position: absolute;
+  top:50%;
+  margin-top: -80px;
+}
+
+.home-container h1{
+  margin-bottom: -20px;
+  margin-left: 70px;
+  font-size: 36px;
+}
+
+.home-container img{
+  width:30%;
+  margin:auto;
+  display:block;
+}

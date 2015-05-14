@@ -84,6 +84,7 @@ table {
 }
 
 
+//Nodes
 .circle {
   width: 35px;
   height: 35px;
@@ -130,33 +131,7 @@ table {
 .margin-fix-upload-timetable {
   margin-right: 13px;
 }
-.home-container{
-  text-align: center;
-  }
 
-.home-container .col-lg-12{
-  position: absolute;
-  top:50%;
-  margin-top: -80px;
-}
-
-.home-container h1{
-  margin-bottom: -20px;
-  margin-left: 70px;
-  font-size: 36px;
-}
-
-.home-container img{
-  width:30%;
-  margin:auto;
-  display:block;
-}
+/*LANDING-PAGE  */
 
 
-.home-modal span {
-  text-align:left;
-}
-
-.home-modal .collapse, .home-modal .collaps-in{
-  display: none;
-}
