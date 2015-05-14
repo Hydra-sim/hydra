@@ -117,9 +117,11 @@
             if(ticks == 60)     return "1 minute";
             if(ticks == 1)      return "1 second";
 
-            if(ticks > 3600)    return ticks/3600 + " hours";
-            if(ticks > 60)      return ticks/60 + " minutes";
-            if(ticks > 1)       return ticks + " seconds";
+            if(ticks > 3600)    return (ticks/3600).toPrecision(4) + " hours";
+            if(ticks > 60)      return (ticks/60).toPrecision(4) + " minutes";
+            if(ticks > 1)       return ticks.toPrecision(3) + " seconds";
+
+
         }
 
         // Tooltip
