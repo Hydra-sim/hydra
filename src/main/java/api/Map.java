@@ -39,7 +39,8 @@ public class Map {
     public Response get(@PathParam("id") int id)
     {
         try {
-            return Response.ok( mapDao.get(id) ).build();
+            models.Map map = mapDao.get(id);
+            return Response.ok( map.getFile() ).build();
         }
         catch (Exception e) {
             return Response.serverError().build();

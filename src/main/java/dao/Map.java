@@ -48,12 +48,10 @@ public class Map {
      * Returns a single map with a given ID
      * @param id ID of map to return
      * @return Return the map with the given ID
-     * @throws Exception Throws exception if the map wasn't found
      */
-    public String get(int id) //throws Exception
+    public models.Map get(int id)
     {
-        models.Map item = entityManager.find(models.Map.class, id);
-        return item.getUrl();
+        return entityManager.find(models.Map.class, id);
     }
 
 }

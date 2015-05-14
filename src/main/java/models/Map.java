@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.*;
 import javax.ws.rs.Produces;
+import java.io.File;
 
 @NamedQuery(name = "Map.findAll", query = "SELECT a FROM Map a")
 
@@ -36,6 +37,10 @@ public class Map {
      */
     public String getFilepath() {
         return filepath;
+    }
+
+    public File getFile() {
+        return new File(filepath);
     }
 
     public Map(String filepath, double scale) {
