@@ -86,47 +86,7 @@
 
     app.controller('HomeCtrl', function($scope, menu_field_button, menu_field_name, $modal){
         menu_field_button.reset();
-
-        $scope.openHome = function(){
-            $modal.open({
-                templateUrl: "templates/modals/homeModal.html",
-                controller: "HomeModalCtrl",
-                size: "lg",
-                resolve: function(){
-                    return $scope.groups;
-                }
-            });
-        }
-    });
-
-    app.controller("HomeModalCtrl", function($scope, $modalInstance){
-
-        $scope.oneAtATime = true;
-        $scope.groups = [
-            {
-                "title": "General information",
-                "content": "HYDRA is a web-based simulation tool that is built to simulate airport passengerflow. " +
-                "It mainly consists of three different components simulations, timetables and locations."},
-            {
-                "title": "Simulations",
-                "content": "In the simulations tab you can see a list of all previous simulatuions and manage them. " +
-                "You can also create a new simulation by pressing new simlation in the upper right hand corner"
-            },
-            {
-                "title": "Timetables",
-                "content": "In the timetables tab you can see a list of timetables used for the location Gardemoen OSL, " +
-                "you can also create new timetables, or edit excisting timetables."
-            },
-            {
-                "title": "Locations",
-                "content": "In the locations tab you can ses pre-defined airport locations. " +
-                "These can be run as is or be edited to suit your purpose"
-            }
-        ];
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
+        menu_field_name.disable();
     });
 
     app.controller("TabCtrl", function($scope, $rootScope, $location) {
