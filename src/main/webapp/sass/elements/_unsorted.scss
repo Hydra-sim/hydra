@@ -1,23 +1,2 @@
-@import '../variables';
-@import '../font';
 
-//
-// TODO: organize this into separate `elements` files
-//
-
-body {
-  min-height: 100%;
-  margin-top: $header_height;
-  margin-bottom: 50px;
-  background-color: $Avinor_LightGrey;
-}
-
-
-/*RESULT PAGE*/
-
-.result-container {
-  width: 100%;
-  text-align: center;
-  margin-bottom: 35px;
-}
 

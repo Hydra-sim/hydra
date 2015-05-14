@@ -1,0 +1,9 @@
+@import '../variables';
+@import '../font';
+
+body {
+  min-height: 100%;
+  margin-top: $header_height;
+  margin-bottom: 50px;
+  background-color: $Avinor_LightGrey;
+}

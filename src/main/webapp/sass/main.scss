@@ -2,6 +2,7 @@
 @import 'reset';
 
 // Elements
+@import "elements/body";
 @import 'elements/text';
 @import 'elements/graph';
 @import 'elements/slider';
@@ -22,8 +23,7 @@
 @import "elements/homepage";
 @import "elements/table";
 @import "elements/mapUpload";
-// TODO: organize this into separate `elements` files
-@import 'elements/unsorted';
+@import "elements/result";
 
 // Don't write anything under here.
 // Create a new `elements` file or put it in the correct one if it already exists
