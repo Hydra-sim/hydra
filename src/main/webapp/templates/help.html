@@ -1,9 +1,8 @@
 <div class="helpContainer" ng-controller="CollapseCtrl">
     <div id="help-window" class="window hidden">
         <a class="close-button" ng-click="closeWindow($event)">x</a>
-        <p>In the help section you can read more about simulations, timetables and locations.
-            There is also a link to the full documentation which in further
-            detail explain how to use the various aspects of the application </p>
+        <p>Read more about simulations, timetables and locations in help,
+            or read the full documentation for more detailed instructions.</p>
         <a class="button" ng-click="openNextWindow($event)" data-next-window="">Next</a>
     </div>
     <button class="btn btn-help" ng-click="isCollapsed = !isCollapsed">Help</button>

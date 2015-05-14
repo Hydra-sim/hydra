@@ -93,9 +93,9 @@
 
         $scope.tabs = [
             {name: 'HOME', link: "/"},
-            {name: "SIMULATIONS", link: "/simulation", nextWindow: '#timetables-window', description: 'In the simulations tab you can see a list of all previous simulation. Click on simulation name to view simulation results. You can also delete, edit, share and set password on the simulations.'},
-            {name: "TIMETABLES", link: "/timetable", nextWindow: '#locations-window', description: 'In the timetables tab you can see a list of all timetables . Click on timetable name to edit timetable. You can also create new timetables and delete them.'},
-            {name: "LOCATIONS", link: "/preset", nextWindow: "#help-window", description: 'In the locations tab you can see a list of all locations. A location is a pre-defined simulation that you can run as is or edit to customize it. You can edit, delete or create a new location.'}
+            {name: "SIMULATIONS", link: "/simulation", nextWindow: '#timetables-window', description: 'View and manage all previous simulation or create a new one.'},
+            {name: "TIMETABLES", link: "/timetable", nextWindow: '#locations-window', description: 'View and manage  timetables or create a new one that suits your location.'},
+            {name: "LOCATIONS", link: "/preset", nextWindow: "#help-window", description: 'See and manage all saved locations or create a brand new location that can easily be reused. '}
         ];
 
         $scope.select= function(item) {

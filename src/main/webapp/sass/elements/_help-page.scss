@@ -118,6 +118,7 @@
   margin: 40px auto;
   text-align: center;
 }
+
 #help-window:before{
   display: none;
 }
@@ -129,7 +130,7 @@
   width: 0;
   border: 10px solid transparent;
   border-top-color: white;
-  top: 79%;
+  bottom: 20.5%;
   left: 50%;
   margin-left: -15px;
 }
@@ -138,6 +139,7 @@ div#help-window a.close-button{
   display: block;
   position: inherit;
   text-align: right;
+  margin:0;
 }
 
 div#help-window a{
