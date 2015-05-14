@@ -10,7 +10,8 @@
         'zeroclipboard',
         'angular-loading-bar',
         'unit.directives',
-        'ngFileUpload'
+        'ngFileUpload',
+        'directive.timeline'
     ]);
 
     app.config(['uiZeroclipConfigProvider', function(uiZeroclipConfigProvider) {

@@ -1,17 +1,6 @@
 <graph nodes="datasource.nodes" edges="datasource.edges" height="500px" extra-border="extraBorder()" control="control"></graph>
 
-<form class="progressBar" style="margin: 10px">
-    <p class="labels">
-        {{startTime.toLocaleTimeString()}}
-        <span style="float: right">{{endTime.toLocaleTimeString()}}</span>
-    </p>
 
-    <div>{{progress.position}}</div>
-    <input type="range" name="points" min="{{startTime}}" max="{{endTime}}" step="{{steps}}" ng-model="progress.position">
+<div>{{progress.position}}</div>
 
-    <div class="progressButtons">
-        <span class="fa fa-backward" ng-click="backward()"></span>
-        <span class="fa fa-pause" ng-click="pause()"></span>
-        <span class="fa fa-forward" ng-click="forward()"></span>
-    </div>
-</form>
+<timeline start-time="startTime" end-time="endTime" max="totalSteps" position="progress.position"></timeline>

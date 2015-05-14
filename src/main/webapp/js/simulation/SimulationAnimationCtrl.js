@@ -16,10 +16,12 @@
             update_datasource_progress();
         });
 
+        $scope.startTime = 1;
+        $scope.endTime = 8;
         $scope.steps = 1;
         $scope.progress = {};
         $scope.progress.position = 0;
-        $scope.totalSteps = 8;
+        $scope.totalSteps = 7;
         $scope.control = {};
 
         function update_datasource_progress() {
@@ -32,36 +34,6 @@
             update_datasource_progress();
             $scope.control.update();
         });
-
-        var intervalPromise;
-
-        $scope.forward = function() {
-
-            $interval.cancel(intervalPromise);
-            $scope.changeTime(1);
-        };
-
-        $scope.backward = function() {
-
-            $interval.cancel(intervalPromise);
-            $scope.changeTime(-1);
-        };
-
-        $scope.pause = function() {
-
-            $interval.cancel(intervalPromise);
-        };
-
-        $scope.changeTime = function(value) {
-
-            intervalPromise = $interval(function () {
-
-                if($scope.progress.position >= 0 && $scope.progress.position <= 100) $scope.progress.position += value;
-                console.log($scope.progress.position);
-
-            }, 100); // Milliseconds, iterations
-        };
-
 
         $scope.extraBorder = function() {
 
