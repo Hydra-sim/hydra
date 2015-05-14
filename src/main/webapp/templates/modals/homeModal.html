@@ -1,0 +1,16 @@
+<form novalidate class="home-modal">
+    <div class="modal-header">
+        <h1 class="modal-title">Quick guide</h1>
+    </div>
+    <div class="modal-body">
+        <accordion close-others="oneAtATime">
+            <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+                {{group.content}}
+            </accordion-group>
+        </accordion>
+        <p>For more information about the application see the full documentation under the help section</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default secondary" ng-click="cancel()" type="submit">Close</button>
+    </div>
+</form>
