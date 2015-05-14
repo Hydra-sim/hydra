@@ -101,6 +101,8 @@
         $scope.select= function(item) {
             $location.path(item.link);
             $location.replace();
+            var overlay = angular.element(document.getElementsByClassName("overlay"));
+            overlay.addClass("hidden");
         };
 
         $scope.itemClass = function(item) {
