@@ -58,7 +58,7 @@
                     $interval.cancel(interval);
 
                     if(that.play) {
-                        interval = $interval(that.forward, 500);
+                        interval = $interval(that.forward, 100);
                     }
                 };
             }
