@@ -19,8 +19,6 @@ public class Producer extends Node{
     @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     Timetable timetable;
 
-    int timetableId;
-
     @Transient
     List<ProducerData> producerDataList;
 
@@ -105,11 +103,11 @@ public class Producer extends Node{
     }
 
     public int getTimetableId() {
-        return timetableId;
+        return timetable.getId();
     }
 
     public void setTimetableId(int timetableId) {
-        this.timetableId = timetableId;
+
     }
 
     //endregion
