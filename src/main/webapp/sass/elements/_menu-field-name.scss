@@ -18,7 +18,14 @@
 
   input.disabled {
     display: none;
+    border: none;
   }
+}
+
+.menu-field-name input[disabled],
+.menu-field-name:hover input[disabled],
+.menu-field-name:focus input[disabled] {
+  border: none;
 }
 
 .menu-field-name:hover input, .menu-field-name input:focus {
