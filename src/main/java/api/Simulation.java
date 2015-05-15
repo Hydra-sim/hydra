@@ -1,6 +1,7 @@
 package api;
 
 import api.data.PasswordFormData;
+import api.data.RunSim;
 import api.data.SimulationFormData;
 import api.data.TrueFalse;
 import helpers.SimulationHelper;
@@ -136,17 +137,20 @@ public class Simulation {
         return Response.ok(new TrueFalse(true)).build();
     }
 
-    @GET
-    @Path("/{id}/run")
+    @PUT
+    @Path("{id}/run")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response simulationData(@PathParam("id") int id) {
+    public Response simulationData(@PathParam("id") int id, RunSim simProperties) {
 
         try {
-
             models.Simulation simulation = simulationDao.get(id);
+
+            simulation.setTickBreakpoints(simProperties.breakpoints);
+
             SimulationHelper simulationHelper = new SimulationHelper();
             simulationHelper.simulate(simulation);
+
             return Response.ok( simulationHelper.getSimulation() ).build();
 
         } catch (Exception e) {

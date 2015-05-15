@@ -10,9 +10,10 @@
 
         $scope.datasource = {};
 
-        Simulation.run({}, {id: $routeParams.id}, function(result) {
+        Simulation.run({}, {id: $routeParams.id, breakpoints: 8}, function(result) {
             $scope.datasource.nodes = result.nodes;
             $scope.datasource.edges = result.relationships;
+            $scope.totalSteps = result.breakpoints -1;
             update_datasource_progress();
         });
 

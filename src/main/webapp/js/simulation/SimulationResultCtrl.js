@@ -25,7 +25,7 @@
                     $location.replace();
                 }
 
-                Simulation.run({}, {id: result.id}, init);
+                Simulation.run({}, {id: result.id, breakpoints: 0}, init);
             });
         } else {
             // If the promise doesn't exists, reload the data from the api

@@ -10,7 +10,7 @@
         return $resource('api/simulation/:simulationId', {simulationId: '@id'},
             {
                 'update': { method: 'PUT' },
-                'run': { method: 'GET', url: 'api/simulation/:simulationId/run', params: {simulationId: '@id'}}
+                'run': { method: 'PUT', url: 'api/simulation/:simulationId/run' }
             });
     }]);
 
