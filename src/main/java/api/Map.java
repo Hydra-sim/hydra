@@ -49,6 +49,7 @@ public class Map {
 
     @POST
     @Consumes("multipart/form-data")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response uploadFile(@MultipartForm FileUploadForm form) {
         try
         {
@@ -61,12 +62,12 @@ public class Map {
 
             // Persist the map to the database
             mapDao.add(map);
+
+            return Response.ok( map ).build();
         }
         catch (Exception e)
         {
             return Response.serverError().build();
         }
-
-        return Response.ok().build();
     }
 }

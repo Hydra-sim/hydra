@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <div class="pull-right">
+        <a href="" class="glyphicon glyphicon-remove close-icon" ng-click="ctrl.cancel()"></a>
+    </div>
+    <span>Resize the map according to the size of the node</span>
+</div>
+<div class="modal-body">
+    <div class="focused-form-wrapper">
+        <div class="mapImageWrapper">
+            <img src="http://localhost:8080/hydra/api/map/{{ctrl.id}}"
+                 alt="Map" style="width: 100%" ng-style="{
+                     'transform': 'scale('+ctrl.scale+')',
+                     '-webkit-transform': 'scale('+ctrl.scale+')',
+                     '-ms-transform': 'scale('+ctrl.scale+')'}">
+            <div class="mapNode"></div>
+        </div>
+        <input type='range' min='0' max='100' value='{{ctrl.zoom}})' ng-model="ctrl.zoom"/>
+    </div>
+    <h5>Zoom: {{ctrl.zoom}}%</h5>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ctrl.submitMap()" type="submit">Submit</button>
+</div>
