@@ -2,9 +2,9 @@
 
     'use strict';
 
-    var app = angular.module('simulation', []);
+    var app = angular.module('unit.controllers');
 
-    app.controller('UploadMapCtrl', function($scope, $rootScope, $log, Map){
+    app.controller('UploadMapCtrl', function($scope, $modal, Map){
 
         $scope.image = { visible: true, id: 86, exists: true, zoom: 0};
         $scope.image2 = {scale: 1, zoom: 0};
@@ -29,10 +29,6 @@
         $scope.$watch("image2.scale", function() {
             $scope.transform = "scale("+$scope.image2.scale+")";
         });
-
-    });
-
-    app.controller('MyUploadCtrl', function($scope, $upload, $log, Map) {
 
         $scope.$watch('files', function () {
             $scope.upload($scope.files);
@@ -62,15 +58,12 @@
                 }
             }
         };
-    });
-
-    app.controller('MapModalCtrl', function($scope, $modal) {
 
         $scope.openMapModal = function(size) {
 
             $modal.open({
-                templateUrl: 'mapModal.html',
-                controller: 'MapModalInstanceCtrl',
+                templateUrl: 'templates/mapModal.html',
+                controller: 'MapModalCtrl',
                 size: size,
                 resolve: {
                     image: function () {
@@ -84,7 +77,7 @@
         }
     });
 
-    app.controller('MapModalInstanceCtrl', function($scope, $log, $modalInstance, $timeout, image, image2) {
+    app.controller('MapModalCtrl', function($scope, $modalInstance, $timeout, image, image2) {
 
         $scope.image = image;
         $scope.image2 = image2;

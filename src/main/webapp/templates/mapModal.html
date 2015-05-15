@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <div class="pull-right">
+        <a href="" class="glyphicon glyphicon-remove close-icon" ng-click="cancel()"></a>
+    </div>
+    <span>Resize the map according to the size of the node</span>
+</div>
+<div class="modal-body">
+    <div class="focused-form-wrapper">
+        <div class="mapImageWrapper">
+            <img src="http://1.bp.blogspot.com/_au17kecZ280/TNwGt8PiP6I/AAAAAAAAFP8/lK-_VjYudzw/s1600/AvinorFlights_app.png"
+                 alt="Map" style="width: 100%" ng-style="{
+                     'transform': 'scale('+image.scale+')',
+                     '-webkit-transform': 'scale('+image.scale+')',
+                     '-ms-transform': 'scale('+image.scale+')'}">
+            <div class="mapNode"></div>
+        </div>
+        <input type='range' min='0' max='100' value='{{image.zoom}})' ng-model="image.zoom"/>
+    </div>
+</div>
+<div class="modal-footer">
+    <h5 class="pull-left">Zoom: {{image.zoom}}%</h5>
+    <button class="btn btn-primary" ng-click="submitMap()" type="submit">Submit</button>
+</div>
