@@ -95,7 +95,7 @@
                             return d.timetable.name + "<br/>" +
                                 "Brought " + d.entitiesTransfered + " passengers to the location." + "<br/>" +
                                 "Number of arrivals: " + d.numberOfArrivals + "<br/>" +
-                                "Number of buses in queue: " + d.numberOfBusesInQueue;
+                                "Number of "  + d.type + " in queue: " + d.numberOfBusesInQueue;
                         //TODO: Legge number of buses in queue bare på buss
 
 
