@@ -51,7 +51,7 @@
                         'parking': {icon: 'P', font: 'Arial'},
                         'passengerflow': {icon: '\uf0c0'},
                         'consumerGroup-desktop': {icon: '\ue003', font: 'custom-font'},
-                        'consumerGroup-suitcase': {icon: '\uf0f2'}
+                        'consumerGroup-suitcase': {icon: '\ue004', font: 'custom-font'}
                     };
 
                     scope.safeApply = function(fn) {
