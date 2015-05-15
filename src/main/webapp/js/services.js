@@ -34,10 +34,7 @@
     });
 
     app.factory('Map', ['$resource', function($resource) {
-        return $resource('api/map/:mapId', {mapId: '@id'},
-            {
-                'update': { method:'PUT' }
-            });
+        return $resource('api/map/:mapId', {mapId: '@id'});
     }]);
 
     app.factory('menu_field_name', function() {
