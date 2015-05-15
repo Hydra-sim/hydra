@@ -1,11 +1,11 @@
 <button class="btn btn-primary" ng-click="openMapModal()">Open modal</button>
 <button class="btn btn-primary" ng-file-select ng-model="files">Upload picture</button>
-
 <br/>
+
 <h4>Image visible: {{image.visible}}</h4>
 <button class="btn btn-primary" ng-click="toggleImage()" type="button" ng-disabled="!image.exists">Toggle image</button>
-<button class="btn btn-danger" ng-click="deleteImage(image.id)" type="button" ng-disabled="!image.exists">Delete image</button>
 <br/>
+
 <img src="http://localhost:8080/hydra/api/map/{{image.id}}" alt="Map" width="500px" ng-show="image.visible">
 <div class="mapImageWrapperFull">
     <img src="http://1.bp.blogspot.com/_au17kecZ280/TNwGt8PiP6I/AAAAAAAAFP8/lK-_VjYudzw/s1600/AvinorFlights_app.png"

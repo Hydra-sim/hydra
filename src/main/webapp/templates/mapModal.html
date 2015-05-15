@@ -1,6 +1,6 @@
 <div class="modal-header">
     <div class="pull-right">
-        <a href="" class="glyphicon glyphicon-remove close-icon" ng-click="cancel()"></a>
+        <a href="" class="glyphicon glyphicon-remove close-icon" ng-click="ctrl.cancel()"></a>
     </div>
     <span>Resize the map according to the size of the node</span>
 </div>
@@ -9,15 +9,15 @@
         <div class="mapImageWrapper">
             <img src="http://1.bp.blogspot.com/_au17kecZ280/TNwGt8PiP6I/AAAAAAAAFP8/lK-_VjYudzw/s1600/AvinorFlights_app.png"
                  alt="Map" style="width: 100%" ng-style="{
-                     'transform': 'scale('+image.scale+')',
-                     '-webkit-transform': 'scale('+image.scale+')',
-                     '-ms-transform': 'scale('+image.scale+')'}">
+                     'transform': 'scale('+ctrl.image.scale+')',
+                     '-webkit-transform': 'scale('+ctrl.image.scale+')',
+                     '-ms-transform': 'scale('+ctrl.image.scale+')'}">
             <div class="mapNode"></div>
         </div>
-        <input type='range' min='0' max='100' value='{{image.zoom}})' ng-model="image.zoom"/>
+        <input type='range' min='0' max='100' value='{{ctrl.image.zoom}})' ng-model="ctrl.image.zoom"/>
     </div>
+    <h5>Zoom: {{ctrl.image.zoom}}%</h5>
 </div>
 <div class="modal-footer">
-    <h5 class="pull-left">Zoom: {{image.zoom}}%</h5>
-    <button class="btn btn-primary" ng-click="submitMap()" type="submit">Submit</button>
+    <button class="btn btn-primary" ng-click="ctrl.submitMap()" type="submit">Submit</button>
 </div>

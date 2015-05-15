@@ -13,11 +13,6 @@
             $scope.image.visible = !$scope.image.visible;
         };
 
-        $scope.deleteImage = function(id) {
-            $scope.image.visible = $scope.image.exists = false;
-            Map.delete({}, {"id" : id});
-        };
-
         // Create a variable to store the transform value
         $scope.transform = "scale(" + $scope.image.zoom + ")";
         // When the number changes, update the transform string
@@ -59,42 +54,27 @@
             }
         };
 
-        $scope.openMapModal = function(size) {
+        $scope.openMapModal = function() {
 
             $modal.open({
                 templateUrl: 'templates/mapModal.html',
                 controller: 'MapModalCtrl',
-                size: size,
+                controllerAs: 'ctrl',
                 resolve: {
                     image: function () {
                         return $scope.image;
-                    },
-                    image2: function() {
-                        return $scope.image2;
                     }
                 }
             });
         }
     });
 
-    app.controller('MapModalCtrl', function($scope, $modalInstance, $timeout, image, image2) {
-
-        $scope.image = image;
-        $scope.image2 = image2;
-        $scope.image.scale = $scope.image2.scale;
-        $scope.image.zoom = $scope.image2.zoom;
-
-        $scope.submitMap = function() {
-            $scope.image2.scale = $scope.image.scale;
-            $scope.image2.zoom = $scope.image.zoom;
-
-            $modalInstance.close();
+    app.controller('MapModalCtrl', function($modalInstance, image) {
+        this.image = image;
+        this.cancel = $modalInstance.dismiss;
+        this.submitMap = function() {
+            $modalInstance.close(this.image);
         };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-
     });
 
 })();
