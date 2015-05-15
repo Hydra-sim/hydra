@@ -48,7 +48,6 @@
 
             }).result.then(function (data) {
 
-                console.log(data);
                 SimResult.data = sim.$save();
                 $location.path('/result');
                 $location.replace();
@@ -97,7 +96,6 @@
 
         $scope.updateTicks();
 
-        $scope.options = []; // For dropdown in add consumer/passengerflow
         $scope.control = {};
         $scope.addData = addData;
         $scope.debug = debug;
@@ -119,9 +117,7 @@
 
             if(ticks > 3600)    return (ticks/3600).toFixed(2) + " hours";
             if(ticks > 60)      return (ticks/60).toFixed(2) + " minutes";
-            if(ticks > 1)       return ticks + " seconds";
-
-
+                                return ticks + " seconds";
         }
 
         // Tooltip
@@ -197,10 +193,6 @@
                     $scope.dataset.edges = result.relationships;
 
                     $scope.updateTime(result);
-
-                    for (var node in $scope.dataset.nodes) {
-                        addData(node, node.type);
-                    }
                 }
             });
         }
