@@ -1,12 +1,6 @@
 <button class="btn btn-primary" ng-click="openMapModal()">Open modal</button>
 <input type="file" ngf-select ng-model="file" required></input>
-<br/>
 
-<img src="http://localhost:8080/hydra/api/map/{{image.id}}" alt="Map" width="500px" ng-show="image.visible">
 <div class="mapImageWrapperFull">
-    <img src="http://1.bp.blogspot.com/_au17kecZ280/TNwGt8PiP6I/AAAAAAAAFP8/lK-_VjYudzw/s1600/AvinorFlights_app.png"
-         alt="Map" ng-style="{
-                         'transform': 'scale('+image2.scale+')',
-                         '-webkit-transform': 'scale('+image2.scale+')',
-                         '-ms-transform': 'scale('+image2.scale+')'}">
+    <img src="http://localhost:8080/hydra/api/map/{{image.id}}" width="500px" alt="Map" ng-style="{'transform': 'scale('+image.scale+')', '-webkit-transform': 'scale('+image.scale+')','-ms-transform': 'scale('+image.scale+')'}" />
 </div>
