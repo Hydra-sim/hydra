@@ -106,9 +106,5 @@ public class Producer extends Node{
         return timetable.getId();
     }
 
-    public void setTimetableId(int timetableId) {
-
-    }
-
     //endregion
 }
