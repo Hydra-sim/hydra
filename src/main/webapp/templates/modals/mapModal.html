@@ -7,16 +7,16 @@
 <div class="modal-body">
     <div class="focused-form-wrapper">
         <div class="mapImageWrapper">
-            <img src="http://localhost:8080/hydra/api/map/{{ctrl.image.id}}"
+            <img src="http://localhost:8080/hydra/api/map/{{ctrl.id}}"
                  alt="Map" style="width: 100%" ng-style="{
-                     'transform': 'scale('+ctrl.image.scale+')',
-                     '-webkit-transform': 'scale('+ctrl.image.scale+')',
-                     '-ms-transform': 'scale('+ctrl.image.scale+')'}">
+                     'transform': 'scale('+ctrl.scale+')',
+                     '-webkit-transform': 'scale('+ctrl.scale+')',
+                     '-ms-transform': 'scale('+ctrl.scale+')'}">
             <div class="mapNode"></div>
         </div>
-        <input type='range' min='0' max='100' value='{{ctrl.image.zoom}})' ng-model="ctrl.image.zoom"/>
+        <input type='range' min='0' max='100' value='{{ctrl.zoom}})' ng-model="ctrl.zoom"/>
     </div>
-    <h5>Zoom: {{ctrl.image.zoom}}%</h5>
+    <h5>Zoom: {{ctrl.zoom}}%</h5>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="ctrl.submitMap()" type="submit">Submit</button>
