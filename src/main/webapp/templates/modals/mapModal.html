@@ -4,10 +4,13 @@
     </div>
     <span>Resize the map according to the size of the node</span>
 </div>
-<div class="modal-body">
+<div class="modal-body" ng-hide="ctrl.file">
+    <div ngf-drop ng-model="ctrl.file" class="drop-box" ngf-drag-over-class="dragover">Drop image files here</div>
+</div>
+<div class="modal-body" ng-show="ctrl.file">
     <div class="focused-form-wrapper">
         <div class="mapImageWrapper">
-            <img src="http://localhost:8080/hydra/api/map/{{ctrl.id}}"
+            <img ngf-src="ctrl.file[0]"
                  alt="Map" style="width: 100%" ng-style="{
                      'transform': 'scale('+ctrl.scale+')',
                      '-webkit-transform': 'scale('+ctrl.scale+')',

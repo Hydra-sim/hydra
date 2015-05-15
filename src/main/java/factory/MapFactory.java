@@ -1,6 +1,7 @@
 package factory;
 
 import api.data.FileUploadForm;
+import api.data.MapUploadForm;
 import helpers.EncryptionHelper;
 import models.Map;
 
@@ -11,13 +12,13 @@ import javax.ejb.Singleton;
  */
 @Singleton
 public class MapFactory {
-    public Map createMap(FileUploadForm fileUploadForm) throws Exception {
+    public Map createMap(MapUploadForm fileUploadForm) throws Exception {
         // Hash the content to generate unique name
         String hash = EncryptionHelper.hashByteArray(fileUploadForm.getData());
 
         // Generate filename
         String filename = EncryptionHelper.getPath() + "/" + hash;
 
-        return new Map(filename, 1);
+        return new Map(filename, fileUploadForm.getZoom());
     }
 }
