@@ -7,6 +7,7 @@ import helpers.ProducerHelper;
 import helpers.SimulationHelper;
 import models.*;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -257,6 +258,7 @@ public class TestingCorner {
         assertTrue(sim1.getResult().getEntitiesConsumed() > sim2.getResult().getEntitiesConsumed());
     }
 
+    @Ignore
     @Test
     public void testSimulationFactoryWithBreakpoints() throws Exception {
 
