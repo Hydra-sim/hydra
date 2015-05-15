@@ -46,11 +46,11 @@
                         'train' : {icon: '\uf238'},
                         'bus': {icon: '\uf207'},
                         'desktop': {icon: '\uf108'},
-                        'door': {icon: '', font: 'Flaticon'},
+                        'door': {icon: '\ue001', font: 'Flaticon'},
                         'suitcase': {icon: '\uf0f2'},
                         'parking': {icon: 'P', font: 'Arial'},
                         'passengerflow': {icon: '\uf0c0'},
-                        'consumerGroup-desktop': {icon: '\uf108'},
+                        'consumerGroup-desktop': {icon: '\ue003', font: 'custom-font'},
                         'consumerGroup-suitcase': {icon: '\uf0f2'}
                     };
 
@@ -401,7 +401,9 @@
                             .attr('font-family', function(d) {
                                 return icons[d.type].font || 'FontAwesome' ;
                             })
-                            .attr('font-size', function(d) { return 1.4 +'em'} )
+                            .attr('font-size', function(d) {
+                                return 1.4 +'em'
+                            } )
                             .attr("text-anchor", "middle")
                             .attr("alignment-baseline", "central")
                             .attr('fill', 'white')
