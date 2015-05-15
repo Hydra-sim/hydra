@@ -1,6 +1,7 @@
 package api;
 
 import api.data.FileUploadForm;
+import api.data.MapUploadForm;
 import factory.MapFactory;
 import org.apache.commons.io.IOUtils;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -50,7 +51,7 @@ public class Map {
     @POST
     @Consumes("multipart/form-data")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response uploadFile(@MultipartForm FileUploadForm form) {
+    public Response uploadFile(@MultipartForm MapUploadForm form) {
         try
         {
             models.Map map = mapFactory.createMap(form);

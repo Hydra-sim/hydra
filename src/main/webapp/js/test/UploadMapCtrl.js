@@ -14,29 +14,23 @@
         });
 
         $scope.openMapModal = function() {
+            var promise = $modal.open({
+                templateUrl: 'templates/modals/mapModal.html',
+                controller: 'MapModalCtrl',
+                controllerAs: 'ctrl'
+            });
 
-            Upload.upload({
-                url: 'api/map',
-                file: $scope.file[0]
-            }).success(function(data, status, headers, config) {
-                $scope.image.id = data.id;
-                $scope.image.zoom = data.zoom;
-
-                var promise = $modal.open({
-                    templateUrl: 'templates/modals/mapModal.html',
-                    controller: 'MapModalCtrl',
-                    controllerAs: 'ctrl',
-                    resolve: {
-                        id: function () {
-                            return $scope.image.id;
-                        }
+            promise.result.then(function(data) {
+                Upload.upload({
+                    url: 'api/map',
+                    file: data.file,
+                    fields: {
+                        'zoom': data.zoom
                     }
-                });
-
-                promise.result.then(function(zoom) {
-                    $scope.image.zoom = zoom;
-                });
-
+                }).success(function(d) {
+                    $scope.image.id = d.id;
+                    $scope.image.zoom = d.zoom;
+                })
             });
         }
     });
