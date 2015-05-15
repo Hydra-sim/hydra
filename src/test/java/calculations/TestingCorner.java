@@ -265,7 +265,6 @@ public class TestingCorner {
         formData.name = "Test";
         formData.startTick = 0;
         formData.ticks = 100;
-        formData.breakpoints = 10;
 
         formData.nodes = new ArrayList<>();
 

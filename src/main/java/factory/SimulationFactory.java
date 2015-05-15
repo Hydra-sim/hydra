@@ -22,6 +22,10 @@ public class SimulationFactory {
     private dao.Timetable timetableDao;
 
     public Simulation createSimulation(SimulationFormData input) throws Exception {
+        return createSimulation(input, 0);
+    }
+
+    public Simulation createSimulation(SimulationFormData input, int breakpoints) throws Exception {
         List<Node> nodes = new ArrayList<>();
         List<Relationship> relationships = new ArrayList<>();
 
@@ -65,7 +69,7 @@ public class SimulationFactory {
                 relationships,
                 input.startTick,
                 input.ticks,
-                input.breakpoints
+                breakpoints
         );
     }
 

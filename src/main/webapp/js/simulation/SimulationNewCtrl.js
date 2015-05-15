@@ -30,8 +30,7 @@
                 'ticks':                            $scope.ticks,
                 'startTick':                        $scope.startTick,
                 'nodes':                            TmpSimulationData.nodes,
-                'edges':                            TmpSimulationData.edges,
-                'breakpoints':                      $scope.breakpoints
+                'edges':                            TmpSimulationData.edges
             });
 
             /* // Edit modal saveAs dialog
