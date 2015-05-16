@@ -60,12 +60,12 @@ gulp.task('sass', ['bower'], function () {
 });
 
 gulp.task('html', function () {
-    gulp.src(config.htmlFiles)
+    return gulp.src(config.htmlFiles)
         .pipe(connect.reload());
 });
 
 gulp.task('js', function () {
-    gulp.src(config.jsFiles)
+    return gulp.src(config.jsFiles)
         .pipe(sourcemaps.init())
             .pipe(ngAnnotate())
             .pipe(uglify())
