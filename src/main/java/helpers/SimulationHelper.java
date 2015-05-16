@@ -68,6 +68,18 @@ public class SimulationHelper {
 
         }
 
+        for(Node node : simulation.getNodes()) {
+
+            if(isConsumer( node )) {
+
+                Consumer consumer = (Consumer) node;
+
+                if(consumer.getMaxWaitingTimeOnCurrentNode() > maxWaitingTime) {
+                    maxWaitingTime = consumer.getMaxWaitingTimeOnCurrentNode();
+                }
+            }
+        }
+
         for(QueueElement queueElement : simulation.getEntitiesQueueing()) {
 
             for(Relationship relationship : queueElement.getRelationships()) {

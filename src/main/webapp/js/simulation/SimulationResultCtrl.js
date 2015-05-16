@@ -112,8 +112,8 @@
                         case "door":
                         case "suitcase":
                             var maxWaitingTime;
-                            if(d.maxWaitingTime !== 0){
-                                maxWaitingTime = ticksToTime(d.maxWaitingTime);
+                            if(d.maxWaitingTimeOnCurrentNode !== 0){
+                                maxWaitingTime = ticksToTime(d.maxWaitingTimeOnCurrentNode);
                             } else{
                                 maxWaitingTime = 0;
                             }
