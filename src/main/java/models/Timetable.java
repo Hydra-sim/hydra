@@ -25,7 +25,7 @@ import java.util.Scanner;
  * entities to produce per. arrival.
  */
 @javax.persistence.Entity
-public class Timetable {
+public class Timetable implements Comparable<Timetable>{
 
     //region attributes
     /**
@@ -114,5 +114,13 @@ public class Timetable {
         }
 
         return new Timetable(entries, name);
+    }
+
+    @Override
+    public int compareTo( Timetable o ) {
+
+        if(o == this) return 0;
+
+        return o.getName().compareToIgnoreCase( this.name );
     }
 }

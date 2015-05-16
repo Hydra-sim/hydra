@@ -4,6 +4,7 @@ import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,7 +41,12 @@ public class Timetable {
                 models.Timetable.class
         );
 
-        return query.getResultList();
+        List<models.Timetable> resultList = query.getResultList();
+
+        Collections.sort(resultList);
+        Collections.reverse( resultList );
+
+        return resultList;
     }
 
     /**
