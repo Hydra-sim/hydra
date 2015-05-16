@@ -127,6 +127,7 @@
                         'zoom': data.zoom
                     }
                 }).success(function(d) {
+                    that.image.url = 'api/map/' + d.id;
                     that.image.id = d.id;
                     that.image.zoom = d.zoom;
                 });

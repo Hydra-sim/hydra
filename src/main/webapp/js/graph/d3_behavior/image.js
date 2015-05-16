@@ -45,14 +45,33 @@
 
     d3.behavior.image = function() {
         // Custom events
-        var event = d3_eventDispatch(tooltip, "open", "close");
+        var event = d3_eventDispatch(image, "open", "close"),
+            image_el = null,
+            url;
 
         // Prototype method
         function image() {
             var that = this,
                 dispatch = event.of(that, arguments);
 
+            image_el = this
+                .selectAll("image")
+                .data([0])
+                .enter()
+                .append("svg:image")
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('width', 100)
+                .attr('height', 100)
+                .attr('xlink:href', url);
         }
+
+        image.updateImage = function(the_url) {
+            url = the_url;
+
+            if(image_el != null)
+                image_el.attr('src', url);
+        };
 
         return d3.rebind(image, event, "on");
     };
