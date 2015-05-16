@@ -340,7 +340,6 @@
                     var bg = d3.behavior.image();
 
                     scope.$watch('background', function(img) {
-                        console.log(img);
                         if(typeof img.url != 'undefined')
                             bg.updateImage(img.url);
                     }, true);
