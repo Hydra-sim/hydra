@@ -96,8 +96,14 @@
 
 .icon-terminals:before {
   content: "\e003";
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .icon-bagdrops:before {
   content: "\e004";
+  width: 100%;
+  height: 100%;
+  display: block;
 }
