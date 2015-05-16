@@ -6,7 +6,7 @@
 
     app.controller('TimetableEditCtrl', function($scope, $rootScope, $location, $modalInstance, $anchorScroll, $timeout, Timetable, id) {
         $scope.btnName = "Save";
-
+        $scope.name = {};
 
         Timetable.get({}, {"id": id}, function(result) {
             $scope.id = result.id;
@@ -30,7 +30,7 @@
             }
 
             $scope.totalArrivals = $scope.arrivals.length;
-            $scope.name = result.name;
+            $scope.name.value = result.name;
 
         });
 
@@ -62,9 +62,11 @@
                     });
             }
 
+            console.log($scope.name.value);
+
             var timetable = new Timetable({
                 id: $scope.id,
-                name: $scope.name,
+                name: $scope.name.value,
                 arrivals: timetableArrivals
             });
 

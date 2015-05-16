@@ -6,7 +6,8 @@
 
     app.controller('TimetableNewCtrl', function($scope, $rootScope, $modalInstance, Timetable) {
         $scope.btnName = "Add";
-        $scope.name = "";
+        $scope.name = {};
+        $scope.name.value = "";
 
         var arrivalTime = new Date();
         arrivalTime.setHours( 0 );
@@ -31,7 +32,7 @@
             }
 
             var timetable = new Timetable({
-                name: $scope.name,
+                name: $scope.name.value,
                 arrivals: timetableArrivals
             });
 
