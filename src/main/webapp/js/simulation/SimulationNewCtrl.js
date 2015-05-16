@@ -134,6 +134,12 @@
             });
         };
 
+        this.deleteMap = function() {
+            that.image.url = "";
+            that.image.id = 0;
+            that.image.zoom = 0;
+        };
+
         //Function for ticks to seconds/minutes/hours
         function ticksToTime(ticks){
             if(ticks == 3600)   return "1 hour";
