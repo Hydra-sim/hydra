@@ -50,9 +50,9 @@ public class ConsumerHelper {
                 ConsumerHelper consumerHelper = new ConsumerHelper();
                 int max = consumerHelper.getMaxWaitingTime(consumer);
 
-                if(max > consumerGroup.getMaxWaitingTime()) {
+                if(max > consumerGroup.getMaxWaitingTimeOnCurrentNode()) {
 
-                    consumerGroup.setMaxWaitingTime(max);
+                    consumerGroup.setMaxWaitingTimeOnCurrentNode(max);
                 }
             }
 
