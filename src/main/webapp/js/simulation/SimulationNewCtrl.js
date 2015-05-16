@@ -26,25 +26,6 @@
                 'edges':                            $scope.dataset.edges
             });
 
-            /* // Edit modal saveAs dialog
-            $modal.open({
-
-                templateUrl: 'templates/modals/saveAs.html',
-                controller: 'SaveAsModalCtrl',
-                size: 'sm',
-                resolve: {
-                    simulationName: function () {
-                        return menu_field_name.value;
-                    }
-                }
-
-            }).result.then(function (data) {
-
-                SimResult.data = sim.$save();
-                $location.path('/result');
-                $location.replace();
-            }); //*/
-
             SimResult.data = sim.$save();
             $location.path('/result');
             $location.replace();
@@ -74,16 +55,11 @@
         updateTicks();
 
         $scope.control = {};
-        $scope.addData = addData;
         this.debug = debug;
 
         // Set menu field name and button
-        menu_field_name.readonly = false;
-        menu_field_name.setValue("Untitled simulation");
-
-        menu_field_button.value = "Submit";
-        menu_field_button.icon = "fa-arrow-circle-right";
-        menu_field_button.click = submit;
+        menu_field_name.setValue("Untitled simulation", false);
+        menu_field_button.update("Submit", "fa-arrow-circle-right", submit);
 
         // Map / image uploading
         this.image = {};
