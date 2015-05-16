@@ -211,6 +211,8 @@
 
                     var container = svg.append("g");
 
+                    var imageContainer = container.append("g");
+
                     // Watch angular properties for changes
                     // trigger an update if they do change
                     scope.$watchCollection('nodes', update, true);
@@ -343,7 +345,7 @@
                             bg.updateImage(img.url);
                     }, true);
 
-                    container.call(bg);
+                    imageContainer.call(bg);
 
                     // Update function, updating nodes and edges
                     function update() {
