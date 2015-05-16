@@ -61,9 +61,7 @@
                         passengers: $scope.arrivals[i].passengers
                     });
             }
-
-            console.log($scope.name.value);
-
+            
             var timetable = new Timetable({
                 id: $scope.id,
                 name: $scope.name.value,
