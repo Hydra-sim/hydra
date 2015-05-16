@@ -4,24 +4,15 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $modal, $routeParams, $rootScope, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, TmpSimulationData, Upload) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $modal, $routeParams, $rootScope, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, Upload) {
 
         var that = this;
 
         $scope.dataset = { nodes: [], edges: [] };
 
-        $scope.$watchCollection('dataset.nodes', function(newvalue) {
-            TmpSimulationData.nodes = newvalue;
-        });
-
-        $scope.$watchCollection('dataset.edges', function(newvalue) {
-            TmpSimulationData.edges = newvalue;
-        });
-
         // Help methods
         function debug() {
             console.log("$scope.dataset", $scope.dataset);
-            console.log("TmpSimulationData", TmpSimulationData);
         }
 
         function submit() {
@@ -31,8 +22,8 @@
                 'name':                             menu_field_name.value,
                 'ticks':                            $scope.ticks,
                 'startTick':                        $scope.startTick,
-                'nodes':                            TmpSimulationData.nodes,
-                'edges':                            TmpSimulationData.edges
+                'nodes':                            $scope.dataset.nodes,
+                'edges':                            $scope.dataset.edges
             });
 
             /* // Edit modal saveAs dialog
