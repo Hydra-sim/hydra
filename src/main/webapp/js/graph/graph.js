@@ -334,6 +334,17 @@
                         });
                     svg.call(zoom);
 
+                    //Add image handeling
+                    var bg = d3.behavior.image();
+
+                    scope.$watch('background', function(img) {
+                        console.log(img);
+                        if(typeof img.url != 'undefined')
+                            bg.updateImage(img.url);
+                    }, true);
+
+                    container.call(bg);
+
                     // Update function, updating nodes and edges
                     function update() {
                         function transformFunction(d){return "translate(" + d.x + "," + d.y + ")";}
