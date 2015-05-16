@@ -16,7 +16,7 @@
         }
 
         function submit() {
-            $scope.updateTicks();
+            updateTicks();
 
             var sim = new Simulation({
                 'name':                             menu_field_name.value,
@@ -55,25 +55,10 @@
             $scope.control.addNode(type || "consumer", pos.x, pos.y, data);
         }
 
-        $scope.updateTicks = function() {
+        function updateTicks() {
             $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
             $scope.ticks = ($scope.endTime.getHours() * 60 * 60) + ($scope.endTime.getMinutes() * 60) - $scope.startTick;
-        };
-
-        $scope.updateTime = function (result) {
-
-            var hours = result.startTick / 60 / 60;
-            $scope.startTime.setHours(hours);
-
-            var minutes = (result.startTick - (hours * 60 * 60)) / 60;
-            $scope.startTime.setMinutes(minutes);
-
-            var hours = (result.startTick + result.ticks) / 60 / 60;
-            $scope.endTime.setHours(hours);
-
-            var minutes = ((result.startTick + result.ticks) - (hours * 60 * 60)) / 60;
-            $scope.endTime.setMinutes(minutes);
-        };
+        }
 
         //Scope values
         $scope.startTime = new Date();
@@ -86,11 +71,11 @@
 
         $scope.breakpoints = 900; // Every 15 minutes
 
-        $scope.updateTicks();
+        updateTicks();
 
         $scope.control = {};
         $scope.addData = addData;
-        $scope.debug = debug;
+        this.debug = debug;
 
         // Set menu field name and button
         menu_field_name.readonly = false;
@@ -214,13 +199,21 @@
                     $scope.dataset.nodes = result.nodes;
                     $scope.dataset.edges = result.relationships;
 
-                    $scope.updateTime(result);
+                    var startHours = result.startTick / 3600;
+                    $scope.startTime.setHours(startHours);
+                    var startMinutes = (result.startTick - startHours * 3600) / 60;
+                    $scope.startTime.setMinutes(startMinutes);
+
+                    var endHours = (result.startTick + result.ticks) / 3600;
+                    $scope.endTime.setHours(endHours);
+                    var endMinutes = (result.startTick + result.ticks - endHours * 3600) / 60;
+                    $scope.endTime.setMinutes(endMinutes);
                 }
             });
         }
 
         // Modals
-        $scope.newProducer = function (title, type) {
+        this.newProducer = function (title, type) {
 
             $modal.open({
                 templateUrl: 'templates/modals/newProducer.html',
@@ -236,7 +229,7 @@
             });
         };
 
-        $scope.newConsumer = function (title, type) {
+        this.newConsumer = function (title, type) {
 
             $modal.open({
                 templateUrl: 'templates/modals/newConsumer.html',
@@ -259,7 +252,7 @@
             });
         };
 
-        $scope.newPassengerflow = function(){
+        this.newPassengerflow = function(){
             $modal.open({
                 templateUrl: 'templates/modals/newPassengerflow.html',
                 controller: 'NewPassengerflowModalCtrl',
@@ -269,7 +262,7 @@
             });
         };
 
-        $scope.openConfigModal = function() {
+        this.openConfigModal = function() {
 
             var configModal = $modal.open({
                 templateUrl: 'templates/modals/configModal.html',
@@ -288,7 +281,7 @@
             configModal.result.then(function (time) {
                 $scope.startTime = time.startTime;
                 $scope.endTime = time.endTime;
-                $scope.updateTicks();
+                updateTicks();
             });
         };
 

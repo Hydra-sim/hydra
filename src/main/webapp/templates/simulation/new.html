@@ -1,20 +1,20 @@
 <div class="row">
     <div class="button-container-simulation">
-        <button tooltip="Config" tooltip-placement="left" class="btn-google-style fa fa-cog" ng-click="openConfigModal()"></button>
-        <button tooltip="Debug" tooltip-placement="left" class="btn-google-style fa fa-code" ng-click="debug()"></button>
+        <button tooltip="Config" tooltip-placement="left" class="btn-google-style fa fa-cog" ng-click="ctrl.openConfigModal()"></button>
+        <button tooltip="Debug" tooltip-placement="left" class="btn-google-style fa fa-code" ng-click="ctrl.debug()"></button>
         <button tooltip="Upload map" tooltip-placement="left" class="btn-google-style fa fa-upload" ng-click="ctrl.openMapModal()"></button>
         <button tooltip="Remove map" tooltip-placement="left" class="btn-google-style fa fa-times" ng-click="ctrl.deleteMap()"></button>
     </div>
 
     <graph nodes="dataset.nodes" edges="dataset.edges" height="calc(100vh - 150px)" control="control" class="graph" extra-tooltip="extraTooltip()" background="ctrl.image">
         <radialmenu control="control">
-            <radialbutton icon="fa-train" color="purple" ng-click="newProducer('NEW TRAIN', 'train')" tooltip="Train" tooltip-placement="top"></radialbutton>
-            <radialbutton icon="fa-bus" color="purple" ng-click="newProducer('NEW BUS', 'bus')" tooltip="Bus" tooltip-placement="right"></radialbutton>
-            <radialbutton icon="fa-desktop" color="dark-purple" ng-click="newConsumer('NEW TERMINAL', 'desktop')" tooltip="Terminal" tooltip-placement="right"></radialbutton>
-            <radialbutton icon="flaticon-open203" color="dark-purple" ng-click="newConsumer('NEW DOOR', 'door')" tooltip="Door"tooltip-placement="right"></radialbutton>
-            <radialbutton icon="fa-suitcase" color="dark-purple" ng-click="newConsumer('NEW BAGDROP', 'suitcase')" tooltip="Bagdrop" tooltip-placement="left"></radialbutton>
-            <radialbutton icon="fa-users" color="black" ng-click="newPassengerflow()" tooltip="People" tooltip-placement="left"></radialbutton>
-            <radialbutton icon="i" color="azure" ng-click="newConsumer('NEW PARKING', 'parking')" tooltip="Bus stop" tooltip-placement="left">P</radialbutton>
+            <radialbutton icon="fa-train" color="purple" ng-click="ctrl.newProducer('NEW TRAIN', 'train')" tooltip="Train" tooltip-placement="top"></radialbutton>
+            <radialbutton icon="fa-bus" color="purple" ng-click="ctrl.newProducer('NEW BUS', 'bus')" tooltip="Bus" tooltip-placement="right"></radialbutton>
+            <radialbutton icon="fa-desktop" color="dark-purple" ng-click="ctrl.newConsumer('NEW TERMINAL', 'desktop')" tooltip="Terminal" tooltip-placement="right"></radialbutton>
+            <radialbutton icon="flaticon-open203" color="dark-purple" ng-click="ctrl.newConsumer('NEW DOOR', 'door')" tooltip="Door"tooltip-placement="right"></radialbutton>
+            <radialbutton icon="fa-suitcase" color="dark-purple" ng-click="ctrl.newConsumer('NEW BAGDROP', 'suitcase')" tooltip="Bagdrop" tooltip-placement="left"></radialbutton>
+            <radialbutton icon="fa-users" color="black" ng-click="ctrl.newPassengerflow()" tooltip="People" tooltip-placement="left"></radialbutton>
+            <radialbutton icon="i" color="azure" ng-click="ctrl.newConsumer('NEW PARKING', 'parking')" tooltip="Bus stop" tooltip-placement="left">P</radialbutton>
         </radialmenu>
     </graph>
 </div>
