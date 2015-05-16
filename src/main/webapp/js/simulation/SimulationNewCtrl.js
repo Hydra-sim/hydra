@@ -4,7 +4,9 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $modal, $routeParams, $rootScope, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, TmpSimulationData) {
+    app.controller('SimulationNewCtrl', function ($scope, $location, $modal, $routeParams, $rootScope, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, TmpSimulationData, Upload) {
+
+        var that = this;
 
         $scope.dataset = { nodes: [], edges: [] };
 
@@ -107,6 +109,29 @@
         menu_field_button.icon = "fa-arrow-circle-right";
         menu_field_button.click = submit;
 
+        // Map / image uploading
+        this.image = {};
+
+        this.openMapModal = function() {
+            var promise = $modal.open({
+                templateUrl: 'templates/modals/mapModal.html',
+                controller: 'MapModalCtrl',
+                controllerAs: 'ctrl'
+            });
+
+            promise.result.then(function(data) {
+                Upload.upload({
+                    url: 'api/map',
+                    file: data.file,
+                    fields: {
+                        'zoom': data.zoom
+                    }
+                }).success(function(d) {
+                    that.image.id = d.id;
+                    that.image.zoom = d.zoom;
+                });
+            });
+        };
 
         //Function for ticks to seconds/minutes/hours
         function ticksToTime(ticks){

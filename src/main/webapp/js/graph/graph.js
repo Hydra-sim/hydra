@@ -25,7 +25,8 @@
                     circleWrapperClass: '@',
                     control: '=',
                     extraTooltip: '&',
-                    extraBorder: '&'
+                    extraBorder: '&',
+                    background: '='
                 },
 
                 // observe and manipulate the DOM

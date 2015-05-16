@@ -2,11 +2,11 @@
     <div class="button-container-simulation">
         <button tooltip="Config" tooltip-placement="left" class="btn-google-style fa fa-cog" ng-click="openConfigModal()"></button>
         <button tooltip="Debug" tooltip-placement="left" class="btn-google-style fa fa-code" ng-click="debug()"></button>
-        <button tooltip="Upload" tooltip-placement="left" class="btn-google-style fa fa-upload"></button>
+        <button tooltip="Upload" tooltip-placement="left" class="btn-google-style fa fa-upload" ng-click="ctrl.openMapModal()"></button>
         <button tooltip="Remove upload" tooltip-placement="left" class="btn-google-style fa fa-times"></button>
     </div>
 
-    <graph nodes="dataset.nodes" edges="dataset.edges" height="calc(100vh - 150px)" control="control" class="graph" extra-tooltip="extraTooltip()">
+    <graph nodes="dataset.nodes" edges="dataset.edges" height="calc(100vh - 150px)" control="control" class="graph" extra-tooltip="extraTooltip()" background="ctrl.image">
         <radialmenu control="control">
             <radialbutton icon="fa-train" color="purple" ng-click="newProducer('NEW TRAIN', 'train')" tooltip="Train" tooltip-placement="top"></radialbutton>
             <radialbutton icon="fa-bus" color="purple" ng-click="newProducer('NEW BUS', 'bus')" tooltip="Bus" tooltip-placement="right"></radialbutton>
