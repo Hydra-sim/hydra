@@ -55,14 +55,9 @@
                 dispatch = event.of(that, arguments);
 
             image_el = this
-                .selectAll("image")
-                .data([0])
-                .enter()
                 .append("svg:image")
-                .attr('x', 0)
-                .attr('y', 0)
-                .attr('width', 100)
-                .attr('height', 100)
+                .attr('width', '200px')
+                .attr('height', '200px')
                 .attr('xlink:href', url);
         }
 
@@ -70,7 +65,7 @@
             url = the_url;
 
             if(image_el != null)
-                image_el.attr('src', url);
+                image_el.attr('xlink:href', url);
         };
 
         return d3.rebind(image, event, "on");
