@@ -84,11 +84,6 @@
             })
 
             // Other
-            .when('/map', {
-                controller: 'UploadMapCtrl',
-                controllerAs: 'ctrl',
-                templateUrl: "templates/map.html"
-            })
             .when('/documentation', {
                 controller: 'FullDocumentationCtrl',
                 controllerAs: 'ctrl',
