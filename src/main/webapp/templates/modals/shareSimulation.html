@@ -1,9 +1,9 @@
-<form novalidate name="shareSimulation" ng-submit="copySimulation()">
+<form novalidate name="shareSimulation">
 <div class="modal-header">
     <h1 class="modal-tittle">SHARE SIMULATION</h1>
 </div>
 <div class="modal-body">
-    <input class="form-control copy" type="text" ng-model="message" focus-me="true"/>
+    <input class="form-control copy" type="text" ng-model="message"/>
 </div>
 <div class="modal-footer">
     <button class="btn btn-default primary" ng-click="copySimulation()" ng-disabled="shareSimulation.$invalid"
