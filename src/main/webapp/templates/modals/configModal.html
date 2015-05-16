@@ -15,6 +15,9 @@
                 </div>
             </div>
         </div>
+    <div class="alert alert-danger" ng-show="wrongTime">
+       Start time is higher than end time
+    </div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-default primary" ng-click="submitConfig(days, hours, minutes)"

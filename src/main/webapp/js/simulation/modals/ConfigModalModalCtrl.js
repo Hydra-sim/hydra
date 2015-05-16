@@ -8,11 +8,16 @@
 
         $scope.startTime = startTime;
         $scope.endTime = endTime;
+        $scope.wrongTime = false;
 
         $scope.submitConfig = function () {
-            var time = {startTime: $scope.startTime, endTime: $scope.endTime};
-
-            $modalInstance.close(time);
+            if($scope.startTime >= $scope.endTime){
+                $scope.wrongTime = true;
+            }
+            else{
+                var time = {startTime: $scope.startTime, endTime: $scope.endTime};
+                $modalInstance.close(time);
+            }
         };
 
         $scope.cancel = function () {
