@@ -594,4 +594,44 @@ public class TestingCorner {
         simulationHelper.simulate(simulation);
 
     }
+
+    @Test
+    public void testRelationshipProducerToProducer() {
+
+        List<Node> nodes = new ArrayList<Node>() {{
+
+            Producer producer1 = new Producer(new Timetable( new ArrayList<TimetableEntry>() {{
+
+                add( new TimetableEntry( 0, 10 ));
+                add( new TimetableEntry( 1, 10 ));
+                add( new TimetableEntry( 2, 10 ));
+
+            }}, "Timetable" ));
+
+            Producer producer2 = new Producer(new Timetable( new ArrayList<TimetableEntry>() {{
+
+                add( new TimetableEntry( 0, 10 ));
+                add( new TimetableEntry( 1, 10 ));
+                add( new TimetableEntry( 2, 10 ));
+
+            }}, "Timetable" ) );
+
+            add(producer1);
+            add(producer2);
+        }};
+
+        List<Relationship> relationships = new ArrayList<Relationship>() {{
+
+            add(new Relationship( nodes.get( 0 ), nodes.get( 1 ), 100 ));
+            add(new Relationship( nodes.get( 1 ), nodes.get( 0 ), 100 ));
+        }};
+
+        int startTick = 0;
+        int ticks = 3;
+        int tickBreakpoints = 1;
+
+        Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
+
+        simulationHelper.simulate( simulation );
+    }
 }
