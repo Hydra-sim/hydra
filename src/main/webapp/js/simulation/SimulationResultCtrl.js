@@ -70,13 +70,25 @@
 
         //Function for ticks to seconds/minutes/hours
         function ticksToTime(ticks){
+            var hh = Math.floor( ticks / 3600);
+            var mm = Math.floor( (ticks % 3600) / 60);
+            var ss = (ticks % 3600) % 60;
+
             if(ticks == 3600)   return "1 hour";
             if(ticks == 60)     return "1 minute";
             if(ticks == 1)      return "1 second";
+            var time = '';
 
-            if(ticks > 3600)    return (ticks/3600).toFixed(2) + " hours";
-            if(ticks > 60)      return (ticks/60).toFixed(2) + " minutes";
-            if(ticks > 1)       return ticks + " seconds";
+            if(hh > 0)
+                time = hh + " hour" + (hh>1? "s" :"");
+
+            if(mm > 0)
+                time += " " + mm + " minute" + (mm>1? "s" :"");
+
+            if(ss > 0)
+                time += " " + ss + " second" + (ss>1? "s" :"");
+
+            return time;
         }
 
         // Tooltip for resultpage
