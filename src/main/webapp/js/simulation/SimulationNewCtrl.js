@@ -101,15 +101,18 @@
             var mm = Math.floor( (ticks % 3600) / 60);
             var ss = (ticks % 3600) % 60;
 
+            var time = '';
 
-            return hh + " hours " + mm + " minutes " + ss + " seconds";
-          /*
+            if(hh > 0)
+                time = hh + " hours";
 
-            if(ticks > 3600)    return (ticks/3600).toFixed(2) + " hours";
-            if(ticks > 60)      return (ticks/60).toFixed(2) + " minutes";
-                                return ticks + " seconds";
+            if(mm > 0)
+                time += " " + mm + " minutes";
 
-        */
+            if(ss > 0)
+                time += " " + ss + " seconds";
+
+            return time;
         }
 
         // Tooltip
