@@ -96,7 +96,7 @@
             })
 
             // Otherwise redirect to frontpage
-            .otherwise({redirectTo : '/'})
+            .otherwise({redirectTo : '/simulation'})
     });
 
 })();
