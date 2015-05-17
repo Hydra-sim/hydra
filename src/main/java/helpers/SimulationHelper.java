@@ -242,12 +242,15 @@ public class SimulationHelper {
 
             if(relationship.getSource() == source) {
 
-                if(relationship.getTarget().getType().equals(PARKING)) {
+                if(relationship.getTarget() instanceof Consumer) {
 
-                    busStop = true;
+                    if ( relationship.getTarget().getType().equals( PARKING ) ) {
+
+                        busStop = true;
+                    }
+
+                    currentRelationships.add( relationship );
                 }
-
-                currentRelationships.add(relationship);
             }
         }
 
