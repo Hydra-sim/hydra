@@ -61,7 +61,12 @@
             $scope.toPrint = $filter('date')($scope.to, "HH:mm");
 
             var test = $scope.simulation.result.maxWaitingTimeInTicks;
-            $scope.maxWaitingTimeInMinutes = ticksToTime(test);
+            if(test !== 0){
+                $scope.maxWaitingTimeInMinutes = ticksToTime(test);
+            }
+            else {
+                $scope.maxWaitingTimeInMinutes = 0 + " seconds";
+            }
 
             $scope.entitiesConsumed = $scope.simulation.result.entitiesConsumed;
             $scope.entitiesInQueue = $scope.simulation.result.entitiesInQueue;
