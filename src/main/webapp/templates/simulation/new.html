@@ -6,8 +6,14 @@
         <button tooltip="Remove map" tooltip-placement="left" class="btn-google-style fa fa-times" ng-click="ctrl.deleteMap()"></button>
     </div>
 
-    <graph nodes="dataset.nodes" edges="dataset.edges" height="calc(100vh - 150px)" control="control" class="graph" extra-tooltip="extraTooltip()" background="ctrl.image">
-        <radialmenu control="control">
+    <graph
+            nodes="dataset.nodes"
+            edges="dataset.edges"
+            height="calc(100vh - 150px)"
+            control="ctrl.control"
+            extra-tooltip="extraTooltip()"
+            background="ctrl.image">
+        <radialmenu control="ctrl.control">
             <radialbutton icon="fa-train" color="purple" ng-click="ctrl.newProducer('NEW TRAIN', 'train')" tooltip="Train" tooltip-placement="top"></radialbutton>
             <radialbutton icon="fa-bus" color="purple" ng-click="ctrl.newProducer('NEW BUS', 'bus')" tooltip="Bus" tooltip-placement="right"></radialbutton>
             <radialbutton icon="fa-desktop" color="dark-purple" ng-click="ctrl.newConsumer('NEW TERMINAL', 'desktop')" tooltip="Terminal" tooltip-placement="right"></radialbutton>

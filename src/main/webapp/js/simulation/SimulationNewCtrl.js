@@ -17,7 +17,7 @@
         $scope.endTime.setHours(8);
         $scope.endTime.setMinutes(0);
 
-        $scope.control = {};
+        this.control = {};
         $scope.dataset = { nodes: [], edges: [] };
 
         // Help methods
@@ -50,8 +50,8 @@
         }
 
         function addData(data, type) {
-            var pos = $scope.control.getlastpos();
-            $scope.control.addNode(type || "consumer", pos.x, pos.y, data);
+            var pos = that.control.getlastpos();
+            that.control.addNode(type || "consumer", pos.x, pos.y, data);
         }
 
 
