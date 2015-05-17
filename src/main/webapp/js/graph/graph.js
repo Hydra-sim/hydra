@@ -142,13 +142,20 @@
                         update();
                     }
 
-                    function copyNode(node, x, y) {
-                        addNode(
-                            node.type,
-                            x,
-                            y,
-                            node.data
-                        );
+                    function copyNode(data, x, y) {
+                        var newNode = {};
+                        _.each(data, function(value, key) { newNode[key] = value; }); // Add the data to the element
+
+                        var pos = viewSpaceToWorldSpace(x, y);
+                        newNode.id = newId();
+                        newNode.x = pos.x;
+                        newNode.y = pos.y;
+
+                        // Add the node
+                        scope.safeApply(function() {
+                            scope.nodes.push(newNode);
+                        });
+                        update();
                     }
 
                     scope.internalControl = scope.control || {};
@@ -289,7 +296,7 @@
                         }
                         else if (d3.event.keyCode == consts.KEY_V && d3.event.ctrlKey) {
                             if(itemToCopy != null) {
-                                console.log("paste", tmpLastMousePos);
+                                console.log("paste", itemToCopy);
                                 copyNode(itemToCopy, tmpLastMousePos[0], tmpLastMousePos[1]);
                             }
                         }
