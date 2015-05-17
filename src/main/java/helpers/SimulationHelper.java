@@ -369,19 +369,25 @@ public class SimulationHelper {
 
                 boolean transfered = false;
 
-                    for(Relationship relationship : simulation.getRelationships()) {
+                boolean validTargetFound = false;
 
-                        if (relationship.getSource() == node) {
+                for(Relationship relationship : simulation.getRelationships()) {
 
-                            isSource = true;
+                    if ( relationship.getSource() == node ) {
+
+                        isSource = true;
+
+                        if ( relationship.getTarget() instanceof Consumer ) {
+
+                            validTargetFound = true;
 
                             // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
                             // have, and runs the code if either this is true, or it is the first entity sent from the sending
                             // consumer
                             // Get the data about the entity that is to be sent
-                            for(TransferData transferData : simulation.getTransferData()) {
+                            for ( TransferData transferData : simulation.getTransferData() ) {
 
-                                if(transferData.source == relationship.getSource() && transferData.target == relationship.getTarget()) {
+                                if ( transferData.source == relationship.getSource() && transferData.target == relationship.getTarget() ) {
 
                                     Node source = relationship.getSource();
 
@@ -390,23 +396,23 @@ public class SimulationHelper {
                                     // consumer
 
 
-                                    if (source.getEntitiesTransfered() == 0
-                                            || ((double) transferData.entitiesRecieved / source.getEntitiesTransfered()) * 100 <= relationship.getWeight()) {
+                                    if ( source.getEntitiesTransfered() == 0
+                                            || ( ( double ) transferData.entitiesRecieved / source.getEntitiesTransfered() ) * 100 <= relationship.getWeight() ) {
 
                                         // Get the data about the entity that is to be sent
-                                        Entity entity = relationship.getSource().getEntitiesReady().get(0);
-                                        entity.setWaitingTimeOnCurrentNode(0);
+                                        Entity entity = relationship.getSource().getEntitiesReady().get( 0 );
+                                        entity.setWaitingTimeOnCurrentNode( 0 );
 
-                                        Consumer target = (Consumer) relationship.getTarget();
+                                        Consumer target = ( Consumer ) relationship.getTarget();
 
-                                        List<Entity> entities = target.getEntitiesInQueue();
-                                        entities.add(entity);
-                                        target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
-                                        target.setEntitiesInQueue(entities);
+                                        List< Entity > entities = target.getEntitiesInQueue();
+                                        entities.add( entity );
+                                        target.setEntitiesRecieved( target.getEntitiesRecieved() + 1 );
+                                        target.setEntitiesInQueue( entities );
 
 
-                                        source.getEntitiesReady().remove(0);
-                                        source.setEntitiesTransfered(relationship.getSource().getEntitiesTransfered() + 1);
+                                        source.getEntitiesReady().remove( 0 );
+                                        source.setEntitiesTransfered( relationship.getSource().getEntitiesTransfered() + 1 );
 
                                         transferData.entitiesRecieved++;
                                         transferData.entitiesTransfered++;
@@ -416,16 +422,19 @@ public class SimulationHelper {
                                     }
                                 }
 
-                                if(transfered) break;
+                                if ( transfered ) break;
                             }
                         }
 
-                        if(transfered) break;
+                        if ( transfered ) break;
                     }
-
-                    if(!isSource) break;
                 }
-            });
+
+                if(!isSource) break;
+
+                if(!validTargetFound) break;
+            }
+        });
     }
 
     /**
