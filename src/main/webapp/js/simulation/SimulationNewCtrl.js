@@ -8,20 +8,38 @@
 
         var that = this;
 
+        //Scope values
+        $scope.startTime = new Date();
+        $scope.startTime.setHours(6);
+        $scope.startTime.setMinutes(0);
+
+        $scope.endTime = new Date();
+        $scope.endTime.setHours(8);
+        $scope.endTime.setMinutes(0);
+
+        $scope.control = {};
         $scope.dataset = { nodes: [], edges: [] };
 
         // Help methods
+        this.debug = debug;
         function debug() {
             console.log("$scope.dataset", $scope.dataset);
         }
 
         function submit() {
-            updateTicks();
+            var startTick =
+                $scope.startTime.getHours() * 3600 +
+                $scope.startTime.getMinutes() * 60;
+
+            var ticks =
+                $scope.endTime.getHours() * 3600 +
+                $scope.endTime.getMinutes() * 60
+                -startTick;
 
             var sim = new Simulation({
                 'name':                             menu_field_name.value,
-                'ticks':                            $scope.ticks,
-                'startTick':                        $scope.startTick,
+                'ticks':                            ticks,
+                'startTick':                        startTick ,
                 'nodes':                            $scope.dataset.nodes,
                 'edges':                            $scope.dataset.edges
             });
@@ -36,26 +54,6 @@
             $scope.control.addNode(type || "consumer", pos.x, pos.y, data);
         }
 
-        function updateTicks() {
-            $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
-            $scope.ticks = ($scope.endTime.getHours() * 60 * 60) + ($scope.endTime.getMinutes() * 60) - $scope.startTick;
-        }
-
-        //Scope values
-        $scope.startTime = new Date();
-        $scope.startTime.setHours(6);
-        $scope.startTime.setMinutes(0);
-
-        $scope.endTime = new Date();
-        $scope.endTime.setHours(8);
-        $scope.endTime.setMinutes(0);
-
-        $scope.breakpoints = 900; // Every 15 minutes
-
-        updateTicks();
-
-        $scope.control = {};
-        this.debug = debug;
 
         // Set menu field name and button
         menu_field_name.setValue("Untitled simulation", false);
@@ -267,7 +265,6 @@
             configModal.result.then(function (time) {
                 $scope.startTime = time.startTime;
                 $scope.endTime = time.endTime;
-                updateTicks();
             });
         };
 
