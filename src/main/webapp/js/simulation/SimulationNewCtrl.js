@@ -8,42 +8,41 @@
 
         var that = this;
 
+        //Scope values
+        $scope.startTime = new Date();
+        $scope.startTime.setHours(6);
+        $scope.startTime.setMinutes(0);
+
+        $scope.endTime = new Date();
+        $scope.endTime.setHours(8);
+        $scope.endTime.setMinutes(0);
+
+        $scope.control = {};
         $scope.dataset = { nodes: [], edges: [] };
 
         // Help methods
+        this.debug = debug;
         function debug() {
             console.log("$scope.dataset", $scope.dataset);
         }
 
         function submit() {
-            updateTicks();
+            var startTick =
+                $scope.startTime.getHours() * 3600 +
+                $scope.startTime.getMinutes() * 60;
+
+            var ticks =
+                $scope.endTime.getHours() * 3600 +
+                $scope.endTime.getMinutes() * 60
+                -startTick;
 
             var sim = new Simulation({
                 'name':                             menu_field_name.value,
-                'ticks':                            $scope.ticks,
-                'startTick':                        $scope.startTick,
+                'ticks':                            ticks,
+                'startTick':                        startTick ,
                 'nodes':                            $scope.dataset.nodes,
                 'edges':                            $scope.dataset.edges
             });
-
-            /* // Edit modal saveAs dialog
-            $modal.open({
-
-                templateUrl: 'templates/modals/saveAs.html',
-                controller: 'SaveAsModalCtrl',
-                size: 'sm',
-                resolve: {
-                    simulationName: function () {
-                        return menu_field_name.value;
-                    }
-                }
-
-            }).result.then(function (data) {
-
-                SimResult.data = sim.$save();
-                $location.path('/result');
-                $location.replace();
-            }); //*/
 
             SimResult.data = sim.$save();
             $location.path('/result');
@@ -55,35 +54,10 @@
             $scope.control.addNode(type || "consumer", pos.x, pos.y, data);
         }
 
-        function updateTicks() {
-            $scope.startTick = ($scope.startTime.getHours() * 60  * 60) + ($scope.startTime.getMinutes() * 60);
-            $scope.ticks = ($scope.endTime.getHours() * 60 * 60) + ($scope.endTime.getMinutes() * 60) - $scope.startTick;
-        }
-
-        //Scope values
-        $scope.startTime = new Date();
-        $scope.startTime.setHours(6);
-        $scope.startTime.setMinutes(0);
-
-        $scope.endTime = new Date();
-        $scope.endTime.setHours(8);
-        $scope.endTime.setMinutes(0);
-
-        $scope.breakpoints = 900; // Every 15 minutes
-
-        updateTicks();
-
-        $scope.control = {};
-        $scope.addData = addData;
-        this.debug = debug;
 
         // Set menu field name and button
-        menu_field_name.readonly = false;
-        menu_field_name.setValue("Untitled simulation");
-
-        menu_field_button.value = "Submit";
-        menu_field_button.icon = "fa-arrow-circle-right";
-        menu_field_button.click = submit;
+        menu_field_name.setValue("Untitled simulation", false);
+        menu_field_button.update("Submit", "fa-arrow-circle-right", submit);
 
         // Map / image uploading
         this.image = {};
@@ -118,7 +92,6 @@
 
         //Function for ticks to seconds/minutes/hours
         function ticksToTime(ticks){
-
             var hh = Math.floor( ticks / 3600);
             var mm = Math.floor( (ticks % 3600) / 60);
             var ss = (ticks % 3600) % 60;
@@ -141,22 +114,25 @@
             else if(hh == 0 && mm > 0 && ss == 0 ){
                 return mm + " minutes"
             }
-           else if(hh == 0 && mm == 0){
-                    return ss + " seconds";
+            else if (hh == 0 && mm == 0){
+                return ss + " seconds";
             }
 
-
-
-          /*
             if(ticks == 3600)   return "1 hour";
             if(ticks == 60)     return "1 minute";
             if(ticks == 1)      return "1 second";
+            var time = '';
 
-            if(ticks > 3600)    return (ticks/3600).toFixed(2) + " hours";
-            if(ticks > 60)      return (ticks/60).toFixed(2) + " minutes";
-                                return ticks + " seconds";
+            if(hh > 0)
+                time = hh + " hour" + (hh>1? "s" :"");
 
-        */
+            if(mm > 0)
+                time += " " + mm + " minute" + (mm>1? "s" :"");
+
+            if(ss > 0)
+                time += " " + ss + " second" + (ss>1? "s" :"");
+
+            return time;
         }
 
         // Tooltip
@@ -313,7 +289,6 @@
             configModal.result.then(function (time) {
                 $scope.startTime = time.startTime;
                 $scope.endTime = time.endTime;
-                updateTicks();
             });
         };
 

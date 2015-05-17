@@ -49,9 +49,12 @@
             enable: function() {
                 this.enabled = true;
             },
-            setValue: function(value) {
+            setValue: function(value, readonly) {
                 this.value = value;
                 this.enable();
+
+                if(typeof readonly != 'undefined' && readonly != null)
+                    this.readonly = readonly;
             }
         };
     });
@@ -65,6 +68,11 @@
                 this.value = "";
                 this.icon = "";
                 this.click = function() {};
+            },
+            update: function(val, ico, func) {
+                this.value = val;
+                this.icon = ico;
+                this.click = func;
             }
         };
     });
