@@ -1,28 +1,37 @@
 <div ng-include src="'templates/simulation/loadingscreen.html'" ng-show="!loaded"></div>
 
-<div class="result-container" ng-show="loaded">
-
-    <h2>Result</h2>
-
-    <p>Simulation Runtime</p>
-
-    <p>From {{ fromPrint }} to {{ toPrint }}</p>
-
-    <p>Max waiting time: {{ maxWaitingTimeInMinutes }}</p>
-
-    <p>Number of passengers through the simulation: {{ entitiesConsumed }}</p>
-    <p>Passengers still in queue at simulation end: {{ entitiesInQueue }}</p>
-    <p>Busses queueing at simulation end: {{ bussesInQueue }}</p>
-
-    <a href="#/simulation/{{simulation.id}}/animation">animation</a>
-
-    <p>Graph</p>
-
-    <graph
-            nodes="simulation.nodes"
-            edges="simulation.relationships"
-            height="500px"
-            extra-tooltip="extraTooltip()"
-            extra-border="extraBorder()">
-    </graph>
+<div class="text-center" ng-show="loaded">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Result</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <p>
+                Simulation ran
+                from {{ fromPrint }}
+                to {{ toPrint }}
+            </p>
+            <p>
+                Max waiting time:
+                {{ maxWaitingTimeInMinutes }}
+            </p>
+            <a href="#/simulation/{{simulation.id}}/animation">Watch the simulation as an animation</a>
+        </div>
+        <div class="col-sm-6">
+            <p>Number of passengers through the simulation: {{ entitiesConsumed }}</p>
+            <p>Passengers still in queue at simulation end: {{ entitiesInQueue }}</p>
+            <p>Busses queueing at simulation end: {{ bussesInQueue }}</p>
+        </div>
+    </div>
+    <div class="row ">
+        <graph
+                nodes="simulation.nodes"
+                edges="simulation.relationships"
+                height="500px"
+                extra-tooltip="extraTooltip()"
+                extra-border="extraBorder()">
+        </graph>
+    </div>
 </div>
