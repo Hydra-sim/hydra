@@ -18,12 +18,12 @@
         $scope.endTime.setMinutes(0);
 
         this.control = {};
-        $scope.dataset = { nodes: [], edges: [] };
+        this.dataset = { nodes: [], edges: [] };
 
         // Help methods
         this.debug = debug;
         function debug() {
-            console.log("$scope.dataset", $scope.dataset);
+            console.log("$scope.dataset", that.dataset);
         }
 
         function submit() {
@@ -40,8 +40,8 @@
                 'name':                             menu_field_name.value,
                 'ticks':                            ticks,
                 'startTick':                        startTick ,
-                'nodes':                            $scope.dataset.nodes,
-                'edges':                            $scope.dataset.edges
+                'nodes':                            that.dataset.nodes,
+                'edges':                            that.dataset.edges
             });
 
             SimResult.data = sim.$save();
@@ -106,7 +106,7 @@
         }
 
         // Tooltip
-        $scope.extraTooltip = function() {
+        this.extraTooltip = function() {
             var timetable = Timetable.query({});
 
             function text(d) {
@@ -170,12 +170,11 @@
                 } else {
 
                     menu_field_name.setValue(result.name);
-                    $scope.id = result.id;
 
                     $scope.ticks = result.ticks;
                     $scope.startTick = result.startTick;
-                    $scope.dataset.nodes = result.nodes;
-                    $scope.dataset.edges = result.relationships;
+                    that.dataset.nodes = result.nodes;
+                    that.dataset.edges = result.relationships;
 
                     var startHours = result.startTick / 3600;
                     $scope.startTime.setHours(startHours);

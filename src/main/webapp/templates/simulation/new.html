@@ -7,11 +7,11 @@
     </div>
 
     <graph
-            nodes="dataset.nodes"
-            edges="dataset.edges"
+            nodes="ctrl.dataset.nodes"
+            edges="ctrl.dataset.edges"
             height="calc(100vh - 150px)"
             control="ctrl.control"
-            extra-tooltip="extraTooltip()"
+            extra-tooltip="ctrl.extraTooltip()"
             background="ctrl.image">
         <radialmenu control="ctrl.control">
             <radialbutton icon="fa-train" color="purple" ng-click="ctrl.newProducer('NEW TRAIN', 'train')" tooltip="Train" tooltip-placement="top"></radialbutton>
