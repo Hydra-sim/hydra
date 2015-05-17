@@ -17,7 +17,10 @@
         cfpLoadingBar.start();
 
         // Check that the promise exists
-        if(typeof SimResult.data !== "undefined") {
+        if(typeof $routeParams.id != "undefined" && $routeParams.id != null) {
+            // If the promise doesn't exists, reload the data from the api
+            Simulation.run({}, {id: $routeParams.id}, init);
+        } else if(typeof SimResult.data != "undefined" && SimResult.data != null) {
             SimResult.data.then(function(result) {
                 // The id is not set
                 if(typeof $routeParams.id === "undefined") {
@@ -25,11 +28,11 @@
                     $location.replace();
                 }
 
+                SimResult.data = null;
                 Simulation.run({}, {id: result.id, breakpoints: 0}, init);
             });
         } else {
-            // If the promise doesn't exists, reload the data from the api
-            Simulation.run({}, {id: $routeParams.id}, init);
+            console.log("well this is embarrasing, but this else should never run")
         }
 
         function init(result) {
