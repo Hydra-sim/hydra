@@ -123,8 +123,30 @@
             var mm = Math.floor( (ticks % 3600) / 60);
             var ss = (ticks % 3600) % 60;
 
+            if(hh > 0 && mm > 0 & ss > 0){
+                return hh + " hours " + mm + " minutes " + ss + " seconds";
+            }
+            else if(hh == 0 && mm > 0 && ss > 0){
+                return mm + " minutes " +ss + " seconds ";
+            }
+            else if(hh > 0 && mm > 0 && ss == 0){
+                return hh + " hours " + mm + " minutes "
+            }
+            else if(hh > 0 && mm == 0 && ss > 0 ) {
+                return hh + " hours " + ss + " seconds";
+            }
+            else if(hh > 0 && mm == 0 && ss == 0){
+                return hh + " hours";
+            }
+            else if(hh == 0 && mm > 0 && ss == 0 ){
+                return mm + " minutes"
+            }
+           else if(hh == 0 && mm == 0){
+                    return ss + " seconds";
+            }
 
-            return hh + " hours " + mm + " minutes " + ss + " seconds";
+
+
           /*
             if(ticks == 3600)   return "1 hour";
             if(ticks == 60)     return "1 minute";
