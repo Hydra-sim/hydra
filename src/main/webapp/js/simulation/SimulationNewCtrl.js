@@ -4,18 +4,18 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationNewCtrl', function ($scope, $location, $modal, $routeParams, $rootScope, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, Upload) {
+    app.controller('SimulationNewCtrl', function ($location, $modal, $routeParams, $rootScope, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, Upload) {
 
         var that = this;
 
         //Scope values
-        $scope.startTime = new Date();
-        $scope.startTime.setHours(6);
-        $scope.startTime.setMinutes(0);
+        this.startTime = new Date();
+        this.startTime.setHours(6);
+        this.startTime.setMinutes(0);
 
-        $scope.endTime = new Date();
-        $scope.endTime.setHours(8);
-        $scope.endTime.setMinutes(0);
+        this.endTime = new Date();
+        this.endTime.setHours(8);
+        this.endTime.setMinutes(0);
 
         this.control = {};
         this.dataset = { nodes: [], edges: [] };
@@ -23,17 +23,17 @@
         // Help methods
         this.debug = debug;
         function debug() {
-            console.log("$scope.dataset", that.dataset);
+            console.log("this.dataset", that.dataset);
         }
 
         function submit() {
             var startTick =
-                $scope.startTime.getHours() * 3600 +
-                $scope.startTime.getMinutes() * 60;
+                that.startTime.getHours() * 3600 +
+                that.startTime.getMinutes() * 60;
 
             var ticks =
-                $scope.endTime.getHours() * 3600 +
-                $scope.endTime.getMinutes() * 60
+                that.endTime.getHours() * 3600 +
+                that.endTime.getMinutes() * 60
                 -startTick;
 
             var sim = new Simulation({
@@ -169,22 +169,20 @@
 
                 } else {
 
-                    menu_field_name.setValue(result.name);
+                    menu_field_name.setValue(result.name, false);
 
-                    $scope.ticks = result.ticks;
-                    $scope.startTick = result.startTick;
                     that.dataset.nodes = result.nodes;
                     that.dataset.edges = result.relationships;
 
                     var startHours = result.startTick / 3600;
-                    $scope.startTime.setHours(startHours);
+                    that.startTime.setHours(startHours);
                     var startMinutes = (result.startTick - startHours * 3600) / 60;
-                    $scope.startTime.setMinutes(startMinutes);
+                    that.startTime.setMinutes(startMinutes);
 
                     var endHours = (result.startTick + result.ticks) / 3600;
-                    $scope.endTime.setHours(endHours);
+                    that.endTime.setHours(endHours);
                     var endMinutes = (result.startTick + result.ticks - endHours * 3600) / 60;
-                    $scope.endTime.setMinutes(endMinutes);
+                    that.endTime.setMinutes(endMinutes);
                 }
             });
         }
@@ -247,17 +245,17 @@
                 size: 'sm',
                 resolve: {
                     startTime: function() {
-                        return $scope.startTime;
+                        return that.startTime;
                     },
                     endTime: function() {
-                        return $scope.endTime;
+                        return that.endTime;
                     }
                 }
             });
 
             configModal.result.then(function (time) {
-                $scope.startTime = time.startTime;
-                $scope.endTime = time.endTime;
+                that.startTime = time.startTime;
+                that.endTime = time.endTime;
             });
         };
 
