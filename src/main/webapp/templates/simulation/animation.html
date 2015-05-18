@@ -1,13 +1,13 @@
 <div class="row">
     <graph
+            class="fillBody"
             nodes="ctrl.simulation.nodes"
             edges="ctrl.simulation.relationships"
-            height="calc(100vh - 160px)"
             extra-border="ctrl.extraBorder()"
             control="ctrl.control"
             background="ctrl.simulation.map">
         <timeline
-                style="position:absolute; bottom: 20px; left: 20px; right: 20px;"
+                class="bottom"
                 start-time="ctrl.simulation.startTick"
                 end-time="ctrl.simulation.startTick + ctrl.simulation.ticks"
                 current-time="ctrl.simulation.startTick + ctrl.simulation.ticks / ctrl.simulation.tickBreakpoints * ctrl.progress"

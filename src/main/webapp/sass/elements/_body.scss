@@ -7,3 +7,14 @@ body {
   margin-bottom: 50px;
   background-color: $Avinor_LightGrey;
 }
+
+.fillBody {
+  height: calc(100vh - 160px);
+}
+
+.bottom {
+  position:absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
