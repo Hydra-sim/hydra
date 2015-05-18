@@ -45,33 +45,6 @@
             cfpLoadingBar.complete();
             $scope.loaded = true;
 
-            var from  = TicksToTimeService.standardTicksToTime($scope.simulation.startTick);
-            var to = TicksToTimeService.standardTicksToTime($scope.simulation.startTick + $scope.simulation.ticks);
-
-            var fromHours = parseInt(from);
-            var fromMinutes = Number( ( ( parseFloat( from ) % fromHours ) * 60 ).toFixed(2) );
-            $scope.from = new Date();
-            $scope.from.setHours( fromHours );
-            $scope.from.setMinutes( fromMinutes );
-            $scope.from.setSeconds(0);
-            $scope.fromPrint = $filter('date')($scope.from, "HH:mm");
-
-            var toHours = parseInt(to);
-            var toMinutes = Number( ( ( parseFloat( to ) % toHours ) * 60 ).toFixed(2) );
-            $scope.to = new Date();
-            $scope.to.setHours( toHours );
-            $scope.to.setMinutes( toMinutes );
-            $scope.to.setSeconds(0);
-            $scope.toPrint = $filter('date')($scope.to, "HH:mm");
-
-            var test = $scope.simulation.result.maxWaitingTimeInTicks;
-            if(test !== 0){
-                $scope.maxWaitingTimeInMinutes = TicksToTimeService.standardTicksToTime(test);
-            }
-            else {
-                $scope.maxWaitingTimeInMinutes = 0 + " seconds";
-            }
-
             $scope.entitiesConsumed = $scope.simulation.result.entitiesConsumed;
             $scope.entitiesInQueue = $scope.simulation.result.entitiesInQueue;
             $scope.bussesInQueue = $scope.simulation.entitiesQueueing.length;

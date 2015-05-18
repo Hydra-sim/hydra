@@ -14,6 +14,9 @@
 
     app.factory('TicksToTimeService', function() {
         function standardTicksToTime(ticks){
+            if(ticks == 0)
+                return '0 seconds';
+
             var hh = Math.floor( ticks / 3600);
             var mm = Math.floor( (ticks % 3600) / 60);
             var ss = (ticks % 3600) % 60;

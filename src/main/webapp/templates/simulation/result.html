@@ -14,8 +14,7 @@
                 to {{ simulation.startTick + simulation.ticks | TicksToTime }}
             </p>
             <p>
-                Max waiting time:
-                {{ maxWaitingTimeInMinutes }}
+                Max waiting time: {{ simulation.result.maxWaitingTimeInTicks | StandardTicksToTime }}
             </p>
             <a href="#/simulation/{{simulation.id}}/animation">Watch the simulation as an animation</a>
         </div>
