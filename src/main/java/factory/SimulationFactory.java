@@ -21,6 +21,9 @@ public class SimulationFactory {
     @EJB
     private dao.Timetable timetableDao;
 
+    @EJB
+    private dao.Map mapDao;
+
     public Simulation createSimulation(SimulationFormData input) throws Exception {
         return createSimulation(input, 0);
     }
