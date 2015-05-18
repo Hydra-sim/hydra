@@ -75,8 +75,8 @@ public class SimulationFactory {
                 breakpoints
         );
 
-        // TODO: set the map
-        //simulation.setMap(mapDao.find(input.mapId));
+        // Sets the map
+        simulation.setMap(mapDao.get(input.mapId));
 
         return simulation;
     }
