@@ -11,7 +11,8 @@
         'angular-loading-bar',
         'unit.directives',
         'ngFileUpload',
-        'directive.timeline'
+        'directive.timeline',
+        'TicksToTimeFilter'
     ]);
 
     app.config(['uiZeroclipConfigProvider', function(uiZeroclipConfigProvider) {

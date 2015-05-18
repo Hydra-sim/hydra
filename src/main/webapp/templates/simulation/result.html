@@ -10,8 +10,8 @@
         <div class="col-sm-6">
             <p>
                 Simulation ran
-                from {{ fromPrint }}
-                to {{ toPrint }}
+                from {{ simulation.startTick | TicksToTime }}
+                to {{ simulation.startTick + simulation.ticks | TicksToTime }}
             </p>
             <p>
                 Max waiting time:
