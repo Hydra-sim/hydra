@@ -19,9 +19,9 @@
             <a href="#/simulation/{{ctrl.simulation.id}}/animation">Watch the simulation as an animation</a>
         </div>
         <div class="col-sm-6">
-            <p>Number of passengers through the simulation: {{ ctrl.entitiesConsumed }}</p>
-            <p>Passengers still in queue at simulation end: {{ ctrl.entitiesInQueue }}</p>
-            <p>Busses queueing at simulation end: {{ ctrl.bussesInQueue }}</p>
+            <p>Number of passengers through the simulation: {{ ctrl.simulation.result.entitiesConsumed }}</p>
+            <p>Passengers still in queue at simulation end: {{ ctrl.simulation.result.entitiesInQueue }}</p>
+            <p>Busses queueing at simulation end: {{ ctrl.simulation.entitiesQueueing.length }}</p>
         </div>
     </div>
     <div class="row ">
@@ -31,7 +31,7 @@
                 height="500px"
                 extra-tooltip="ctrl.extraTooltip()"
                 extra-border="ctrl.extraBorder()"
-                background="ctrl.image">
+                background="ctrl.simulation.map">
         </graph>
     </div>
 </div>

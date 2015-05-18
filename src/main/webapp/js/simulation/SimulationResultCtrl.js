@@ -12,18 +12,19 @@
             nodes: [],
             relationships: []
         };
-        ctrl.loaded = false;
-        ctrl.image = {};
 
         menu_field_name.readonly = true;
 
+        ctrl.loaded = false;
         cfpLoadingBar.start();
 
-        // Check that the promise exists
-        if(typeof $routeParams.id != "undefined" && $routeParams.id != null) {
+        if(typeof $routeParams.id != "undefined" && $routeParams.id != null)
+        {
             // If the promise doesn't exists, reload the data from the api
             Simulation.run({}, {id: $routeParams.id, breakpoints: 0}, init);
-        } else if(typeof SimResult.data != "undefined" && SimResult.data != null) {
+        }
+        else if(typeof SimResult.data != "undefined" && SimResult.data != null)
+        {
             SimResult.data.then(function(result) {
                 // The id is not set
                 if(typeof $routeParams.id === "undefined") {
@@ -34,8 +35,9 @@
                 SimResult.data = null;
                 Simulation.run({}, {id: result.id, breakpoints: 0}, init);
             });
-        } else {
-            console.log("well this is embarrasing, but this else should never run")
+        }
+        else {
+            console.log("well this is embarrasing, but this else shouldn't have been run, ever.")
         }
 
         function init(result) {
@@ -47,12 +49,7 @@
             cfpLoadingBar.complete();
             ctrl.loaded = true;
 
-            ctrl.entitiesConsumed = ctrl.simulation.result.entitiesConsumed;
-            ctrl.entitiesInQueue = ctrl.simulation.result.entitiesInQueue;
-            ctrl.bussesInQueue = ctrl.simulation.entitiesQueueing.length;
-
-            ctrl.image = result.map;
-            ctrl.image.url = 'api/map/' + result.map.id;
+            ctrl.simulation.map.url = 'api/map/' + result.map.id;
         }
 
         // Tooltip for resultpage
