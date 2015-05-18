@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationNewCtrl', function ($location, $modal, $routeParams, $rootScope, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, Upload) {
+    app.controller('SimulationNewCtrl', function ($location, $modal, $routeParams, $rootScope, SimResult, Simulation, Timetable, menu_field_name, menu_field_button, Upload, TicksToTimeService) {
 
         var that = this;
 
@@ -91,21 +91,6 @@
             that.image.zoom = 0;
         };
 
-        //Function for ticks to seconds/minutes/hours
-        function ticksToTime(ticks){
-            var hh = Math.floor( ticks / 3600);
-            var mm = Math.floor( (ticks % 3600) / 60);
-            var ss = (ticks % 3600) % 60;
-
-            var time = '';
-
-            if(hh > 0) time = hh + " hour" + (hh>1? "s" :"");
-            if(mm > 0) time += " " + mm + " minute" + (mm>1? "s" :"");
-            if(ss > 0) time += " " + ss + " second" + (ss>1? "s" :"");
-
-            return time;
-        }
-
         // Tooltip
         this.extraTooltip = function() {
             var timetable = Timetable.query({});
@@ -117,11 +102,11 @@
                 else if(d.type == "passengerflow")
                 {
                     return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
-                           "Time between arrivals: " + ticksToTime(d.timeBetweenArrivals);
+                           "Time between arrivals: " + TicksToTimeService.ticksToTime(d.timeBetweenArrivals);
                 }
                 else if(d.type == "parking")
                 {
-                    return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity);
+                    return "Buses handled every " + TicksToTimeService.ticksToTime(d.ticksToConsumeEntity);
                 }
                 else if(
                     d.type == "desktop" ||
@@ -132,7 +117,7 @@
                     d.type == "consumerGroup-suitcase"
                 )
                 {
-                    var printForConsumer =  "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity);
+                    var printForConsumer =  "Passengers handled every " + TicksToTimeService.ticksToTime(d.ticksToConsumeEntity);
 
                     if(d.type.indexOf("consumerGroup") != -1) {
                         printForConsumer += "<br/>" + "Quantity: " + d.consumers.length;
