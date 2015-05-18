@@ -32,18 +32,14 @@
             return ctrl.simulation.startTick + ticksBetweenSteps * ctrl.progress;
         };
 
+        $scope.$watchCollection(function() { return ctrl.progress; }, update_datasource_progress);
         function update_datasource_progress() {
             _.each(ctrl.simulation.nodes, function (value, key) {
                 ctrl.simulation.nodes[key].progress = ctrl.progress;
             });
-        }
 
-        $scope.$watchCollection(function() {
-            return ctrl.progress;
-        }, function() {
-            update_datasource_progress();
             ctrl.control.update();
-        });
+        }
 
         ctrl.extraBorder = function() {
 
