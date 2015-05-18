@@ -59,8 +59,9 @@
         };
     });
 
-    app.factory('menu_field_button', function() {
-        return {
+    app.factory('menu_field_button', function($rootScope) {
+
+        var value = {
             value: "",
             icon: "",
             click: function() {},
@@ -75,6 +76,10 @@
                 this.click = func;
             }
         };
+
+        $rootScope.$on("$routeChangeSuccess", function() { value.reset(); });
+
+        return value;
     });
 
     app.factory('Session', function($http) {

@@ -86,12 +86,11 @@
         }
     });
 
-    app.controller('HomeCtrl', function($scope, menu_field_button, menu_field_name, $modal){
-        menu_field_button.reset();
+    app.controller('HomeCtrl', function($scope, menu_field_name){
         menu_field_name.disable();
     });
 
-    app.controller("TabCtrl", function($scope, $rootScope, $location) {
+    app.controller("TabCtrl", function($scope, $location) {
 
         $scope.tabs = [
             {name: 'HOME', link: "/"},
@@ -122,9 +121,7 @@
 
     });
 
-    app.controller('FullDocumentationCtrl', function($scope, $location, $anchorScroll, menu_field_button){
-        menu_field_button.reset();
-
+    app.controller('FullDocumentationCtrl', function($scope, $location, $anchorScroll){
         $scope.scrollTo = function(id) {
             $location.hash(id);
             $anchorScroll();

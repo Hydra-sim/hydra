@@ -4,10 +4,8 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationAnimationCtrl', function($routeParams, menu_field_button, $scope, Simulation, WeightToColor) {
+    app.controller('SimulationAnimationCtrl', function($routeParams, $scope, Simulation, WeightToColor) {
         var ctrl = this;
-
-        menu_field_button.reset();
 
         ctrl.simulation = {};
 

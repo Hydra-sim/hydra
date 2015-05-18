@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('AuthPathCtrl', function($scope, $rootScope, $routeParams, $location, Authentication, menu_field_name, menu_field_button) {
+    app.controller('AuthPathCtrl', function($scope, $rootScope, $routeParams, $location, Authentication, menu_field_name) {
 
         $scope.id = $routeParams.id;
 
@@ -34,8 +34,6 @@
 
         menu_field_name.setValue("");
         menu_field_name.disable();
-
-        menu_field_button.reset();
     });
 
 })();

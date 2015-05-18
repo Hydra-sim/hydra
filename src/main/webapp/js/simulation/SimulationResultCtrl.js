@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationResultCtrl', function($location, $routeParams, SimResult, Simulation, cfpLoadingBar, menu_field_name, menu_field_button, TicksToTimeService, WeightToColor) {
+    app.controller('SimulationResultCtrl', function($location, $routeParams, SimResult, Simulation, cfpLoadingBar, menu_field_name, TicksToTimeService, WeightToColor) {
 
         var ctrl = this;
 
@@ -127,7 +127,6 @@
                 });
         };
 
-        menu_field_button.reset();
     });
 
 })();
