@@ -12,6 +12,7 @@
             restricted: 'E',
 
             template: '<div>' +
+                '<h3 class="text-center">{{currentTime | TicksToTime: \'hh:MM:SS\'}}</h3>' +
                 '<p class="labels">' +
                     '<span>{{startTime | TicksToTime: \'hh:MM:SS\'}}</span>' +
                     '<span style="float: right">{{endTime | TicksToTime: \'hh:MM:SS\'}}</span>' +
@@ -29,6 +30,7 @@
             scope: {
                 'startTime': '=',
                 'endTime': '=',
+                'currentTime': '=',
                 'position': '=',
                 'max': '='
             },

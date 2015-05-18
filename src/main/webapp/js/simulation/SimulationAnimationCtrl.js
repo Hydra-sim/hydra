@@ -26,12 +26,6 @@
             update_datasource_progress();
         });
 
-        ctrl.progressTime = function() {
-
-            var ticksBetweenSteps = ctrl.simulation.ticks / ctrl.simulation.tickBreakpoints;
-            return ctrl.simulation.startTick + ticksBetweenSteps * ctrl.progress;
-        };
-
         $scope.$watchCollection(function() { return ctrl.progress; }, update_datasource_progress);
         function update_datasource_progress() {
             _.each(ctrl.simulation.nodes, function (value, key) {
