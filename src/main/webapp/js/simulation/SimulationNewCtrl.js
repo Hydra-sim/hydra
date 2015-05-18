@@ -102,11 +102,11 @@
                 else if(d.type == "passengerflow")
                 {
                     return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
-                           "Time between arrivals: " + TicksToTimeService.ticksToTime(d.timeBetweenArrivals);
+                           "Time between arrivals: " + TicksToTimeService.standardTicksToTime(d.timeBetweenArrivals);
                 }
                 else if(d.type == "parking")
                 {
-                    return "Buses handled every " + TicksToTimeService.ticksToTime(d.ticksToConsumeEntity);
+                    return "Buses handled every " + TicksToTimeService.standardTicksToTime(d.ticksToConsumeEntity);
                 }
                 else if(
                     d.type == "desktop" ||
@@ -117,7 +117,7 @@
                     d.type == "consumerGroup-suitcase"
                 )
                 {
-                    var printForConsumer =  "Passengers handled every " + TicksToTimeService.ticksToTime(d.ticksToConsumeEntity);
+                    var printForConsumer =  "Passengers handled every " + TicksToTimeService.standardTicksToTime(d.ticksToConsumeEntity);
 
                     if(d.type.indexOf("consumerGroup") != -1) {
                         printForConsumer += "<br/>" + "Quantity: " + d.consumers.length;
