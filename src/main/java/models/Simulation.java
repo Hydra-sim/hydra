@@ -78,6 +78,11 @@ public class Simulation
     private String password;
     private int tickBreakpoints;
 
+
+    // Made it transient for now. Must later be made into a @OneToMany
+    @Transient
+    private Map map;
+
     // endregion
 
     // region constructors
@@ -290,6 +295,14 @@ public class Simulation
 
     public void setEntitiesQueueing(List<QueueElement> entitiesQueueing) {
         this.entitiesQueueing = entitiesQueueing;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 
     //endregion

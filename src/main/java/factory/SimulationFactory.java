@@ -62,7 +62,7 @@ public class SimulationFactory {
         }
 
         // Create the simulation
-        return new models.Simulation(
+        models.Simulation simulation = new models.Simulation(
                 input.name,
                 new Date(),
                 nodes,
@@ -71,6 +71,11 @@ public class SimulationFactory {
                 input.ticks,
                 breakpoints
         );
+
+        // TODO: set the map
+        //simulation.setMap(mapDao.find(input.mapId));
+
+        return simulation;
     }
 
     private Optional<Node> findNodeWithId(int id, List<Node> nodes) {
