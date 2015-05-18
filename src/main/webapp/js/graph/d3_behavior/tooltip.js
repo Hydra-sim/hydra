@@ -48,36 +48,40 @@
         var event = d3_eventDispatch(tooltip, "open", "close");
 
         var text_method = function() {},
-            tooltip_el = d3.select("body")
-                .append("div")
-                .style("position", "absolute")
-                .style("z-index", "10")
-                .style("visibility", "hidden")
-                .style("background", "#1d1d1d")
-                .style("box-shadow", "0 0 5px #999999")
-                .style("border-radius", "5px")
-                .style("padding", "10px")
-                .style("color", "white");
+            tooltip_el = null,
+            parent = null,
+            worldSpaceToViewSpace = function(arg) { return arg * 1;},
+            dispatch;
 
         // Prototype method
         function tooltip() {
-            var that = this,
+            var that = this;
+
                 dispatch = event.of(that, arguments);
 
+            if(tooltip_el == null && parent != null) {
+                tooltip_el = d3.select(parent)
+                    .append("div")
+                    .attr("class", "d3BehaviorTooltip")
+                    .style("visibility", "hidden");
+            }
+
+            if(tooltip_el != null) {
+                tooltip_el
+                    .on("mouseover", open)
+                    .on("mouseout", close);
+            }
+
             this
-                .on("mouseover", function(){
-                    dispatch({type: "open"});
-                    open();
-                })
+                .on("mouseover", open)
+                .on("mouseout", close)
                 .on("mousemove", function(d){
+                    var pos = worldSpaceToViewSpace(d.x, d.y);
+
                     tooltip_el
-                        .style("top", (d3.event.pageY-10)+"px")
-                        .style("left",(d3.event.pageX+10)+"px")
+                        .style("left",(pos.x-135)+"px")
+                        .style("top", (pos.y-75)+"px")
                         .html(text_method(d));
-                })
-                .on("mouseout", function(){
-                    dispatch({type: "close"});
-                    close();
                 });
         }
 
@@ -87,13 +91,25 @@
             return tooltip;
         };
 
+        tooltip.setParent = function(p) {
+            parent = p;
+            return tooltip;
+        };
+
+        tooltip.setWorldSpaceToViewSpace = function(func) {
+            worldSpaceToViewSpace = func;
+            return tooltip;
+        };
+
         tooltip.open = open;
         function open() {
+            dispatch({type: "open"});
             tooltip_el.style("visibility", "visible");
         }
 
         tooltip.close = close;
         function close() {
+            dispatch({type: "close"});
             tooltip_el.style("visibility", "hidden");
         }
 

@@ -121,6 +121,16 @@
                         return {'x': x, 'y': y};
                     }
 
+                    function worldSpaceToViewSpace(x, y) {
+                        var pos = zoom.translate();
+                        var scale = zoom.scale();
+
+                        return {
+                            'x' : scale * x + pos[0],
+                            'y' : scale * y + pos[1]
+                        }
+                    }
+
                     function addNode(type, x, y, data) {
                         // Get a new unused id
                         var id = newId();
@@ -409,8 +419,13 @@
                             })
                             .call(drag);
 
-                        if(tooltip != null)
+                        if(tooltip != null) {
+                            tooltip
+                                .setParent(element[0])
+                                .setWorldSpaceToViewSpace(worldSpaceToViewSpace);
+
                             newCircleWrappers.call(tooltip);
+                        }
 
                         newCircleWrappers
                             .append("circle")

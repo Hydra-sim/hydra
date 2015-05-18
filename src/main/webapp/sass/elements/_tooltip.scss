@@ -1,58 +1,25 @@
-/*
-.custom-tooltip:after, .custom-tooltip:before
-{
-  content: ' ';
+.d3BehaviorTooltip {
+
   position: absolute;
-  top: 100%;
-  border-style: solid;
-  width: 0;
-  height: 0;
+  z-index: 10;
+  background: #1d1d1d;
+  box-shadow: 0 0 5px #999;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    bottom: -14px;
+    left: 50%;
+    mergin-left: -7px;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 14px solid #1d1d1d;
+  }
 }
-
-.custom-tooltip:before
-{
-  border-color: #c6c8ca transparent transparent transparent;
-  border-width: 16px 16px 0 7px;
-  left: 10px;
-}
-
-.custom-tooltip:after
-{
-  border-color: #c6c8ca transparent transparent transparent;
-  border-width: 12px 11px 0 4px;
-  left: 14px;
-}
-
-
-.custom-tooltip {
-  display: none;
-  line-height: 1.4;
-  opacity: 0;
-  background-color: #c6c8ca;
-  max-width: 200px;
-  min-height: 50px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  -webkit-transition: opacity 0.5s;
-  -moz-transition: opacity 0.5s;
-  -o-transition: opacity 0.5s ;
-  -ms-transition: opacity 0.5s;
-}
-
-
-.inner-tooltip{
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-
-
-.inner-tooltip p, .inner-html span{
-  color: #000;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  text-decoration: none;
-  margin: 0;
-}
-*/
