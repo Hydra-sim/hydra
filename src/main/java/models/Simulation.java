@@ -61,12 +61,14 @@ public class Simulation
     private List<Node> nodes;
 
     @Transient
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<QueueElement> entitiesQueueing;
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private List<Relationship> relationships;
+
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    private Map map;
 
     @Transient
     private List<TransferData> transferData;
@@ -77,11 +79,6 @@ public class Simulation
     private boolean passwordProtected;
     private String password;
     private int tickBreakpoints;
-
-
-    // Made it transient for now. Must later be made into a @OneToMany
-    @Transient
-    private Map map;
 
     // endregion
 
