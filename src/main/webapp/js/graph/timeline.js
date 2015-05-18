@@ -2,7 +2,9 @@
 
     "use strict";
 
-    var app = angular.module('directive.timeline', []);
+    var app = angular.module('directive.timeline', [
+        'TicksToTimeFilter'
+    ]);
 
     app.directive('timeline', function($interval) {
         return {
@@ -10,7 +12,10 @@
             restricted: 'E',
 
             template: '<div>' +
-                '<p class="labels"><span>{{startTime}}</span><span style="float: right">{{endTime}}</span></p>' +
+                '<p class="labels">' +
+                    '<span>{{startTime | TicksToTime: \'hh:MM:SS\'}}</span>' +
+                    '<span style="float: right">{{endTime | TicksToTime: \'hh:MM:SS\'}}</span>' +
+                '</p>' +
                 '<input type="range" name="points" min="0" max="{{max}}" step="1" ng-model="position">' +
                 '<div class="progressButtons">' +
                     '<span class="fa fa-backward" ng-click="ctrl.backward()"></span>' +
