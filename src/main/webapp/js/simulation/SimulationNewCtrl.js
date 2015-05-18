@@ -41,7 +41,8 @@
                 'ticks':                            ticks,
                 'startTick':                        startTick ,
                 'nodes':                            that.dataset.nodes,
-                'edges':                            that.dataset.edges
+                'edges':                            that.dataset.edges,
+                'mapId':                            that.image.id
             });
 
             SimResult.data = sim.$save();
