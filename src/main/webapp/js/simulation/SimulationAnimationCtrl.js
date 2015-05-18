@@ -13,8 +13,7 @@
 
         Simulation.run({}, {id: $routeParams.id, breakpoints: 100}, function(result) {
 
-            $scope.datasource.nodes = result.nodes;
-            $scope.datasource.edges = result.relationships;
+            $scope.datasource = result;
             $scope.totalSteps = result.tickBreakpoints -1;
             $scope.image = result.map;
             if(typeof result.map != 'undefined' && result.map != null && typeof result.map.id != 'undefined')
