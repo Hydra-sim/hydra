@@ -12,56 +12,49 @@
         $scope.datasource = {};
         $scope.image = {};
 
+        $scope.currentTime = {};
+
+        $scope.progress = {
+            position: 0
+        };
+        $scope.totalSteps = 7;
+        ctrl.control = {};
+
         Simulation.run({}, {id: $routeParams.id, breakpoints: 100}, function(result) {
 
             $scope.datasource = result;
-            $scope.totalSteps = result.tickBreakpoints -1;
+            $scope.totalSteps = result.tickBreakpoints;
             $scope.image = result.map;
+
             if(typeof result.map != 'undefined' && result.map != null && typeof result.map.id != 'undefined')
                 $scope.image.url = 'api/map/' + result.map.id;
 
-            var startTimeDate = new Date();
-            startTimeDate.setHours(0);
-            startTimeDate.setMinutes(0);
-            startTimeDate.setSeconds(result.startTick);
-            $scope.startTime = startTimeDate.toLocaleTimeString();
-
-            $scope.currentTime.date = startTimeDate;
+            $scope.currentTime.date = new Date();
+            $scope.currentTime.date.setHours(0);
+            $scope.currentTime.date.setMinutes(0);
+            $scope.currentTime.date.setSeconds(result.startTick);
 
             $scope.ticksBetweenSteps = result.ticks / result.tickBreakpoints;
-            var date = $scope.currentTime.date;
-            $scope.currentTime.seconds = date.getHours()*60*60 + date.getMinutes()*60 + date.getSeconds();
 
             update_datasource_progress();
         });
 
-        $scope.currentTime = {};
-        $scope.currentTime.date = new Date();
-
-        $scope.steps = 1;
-        $scope.progress = {};
-        $scope.progress.position = 0;
-        $scope.currentTime = {};
-        $scope.totalSteps = 7;
-        ctrl.control = {};
-
         function update_datasource_progress() {
-            _.each($scope.datasource.nodes, function (value, key, list) {
+            _.each($scope.datasource.nodes, function (value, key) {
                 $scope.datasource.nodes[key].progress = $scope.progress.position;
             });
 
-            if ($scope.currentTime.date) {
+            var date = $scope.currentTime.date;
+            if (date) {
+                var seconds = $scope.datasource.startTick + $scope.ticksBetweenSteps * $scope.progress.position;
 
-                $scope.currentTime.date.setHours(0);
-                $scope.currentTime.date.setMinutes(0);
-
-                $scope.currentTime.date.setSeconds($scope.currentTime.seconds + ( $scope.ticksBetweenSteps * $scope.progress.position ));
+                date.setHours(0);
+                date.setMinutes(0);
+                date.setSeconds(seconds);
             }
-
         }
 
         $scope.$watchCollection('progress', function(newvalue) {
-
             update_datasource_progress();
             ctrl.control.update();
         });
