@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationResultCtrl', function($scope, $rootScope, $filter, $location, $routeParams, SimResult, Simulation, cfpLoadingBar, menu_field_name, menu_field_button) {
+    app.controller('SimulationResultCtrl', function($scope, $rootScope, $filter, $location, $routeParams, SimResult, Simulation, cfpLoadingBar, menu_field_name, menu_field_button, TicksToTimeService) {
 
         $scope.simulation = {
             nodes: [],
@@ -45,8 +45,8 @@
             cfpLoadingBar.complete();
             $scope.loaded = true;
 
-            var from  = ticksToTime($scope.simulation.startTick);
-            var to = ticksToTime($scope.simulation.startTick + $scope.simulation.ticks);
+            var from  = TicksToTimeService.standardTicksToTime($scope.simulation.startTick);
+            var to = TicksToTimeService.standardTicksToTime($scope.simulation.startTick + $scope.simulation.ticks);
 
             var fromHours = parseInt(from);
             var fromMinutes = Number( ( ( parseFloat( from ) % fromHours ) * 60 ).toFixed(2) );
@@ -66,7 +66,7 @@
 
             var test = $scope.simulation.result.maxWaitingTimeInTicks;
             if(test !== 0){
-                $scope.maxWaitingTimeInMinutes = ticksToTime(test);
+                $scope.maxWaitingTimeInMinutes = TicksToTimeService.standardTicksToTime(test);
             }
             else {
                 $scope.maxWaitingTimeInMinutes = 0 + " seconds";
@@ -78,21 +78,6 @@
 
             $scope.image = result.map;
             $scope.image.url = 'api/map/' + result.map.id;
-        }
-
-        //Function for ticks to seconds/minutes/hours
-        function ticksToTime(ticks){
-            var hh = Math.floor( ticks / 3600);
-            var mm = Math.floor( (ticks % 3600) / 60);
-            var ss = (ticks % 3600) % 60;
-
-            var time = '';
-
-            if(hh > 0) time = hh + " hour" + (hh>1? "s" :"");
-            if(mm > 0) time += " " + mm + " minute" + (mm>1? "s" :"");
-            if(ss > 0) time += " " + ss + " second" + (ss>1? "s" :"");
-
-            return time;
         }
 
         // Tooltip for resultpage
@@ -113,13 +98,13 @@
 
                         case "passengerflow":
                             return "Persons per arrival: " + d.personsPerArrival + "<br/>" +
-                                "Time between arrivals: " + ticksToTime(d.timeBetweenArrivals) + "<br/>" +
+                                "Time between arrivals: " + TicksToTimeService.standardTicksToTime(d.timeBetweenArrivals) + "<br/>" +
                                 "Brought " + d.entitiesTransfered + " passengers to the location.";
 
 
                         case "parking":
                             console.log("d:" + d);
-                            return "Buses handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
+                            return "Buses handled every " + TicksToTimeService.standardTicksToTime(d.ticksToConsumeEntity) + "<br/>" +
                                 "Brought " + d.entitiesTransfered + " passengeres to the location.";
 
                         case "desktop":
@@ -129,11 +114,11 @@
                         case "suitcase":
                             var maxWaitingTime;
                             if(d.maxWaitingTimeOnCurrentNode !== 0){
-                                maxWaitingTime = ticksToTime(d.maxWaitingTimeOnCurrentNode);
+                                maxWaitingTime = TicksToTimeService.standardTicksToTime(d.maxWaitingTimeOnCurrentNode);
                             } else{
                                 maxWaitingTime = 0;
                             }
-                            var printForConsumer = "Passengers handled every " + ticksToTime(d.ticksToConsumeEntity) + "<br/>" +
+                            var printForConsumer = "Passengers handled every " + TicksToTimeService.standardTicksToTime(d.ticksToConsumeEntity) + "<br/>" +
                                 "Passengers that went through: " + d.entitiesConsumed.length + "<br/>" +
                                 "Max waiting time: " + maxWaitingTime;
                             if(d.type.indexOf("consumerGroup") != -1) {

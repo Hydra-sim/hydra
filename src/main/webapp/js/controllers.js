@@ -9,7 +9,8 @@
         'ngFileUpload',
         'zeroclipboard',
         'angular-loading-bar',
-        'ngAnimate'
+        'ngAnimate',
+        'TicksToTimeFilter'
     ]);
 
     app.controller('ApplicationCtrl', function($scope, $rootScope, menu_field_name, menu_field_button) {
