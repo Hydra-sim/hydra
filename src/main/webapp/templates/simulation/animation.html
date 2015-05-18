@@ -1,10 +1,10 @@
 <graph
-        nodes="datasource.nodes"
-        edges="datasource.relationships"
+        nodes="ctrl.simulation.nodes"
+        edges="ctrl.simulation.relationships"
         height="500px"
         extra-border="ctrl.extraBorder()"
         control="ctrl.control"
-        background="image">
+        background="ctrl.simulation.map">
 </graph>
 
 <h3 class="text-center">
@@ -12,8 +12,8 @@
 </h3>
 
 <timeline
-        start-time="datasource.startTick"
-        end-time="datasource.startTick + datasource.ticks"
+        start-time="ctrl.simulation.startTick"
+        end-time="ctrl.simulation.startTick + ctrl.simulation.ticks"
         max="totalSteps"
         position="progress.position">
 </timeline>
