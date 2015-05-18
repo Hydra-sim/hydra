@@ -10,7 +10,8 @@
         'zeroclipboard',
         'angular-loading-bar',
         'ngAnimate',
-        'TicksToTimeFilter'
+        'TicksToTimeFilter',
+        'WeightToColor'
     ]);
 
     app.controller('ApplicationCtrl', function($scope, $rootScope, menu_field_name, menu_field_button) {
