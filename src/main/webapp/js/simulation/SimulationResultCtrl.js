@@ -49,7 +49,8 @@
             cfpLoadingBar.complete();
             ctrl.loaded = true;
 
-            ctrl.simulation.map.url = 'api/map/' + result.map.id;
+            if(typeof result.map != 'undefined' && result.map != null && typeof result.map.id != 'undefined')
+                ctrl.simulation.map.url = 'api/map/' + result.map.id;
         }
 
         // Tooltip for resultpage

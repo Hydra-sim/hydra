@@ -17,7 +17,7 @@
             $scope.datasource.edges = result.relationships;
             $scope.totalSteps = result.tickBreakpoints -1;
             $scope.image = result.map;
-            if(typeof result.map.id != 'undefined')
+            if(typeof result.map != 'undefined' && result.map != null && typeof result.map.id != 'undefined')
                 $scope.image.url = 'api/map/' + result.map.id;
 
             var startTimeDate = new Date();
