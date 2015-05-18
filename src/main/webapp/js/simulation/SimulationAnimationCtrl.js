@@ -9,11 +9,14 @@
         menu_field_button.reset();
 
         $scope.datasource = {};
+        $scope.image = {};
 
         Simulation.run({}, {id: $routeParams.id, breakpoints: 100}, function(result) {
             $scope.datasource.nodes = result.nodes;
             $scope.datasource.edges = result.relationships;
             $scope.totalSteps = result.tickBreakpoints -1;
+            $scope.image = result.map;
+            $scope.image.url = 'api/map/' + result.map.id;
             update_datasource_progress();
         });
 

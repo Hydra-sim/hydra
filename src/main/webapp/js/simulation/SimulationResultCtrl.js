@@ -11,6 +11,7 @@
             relationships: []
         };
         $scope.loaded = false;
+        $scope.image = {};
 
         menu_field_name.readonly = true;
 
@@ -74,6 +75,9 @@
             $scope.entitiesConsumed = $scope.simulation.result.entitiesConsumed;
             $scope.entitiesInQueue = $scope.simulation.result.entitiesInQueue;
             $scope.bussesInQueue = $scope.simulation.entitiesQueueing.length;
+
+            $scope.image = result.map;
+            $scope.image.url = 'api/map/' + result.map.id;
         }
 
         //Function for ticks to seconds/minutes/hours
