@@ -11,17 +11,14 @@
 
         ctrl.simulation = {};
 
-        $scope.totalSteps = 7;
-        $scope.progress = {
-            position: 0
-        };
+        ctrl.totalSteps = 7;
+        ctrl.progress = 0;
         ctrl.control = {};
 
         Simulation.run({}, {id: $routeParams.id, breakpoints: 100}, function(result) {
 
             ctrl.simulation = result;
-            $scope.totalSteps = result.tickBreakpoints;
-            $scope.image = result.map;
+            ctrl.totalSteps = result.tickBreakpoints;
 
             if(typeof result.map != 'undefined' && result.map != null && typeof result.map.id != 'undefined')
                 ctrl.simulation.map.url = 'api/map/' + result.map.id;
@@ -32,16 +29,18 @@
         ctrl.progressTime = function() {
 
             var ticksBetweenSteps = ctrl.simulation.ticks / ctrl.simulation.tickBreakpoints;
-            return ctrl.simulation.startTick + ticksBetweenSteps * $scope.progress.position;
+            return ctrl.simulation.startTick + ticksBetweenSteps * ctrl.progress;
         };
 
         function update_datasource_progress() {
             _.each(ctrl.simulation.nodes, function (value, key) {
-                ctrl.simulation.nodes[key].progress = $scope.progress.position;
+                ctrl.simulation.nodes[key].progress = ctrl.progress;
             });
         }
 
-        $scope.$watchCollection('progress', function(newvalue) {
+        $scope.$watchCollection(function() {
+            return ctrl.progress;
+        }, function() {
             update_datasource_progress();
             ctrl.control.update();
         });
