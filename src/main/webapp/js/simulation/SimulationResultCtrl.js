@@ -43,7 +43,7 @@
         function init(result) {
 
             ctrl.simulation = result;
-            console.log(result);
+            //console.log(result);
 
             // Close the loading bar
             cfpLoadingBar.complete();
