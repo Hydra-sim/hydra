@@ -1,6 +1,6 @@
-<div ng-include src="'templates/simulation/loadingscreen.html'" ng-show="!loaded"></div>
+<div ng-include src="'templates/simulation/loadingscreen.html'" ng-hide="ctrl.loaded"></div>
 
-<div class="text-center" ng-show="loaded">
+<div class="text-center" ng-show="ctrl.loaded">
     <div class="row">
         <div class="col-sm-12">
             <h2>Result</h2>
@@ -10,28 +10,28 @@
         <div class="col-sm-6">
             <p>
                 Simulation ran
-                from {{ simulation.startTick | TicksToTime }}
-                to {{ simulation.startTick + simulation.ticks | TicksToTime }}
+                from {{ ctrl.simulation.startTick | TicksToTime }}
+                to {{ ctrl.simulation.startTick + ctrl.simulation.ticks | TicksToTime }}
             </p>
             <p>
-                Max waiting time: {{ simulation.result.maxWaitingTimeInTicks | StandardTicksToTime }}
+                Max waiting time: {{ ctrl.simulation.result.maxWaitingTimeInTicks | StandardTicksToTime }}
             </p>
-            <a href="#/simulation/{{simulation.id}}/animation">Watch the simulation as an animation</a>
+            <a href="#/simulation/{{ctrl.simulation.id}}/animation">Watch the simulation as an animation</a>
         </div>
         <div class="col-sm-6">
-            <p>Number of passengers through the simulation: {{ entitiesConsumed }}</p>
-            <p>Passengers still in queue at simulation end: {{ entitiesInQueue }}</p>
-            <p>Busses queueing at simulation end: {{ bussesInQueue }}</p>
+            <p>Number of passengers through the simulation: {{ ctrl.entitiesConsumed }}</p>
+            <p>Passengers still in queue at simulation end: {{ ctrl.entitiesInQueue }}</p>
+            <p>Busses queueing at simulation end: {{ ctrl.bussesInQueue }}</p>
         </div>
     </div>
     <div class="row ">
         <graph
-                nodes="simulation.nodes"
-                edges="simulation.relationships"
+                nodes="ctrl.simulation.nodes"
+                edges="ctrl.simulation.relationships"
                 height="500px"
-                extra-tooltip="extraTooltip()"
-                extra-border="extraBorder()"
-                background="image">
+                extra-tooltip="ctrl.extraTooltip()"
+                extra-border="ctrl.extraBorder()"
+                background="ctrl.image">
         </graph>
     </div>
 </div>

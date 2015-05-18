@@ -4,14 +4,16 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationResultCtrl', function($scope, $rootScope, $filter, $location, $routeParams, SimResult, Simulation, cfpLoadingBar, menu_field_name, menu_field_button, TicksToTimeService) {
+    app.controller('SimulationResultCtrl', function($location, $routeParams, SimResult, Simulation, cfpLoadingBar, menu_field_name, menu_field_button, TicksToTimeService) {
 
-        $scope.simulation = {
+        var ctrl = this;
+
+        ctrl.simulation = {
             nodes: [],
             relationships: []
         };
-        $scope.loaded = false;
-        $scope.image = {};
+        ctrl.loaded = false;
+        ctrl.image = {};
 
         menu_field_name.readonly = true;
 
@@ -20,7 +22,7 @@
         // Check that the promise exists
         if(typeof $routeParams.id != "undefined" && $routeParams.id != null) {
             // If the promise doesn't exists, reload the data from the api
-            Simulation.run({}, {id: $routeParams.id}, init);
+            Simulation.run({}, {id: $routeParams.id, breakpoints: 0}, init);
         } else if(typeof SimResult.data != "undefined" && SimResult.data != null) {
             SimResult.data.then(function(result) {
                 // The id is not set
@@ -38,23 +40,23 @@
 
         function init(result) {
 
-            $scope.simulation = result;
+            ctrl.simulation = result;
             console.log(result);
 
             // Close the loading bar
             cfpLoadingBar.complete();
-            $scope.loaded = true;
+            ctrl.loaded = true;
 
-            $scope.entitiesConsumed = $scope.simulation.result.entitiesConsumed;
-            $scope.entitiesInQueue = $scope.simulation.result.entitiesInQueue;
-            $scope.bussesInQueue = $scope.simulation.entitiesQueueing.length;
+            ctrl.entitiesConsumed = ctrl.simulation.result.entitiesConsumed;
+            ctrl.entitiesInQueue = ctrl.simulation.result.entitiesInQueue;
+            ctrl.bussesInQueue = ctrl.simulation.entitiesQueueing.length;
 
-            $scope.image = result.map;
-            $scope.image.url = 'api/map/' + result.map.id;
+            ctrl.image = result.map;
+            ctrl.image.url = 'api/map/' + result.map.id;
         }
 
         // Tooltip for resultpage
-        $scope.extraTooltip = function() {
+        ctrl.extraTooltip = function() {
 
             return d3.behavior
                 .tooltip()
@@ -110,7 +112,7 @@
         };
 
 
-        $scope.extraBorder = function() {
+        ctrl.extraBorder = function() {
 
             function hsv2rgb(h, s, v) {
                 // adapted from http://schinckel.net/2012/01/10/hsv-to-rgb-in-javascript/
