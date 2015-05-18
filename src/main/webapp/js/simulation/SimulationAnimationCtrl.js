@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationAnimationCtrl', function($routeParams, menu_field_button, $scope, $interval, Simulation) {
+    app.controller('SimulationAnimationCtrl', function($routeParams, menu_field_button, $scope, Simulation) {
         this.simulationId = $routeParams.id;
         menu_field_button.reset();
 
