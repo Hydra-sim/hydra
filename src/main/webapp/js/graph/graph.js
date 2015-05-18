@@ -379,11 +379,6 @@
                         paths.style('marker-end', 'url(#end-arrow)')
                             .attr("d", d);
 
-                        //Adding tooltip to paths
-                        if(tooltip != "undefined" && tooltip != null) {
-                            paths.call(tooltip);
-                        }
-
                         // add new paths
                         paths.enter()
                             .append("path")
