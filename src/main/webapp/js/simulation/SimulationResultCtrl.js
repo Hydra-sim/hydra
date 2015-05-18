@@ -48,9 +48,6 @@
             // Close the loading bar
             cfpLoadingBar.complete();
             ctrl.loaded = true;
-
-            if(typeof result.map != 'undefined' && result.map != null && typeof result.map.id != 'undefined')
-                ctrl.simulation.map.url = 'api/map/' + result.map.id;
         }
 
         // Tooltip for resultpage

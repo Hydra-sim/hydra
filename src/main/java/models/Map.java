@@ -38,6 +38,10 @@ public class Map {
         return new File(filepath);
     }
 
+    public String getUrl() {
+        return "api/map/" + this.id;
+    }
+
     public Map(String filepath, double scale) {
         this.filepath = filepath;
         this.scale = scale;

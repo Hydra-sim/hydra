@@ -20,9 +20,6 @@
             ctrl.simulation = result;
             ctrl.totalSteps = result.tickBreakpoints;
 
-            if(typeof result.map != 'undefined' && result.map != null && typeof result.map.id != 'undefined')
-                ctrl.simulation.map.url = 'api/map/' + result.map.id;
-
             update_datasource_progress();
         });
 
