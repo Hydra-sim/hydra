@@ -5,7 +5,8 @@
     var app = angular.module('unit.controllers');
 
     app.controller('SimulationAnimationCtrl', function($routeParams, menu_field_button, $scope, Simulation, WeightToColor) {
-        this.simulationId = $routeParams.id;
+        var ctrl = this;
+
         menu_field_button.reset();
 
         $scope.datasource = {};
@@ -25,12 +26,6 @@
             startTimeDate.setSeconds(result.startTick);
             $scope.startTime = startTimeDate.toLocaleTimeString();
 
-            var endTimeDate = new Date();
-            endTimeDate.setHours(0);
-            endTimeDate.setMinutes(0);
-            endTimeDate.setSeconds(result.startTick + result.ticks);
-            $scope.endTime = endTimeDate.toLocaleTimeString();
-
             $scope.currentTime.date = startTimeDate;
 
             $scope.ticksBetweenSteps = result.ticks / result.tickBreakpoints;
@@ -48,7 +43,7 @@
         $scope.progress.position = 0;
         $scope.currentTime = {};
         $scope.totalSteps = 7;
-        $scope.control = {};
+        ctrl.control = {};
 
         function update_datasource_progress() {
             _.each($scope.datasource.nodes, function (value, key, list) {
@@ -68,21 +63,21 @@
         $scope.$watchCollection('progress', function(newvalue) {
 
             update_datasource_progress();
-            $scope.control.update();
+            ctrl.control.update();
         });
 
-        $scope.extraBorder = function() {
+        ctrl.extraBorder = function() {
+
+            function coloring(d) {
+                if(typeof d.consumerDataList !== "undefined" && d.type !== "parking") {
+                    var val = d.consumerDataList[d.progress].entitiesInQueue;
+                    return WeightToColor.colorFromValue(val);
+                }
+            }
 
             return d3.behavior.border()
-                .width(function (d) {
-                    return "5px";
-                })
-                .color(function(d) {
-                    if(typeof d.consumerDataList !== "undefined" && d.type !== "parking") {
-                        var val = d.consumerDataList[d.progress].entitiesInQueue;
-                        return WeightToColor.colorFromValue(val);
-                    }
-                });
+                .width(function(){ return "5px"; })
+                .color(coloring);
         };
     });
 
