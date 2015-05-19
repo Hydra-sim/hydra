@@ -506,7 +506,7 @@ public class TestingCorner {
         Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
         simulationHelper.simulate(simulation);
 
-        assertEquals(((ConsumerGroup) simulation.getNodes().get(1)).getNumberOfConsumersInQueue()
+        assertEquals(((ConsumerGroup) simulation.getNodes().get(1)).getNumberOfConsumers()
                         + ((Consumer) simulation.getNodes().get(2)).getEntitiesInQueue().size(),
                 simulation.getResult().getEntitiesInQueue());
     }

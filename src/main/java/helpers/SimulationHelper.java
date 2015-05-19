@@ -517,7 +517,7 @@ public class SimulationHelper {
 
                     ConsumerGroup consumerGroup = (ConsumerGroup) node;
 
-                    entitiesInQueue += consumerGroup.getNumberOfConsumersInQueue();
+                    entitiesInQueue += consumerGroup.getNumberOfConsumers();
 
                 } else {
 
