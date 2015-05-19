@@ -106,6 +106,14 @@ public class OSLPreset {
         terminal7.setType("desktop");
         nodes.add(terminal7);
 
+        //Bagdrops
+        Consumer bagdrop1 = new Consumer(30, 566, 292);
+        bagdrop1.setType("suitcase");
+        nodes.add(bagdrop1);
+        Consumer bagdrop2 = new Consumer(30, 818, 292);
+        bagdrop2.setType("suitcase");
+        nodes.add(bagdrop2);
+
 
         // Create a relationship from the producer to the consumer
         List<Relationship> relationships = new ArrayList<>();
@@ -143,13 +151,17 @@ public class OSLPreset {
         relationships.add(dt15);
 
         //Door 2 to terminal 1 and 2
-        Relationship dt2 = new Relationship(door2, terminal1, 40);
+        Relationship dt2 = new Relationship(door2, terminal1, 30);
         relationships.add(dt2);
-        Relationship dt3 = new Relationship(door2, terminal2, 35);
+        Relationship dt3 = new Relationship(door2, terminal2, 30);
         relationships.add(dt3);
         //Door 2 to simple terminal 5
-        Relationship dt14 = new Relationship(door2, terminal5, 25);
+        Relationship dt14 = new Relationship(door2, terminal5, 20);
         relationships.add(dt14);
+        //Door 2 to bagdrop 1
+        Relationship db1 = new Relationship(door2, bagdrop2, 20);
+        relationships.add(db1);
+
 
         //Door 3 to terminal 1, 2 and 3
         Relationship dt4 = new Relationship(door3, terminal1, 20);
@@ -165,13 +177,16 @@ public class OSLPreset {
         relationships.add(dt13);
 
         //Door 4 to terminal 2 and 3
-        Relationship dt7 = new Relationship(door4, terminal2, 40);
+        Relationship dt7 = new Relationship(door4, terminal2, 30);
         relationships.add(dt7);
-        Relationship dt8 = new Relationship(door4, terminal3, 35);
+        Relationship dt8 = new Relationship(door4, terminal3, 30);
         relationships.add(dt8);
         //Door 4 to simple terminal 6
-        Relationship dt11 = new Relationship(door4, terminal6, 25);
+        Relationship dt11 = new Relationship(door4, terminal6, 20);
         relationships.add(dt11);
+        //Door 4 to bagdrop 2
+        Relationship db2 = new Relationship(door4, bagdrop1, 20);
+        relationships.add(db2);
 
         //Door 5 to terminal 3
         Relationship dt9 = new Relationship(door5, terminal3, 75);
