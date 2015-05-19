@@ -119,8 +119,9 @@
                 {
                     var printForConsumer =  "Passengers handled every " + TicksToTimeService.standardTicksToTime(d.ticksToConsumeEntity);
 
+                    //This doesn't really work.
                     if(d.type.indexOf("consumerGroup") != -1) {
-                        printForConsumer += "<br/>" + "Quantity: " + d.consumers.length;
+                        printForConsumer += "<br/>" + "Quantity: " + d.numberOfConsumers;
                     }
 
                     return printForConsumer;
