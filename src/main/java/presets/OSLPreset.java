@@ -20,7 +20,7 @@ public class OSLPreset {
         producer.setType("bus");
         nodes.add(producer);
 
-        // Create and add one conusmer
+        // Create and add one consumer
         Consumer consumer = new Consumer(10, 400, 300);
         consumer.setType("door");
         nodes.add(consumer);
