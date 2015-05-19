@@ -79,7 +79,7 @@ public class ConsumerGroup extends Consumer{
         return entitesConsumed;
     }
 
-    public int getNumberOfConsumersg() {
+    public int getNumberOfConsumers() {
         return consumers.size();
     }
 
