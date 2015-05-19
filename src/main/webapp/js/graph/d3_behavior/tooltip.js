@@ -50,7 +50,7 @@
         var text_method = function() {},
             tooltip_el = null,
             parent = null,
-            worldSpaceToViewSpace = function(arg) { return arg * 1;},
+            position = function() { return {x:0, y:0}; },
             dispatch;
 
         // Prototype method
@@ -62,8 +62,12 @@
             if(tooltip_el == null && parent != null) {
                 tooltip_el = d3.select(parent)
                     .append("div")
-                    .attr("class", "d3BehaviorTooltip")
+                    .attr("class", "d3BehaviorTooltipWrapper")
                     .style("visibility", "hidden");
+
+                tooltip_el
+                    .append("div")
+                    .attr("class", "d3BehaviorTooltip");
             }
 
             if(tooltip_el != null) {
@@ -76,11 +80,12 @@
                 .on("mouseover", open)
                 .on("mouseout", close)
                 .on("mousemove", function(d){
-                    var pos = worldSpaceToViewSpace(d.x, d.y);
+                    var pos = position(d);
 
                     tooltip_el
-                        .style("left",(pos.x-135)+"px")
-                        .style("top", (pos.y-75)+"px")
+                        .style("left",pos.x+"px")
+                        .style("top", pos.y+"px")
+                        .selectAll("div")
                         .html(text_method(d));
                 });
         }
@@ -96,8 +101,8 @@
             return tooltip;
         };
 
-        tooltip.setWorldSpaceToViewSpace = function(func) {
-            worldSpaceToViewSpace = func;
+        tooltip.setPosition = function(func) {
+            position = func;
             return tooltip;
         };
 

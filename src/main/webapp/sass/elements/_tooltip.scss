@@ -1,13 +1,18 @@
-.d3BehaviorTooltip {
+.d3BehaviorTooltipWrapper {
+  position: absolute;
+}
 
+.d3BehaviorTooltip {
   position: absolute;
   z-index: 10;
   background: #1d1d1d;
+  width: 300px;
   box-shadow: 0 0 5px #999;
   border-radius: 5px;
   padding: 10px;
   color: white;
-
+  bottom: 30px;
+  left: -150px;
 
   &:after {
     content: '';
@@ -15,7 +20,7 @@
     display: block;
     bottom: -14px;
     left: 50%;
-    mergin-left: -7px;
+    margin-left: -7px;
     width: 0;
     height: 0;
     border-left: 7px solid transparent;

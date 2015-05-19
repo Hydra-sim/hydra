@@ -417,7 +417,7 @@
                         if(tooltip != null) {
                             tooltip
                                 .setParent(element[0])
-                                .setWorldSpaceToViewSpace(worldSpaceToViewSpace);
+                                .setPosition(function(d) { return worldSpaceToViewSpace(d.x, d.y); });
 
                             newCircleWrappers.call(tooltip);
                         }
