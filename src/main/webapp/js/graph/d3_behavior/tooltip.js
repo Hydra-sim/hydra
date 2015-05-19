@@ -45,14 +45,13 @@
 
     d3.behavior.tooltip = function() {
         // Custom events
-        var event = d3_eventDispatch(tooltip, "open", "close");
+        var event = d3_eventDispatch(tooltip, "open", "close", "drag", "dragstart", "dragend");
 
         var text_method = function() {},
             tooltip_el = null,
             parent = null,
             position = function() { return {x:0, y:0}; },
-            dispatch,
-            callOn = null;
+            dispatch;
 
         // Prototype method
         function tooltip() {
@@ -79,9 +78,6 @@
                 tooltip_el
                     .on("mouseover", function() { open(); })
                     .on("mouseout", close);
-
-                if(callOn != null)
-                    tooltip_el.call(callOn);
             }
 
             this
@@ -111,11 +107,6 @@
 
         tooltip.setPosition = function(func) {
             position = func;
-            return tooltip;
-        };
-
-        tooltip.callOn = function(co) {
-            callOn = co;
             return tooltip;
         };
 

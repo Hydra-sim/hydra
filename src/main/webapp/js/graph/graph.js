@@ -152,10 +152,6 @@
                         update();
                     }
 
-                    function getEdgeWithId(source, target) {
-                        return _.find(scope.edges, function(d) { return d.source.id == source.id && d.target.id == target.id; });
-                    }
-
                     function copyNode(data, x, y) {
                         var newNode = {};
                         _.each(data, function(value, key) { newNode[key] = value; }); // Add the data to the element
@@ -369,6 +365,7 @@
 
 
                     //Tooltip for weigting
+                    var tmp_start_weight;
                     var tooltip_weighting = d3.behavior.tooltip()
                         .text(function(d) {
                             //console.log(d);
@@ -387,12 +384,10 @@
                             var dy = (source.y + target.y)/2 + 18;
 
                             return worldSpaceToViewSpace(dx, dy);
-                        });
-
-                    var tmp_start_weight;
-                    var tooltip_drag = d3.behavior.drag()
-                        .on('dragstart', function(d) {
-                            tmp_start_weight = d.weight || 0;
+                        })/*
+                        .on('dragstart', function(edge) {
+                            console.log(edge);
+                            tmp_start_weight = edge.weight || 0;
                         })
                         .on('drag', function(edge) {
                             var pos = d3.mouse(this);
@@ -402,8 +397,7 @@
                             tooltip_weighting.open(edge);
                         })
                         .on('dragend', function() { tooltip_weighting.close(); });
-
-                    tooltip_weighting.callOn(tooltip_drag);
+                        */
 
                     // Update function, updating nodes and edges
                     function update() {
