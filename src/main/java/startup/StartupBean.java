@@ -50,14 +50,13 @@ public class StartupBean {
      */
     @PostConstruct
     public void startup() {
-
-        // Timetables
-        setupTimetables();
-
-        timetables = timetableDao.list();
-
-        // Upload map
         try {
+            // Timetables
+            setupTimetables();
+
+            timetables = timetableDao.list();
+
+            // Upload map
             InputStream InputStreamOslPng = StartupBean.class.getResourceAsStream("osl.png");
             byte[] bytes = IOUtils.toByteArray(InputStreamOslPng);
             models.Map map = mapFactory.createMap(bytes, 1);
@@ -69,24 +68,26 @@ public class StartupBean {
 
             // Persist the map to the database
             mapDao.add(map);
+
+
+            // Simple preset
+            Simulation simplePreset = new SimplePreset().createPreset( timetables.get( 0 ) );
+            entityManager.persist( simplePreset );
+
+            Simulation OSLPreset = new OSLPreset().createPreset( timetables.get( 0 ) );
+            entityManager.persist( OSLPreset );
+
+            Simulation OSLPreset2 = persistJsonFile( "presets/OSLPreset.json" );
+            OSLPreset2.setMap(map);
+            //persistJsonFile( "presets/TestPreset.json" );
         } catch(Exception e) {
 
         }
-
-        // Simple preset
-        Simulation simplePreset = new SimplePreset().createPreset( timetables.get( 0 ) );
-        entityManager.persist( simplePreset );
-
-        Simulation OSLPreset = new OSLPreset().createPreset( timetables.get( 0 ) );
-        entityManager.persist( OSLPreset );
-
-        persistJsonFile( "presets/OSLPreset.json" );
-        persistJsonFile( "presets/TestPreset.json" );
     }
 
     @SuppressWarnings( "unchecked" )
     @Consumes( MediaType.APPLICATION_JSON )
-    private void persistJsonFile( String path ) {
+    private Simulation persistJsonFile( String path ) {
 
         InputStream inputStream = StartupBean.class.getResourceAsStream( path );
 
@@ -231,12 +232,14 @@ public class StartupBean {
             }
 
             entityManager.persist( simulation );
+            return simulation;
 
         } catch ( Exception e ) {
 
             e.printStackTrace();
         }
 
+        return null;
     }
 
     private void setupTimetables() {

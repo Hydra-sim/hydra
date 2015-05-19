@@ -160,6 +160,7 @@
 
                     that.dataset.nodes = result.nodes;
                     that.dataset.edges = result.relationships;
+                    that.image = result.map;
 
                     var startHours = result.startTick / 3600;
                     that.startTime.setHours(startHours);
