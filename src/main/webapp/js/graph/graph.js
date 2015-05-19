@@ -363,6 +363,38 @@
 
                     imageContainer.call(bg);
 
+
+                    //Tooltip for weigting
+                    var tooltip_weighting = d3.behavior.tooltip()
+                        .text(function(d) { console.log(d); return d.weight + "%"; })
+                        .setParent(element[0])
+                        .setPosition(function(d) {
+                            var source = _.find(scope.nodes, function(node) { return node.id == d.source.id; });
+                            var target = _.find(scope.nodes, function(node) { return node.id == d.target.id; });
+
+                            var dx = (source.x + target.x)/2;
+                            var dy = (source.y + target.y)/2 + 18;
+
+                            return worldSpaceToViewSpace(dx, dy);
+                        });
+
+                    var tmp_start_weight;
+                    var tooltip_drag = d3.behavior.drag()
+                        .on('dragstart', function(d) {
+                            var data = d[0].parentNode.firstChild.__data__;
+                            tmp_start_weight = data.weight;
+                        })
+                        .on('drag', function(d) {
+                            var pos = d3.mouse(this);
+                            var data = d[0].parentNode.firstChild.__data__;
+                            data.weight = tmp_start_weight + ~~(pos[1]/3);
+                            data.weight = data.weight >= 0 ? data.weight : 0;
+                            data.weight = data.weight > 100 ? 100 : data.weight;
+                            tooltip_weighting.open(data);
+                        });
+
+                    tooltip_weighting.callOn(tooltip_drag);
+
                     // Update function, updating nodes and edges
                     function update() {
                         function transformFunction(d){return "translate(" + d.x + "," + d.y + ")";}
@@ -387,7 +419,8 @@
                             .attr("d", d)
                             .on("click", function() {
                                 selectItem(d3.select(this), "edge");
-                            });
+                            })
+                            .call(tooltip_weighting);
 
                         // remove old links
                         paths.exit().remove();

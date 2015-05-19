@@ -51,7 +51,8 @@
             tooltip_el = null,
             parent = null,
             position = function() { return {x:0, y:0}; },
-            dispatch;
+            dispatch,
+            callOn = null;
 
         // Prototype method
         function tooltip() {
@@ -61,6 +62,7 @@
 
             if(tooltip_el == null && parent != null) {
                 tooltip_el = d3.select(parent)
+                    .data([this])
                     .append("div")
                     .attr("class", "d3BehaviorTooltipWrapper")
                     .style("visibility", "hidden");
@@ -72,12 +74,15 @@
 
             if(tooltip_el != null) {
                 tooltip_el
-                    .on("mouseover", open)
+                    .on("mouseover", function() { open(); })
                     .on("mouseout", close);
+
+                if(callOn != null)
+                    tooltip_el.call(callOn);
             }
 
             this
-                .on("mouseover", open)
+                .on("mouseover", function() { open(); })
                 .on("mouseout", close)
                 .on("mousemove", function(d){
                     var pos = position(d);
@@ -106,10 +111,19 @@
             return tooltip;
         };
 
+        tooltip.callOn = function(co) {
+            callOn = co;
+            return tooltip;
+        };
+
         tooltip.open = open;
-        function open() {
+        function open(d) {
             dispatch({type: "open"});
             tooltip_el.style("visibility", "visible");
+
+            if(typeof d != 'undefined' && d != null)
+                tooltip_el.selectAll("div")
+                    .html(text_method(d));
         }
 
         tooltip.close = close;
