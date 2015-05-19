@@ -399,6 +399,7 @@
                             edge.weight = tmp_start_weight + ~~(pos[0]/3);
                             edge.weight = edge.weight >= 0 ? edge.weight : 0;
                             edge.weight = edge.weight > 100 ? 100 : edge.weight;
+                            console.log(edge.weight);
                             //tooltip_weighting.open(edge);
                             update();
                         })
