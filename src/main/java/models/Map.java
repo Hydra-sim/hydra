@@ -19,6 +19,8 @@ public class Map {
     private double scale;
     private String filepath;
 
+    private int width, height;
+
     public int getId() {
         return id;
     }
@@ -40,6 +42,22 @@ public class Map {
 
     public String getUrl() {
         return "api/map/" + this.id;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public Map(String filepath, double scale) {
