@@ -395,13 +395,16 @@
                             tmp_start_weight = d.weight || 0;
                         })
                         .on('drag', function(edge) {
+                            console.log(edge);
                             var pos = d3.mouse(this);
                             edge.weight = tmp_start_weight + ~~(pos[0]/3);
                             edge.weight = edge.weight >= 0 ? edge.weight : 0;
                             edge.weight = edge.weight > 100 ? 100 : edge.weight;
-                            tooltip_weighting.open(edge);
+                            //tooltip_weighting.open(edge);
                         })
-                        .on('dragend', function() { tooltip_weighting.close(); });
+                        .on('dragend', function() {
+                            //tooltip_weighting.close();
+                        });
 
                     tooltip_weighting.callOn(tooltip_drag);
 

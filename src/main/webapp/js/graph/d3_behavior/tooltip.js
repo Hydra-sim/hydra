@@ -60,6 +60,7 @@
 
                 var that = this;
                 dispatch = event.of(that, arguments);
+                var tooltip_el;
 
                 if(parent != null) {
                     tooltip_el = d3.select(parent)
@@ -98,6 +99,20 @@
                             .selectAll("div")
                             .html(text_method(d));
                     });
+
+                function close() {
+                    dispatch({type: "close"});
+                    tooltip_el.style("visibility", "hidden");
+                }
+
+                function open(d) {
+                    dispatch({type: "open"});
+                    tooltip_el.style("visibility", "visible");
+
+                    if(typeof d != 'undefined' && d != null)
+                        tooltip_el.selectAll("div")
+                            .html(text_method(d));
+                }
             });
         }
 
@@ -121,22 +136,6 @@
             callOn = co;
             return tooltip;
         };
-
-        tooltip.open = open;
-        function open(d) {
-            dispatch({type: "open"});
-            tooltip_el.style("visibility", "visible");
-
-            if(typeof d != 'undefined' && d != null)
-                tooltip_el.selectAll("div")
-                    .html(text_method(d));
-        }
-
-        tooltip.close = close;
-        function close() {
-            dispatch({type: "close"});
-            tooltip_el.style("visibility", "hidden");
-        }
 
         return d3.rebind(tooltip, event, "on");
     };
