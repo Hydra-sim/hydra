@@ -56,6 +56,7 @@ public class OSLPreset {
         nodes.add(door1);
 
         //Terminals
+        //Groups
         ConsumerGroup terminal1 = new ConsumerGroup(30, 60);
         terminal1.setType("consumerGroup-desktop");
         terminal1.setX(977);
@@ -73,6 +74,23 @@ public class OSLPreset {
         terminal3.setX(400);
         terminal3.setY(316);
         nodes.add(terminal3);
+
+        //Simple
+        Consumer terminal4 = new Consumer(2*60, 1060, 242);
+        terminal4.setType("desktop");
+        nodes.add(terminal4);
+
+        Consumer terminal5 = new Consumer(2*60, 822, 242);
+        terminal5.setType("desktop");
+        nodes.add(terminal5);
+
+        Consumer terminal6 = new Consumer(2*60, 564, 242);
+        terminal6.setType("desktop");
+        nodes.add(terminal6);
+
+        Consumer terminal7 = new Consumer(2*60, 332, 242);
+        terminal7.setType("desktop");
+        nodes.add(terminal7);
 
 
         // Create a relationship from the producer to the consumer
@@ -104,28 +122,66 @@ public class OSLPreset {
         relationships.add(bd10);
 
         //Door 1 to terminal 1
-        Relationship dt1 = new Relationship(door1, terminal1, 100);
+        Relationship dt1 = new Relationship(door1, terminal1, 75);
         relationships.add(dt1);
+        //Door 1 to simple terminal 4
+        Relationship dt15 = new Relationship(door1, terminal4, 25);
+        relationships.add(dt15);
+
         //Door 2 to terminal 1 and 2
-        Relationship dt2 = new Relationship(door2, terminal1, 50);
+        Relationship dt2 = new Relationship(door2, terminal1, 40);
         relationships.add(dt2);
-        Relationship dt3 = new Relationship(door2, terminal2, 50);
+        Relationship dt3 = new Relationship(door2, terminal2, 35);
         relationships.add(dt3);
+        //Door 2 to simple terminal 5
+        Relationship dt14 = new Relationship(door2, terminal5, 25);
+        relationships.add(dt14);
+
         //Door 3 to terminal 1, 2 and 3
-        Relationship dt4 = new Relationship(door3, terminal1, 34);
+        Relationship dt4 = new Relationship(door3, terminal1, 20);
         relationships.add(dt4);
-        Relationship dt5 = new Relationship(door3, terminal2, 33);
+        Relationship dt5 = new Relationship(door3, terminal2, 20);
         relationships.add(dt5);
-        Relationship dt6 = new Relationship(door3, terminal3, 33);
+        Relationship dt6 = new Relationship(door3, terminal3, 20);
         relationships.add(dt6);
+        //Door 3 to simple terminal 6 and 5
+        Relationship dt12 = new Relationship(door3, terminal6, 20);
+        relationships.add(dt12);
+        Relationship dt13 = new Relationship(door3, terminal5, 20);
+        relationships.add(dt13);
+
         //Door 4 to terminal 2 and 3
-        Relationship dt7 = new Relationship(door4, terminal2, 50);
+        Relationship dt7 = new Relationship(door4, terminal2, 40);
         relationships.add(dt7);
-        Relationship dt8 = new Relationship(door4, terminal3, 50);
+        Relationship dt8 = new Relationship(door4, terminal3, 35);
         relationships.add(dt8);
+        //Door 4 to simple terminal 6
+        Relationship dt11 = new Relationship(door4, terminal6, 25);
+        relationships.add(dt11);
+
         //Door 5 to terminal 3
-        Relationship dt9 = new Relationship(door5, terminal3, 50);
+        Relationship dt9 = new Relationship(door5, terminal3, 75);
         relationships.add(dt9);
+        //Door 5 to simple terminal 7
+        Relationship dt10 = new Relationship(door5, terminal7, 25);
+        relationships.add(dt10);
+
+        //Terminal 3 to terminal 6 and 7
+        Relationship tt1 = new Relationship(terminal3, terminal6, 50);
+        relationships.add(tt1);
+        Relationship tt2 = new Relationship(terminal3, terminal7, 50);
+        relationships.add(tt2);
+        //Terminal 2 to terminal 6 and 5
+        Relationship tt3 = new Relationship(terminal2, terminal6, 50);
+        relationships.add(tt3);
+        Relationship tt4 = new Relationship(terminal2, terminal5, 50);
+        relationships.add(tt4);
+        //Terminal 1 to terminal 5 and 4
+        Relationship tt5 = new Relationship(terminal1, terminal5, 50);
+        relationships.add(tt5);
+        Relationship tt6 = new Relationship(terminal1, terminal4, 50);
+        relationships.add(tt6);
+
 
 
         // Create the simulation
