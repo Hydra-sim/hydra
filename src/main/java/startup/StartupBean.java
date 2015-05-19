@@ -16,11 +16,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 ;
 
@@ -56,19 +56,22 @@ public class StartupBean {
         Simulation simplePreset = new SimplePreset().createPreset( timetables.get( 0 ) );
         entityManager.persist( simplePreset );
 
-        persistJsonFile( "/Users/kristinesundtlorentzen/Dropbox/School/2015/hydra/OSLPreset.json" );
-        persistJsonFile( "/Users/kristinesundtlorentzen/Dropbox/School/2015/hydra/TestPreset.json" );
+        persistJsonFile( "presets/OSLPreset.json" );
+        persistJsonFile( "presets/TestPreset.json" );
     }
 
     @SuppressWarnings( "unchecked" )
     @Consumes( MediaType.APPLICATION_JSON )
     private void persistJsonFile( String path ) {
 
+        InputStream inputStream = StartupBean.class.getResourceAsStream( path );
+
         try {
 
-            Scanner scanner = new Scanner( new File( path ) );
+            //Scanner scanner = new Scanner( new File( path ) );
+            BufferedReader reader = new BufferedReader( new InputStreamReader( inputStream ) );
 
-            JsonElement element = new JsonParser().parse( scanner.nextLine() );
+            JsonElement element = new JsonParser().parse( reader.readLine() );
             JsonObject object = element.getAsJsonObject();
 
             Simulation simulation = new Simulation();
@@ -271,9 +274,9 @@ public class StartupBean {
 
 
         for ( TmpFileListItem item : timetables ) {
+
             InputStream is = StartupBean.class.getResourceAsStream( item.getFilename() );
             Timetable t = Timetable.getTimetableFromCsv( is, item.getName() );
-
             entityManager.persist( t );
         }
     }
