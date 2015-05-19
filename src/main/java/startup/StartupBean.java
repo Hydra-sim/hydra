@@ -74,15 +74,20 @@ public class StartupBean {
             Simulation simplePreset = new SimplePreset().createPreset( timetables.get( 0 ) );
             entityManager.persist( simplePreset );
 
-            Simulation OSLPreset = new OSLPreset().createPreset( timetables.get( 0 ) );
-            entityManager.persist( OSLPreset );
+            //Simulation OSLPreset = new OSLPreset().createPreset( timetables.get( 0 ) );
+            //entityManager.persist( OSLPreset );
 
-            Simulation OSLPreset2 = persistJsonFile( "presets/OSLPreset.json" );
-            OSLPreset2.setMap(map);
-            //persistJsonFile( "presets/TestPreset.json" );
+            //Simulation OSLPreset2 = persistJsonFile( "presets/OSLPreset.json" );
+            //OSLPreset2.setMap(map);
+            //OSLPreset2.setName( "OSL Preset with Map" );
         } catch(Exception e) {
 
         }
+
+        persistJsonFile( "presets/OSLPreset.json" );
+        persistJsonFile( "presets/OSLPresetWithProducers.json" );
+        persistJsonFile( "presets/OSLPresetWithManyProducers.json" );
+        persistJsonFile( "presets/TestPreset.json" );
     }
 
     @SuppressWarnings( "unchecked" )
