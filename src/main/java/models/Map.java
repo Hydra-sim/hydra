@@ -60,6 +60,13 @@ public class Map {
         this.height = height;
     }
 
+    public Map(String filepath, double scale, int width, int height) {
+        this.scale = scale;
+        this.filepath = filepath;
+        this.width = width;
+        this.height = height;
+    }
+
     public Map(String filepath, double scale) {
         this.filepath = filepath;
         this.scale = scale;

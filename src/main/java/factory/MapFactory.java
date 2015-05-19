@@ -12,16 +12,25 @@ import javax.ejb.Singleton;
 @Singleton
 public class MapFactory {
     public Map createMap(MapUploadForm fileUploadForm) throws Exception {
-        return createMap(fileUploadForm.getData(), fileUploadForm.getZoom());
+        return createMap(
+                fileUploadForm.getData(),
+                fileUploadForm.getZoom(),
+                fileUploadForm.getWidth(),
+                fileUploadForm.getHeight()
+        );
     }
 
     public Map createMap(byte[] data, int zoom) throws Exception {
+        return createMap( data, zoom, 0, 0 );
+    }
+
+    public Map createMap(byte[] data, int zoom, int width, int height) throws Exception {
         // Hash the content to generate unique name
         String hash = EncryptionHelper.hashByteArray(data);
 
         // Generate filename
         String filename = EncryptionHelper.getPath() + "/" + hash;
 
-        return new Map(filename, zoom);
+        return new Map(filename, zoom, width, height);
     }
 }
