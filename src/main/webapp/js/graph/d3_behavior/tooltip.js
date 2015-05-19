@@ -55,47 +55,50 @@
             callOn = null;
 
         // Prototype method
-        function tooltip() {
-            var that = this;
+        function tooltip(selection) {
+            selection.each(function(i) {
+
+                var that = this;
                 dispatch = event.of(that, arguments);
 
-            if(parent != null && this.node() != null) {
-                tooltip_el = d3.select(parent)
-                    .selectAll("div.d3BehaviorTooltipWrapper")
-                    .data([this.node().__data__]);
-
-                tooltip_el
-                    .enter()
-                    .append("div.d3BehaviorTooltipWrapper")
-                    .attr("class", "d3BehaviorTooltipWrapper")
-                    .style("visibility", "hidden");
-
-                tooltip_el
-                    .append("div")
-                    .attr("class", "d3BehaviorTooltip");
-            }
-
-            if(tooltip_el != null) {
-                tooltip_el
-                    .on("mouseover", function() { open(); })
-                    .on("mouseout", close);
-
-                if(callOn != null)
-                    tooltip_el.call(callOn);
-            }
-
-            this
-                .on("mouseover", function() { open(); })
-                .on("mouseout", close)
-                .on("mousemove", function(d){
-                    var pos = position(d);
+                if(parent != null) {
+                    tooltip_el = d3.select(parent)
+                        .selectAll("div.d3BehaviorTooltipWrapper")
+                        .data([i]);
 
                     tooltip_el
-                        .style("left",pos.x+"px")
-                        .style("top", pos.y+"px")
-                        .selectAll("div")
-                        .html(text_method(d));
-                });
+                        .enter()
+                        .append("div.d3BehaviorTooltipWrapper")
+                        .attr("class", "d3BehaviorTooltipWrapper")
+                        .style("visibility", "hidden");
+
+                    tooltip_el
+                        .append("div")
+                        .attr("class", "d3BehaviorTooltip");
+                }
+
+                if(tooltip_el != null) {
+                    tooltip_el
+                        .on("mouseover", function() { open(); })
+                        .on("mouseout", close);
+
+                    if(callOn != null)
+                        tooltip_el.call(callOn);
+                }
+
+                d3.select(this)
+                    .on("mouseover", function() { open(); })
+                    .on("mouseout", close)
+                    .on("mousemove", function(d){
+                        var pos = position(d);
+
+                        tooltip_el
+                            .style("left",pos.x+"px")
+                            .style("top", pos.y+"px")
+                            .selectAll("div")
+                            .html(text_method(d));
+                    });
+            });
         }
 
         // Custom methods
