@@ -152,6 +152,10 @@
                         update();
                     }
 
+                    function getEdgeWithId(source, target) {
+                        return _.find(scope.edges, function(d) { return d.source.id == source.id && d.target.id == target.id; });
+                    }
+
                     function copyNode(data, x, y) {
                         var newNode = {};
                         _.each(data, function(value, key) { newNode[key] = value; }); // Add the data to the element
@@ -366,7 +370,14 @@
 
                     //Tooltip for weigting
                     var tooltip_weighting = d3.behavior.tooltip()
-                        .text(function(d) { console.log(d); return d.weight + "%"; })
+                        .text(function(d) {
+                            //console.log(d);
+                            if(typeof d.weight == 'undefined') {
+                                return "0%";
+                            }
+
+                            return d.weight + "%";
+                        })
                         .setParent(element[0])
                         .setPosition(function(d) {
                             var source = _.find(scope.nodes, function(node) { return node.id == d.source.id; });
@@ -381,17 +392,16 @@
                     var tmp_start_weight;
                     var tooltip_drag = d3.behavior.drag()
                         .on('dragstart', function(d) {
-                            var data = d[0].parentNode.firstChild.__data__;
-                            tmp_start_weight = data.weight;
+                            tmp_start_weight = d.weight || 0;
                         })
-                        .on('drag', function(d) {
+                        .on('drag', function(edge) {
                             var pos = d3.mouse(this);
-                            var data = d[0].parentNode.firstChild.__data__;
-                            data.weight = tmp_start_weight + ~~(pos[1]/3);
-                            data.weight = data.weight >= 0 ? data.weight : 0;
-                            data.weight = data.weight > 100 ? 100 : data.weight;
-                            tooltip_weighting.open(data);
-                        });
+                            edge.weight = tmp_start_weight + ~~(pos[1]/3);
+                            edge.weight = edge.weight >= 0 ? edge.weight : 0;
+                            edge.weight = edge.weight > 100 ? 100 : edge.weight;
+                            tooltip_weighting.open(edge);
+                        })
+                        .on('dragend', function() { tooltip_weighting.close(); });
 
                     tooltip_weighting.callOn(tooltip_drag);
 

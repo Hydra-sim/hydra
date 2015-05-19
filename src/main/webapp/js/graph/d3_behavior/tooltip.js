@@ -57,13 +57,16 @@
         // Prototype method
         function tooltip() {
             var that = this;
-
                 dispatch = event.of(that, arguments);
 
-            if(tooltip_el == null && parent != null) {
+            if(parent != null && this.node() != null) {
                 tooltip_el = d3.select(parent)
-                    .data([this])
-                    .append("div")
+                    .selectAll("div.d3BehaviorTooltipWrapper")
+                    .data([this.node().__data__]);
+
+                tooltip_el
+                    .enter()
+                    .append("div.d3BehaviorTooltipWrapper")
                     .attr("class", "d3BehaviorTooltipWrapper")
                     .style("visibility", "hidden");
 
