@@ -217,31 +217,6 @@ public class SimulationEngineIntegrationTest {
 
     
     @Test
-    public void testPreset() {
-
-        Simulation sim = new OSLPreset().createOSLPreset();
-
-        List<TimetableEntry> tList = new ArrayList<>();
-
-        for(int i = 1; i <= 100; i++) {
-
-            TimetableEntry t = new TimetableEntry(i, 100);
-            tList.add(t);
-        }
-
-        Producer p = new Producer(new Timetable(tList, "Timetable"));
-
-        sim.getNodes().add(p);
-
-        long start = System.currentTimeMillis();
-
-        simulationHelper.simulate(sim);
-
-        System.out.printf("%-80s%s", "Timetest; OSL Preset: ", (System.currentTimeMillis() - start) + " milliseconds.\n");
-    }
-
-    
-    @Test
     public void testConsumerGroup() {
 
         // Making ConsumerGroup

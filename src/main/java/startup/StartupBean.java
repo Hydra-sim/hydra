@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import helpers.ProducerHelper;
 import models.*;
 import presets.SimplePreset;
+import presets.OSLPreset;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -21,8 +22,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
-
-;
 
 /**
  * This class contains all the data that is to be persisted at deployment
@@ -55,6 +54,9 @@ public class StartupBean {
         // Simple preset
         Simulation simplePreset = new SimplePreset().createPreset( timetables.get( 0 ) );
         entityManager.persist( simplePreset );
+
+        Simulation OSLPreset = new OSLPreset().createPreset( timetables.get( 0 ) );
+        entityManager.persist( OSLPreset );
 
         persistJsonFile( "presets/OSLPreset.json" );
         persistJsonFile( "presets/TestPreset.json" );
