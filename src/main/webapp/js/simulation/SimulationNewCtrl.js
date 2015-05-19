@@ -36,14 +36,19 @@
                 that.endTime.getMinutes() * 60
                 -startTick;
 
-            var sim = new Simulation({
+            var data = {
                 'name':                             menu_field_name.value,
                 'ticks':                            ticks,
                 'startTick':                        startTick ,
                 'nodes':                            that.dataset.nodes,
-                'edges':                            that.dataset.edges,
-                'mapId':                            that.image.id
-            });
+                'edges':                            that.dataset.edges
+            };
+
+            if(that.image != null) {
+                data.mapId= that.image.id;
+            }
+
+            var sim = new Simulation(data);
 
             SimResult.data = sim.$save();
             $location.path('/result');
