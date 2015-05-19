@@ -48,10 +48,8 @@
         var event = d3_eventDispatch(tooltip, "open", "close");
 
         var text_method = function() {},
-            tooltip_el = null,
             parent = null,
-            position = function() { return {x:0, y:0}; },
-            dispatch,
+            position = function(d) { return {x: d.x, y: d.y}; },
             callOn = null;
 
         // Prototype method
@@ -59,7 +57,7 @@
             selection.each(function(i) {
 
                 var that = this;
-                dispatch = event.of(that, arguments);
+                var dispatch = event.of(that, arguments);
                 var tooltip_el;
 
                 if(parent != null) {
