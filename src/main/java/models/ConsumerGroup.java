@@ -79,14 +79,13 @@ public class ConsumerGroup extends Consumer{
         return entitesConsumed;
     }
 
-    public int getNumberOfConsumers() {
+    public int getNumberOfConsumersInQueue() {
         return numberOfConsumersInQueue;
     }
 
     public void setNumberOfConsumersInQueue(int numberOfConsumersInQueue) {
         this.numberOfConsumersInQueue = numberOfConsumersInQueue;
     }
-
 
     //endregion
 }
