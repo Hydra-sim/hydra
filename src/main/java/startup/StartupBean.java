@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import helpers.ProducerHelper;
 import models.*;
+import org.apache.commons.io.IOUtils;
 import presets.SimplePreset;
 import presets.OSLPreset;
 
@@ -17,9 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,6 +37,12 @@ public class StartupBean {
     @EJB
     private dao.Timetable timetableDao;
 
+    @EJB
+    private factory.MapFactory mapFactory;
+
+    @EJB
+    private dao.Map mapDao;
+
     List< Timetable > timetables;
 
     /**
@@ -50,6 +55,23 @@ public class StartupBean {
         setupTimetables();
 
         timetables = timetableDao.list();
+
+        // Upload map
+        try {
+            InputStream InputStreamOslPng = StartupBean.class.getResourceAsStream("osl.png");
+            byte[] bytes = IOUtils.toByteArray(InputStreamOslPng);
+            models.Map map = mapFactory.createMap(bytes, 1);
+
+            // Create the output stream & copy the input stream to the output
+            OutputStream os = new FileOutputStream(map.getFile());
+            IOUtils.copy(new ByteArrayInputStream(bytes), os);
+            os.close();
+
+            // Persist the map to the database
+            mapDao.add(map);
+        } catch(Exception e) {
+
+        }
 
         // Simple preset
         Simulation simplePreset = new SimplePreset().createPreset( timetables.get( 0 ) );
