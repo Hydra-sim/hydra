@@ -106,12 +106,26 @@ public class OSLPreset {
         //Door 1 to terminal 1
         Relationship dt1 = new Relationship(door1, terminal1, 100);
         relationships.add(dt1);
-
         //Door 2 to terminal 1 and 2
         Relationship dt2 = new Relationship(door2, terminal1, 50);
         relationships.add(dt2);
         Relationship dt3 = new Relationship(door2, terminal2, 50);
         relationships.add(dt3);
+        //Door 3 to terminal 1, 2 and 3
+        Relationship dt4 = new Relationship(door3, terminal1, 34);
+        relationships.add(dt4);
+        Relationship dt5 = new Relationship(door3, terminal2, 33);
+        relationships.add(dt5);
+        Relationship dt6 = new Relationship(door3, terminal3, 33);
+        relationships.add(dt6);
+        //Door 4 to terminal 2 and 3
+        Relationship dt7 = new Relationship(door4, terminal2, 50);
+        relationships.add(dt7);
+        Relationship dt8 = new Relationship(door4, terminal3, 50);
+        relationships.add(dt8);
+        //Door 5 to terminal 3
+        Relationship dt9 = new Relationship(door5, terminal3, 50);
+        relationships.add(dt9);
 
 
         // Create the simulation
