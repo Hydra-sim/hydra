@@ -57,6 +57,7 @@ public class OSLPreset {
 
         //Terminals
         //Groups
+        /*
         Consumer terminal1 = new Consumer(30, 977, 316);
         terminal1.setType("desktop");
         nodes.add(terminal1);
@@ -66,8 +67,10 @@ public class OSLPreset {
         Consumer terminal3 = new Consumer(30, 400, 316);
         terminal3.setType("desktop");
         nodes.add(terminal3);
+        /**/
 
-        /*ConsumerGroup terminal1 = new ConsumerGroup(30, 60);
+        //*
+        ConsumerGroup terminal1 = new ConsumerGroup(30, 60);
         terminal1.setType("consumerGroup-desktop");
         terminal1.setX(977);
         terminal1.setY(316);
@@ -83,7 +86,8 @@ public class OSLPreset {
         terminal3.setType("consumerGroup-desktop");
         terminal3.setX(400);
         terminal3.setY(316);
-        nodes.add(terminal3);*/
+        nodes.add(terminal3);
+        //*/
 
         //Simple
         Consumer terminal4 = new Consumer(2*60, 1060, 242);

@@ -79,6 +79,10 @@ public class ConsumerGroup extends Consumer{
         return entitesConsumed;
     }
 
+    public int getNumberOfConsumersg() {
+        return consumers.size();
+    }
+
     public int getNumberOfConsumersInQueue() {
         return numberOfConsumersInQueue;
     }
