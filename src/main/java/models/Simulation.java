@@ -231,7 +231,7 @@ public class Simulation
         return passwordProtected;
     }
 
-    private void setPasswordProtected(boolean passwordProtected) {
+    public void setPasswordProtected(boolean passwordProtected) {
         this.passwordProtected = passwordProtected;
     }
 

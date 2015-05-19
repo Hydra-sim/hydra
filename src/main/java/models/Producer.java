@@ -31,6 +31,7 @@ public class Producer extends Node{
     int numberOfBusesInQueue;
 
     //region constructors
+
     public Producer() {
         this(new Timetable());
     }
@@ -49,8 +50,8 @@ public class Producer extends Node{
         this.numberOfBusesInQueue = 0;
     }
 
-
     //endregion
+
 
     //region getters and setters
 
@@ -105,6 +106,7 @@ public class Producer extends Node{
     public int getTimetableId() {
         return timetable.getId();
     }
+
 
     //endregion
 }
