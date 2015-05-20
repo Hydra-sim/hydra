@@ -88,7 +88,7 @@
             .when('/documentation', {
                 controller: 'FullDocumentationCtrl',
                 controllerAs: 'ctrl',
-                templateUrl: 'templates/fulldocumentation.html'
+                templateUrl: 'templates/documentation/index.html'
             })
             .when('/colortest', {
                 controller: 'ColorTestCtrl',
