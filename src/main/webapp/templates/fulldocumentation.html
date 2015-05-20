@@ -12,13 +12,13 @@
 
     <p></p>
 
-    <img src="img/SimulationTab.PNG" alt="simulation tab" id="info-simulations" width="150px">
+    <img src="img/SimulationTab.PNG" alt="simulation tab" id="info-simulations" width="150px" style="margin-bottom: 10px">
     <p>In the simulations tab you can see a list of all previous simulation.
         Click on simulation name to view simulation results. You can also delete, edit, share and set password on the simulations.
         Passwords are set by clicking on the "lock-icon", and are used to prevent other users of the system to change your simulation.
     </p>
 
-    <img src="img/TimetableTab.PNG" alt="timetable tab" id="info-timetables" width="150px">
+    <img src="img/TimetableTab.PNG" alt="timetable tab" id="info-timetables" width="150px" style="margin-bottom: 10px">
     <p>In the timetables tab you can see a list of all timetables .
         Click on timetable name to edit timetable. You can also create new timetables and delete them.
         Timetables has to values, the time the bus/train arrives, and how many passengers that arrives. Both can be edited later on.
@@ -26,7 +26,7 @@
         show traffic for the weekend, choose the appropriate timetable.
     </p>
 
-    <img src="img/LocationsTab.PNG" alt="locations tab" id="info-locations"  width="150px">
+    <img src="img/LocationsTab.PNG" alt="locations tab" id="info-locations"  width="150px" style="margin-bottom: 10px">
     <p>In the presets tab you can see a list of all locations. A location is a pre-defined simulation that you can run as is or edit to customize it.
         You can edit, delete or create a new location.
         When you set up a new simulation, you get the option of working on a location for the simulation. If you choose to use a location, a
@@ -38,10 +38,11 @@
         you want to add. A popup for entering information for the node will then be presented. There are different input-fields
         to fill in depending on the node.</p>
         <img src="img/radialmeny.png" alt="radialmeny" width="200px">
-            <li>A typical bus/train will only demand a timetable to be connected.</li>
-            <li>While a terminal or door will demand information on how long it takes a passenger to enter, and if you want to make a single instance of the node, or
+            <li>Bus and train will only demand a timetable to be connected.</li>
+            <li>Terminal and bagdrop will demand information on how long it takes a passenger to enter, and if you want to make a single instance of the node, or
                 include more in the area of the node.
             </li>
+            <li>Door only requires prosessing time.</li>
             <li>There is also possible to add traffic by adding people this represents a group of people arriving at the airport. This require you to
             to fill out how many passangers are arriving, and at what intervals the traffic are comming.
             </li>
@@ -88,7 +89,7 @@
                 <h5>Bus stop</h5>
             </div>
             <div class="col-sm-1">
-                <div class="circle purple">
+                <div class="circle dark-purple">
                     <i class="icon icon-terminals"></i>
                 </div>
                 <h5>Terminal group</h5>
@@ -96,7 +97,7 @@
         </div>
         <div class="row">
             <div class="col-sm-1">
-                <div class="circle purple">
+                <div class="circle dark-purple">
                     <i class="fa fa-train"></i>
                 </div>
                 <h5>Train</h5>
@@ -114,7 +115,7 @@
             <h5>People</h5>
         </div>
             <div class="col-sm-1">
-                <div class="circle purple">
+                <div class="circle dark-purple">
                     <i class="icon icon-bagdrops"></i>
                 </div>
                 <h5>Bagdrop group</h5>
