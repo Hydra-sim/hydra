@@ -1,10 +1,11 @@
 package api.data;
 
 import models.Timetable;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 /**
  * Created by knarf on 20/04/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SimulationNode {
 
     public String name;

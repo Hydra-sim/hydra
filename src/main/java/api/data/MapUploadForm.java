@@ -4,12 +4,14 @@ package api.data;
  * Created by knarf on 09/04/15.
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
 import javax.ws.rs.FormParam;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MapUploadForm {
 
     @FormParam("file")
