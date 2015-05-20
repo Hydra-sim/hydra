@@ -121,7 +121,9 @@
 
     });
 
-    app.controller('FullDocumentationCtrl', function($scope, $location, $anchorScroll){
+    app.controller('FullDocumentationCtrl', function($scope, $location, $anchorScroll, menu_field_name){
+        menu_field_name.setValue("Full documentation", true);
+
         $scope.scrollTo = function(id) {
             $location.hash(id);
             $anchorScroll();
