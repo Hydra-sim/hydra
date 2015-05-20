@@ -12,13 +12,13 @@
 
     <p></p>
 
-    <img src="../img/SimulationTab.PNG" alt="simulation tab" id="info-simulations" width="150px">
+    <img src="img/SimulationTab.PNG" alt="simulation tab" id="info-simulations" width="150px">
     <p>In the simulations tab you can see a list of all previous simulation.
         Click on simulation name to view simulation results. You can also delete, edit, share and set password on the simulations.
         Passwords are set by clicking on the "lock-icon", and are used to prevent other users of the system to change your simulation.
     </p>
 
-    <img src="../img/TimetableTab.PNG" alt="timetable tab" id="info-timetables" width="150px">
+    <img src="img/TimetableTab.PNG" alt="timetable tab" id="info-timetables" width="150px">
     <p>In the timetables tab you can see a list of all timetables .
         Click on timetable name to edit timetable. You can also create new timetables and delete them.
         Timetables has to values, the time the bus/train arrives, and how many passengers that arrives. Both can be edited later on.
@@ -26,19 +26,18 @@
         show traffic for the weekend, choose the appropriate timetable.
     </p>
 
-    <img src="../img/LocationsTab.PNG" alt="locations tab" id="info-locations"  width="150px">
+    <img src="img/LocationsTab.PNG" alt="locations tab" id="info-locations"  width="150px">
     <p>In the presets tab you can see a list of all locations. A location is a pre-defined simulation that you can run as is or edit to customize it.
         You can edit, delete or create a new location.
         When you set up a new simulation, you get the option of working on a location for the simulation. If you choose to use a location, a
         predefined working area with nodes will be set up for you. If you choose not to use a location your working are will be empty.
     </p>
-
+    <div class="col-lg-12">
     <h3 id="info-setup">Setting up a simulation</h3>
     <p>Right click on the screen to add a new item. You will then get a radial menu where you can choose which type of node
         you want to add. A popup for entering information for the node will then be presented. There are different input-fields
         to fill in depending on the node.</p>
-        <img src="../img/radialmeny.png" alt="radialmeny" width="200px">
-        <ul>
+        <img src="img/radialmeny.png" alt="radialmeny" width="200px">
             <li>A typical bus/train will only demand a timetable to be connected.</li>
             <li>While a terminal or door will demand information on how long it takes a passenger to enter, and if you want to make a single instance of the node, or
                 include more in the area of the node.
@@ -48,13 +47,16 @@
             </li>
         </ul>
         </br>
-    <p>
-        To create a direction for the passengers to go, you click shift + drag
+    </div>
+
+    <p>To create a direction for the passengers to go, you click shift + drag
         from an item to another item. You will then be able to enter in how many percent of the passengers
         that should walk in that direction. If you do not enter anything the percentage will be set to equal of all the different
         directions the passenger can go from the node selected.
-        <img src="../img/dependancy.png" alt="depandancy" width="300px">
+        You can set amount of traffic between nodes by hovering over the line connecting two nodes, and dragging to the left or right in the tooltip.
     </p>
+        <img src="img/dependancy.png" alt="depandancy" width="300px">
+        <img src="img/weight.png" alt="weight" width="300px">
     <h4 id="info-short-commands">Short commands:</h4>
     <ul>
         <li>Drag a node to move it.</li>
@@ -63,9 +65,7 @@
         <li>Click shift+backspace to delete selected edge / selected node and all connected edges.</li>
         <li>Shift+drag from one node to another to add an edge.</li>
         <li>Copy a node by, selcting it at press CTRL + C and CTRL + V</li>
-        <li>You can set amount of traffic between nodes by hovering over the line connecting two nodes, and dragging to the left or right in the tooltip</li>
     </ul>
-    <img src="../img/weight.png" alt="weight" width="300px">
     <h3 id="info-icons">ICONS</h3>
     <div class="icon-container-documentation">
         <div class="row">
@@ -87,6 +87,12 @@
                 </div>
                 <h5>Bus stop</h5>
             </div>
+            <div class="col-sm-1">
+                <div class="circle purple">
+                    <i class="icon icon-terminals"></i>
+                </div>
+                <h5>Terminal group</h5>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-1">
@@ -102,10 +108,16 @@
                 <h5>Door</h5>
             </div>
             <div class="col-sm-1">
-                <div class="circle black">
-                    <i class="fa fa-users"></i>
+            <div class="circle black">
+                <i class="fa fa-users"></i>
+            </div>
+            <h5>People</h5>
+        </div>
+            <div class="col-sm-1">
+                <div class="circle purple">
+                    <i class="icon icon-bagdrops"></i>
                 </div>
-                <h5>People</h5>
+                <h5>Bagdrop group</h5>
             </div>
         </div>
     </div>
