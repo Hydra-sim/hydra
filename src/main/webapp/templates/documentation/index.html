@@ -11,7 +11,7 @@
     </ol>
 
 
-    <h3 id="info-simulations">1.Simulation</h3>
+    <h3 id="info-simulations">1. Simulation</h3>
     <p>Here you can find information and instructions on how to use the simulation tool, and how the result works.</p>
     <img src="img/tabs.png" alt="tabs" width="500px" style="float: right;">
 
@@ -21,7 +21,8 @@
         Passwords are set by clicking on the "lock-icon", and are used to prevent other users of the system to change
         your simulation.</p>
 
-    <h3 id="info-timetables">2.Timetables</h3>
+    <h3 id="info-timetables">2. Timetables</h3>
+    <img src="img/newTimetable.png" alt=" new timetable" width="250px" style="float: right;">
     <p>In the timetables tab you can see a list of all timetables .
         Click on timetable name to edit timetable. You can also create new timetables and delete them.
         Timetables has to values, the time the bus/train arrives, and how many passengers that arrives. Both can be
@@ -30,7 +31,12 @@
         simulation to
         show traffic for the weekend, choose the appropriate timetable.</p>
 
-    <h3 id="info-locations">3.Locations</h3>
+    <p>To create a new timetable you simply press new timetable button located in the upper right hand corner on the timetable page.
+    This will open a modal and you will be able to sett a name on your timetable and add the arrival times and passengers for thoose arivales.
+    </p>
+
+
+    <h3 id="info-locations">3. Locations</h3>
     <p>In the presets tab you can see a list of all locations. A location is a pre-defined simulation that you can run
         as is or edit to customize it.
         You can edit, delete or create a new location.
@@ -39,26 +45,28 @@
         predefined working area with nodes will be set up for you. If you choose not to use a location your working are
         will be empty.</p>
 
-    <h3 id="info-setup">4.Setting up a simulation</h3>
+    <h3 id="info-setup">4. Setting up a simulation</h3>
+    <img src="img/radialmeny.png" alt="radialmeny" width="200px" style="float: right">
+
+
     <p>Right click on the screen to add a new item. You will then get a radial menu where you can choose which type of
         node
         you want to add. A popup for entering information for the node will then be presented. There are different
         input-fields
         to fill in depending on the node.</p>
-    <img src="img/radialmeny.png" alt="radialmeny" width="200px" style="float: right;">
+
     <ul>
         <li>Bus and train will only demand a timetable to be connected.</li>
         <li>Terminal and bagdrop will demand information on how long it takes a passenger to enter, and if you want to
             make a single instance of the node, or
             include more in the area of the node.
         </li>
-        <li>Door only requires prosessing time.</li>
+        <li>Door only requires processing time.</li>
         <li>There is also possible to add traffic by adding people this represents a group of people arriving at the
             airport. This require you to
-            to fill out how many passangers are arriving, and at what intervals the traffic are comming.
+            to fill out how many passengers are arriving, and at what intervals the traffic are coming.
         </li>
     </ul>
-
     <p>To create a direction for the passengers to go, you click shift + drag
         from an item to another item. You will then be able to enter in how many percent of the passengers
         that should walk in that direction. If you do not enter anything the percentage will be set to equal of all the
@@ -69,19 +77,14 @@
     </p>
     <img src="img/dependancy.png" alt="depandancy" width="345px">
     <img src="img/weight.png" alt="weight" width="300px">
-    <h4 id="info-short-commands">5.Short commands:</h4>
-    <ul>
-        <li>Drag a node to move it.</li>
-        <li>Scroll too zoom working area, drag working area too move around.</li>
-        <li>Click on a node or edge to select it.</li>
-        <li>Click shift+backspace to delete selected edge / selected node and all connected edges.</li>
-        <li>Shift+drag from one node to another to add an edge.</li>
-        <li>Copy a node by, selcting it at press CTRL + C and CTRL + V</li>
-    </ul>
-    <h3 id="info-icons">6.Icons</h3>
+    <h3 id="info-short-commands">5. Short commands:</h3>
+    <p>To move a node you simply drag it around the area. There is also possible to zoom on the working area by scrolling on it
+        and drag it too move around.To select a node or edge to simply click it, this also makes it possible to copy a node by pressing Ctrl + C and Ctrl + V.
+        If you want to delete a node or a dependency you can simply select it and press Shift + del.
+    </p>
+    <h3 id="info-icons">6. Icons</h3>
 
     <div class="icon-container-documentation">
-        <div class="row">
             <div class="col-sm-1">
                 <div class="circle purple">
                     <i class="fa fa-bus"></i>
@@ -100,14 +103,18 @@
                 </div>
                 <h5>Bus stop</h5>
             </div>
+        <div class="col-sm-1">
+            <div class="circle black">
+                <i class="fa fa-users"></i>
+            </div>
+            <h5>People</h5>
+        </div>
             <div class="col-sm-1">
                 <div class="circle dark-purple">
                     <i class="icon icon-terminals"></i>
                 </div>
                 <h5>Terminal group</h5>
             </div>
-        </div>
-        <div class="row">
             <div class="col-sm-1">
                 <div class="circle dark-purple">
                     <i class="fa fa-train"></i>
@@ -121,17 +128,10 @@
                 <h5>Door</h5>
             </div>
             <div class="col-sm-1">
-                <div class="circle black">
-                    <i class="fa fa-users"></i>
-                </div>
-                <h5>People</h5>
-            </div>
-            <div class="col-sm-1">
                 <div class="circle dark-purple">
                     <i class="icon icon-bagdrops"></i>
                 </div>
                 <h5>Bagdrop group</h5>
             </div>
-        </div>
     </div>
 </div>
