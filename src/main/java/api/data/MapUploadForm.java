@@ -22,10 +22,10 @@ public class MapUploadForm {
     public int zoom;
 
     @FormParam("width")
-    public int width;
+    public String width;
 
     @FormParam("height")
-    public int height;
+    public String height;
 
     public InputStream getInputStream() {
         return new ByteArrayInputStream(data);
@@ -39,11 +39,11 @@ public class MapUploadForm {
         return zoom;
     }
 
-    public int getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public int getWidth() {
+    public String getWidth() {
         return width;
     }
 }
