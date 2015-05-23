@@ -361,8 +361,8 @@
                     var bg = d3.behavior.image();
 
                     scope.$watch('background', function(img) {
-                        if(typeof img != 'undefined' && img != null && typeof img.url != 'undefined')
-                            bg.updateImage(img.url);
+                        if(typeof img != 'undefined' && img != null)
+                            bg.updateImage(img);
                     }, true);
 
                     imageContainer.call(bg);

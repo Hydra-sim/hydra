@@ -47,26 +47,29 @@
         // Custom events
         var event = d3_eventDispatch(image, "open", "close"),
             image_el = null,
-            url;
+            image_data = null;
 
         // Prototype method
         function image() {
-            var that = this,
-                dispatch = event.of(that, arguments);
-
             image_el = this
-                .append("svg:image")
-                .attr('width', '200px')
-                .attr('height', '200px')
-                .attr('xlink:href', url);
+                .append("svg:image");
+
+            update();
         }
 
-        image.updateImage = function(the_url) {
-            url = the_url;
-
-            if(image_el != null)
-                image_el.attr('xlink:href', url);
+        image.updateImage = function(img_data) {
+            image_data = img_data;
+            update();
         };
+
+        function update() {
+            if(image_data != null && image_el != null) {
+                image_el
+                    .attr('width', image_data.width)
+                    .attr('height', image_data.height)
+                    .attr('xlink:href', image_data.url);
+            }
+        }
 
         return d3.rebind(image, event, "on");
     };
