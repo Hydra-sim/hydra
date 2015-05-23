@@ -32,7 +32,8 @@ var vendorJsFiles = [
     config.bowerDir + 'ng-file-upload/ng-file-upload-shim.min.js',
     config.bowerDir + 'ng-file-upload/ng-file-upload.min.js',
     config.bowerDir + 'underscore/underscore-min.js',
-    config.bowerDir + 'zeroclipboard/dist/ZeroClipboard.min.js'
+    config.bowerDir + 'zeroclipboard/dist/ZeroClipboard.min.js',
+    config.bowerDir + 'calc-polyfill/calc.min.js'
 ];
 
 
