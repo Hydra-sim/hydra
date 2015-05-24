@@ -303,9 +303,4 @@ public class Simulation
     }
 
     //endregion
-
-    public void simulate() {
-
-        new SimulationHelper().simulate(this);
-    }
 }
