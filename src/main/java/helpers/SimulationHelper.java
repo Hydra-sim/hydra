@@ -184,7 +184,19 @@ public class SimulationHelper {
      */
     public void addEntitiesFromProducer(int currentTick) {
 
-        updatebusStop_inUse(currentTick);
+        // Update busStop_inUse
+        simulation
+                .getConsumers()
+                .filter(this::isBusstop)
+                .forEach(node -> {
+                    if (node.getBusStop_tickArrival() != -1) {
+
+                        if (currentTick - node.getBusStop_tickArrival() == node.getTicksToConsumeEntity()) {
+
+                            node.setBusStop_inUse(false);
+                        }
+                    }
+                });
 
         simulation
                 .getProducers()
@@ -302,22 +314,6 @@ public class SimulationHelper {
         }
 
         return maxWaitingTime;
-    }
-
-    private void updatebusStop_inUse(int currentTick) {
-
-        simulation
-                .getConsumers()
-                .filter(this::isBusstop)
-                .forEach(node -> {
-                    if (node.getBusStop_tickArrival() != -1) {
-
-                        if (currentTick - node.getBusStop_tickArrival() == node.getTicksToConsumeEntity()) {
-
-                            node.setBusStop_inUse(false);
-                        }
-                    }
-                });
     }
 
     private void transferEntities(Producer source, TimetableEntry arrival) {
