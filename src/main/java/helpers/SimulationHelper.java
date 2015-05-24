@@ -68,7 +68,7 @@ public class SimulationHelper {
             // If its time for a breakpoint
             if ((simulation.getTickBreakpoints() > 0 && i % simulation.getTickBreakpoints() == 0)) {
 
-                updateNodeData(i);
+                updateNodeData(i, simulation, consumerHelper);
             }
 
         }
@@ -510,7 +510,7 @@ public class SimulationHelper {
         return entitiesInQueue;
     }
 
-    private void updateNodeData(int breakpoint) {
+    private void updateNodeData(int breakpoint, Simulation simulation, ConsumerHelper consumerHelper) {
 
         for (Node node : simulation.getNodes()) {
 
