@@ -83,6 +83,7 @@ public class ConsumerGroup extends Consumer{
         return consumers.size();
     }
 
+    @Override
     public int getNumberOfConsumersInQueue() {
         return numberOfConsumersInQueue;
     }

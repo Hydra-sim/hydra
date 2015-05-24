@@ -482,15 +482,9 @@ public class SimulationHelper {
     }
 
     private int getEntitiesInQueue() {
-
         return simulation
                 .getConsumers()
-                .mapToInt(node -> {
-                    if (isConsumerGroup(node))
-                        return ((ConsumerGroup) node).getNumberOfConsumersInQueue();
-
-                    return node.getEntitiesInQueue().size();
-                })
+                .mapToInt(Consumer::getNumberOfConsumersInQueue)
                 .sum();
     }
 

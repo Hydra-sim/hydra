@@ -147,6 +147,11 @@ public class Consumer extends Node{
         this.maxWaitingTimeOnCurrentNode = maxWaitingTimeOnCurrentNode;
     }
 
+
+    public int getNumberOfConsumersInQueue() {
+        return this.getEntitiesInQueue().size();
+    }
+
     //endregion
 
     public String toString() {
