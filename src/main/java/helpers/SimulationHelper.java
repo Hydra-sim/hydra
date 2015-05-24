@@ -483,27 +483,15 @@ public class SimulationHelper {
 
     private int getEntitiesInQueue() {
 
-        int entitiesInQueue = 0;
+        return simulation
+                .getConsumers()
+                .mapToInt(node -> {
+                    if (isConsumerGroup(node))
+                        return ((ConsumerGroup) node).getNumberOfConsumersInQueue();
 
-        for (Node node : simulation.getNodes()) {
-
-            if (isConsumer(node)) {
-
-                if (isConsumerGroup(node)) {
-
-                    ConsumerGroup consumerGroup = (ConsumerGroup) node;
-
-                    entitiesInQueue += consumerGroup.getNumberOfConsumersInQueue();
-
-                } else {
-
-                    Consumer consumer = (Consumer) node;
-                    entitiesInQueue += consumer.getEntitiesInQueue().size();
-                }
-            }
-        }
-
-        return entitiesInQueue;
+                    return node.getEntitiesInQueue().size();
+                })
+                .sum();
     }
 
     private void updateNodeData(int breakpoint, Simulation simulation, ConsumerHelper consumerHelper) {
@@ -533,11 +521,9 @@ public class SimulationHelper {
 
                 for (TimetableEntry arrival : producer.getTimetable().getArrivals()) {
 
-                    if (arrival.getTime() <= breakpoint) {
-
+                    if (arrival.getTime() <= breakpoint)
                         arrivals++;
 
-                    }
                 }
 
                 producer.getProducerDataList().add(
