@@ -155,14 +155,11 @@ public class SimulationHelper {
 
                         consumerGroup.setNumberOfConsumersInQueue(queue);
 
-                    } else {
-
-                        if (!isBusstop(node)) {
-                            consumerHelper.consumeEntity((Consumer) node, tick);
-                        }
+                    } else if (!isBusstop(node)) {
+                        consumerHelper.consumeEntity(node, tick);
                     }
 
-                    for (Entity entity : ((Consumer) node).getEntitiesInQueue()) {
+                    for (Entity entity : node.getEntitiesInQueue()) {
 
                         entity.setWaitingTimeOnCurrentNode(entity.getWaitingTimeOnCurrentNode() + 1);
                     }
