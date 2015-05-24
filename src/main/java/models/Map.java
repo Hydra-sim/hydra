@@ -1,8 +1,8 @@
 package models;
 
 import javax.persistence.*;
-import javax.ws.rs.Produces;
 import java.io.File;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @NamedQuery(name = "Map.findAll", query = "SELECT a FROM Map a")
 
@@ -33,9 +33,7 @@ public class Map {
         this.scale = scale;
     }
 
-    /**
-     * @todo This shouldn't be returned from the api. We need to look into not serializing it.
-     */
+    @JsonIgnore
     public File getFile() {
         return new File(filepath);
     }
