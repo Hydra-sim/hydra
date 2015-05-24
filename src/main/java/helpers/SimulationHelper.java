@@ -189,7 +189,7 @@ public class SimulationHelper {
                     //source.setPersonsPerArrival(0); // TODO: Why the fuck do you have this line???
                     source.getTimetable().getArrivals().stream()
                             .filter(arrival -> arrival.getTime() == currentTick)
-                            .forEach(arrival -> transferEntities(source, arrival, currentTick));
+                            .forEach(arrival -> transferEntities(source, arrival));
                 });
 
     }
@@ -214,7 +214,7 @@ public class SimulationHelper {
                 });
     }
 
-    private void transferEntities(Producer source, TimetableEntry arrival, int currentTick) {
+    private void transferEntities(Producer source, TimetableEntry arrival) {
 
         source.setNumberOfArrivals(source.getNumberOfArrivals() + 1);
 
