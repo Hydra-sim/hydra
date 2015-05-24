@@ -40,6 +40,6 @@ public class ProducerHelper {
         producer.setNumberOfArrivals(timetable.getArrivals().size());
         producer.setTimeBetweenArrivals(tickBetweenArrivals);
         producer.setTimeBetweenArrivals( tickBetweenArrivals );
-        producer.setPersonsPerArrival( numberOfPassengers );
+        producer.setPersonsPerArrival( numberOfPassengers ); // TODO: Why to fuck do you have this line???
     }
 }
