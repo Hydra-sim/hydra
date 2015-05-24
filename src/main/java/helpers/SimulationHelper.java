@@ -47,7 +47,12 @@ public class SimulationHelper {
 
             consumeEntities(i);
 
-            consumeAllInQueueOnBusStop();
+            // Consume all in queue on bus-stop / parking
+            simulation.getNodes().stream()
+                    .filter(this::isConsumer)
+                    .map(Consumer.class::cast)
+                    .filter(node -> node.getType().equals(PARKING))
+                    .forEach(consumerHelper::consumeAllEntities);
 
             maxWaitingTime = calculateWaitingTime(maxWaitingTime);
 
@@ -162,15 +167,6 @@ public class SimulationHelper {
                         entity.setWaitingTimeOnCurrentNode(entity.getWaitingTimeOnCurrentNode() + 1);
                     }
                 });
-    }
-
-    private void consumeAllInQueueOnBusStop() {
-
-        simulation.getNodes().stream()
-                .filter(this::isConsumer)
-                .map(Consumer.class::cast)
-                .filter(node -> node.getType().equals(PARKING))
-                .forEach(consumerHelper::consumeAllEntities);
     }
 
     /**
