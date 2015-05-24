@@ -197,16 +197,17 @@ public class SimulationHelper {
 
         updatebusStop_inUse(currentTick);
 
-        simulation.getNodes().stream().filter(
-                this::isProducer).forEach(node -> {
+        simulation.getNodes().stream()
+                .filter(this::isProducer)
+                .forEach(node -> {
 
-            Producer source = (Producer) node;
+                    Producer source = (Producer) node;
 
-            source.setPersonsPerArrival(0);
-            source.getTimetable().getArrivals().stream().filter(
-                    arrival -> arrival.getTime() == currentTick).forEach(
-                    arrival -> transferEntities(source, arrival, currentTick));
-        });
+                    source.setPersonsPerArrival(0);
+                    source.getTimetable().getArrivals().stream()
+                            .filter(arrival -> arrival.getTime() == currentTick)
+                            .forEach(arrival -> transferEntities(source, arrival, currentTick));
+                });
 
     }
 
