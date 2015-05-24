@@ -168,13 +168,9 @@ public class SimulationHelper {
 
         simulation.getNodes().stream()
                 .filter(this::isConsumer)
-                .forEach(node -> {
-                    Consumer consumer = (Consumer) node;
-
-                    if (consumer.getType().equals(PARKING)) {
-                        consumerHelper.consumeAllEntities(consumer);
-                    }
-                });
+                .map(Consumer.class::cast)
+                .filter(node -> node.getType().equals(PARKING))
+                .forEach(consumerHelper::consumeAllEntities);
     }
 
     /**
