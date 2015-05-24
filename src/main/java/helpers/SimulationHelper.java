@@ -50,7 +50,8 @@ public class SimulationHelper {
 
             maxWaitingTime = calculateWaitingTime(maxWaitingTime);
 
-            if (isBreakpoint(simulation, i)) {
+            // If its time for a breakpoint
+            if ((simulation.getTickBreakpoints() > 0 && i % simulation.getTickBreakpoints() == 0)) {
 
                 updateNodeData(i);
             }
@@ -70,7 +71,7 @@ public class SimulationHelper {
         }
 
         for (QueueElement queueElement : simulation.getEntitiesQueueing()) {
-
+            // What is happening here @kristine?
             for (Relationship relationship : queueElement.getRelationships()) {
 
                 Producer source = (Producer) relationship.getSource();
@@ -532,16 +533,22 @@ public class SimulationHelper {
 
         for (Node node : simulation.getNodes()) {
 
-            NodeData nodeData = new NodeData(node.getEntitiesTransfered(), node.getEntitiesRecieved(), node.getEntitiesReady().size());
+            NodeData nodeData = new NodeData(
+                    node.getEntitiesTransfered(),
+                    node.getEntitiesRecieved(),
+                    node.getEntitiesReady().size()
+            );
 
             node.getNodeDataList().add(nodeData);
 
             if (isConsumer(node)) {
 
                 Consumer consumer = (Consumer) node;
-                ConsumerData consumerData = new ConsumerData(consumer.getEntitiesInQueue().size(),
+                ConsumerData consumerData = new ConsumerData(
+                        consumer.getEntitiesInQueue().size(),
                         consumer.getEntitiesConsumed().size(),
-                        consumerHelper.getMaxWaitingTime(consumer));
+                        consumerHelper.getMaxWaitingTime(consumer)
+                );
 
                 consumer.getConsumerDataList().add(consumerData);
 
@@ -576,11 +583,6 @@ public class SimulationHelper {
 
     private boolean isProducer(Node node) {
         return node instanceof Producer;
-    }
-
-    private boolean isBreakpoint(Simulation simulation, int i) {
-
-        return (simulation.getTickBreakpoints() > 0 && i % simulation.getTickBreakpoints() == 0);
     }
 
 }
