@@ -17,6 +17,10 @@ public class SimulationHelper {
 
     ConsumerHelper consumerHelper;
 
+    public SimulationHelper() {
+        this.consumerHelper = new ConsumerHelper(); // Why is this line needed?
+    }
+
     /**
      * This method simulates the trafic flow from the producers, through all the cosumers.
      *
