@@ -186,7 +186,7 @@ public class SimulationHelper {
 
                     Producer source = (Producer) node;
 
-                    //source.setPersonsPerArrival(0); // TODO: Why to fuck do you have this line???
+                    //source.setPersonsPerArrival(0); // TODO: Why the fuck do you have this line???
                     source.getTimetable().getArrivals().stream()
                             .filter(arrival -> arrival.getTime() == currentTick)
                             .forEach(arrival -> transferEntities(source, arrival, currentTick));
