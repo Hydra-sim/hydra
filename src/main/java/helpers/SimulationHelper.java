@@ -510,24 +510,21 @@ public class SimulationHelper {
 
         for (Node node : simulation.getNodes()) {
 
-            NodeData nodeData = new NodeData(
+            node.getNodeDataList().add(new NodeData(
                     node.getEntitiesTransfered(),
                     node.getEntitiesRecieved(),
                     node.getEntitiesReady().size()
-            );
-
-            node.getNodeDataList().add(nodeData);
+            ));
 
             if (isConsumer(node)) {
 
                 Consumer consumer = (Consumer) node;
-                ConsumerData consumerData = new ConsumerData(
+
+                consumer.getConsumerDataList().add(new ConsumerData(
                         consumer.getEntitiesInQueue().size(),
                         consumer.getEntitiesConsumed().size(),
                         consumerHelper.getMaxWaitingTime(consumer)
-                );
-
-                consumer.getConsumerDataList().add(consumerData);
+                ));
 
             } else if (isProducer(node)) {
 
@@ -543,9 +540,9 @@ public class SimulationHelper {
                     }
                 }
 
-                ProducerData producerData = new ProducerData(arrivals);
-
-                producer.getProducerDataList().add(producerData);
+                producer.getProducerDataList().add(
+                        new ProducerData(arrivals)
+                );
             }
         }
     }
