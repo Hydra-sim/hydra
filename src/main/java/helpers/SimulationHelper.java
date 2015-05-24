@@ -19,6 +19,15 @@ public class SimulationHelper {
         this.consumerHelper = new ConsumerHelper(); // Why is this line needed?
     }
 
+    public Simulation getSimulation() {
+        return simulation;
+    }
+
+    @Deprecated
+    public void setSimulation(Simulation simulation) {
+        this.simulation = simulation;
+    }
+
     /**
      * This method simulates the trafic flow from the producers, through all the cosumers.
      *
@@ -187,6 +196,114 @@ public class SimulationHelper {
                 });
     }
 
+    public void addEntitiesFromConsumers() {
+
+        // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+        // have, and runs the code if either this is true, or it is the first entity sent from the sending
+        // consumer
+        // Get the data about the entity that is to be sent
+        simulation
+                .getConsumers()
+                .forEach(node -> {
+
+                    while (!node.getEntitiesReady().isEmpty()) {
+
+                        boolean isSource = false,
+                                transfered = false,
+                                validTargetFound = false;
+
+                        for (Relationship relationship : simulation.getRelationships()) {
+
+                            if (relationship.getSource() == node) {
+
+                                isSource = true;
+
+                                if (relationship.getTarget() instanceof Consumer) {
+
+                                    validTargetFound = true;
+
+                                    // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                                    // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                                    // consumer
+                                    // Get the data about the entity that is to be sent
+                                    for (TransferData transferData : simulation.getTransferData()) {
+
+                                        if (transferData.source == relationship.getSource() && transferData.target == relationship.getTarget()) {
+
+                                            Node source = relationship.getSource();
+
+                                            // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
+                                            // have, and runs the code if either this is true, or it is the first entity sent from the sending
+                                            // consumer
+
+
+                                            if (source.getEntitiesTransfered() == 0
+                                                    || ((double) transferData.entitiesRecieved / source.getEntitiesTransfered()) * 100 <= relationship.getWeight()) {
+
+                                                // Get the data about the entity that is to be sent
+                                                Entity entity = relationship.getSource().getEntitiesReady().get(0);
+                                                entity.setWaitingTimeOnCurrentNode(0);
+
+                                                Consumer target = (Consumer) relationship.getTarget();
+
+                                                List<Entity> entities = target.getEntitiesInQueue();
+                                                entities.add(entity);
+                                                target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
+                                                target.setEntitiesInQueue(entities);
+
+
+                                                source.getEntitiesReady().remove(0);
+                                                source.setEntitiesTransfered(relationship.getSource().getEntitiesTransfered() + 1);
+
+                                                transferData.entitiesRecieved++;
+                                                transferData.entitiesTransfered++;
+
+                                                transfered = true;
+
+                                            }
+                                        }
+
+                                        if (transfered) break;
+                                    }
+                                }
+
+                                if (transfered) break;
+                            }
+                        }
+
+                        if (!isSource) break;
+
+                        if (!validTargetFound) break;
+                    }
+                });
+    }
+
+    /**
+     * Checks which entity has the longest waiting time registered on it, and checks if this is higher than the highest
+     * waiting time registered so far in the simulation.
+     *
+     * @param maxWaitingTime The largest of the registered waiting times so far in the simulation
+     * @return Whichever value is largest of the registered waiting times so far in the simulation and the highest
+     * waiting time of the entities registered on the entities list.
+     */
+    public int calculateWaitingTime(int maxWaitingTime) {
+
+        for (Node node : simulation.getNodes()) {
+
+            if (isConsumer(node)) {
+
+                Consumer consumer = (Consumer) node;
+
+                int waitingTime = consumerHelper.getMaxWaitingTime(consumer);
+                consumer.setMaxWaitingTime(waitingTime);
+
+                if (waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
+            }
+        }
+
+        return maxWaitingTime;
+    }
+
     private void updatebusStop_inUse(int currentTick) {
 
         simulation
@@ -327,114 +444,6 @@ public class SimulationHelper {
         source.setEntitiesTransfered(source.getEntitiesTransfered() + 1);
     }
 
-    public void addEntitiesFromConsumers() {
-
-        // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-        // have, and runs the code if either this is true, or it is the first entity sent from the sending
-        // consumer
-        // Get the data about the entity that is to be sent
-        simulation
-                .getConsumers()
-                .forEach(node -> {
-
-                    while (!node.getEntitiesReady().isEmpty()) {
-
-                        boolean isSource = false,
-                                transfered = false,
-                                validTargetFound = false;
-
-                        for (Relationship relationship : simulation.getRelationships()) {
-
-                            if (relationship.getSource() == node) {
-
-                                isSource = true;
-
-                                if (relationship.getTarget() instanceof Consumer) {
-
-                                    validTargetFound = true;
-
-                                    // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-                                    // have, and runs the code if either this is true, or it is the first entity sent from the sending
-                                    // consumer
-                                    // Get the data about the entity that is to be sent
-                                    for (TransferData transferData : simulation.getTransferData()) {
-
-                                        if (transferData.source == relationship.getSource() && transferData.target == relationship.getTarget()) {
-
-                                            Node source = relationship.getSource();
-
-                                            // Checks if the percentage already sent to the receiving consumer is equal or greater to what it should
-                                            // have, and runs the code if either this is true, or it is the first entity sent from the sending
-                                            // consumer
-
-
-                                            if (source.getEntitiesTransfered() == 0
-                                                    || ((double) transferData.entitiesRecieved / source.getEntitiesTransfered()) * 100 <= relationship.getWeight()) {
-
-                                                // Get the data about the entity that is to be sent
-                                                Entity entity = relationship.getSource().getEntitiesReady().get(0);
-                                                entity.setWaitingTimeOnCurrentNode(0);
-
-                                                Consumer target = (Consumer) relationship.getTarget();
-
-                                                List<Entity> entities = target.getEntitiesInQueue();
-                                                entities.add(entity);
-                                                target.setEntitiesRecieved(target.getEntitiesRecieved() + 1);
-                                                target.setEntitiesInQueue(entities);
-
-
-                                                source.getEntitiesReady().remove(0);
-                                                source.setEntitiesTransfered(relationship.getSource().getEntitiesTransfered() + 1);
-
-                                                transferData.entitiesRecieved++;
-                                                transferData.entitiesTransfered++;
-
-                                                transfered = true;
-
-                                            }
-                                        }
-
-                                        if (transfered) break;
-                                    }
-                                }
-
-                                if (transfered) break;
-                            }
-                        }
-
-                        if (!isSource) break;
-
-                        if (!validTargetFound) break;
-                    }
-                });
-    }
-
-    /**
-     * Checks which entity has the longest waiting time registered on it, and checks if this is higher than the highest
-     * waiting time registered so far in the simulation.
-     *
-     * @param maxWaitingTime The largest of the registered waiting times so far in the simulation
-     * @return Whichever value is largest of the registered waiting times so far in the simulation and the highest
-     * waiting time of the entities registered on the entities list.
-     */
-    public int calculateWaitingTime(int maxWaitingTime) {
-
-        for (Node node : simulation.getNodes()) {
-
-            if (isConsumer(node)) {
-
-                Consumer consumer = (Consumer) node;
-
-                int waitingTime = consumerHelper.getMaxWaitingTime(consumer);
-                consumer.setMaxWaitingTime(waitingTime);
-
-                if (waitingTime > maxWaitingTime) maxWaitingTime = waitingTime;
-            }
-        }
-
-        return maxWaitingTime;
-    }
-
     private int getEntitesConsumed() {
 
         int entitiesConsumed = 0;
@@ -499,15 +508,6 @@ public class SimulationHelper {
         }
 
         return entitiesInQueue;
-    }
-
-    public Simulation getSimulation() {
-        return simulation;
-    }
-
-    @Deprecated
-    public void setSimulation(Simulation simulation) {
-        this.simulation = simulation;
     }
 
     private void updateNodeData(int breakpoint) {
