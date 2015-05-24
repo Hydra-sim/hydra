@@ -16,7 +16,7 @@
         Simulation.run({}, {id: $routeParams.id, breakpoints: 100}, function(result) {
             console.log(result);
             ctrl.simulation = result;
-            ctrl.totalSteps = result.tickBreakpoints;
+            ctrl.totalSteps = Math.floor(result.ticks / result.tickBreakpoints) - 1;
 
             update_datasource_progress();
         });
