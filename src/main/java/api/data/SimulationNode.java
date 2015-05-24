@@ -32,6 +32,8 @@ public class SimulationNode {
     public Timetable timetable;
 
     // Values returned. Don't remove, or edit will break
+    // After adding `@JsonIgnoreProperties(ignoreUnknown = true)` this should be possible to delete?
+    // TODO: figure out if its safe to delete these lines
     public Object entitiesTransfered;
     public Object entitiesRecieved;
     public Object entitiesConsumed;
