@@ -80,12 +80,12 @@
                     url: 'api/map',
                     file: data.file,
                     fields: {
-                        'zoom': data.zoom
+                        'zoom': data.zoom,
+                        'width': data.width + 'px',
+                        'height': data.height + 'px'
                     }
                 }).success(function(d) {
-                    that.image.url = 'api/map/' + d.id;
-                    that.image.id = d.id;
-                    that.image.zoom = d.zoom;
+                    that.image = d;
                 });
             });
         };
