@@ -4,7 +4,7 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller('SimulationAnimationCtrl', function($routeParams, $scope, Simulation, WeightToColor) {
+    app.controller('SimulationAnimationCtrl', function($routeParams, $scope, Simulation, WeightToColor, TicksToTimeService) {
         var ctrl = this;
 
         ctrl.simulation = {};
@@ -14,7 +14,7 @@
         ctrl.control = {};
 
         Simulation.run({}, {id: $routeParams.id, breakpoints: 100}, function(result) {
-
+            console.log(result);
             ctrl.simulation = result;
             ctrl.totalSteps = result.tickBreakpoints;
 
@@ -29,6 +29,37 @@
 
             ctrl.control.update();
         }
+
+        ctrl.extraTooltip = function(){
+
+
+            return d3.behavior
+                .tooltip()
+                .text(function(d){
+                    switch (d.type) {
+                        case "bus":
+                        case "train":
+                            return "Brought " + d.nodeDataList[d.progress].entitiesTransfered + " passengers to the location." + "<br/>" +
+                            "Number of arrivals: " + d.producerDataList[d.progress].arrivals;
+
+                        case "passengerflow":
+                            return  "Brought " + d.nodeDataList[d.progress].entitiesTransfered + " passengers to the location." + "</br>" +
+                                "Number of arrivals: " + d.producerDataList[d.progress].arrivals;
+
+                        case "parking":
+                            return "Brought " + d.consumerDataList[d.progress].entitiesConsumed + " passengeres to the location.";
+
+                        case "desktop":
+                        case "consumerGroup-desktop":
+                        case "consumerGroup-suitcase":
+                        case "door":
+                        case "suitcase":
+                            return "Entities in queue: " + d.consumerDataList[d.progress].entitiesInQueue + "</br>" +
+                                    "Max waiting time: " + TicksToTimeService.standardTicksToTime(d.consumerDataList[d.progress].maxWaitingTime);
+
+                    }
+                });
+        };
 
         ctrl.extraBorder = function() {
 
