@@ -4,30 +4,29 @@
 
     var app = angular.module('unit.controllers');
 
-    app.controller("NewPassengerflowModalCtrl", function($scope, $modal, $modalInstance){
-        $scope.options = [
+    app.controller("NewPassengerflowModalCtrl", function($modalInstance){
+        var ctrl = this;
+        ctrl.options = [
             {label: "Seconds", value: "1"},
-            {label: "Minutes", value: "2"},
-            {label: "Hours", value: "3"}
+            {label: "Minutes", value: "60"},
+            {label: "Hours", value: "3600"}
         ];
+        ctrl.timeSelect = {
+            item: ctrl.options[0]
+        };
 
-        $scope.submitPassengerflow =  function(totalNumberOfEntities, numberOfEntities, timeBetweenArrivals , timeSelect){
-            if(timeSelect.item.label == "Minutes"){
-                timeBetweenArrivals *= 60;
-            }
-            else if(timeSelect.item.label == "Hours"){
-                timeBetweenArrivals *= 60 * 60;
-            }
+        ctrl.submitPassengerflow =  function(){
+            var timeBetweenArrivals =
+                ctrl.timeBetweenArrivals *
+                ctrl.timeSelect.item.value;
 
             $modalInstance.close({
                 'timeBetweenArrivals': timeBetweenArrivals,
-                'personsPerArrival': numberOfEntities
+                'personsPerArrival': ctrl.personsPerArrival
             });
         };
 
-        $scope.cancel = function(){
-            $modalInstance.dismiss('cancel');
-        }
+        ctrl.cancel = $modalInstance.dismiss;
 
     });
 

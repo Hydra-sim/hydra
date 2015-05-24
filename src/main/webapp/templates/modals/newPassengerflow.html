@@ -1,25 +1,23 @@
-<form novalidate name="newPassengerflow" ng-submit="submitPassengerflow(totalNumberOfEntities, numberOfEntities, timeBetweenArrivals, timeSelect)">
-<div class="modal-header">
-    <h1 class="modal-title">NEW PEOPLE</h1>
-</div>
-<div class="modal-body">
-        <div class="form-group">
-            <label>Persons per arrival</label>
-            <input type="number" class="form-control" min="0" ng-model="numberOfEntities" required focus-me="true">
-        </div>
-        <div class="form-group">
-            <label>Time between arrivals</label>
-            <input type="number" class="form-control" ng-model="timeBetweenArrivals" min="0" required>
-            <select class="form-control" ng-init="timeSelect.item = options[0]" ng-model="timeSelect.item" ng-options="opt as opt.label for opt in options">
-            </select>
-        </div>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-default primary"
-            ng-click="submitPassengerflow(totalNumberOfEntities, numberOfEntities, timeBetweenArrivals, timeSelect)"
-            type="submit" ng-disabled="newPassengerflow.$invalid" >Add
-    </button>
-    <button class="btn btn-default secondary" ng-click="cancel()">Cancel</button>
-</div>
-</div>
+<form novalidate name="newPassengerflow" ng-submit="ctrl.submitPassengerflow()">
+    <div class="modal-header">
+        <h1 class="modal-title">NEW PEOPLE</h1>
+    </div>
+    <div class="modal-body">
+            <div class="form-group">
+                <label>Persons per arrival</label>
+                <input type="number" class="form-control" min="0" ng-model="ctrl.personsPerArrival" required focus-me="true" />
+            </div>
+            <div class="form-group">
+                <label>Time between arrivals</label>
+                <input type="number" class="form-control" ng-model="ctrl.timeBetweenArrivals" min="0" required />
+                <select class="form-control" ng-model="ctrl.timeSelect.item" ng-options="opt as opt.label for opt in ctrl.options">
+                </select>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default primary" ng-click="ctrl.submitPassengerflow()" type="submit" ng-disabled="newPassengerflow.$invalid">
+            Add
+        </button>
+        <button class="btn btn-default secondary" ng-click="ctrl.cancel()">Cancel</button>
+    </div>
 </form>

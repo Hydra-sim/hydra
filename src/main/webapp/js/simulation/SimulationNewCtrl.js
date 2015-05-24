@@ -186,6 +186,7 @@
             $modal.open({
                 templateUrl: 'templates/modals/newProducer.html',
                 controller: 'NewProducerModalCtrl',
+                controllerAs: 'ctrl',
                 size: 'sm',
                 resolve: {
                     type: function () {
@@ -202,6 +203,7 @@
             $modal.open({
                 templateUrl: 'templates/modals/newConsumer.html',
                 controller: 'NewConsumerModalCtrl',
+                controllerAs: 'ctrl',
                 size: 'sm',
                 resolve: {
                     type: function(){
@@ -224,6 +226,7 @@
             $modal.open({
                 templateUrl: 'templates/modals/newPassengerflow.html',
                 controller: 'NewPassengerflowModalCtrl',
+                controllerAs: 'ctrl',
                 size: 'sm'
             }).result.then(function(data) {
                 addData(data, 'passengerflow');
@@ -235,6 +238,7 @@
             var configModal = $modal.open({
                 templateUrl: 'templates/modals/configModal.html',
                 controller: 'ConfigModalModalCtrl',
+                controllerAs: 'ctrl',
                 size: 'sm',
                 resolve: {
                     startTime: function() {

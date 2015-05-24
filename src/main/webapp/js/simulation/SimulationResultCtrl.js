@@ -42,6 +42,8 @@
 
         function init(result) {
 
+            console.log(result);
+
             ctrl.simulation = result;
             //console.log(result);
 
