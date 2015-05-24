@@ -24,7 +24,6 @@ public class SimulationHelper {
      */
     public void simulate(Simulation simulation) {
 
-        consumerHelper = new ConsumerHelper();
         this.simulation = simulation;
         consumerHelper = new ConsumerHelper();
 
