@@ -34,9 +34,8 @@ public class SimulationHelper {
         for (int i = simulation.getStartTick(); i < simulation.getStartTick() + simulation.getTicks(); i++) {
 
             // Increase waiting time
-            simulation.getNodes().stream()
-                    .filter(this::isConsumer)
-                    .map(Consumer.class::cast)
+            simulation
+                    .getConsumers()
                     .forEach(ConsumerHelper::increaseWaitingTime);
 
             addEntitiesFromProducer(i);
@@ -48,9 +47,8 @@ public class SimulationHelper {
             consumeEntities(i);
 
             // Consume all in queue on bus-stop / parking
-            simulation.getNodes().stream()
-                    .filter(this::isConsumer)
-                    .map(Consumer.class::cast)
+            simulation
+                    .getConsumers()
                     .filter(node -> node.getType().equals(PARKING))
                     .forEach(consumerHelper::consumeAllEntities);
 
@@ -119,8 +117,8 @@ public class SimulationHelper {
     public void consumeEntities(int tick) {
 
         // Will be true both for Consumers and ConsumerGroups
-        simulation.getNodes().stream()
-                .filter(this::isConsumer)
+        simulation
+                .getConsumers()
                 .forEach(node -> {
 
                     if (isConsumerGroup(node)) {
@@ -194,9 +192,8 @@ public class SimulationHelper {
 
     private void updatebusStop_inUse(int currentTick) {
 
-        simulation.getNodes().stream()
-                .filter(this::isConsumer)
-                .map(Consumer.class::cast)
+        simulation
+                .getConsumers()
                 .filter(node -> node.getType().equals(PARKING))
                 .forEach(node -> {
                     if (node.getBusStop_tickArrival() != -1) {
@@ -339,8 +336,8 @@ public class SimulationHelper {
         // have, and runs the code if either this is true, or it is the first entity sent from the sending
         // consumer
         // Get the data about the entity that is to be sent
-        simulation.getNodes().stream()
-                .filter(this::isConsumer)
+        simulation
+                .getConsumers()
                 .forEach(node -> {
 
                     while (!node.getEntitiesReady().isEmpty()) {

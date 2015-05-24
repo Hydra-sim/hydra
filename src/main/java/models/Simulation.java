@@ -1,6 +1,6 @@
 package models;
 
-import helpers.SimulationHelper;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.data.QueueElement;
 import models.data.TransferData;
 import org.hibernate.annotations.Fetch;
@@ -13,6 +13,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * A query to get all Simulations in the database
@@ -205,6 +206,20 @@ public class Simulation
 
     public List<Node> getNodes() {
         return nodes;
+    }
+
+    @JsonIgnore
+    public Stream<Consumer> getConsumers() {
+        return nodes.stream()
+                .filter(node -> node instanceof Consumer)
+                .map(Consumer.class::cast);
+    }
+
+    @JsonIgnore
+    public Stream<Producer> getProducers() {
+        return nodes.stream()
+                .filter(node -> node instanceof Producer)
+                .map(Producer.class::cast);
     }
 
     public void setNodes(List<Node> nodes) {
