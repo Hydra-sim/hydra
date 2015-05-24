@@ -36,7 +36,8 @@ public class SimulationHelper {
             // Increase waiting time
             simulation.getNodes().stream()
                     .filter(this::isConsumer)
-                    .forEach(node -> ConsumerHelper.increaseWaitingTime((Consumer) node));
+                    .map(Consumer.class::cast)
+                    .forEach(ConsumerHelper::increaseWaitingTime);
 
             addEntitiesFromProducer(i);
 
