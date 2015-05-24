@@ -77,7 +77,7 @@ public class SimulationHelper {
         }
 
         for (QueueElement queueElement : simulation.getEntitiesQueueing()) {
-            // What is happening here @kristine?
+            // What is happening here @kristine? TODO: fix this!
             for (Relationship relationship : queueElement.getRelationships()) {
 
                 Producer source = (Producer) relationship.getSource();
