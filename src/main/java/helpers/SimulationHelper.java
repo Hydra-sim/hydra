@@ -182,33 +182,28 @@ public class SimulationHelper {
 
         simulation.getNodes().stream()
                 .filter(this::isProducer)
+                .map(Producer.class::cast)
                 .forEach(node -> {
-
-                    Producer source = (Producer) node;
-
-                    //source.setPersonsPerArrival(0); // TODO: Why the fuck do you have this line???
-                    source.getTimetable().getArrivals().stream()
+                    //node.setPersonsPerArrival(0); // TODO: Why the fuck do you have this line???
+                    node.getTimetable().getArrivals().stream()
                             .filter(arrival -> arrival.getTime() == currentTick)
-                            .forEach(arrival -> transferEntities(source, arrival));
+                            .forEach(arrival -> transferEntities(node, arrival));
                 });
 
     }
 
     private void updatebusStop_inUse(int currentTick) {
 
-        simulation.getNodes().stream().filter(this::isConsumer).forEach(
-                node -> {
+        simulation.getNodes().stream()
+                .filter(this::isConsumer)
+                .map(Consumer.class::cast)
+                .filter(node -> node.getType().equals(PARKING))
+                .forEach(node -> {
+                    if (node.getBusStop_tickArrival() != -1) {
 
-                    Consumer consumer = (Consumer) node;
+                        if (currentTick - node.getBusStop_tickArrival() == node.getTicksToConsumeEntity()) {
 
-                    if (consumer.getType().equals(PARKING)) {
-
-                        if (consumer.getBusStop_tickArrival() != -1) {
-
-                            if (currentTick - consumer.getBusStop_tickArrival() == consumer.getTicksToConsumeEntity()) {
-
-                                consumer.setBusStop_inUse(false);
-                            }
+                            node.setBusStop_inUse(false);
                         }
                     }
                 });
