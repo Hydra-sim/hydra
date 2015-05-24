@@ -55,7 +55,7 @@
                         case "door":
                         case "suitcase":
                             return "Entities in queue: " + d.consumerDataList[d.progress].entitiesInQueue + "</br>" +
-                                    "Max waiting time: " + TicksToTimeService.standardTicksToTime(d.consumerDataList[d.progress].maxWaitingTime);
+                                    "Waiting time: " + TicksToTimeService.standardTicksToTime(d.consumerDataList[d.progress].maxWaitingTime);
 
                     }
                 });
