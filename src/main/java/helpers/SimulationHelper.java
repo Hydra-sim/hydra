@@ -12,9 +12,7 @@ import java.util.List;
  */
 public class SimulationHelper {
 
-    public static final String PARKING = "parking";
     Simulation simulation;
-
     ConsumerHelper consumerHelper;
 
     public SimulationHelper() {
@@ -53,7 +51,7 @@ public class SimulationHelper {
             // Consume all in queue on bus-stop / parking
             simulation
                     .getConsumers()
-                    .filter(node -> node.getType().equals(PARKING))
+                    .filter(this::isBusstop)
                     .forEach(consumerHelper::consumeAllEntities);
 
             maxWaitingTime = calculateWaitingTime(maxWaitingTime);
@@ -159,7 +157,7 @@ public class SimulationHelper {
 
                     } else {
 
-                        if (!node.getType().equals(PARKING)) {
+                        if (!isBusstop(node)) {
                             consumerHelper.consumeEntity((Consumer) node, tick);
                         }
                     }
@@ -182,23 +180,21 @@ public class SimulationHelper {
 
         updatebusStop_inUse(currentTick);
 
-        simulation.getNodes().stream()
-                .filter(this::isProducer)
-                .map(Producer.class::cast)
+        simulation
+                .getProducers()
                 .forEach(node -> {
                     //node.setPersonsPerArrival(0); // TODO: Why the fuck do you have this line???
                     node.getTimetable().getArrivals().stream()
                             .filter(arrival -> arrival.getTime() == currentTick)
                             .forEach(arrival -> transferEntities(node, arrival));
                 });
-
     }
 
     private void updatebusStop_inUse(int currentTick) {
 
         simulation
                 .getConsumers()
-                .filter(node -> node.getType().equals(PARKING))
+                .filter(this::isBusstop)
                 .forEach(node -> {
                     if (node.getBusStop_tickArrival() != -1) {
 
@@ -224,7 +220,7 @@ public class SimulationHelper {
 
                 if (relationship.getTarget() instanceof Consumer) {
 
-                    if (relationship.getTarget().getType().equals(PARKING)) {
+                    if (isBusstop(relationship.getTarget())) {
 
                         busStop = true;
                     }
@@ -346,11 +342,9 @@ public class SimulationHelper {
 
                     while (!node.getEntitiesReady().isEmpty()) {
 
-                        boolean isSource = false;
-
-                        boolean transfered = false;
-
-                        boolean validTargetFound = false;
+                        boolean isSource = false,
+                                transfered = false,
+                                validTargetFound = false;
 
                         for (Relationship relationship : simulation.getRelationships()) {
 
@@ -514,6 +508,7 @@ public class SimulationHelper {
         return simulation;
     }
 
+    @Deprecated
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
     }
@@ -572,6 +567,10 @@ public class SimulationHelper {
 
     private boolean isProducer(Node node) {
         return node instanceof Producer;
+    }
+
+    private boolean isBusstop(Node node) {
+        return node.getType().equals("parking");
     }
 
 }
