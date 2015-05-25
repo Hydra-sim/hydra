@@ -44,10 +44,7 @@ public class SimulationHelper {
 
         // Breakpoint every - tick. 10 by default
         double tempTicksBetweenBreakpoints = ( simulation.getTickBreakpoints() != 0 )
-
-                ? ( ( double ) simulation.getTicks() / simulation.getTickBreakpoints() )
-
-                : 10;
+                ? ( ( double ) simulation.getTicks() / simulation.getTickBreakpoints() ) : 10;
 
         int ticksBetweenBreakpoints = ( int ) Math.ceil( tempTicksBetweenBreakpoints );
 
