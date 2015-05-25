@@ -52,7 +52,7 @@ public class SimulationHelper {
 
         for ( int i = simulation.getStartTick(); i < simulation.getStartTick() + simulation.getTicks(); i++ ) {
 
-            if ( ticksBetweenBreakpoints != 0 && i % ticksBetweenBreakpoints == 0 ) {
+            if ( ticksBetweenBreakpoints != 0 && i % ticksBetweenBreakpoints == 0 && breakpoints != simulation.getTickBreakpoints()) {
 
                 updateNodeData( i, simulation, consumerHelper );
 
@@ -99,6 +99,8 @@ public class SimulationHelper {
                 }
             }
         }
+
+        updateNodeData( 0, simulation, consumerHelper );
 
         simulation.getEntitiesQueueing().stream().filter(
                 queueElement -> !queueElement.getRelationships().isEmpty() ).forEach(
