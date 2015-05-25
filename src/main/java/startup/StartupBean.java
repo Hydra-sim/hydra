@@ -80,14 +80,17 @@ public class StartupBean {
             Simulation OSLPreset2 = persistJsonFile( "presets/OSLPreset.json" );
             OSLPreset2.setMap(map);
             OSLPreset2.setName( "OSL Preset with Map" );
+
+            Simulation OSLPreset3 = persistJsonFile( "presets/OSLPresetWithProducers.json" );
+            OSLPreset3.setMap(map);
+
+            persistJsonFile( "presets/OSLPreset.json" );
+            persistJsonFile( "presets/OSLPresetWithManyProducers.json" );
+            persistJsonFile( "presets/TestPreset.json" );
+
         } catch(Exception e) {
 
         }
-
-        persistJsonFile( "presets/OSLPreset.json" );
-        persistJsonFile( "presets/OSLPresetWithProducers.json" );
-        persistJsonFile( "presets/OSLPresetWithManyProducers.json" );
-        persistJsonFile( "presets/TestPreset.json" );
     }
 
     @SuppressWarnings( "unchecked" )
