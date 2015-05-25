@@ -64,11 +64,13 @@
 
         function update() {
             if(image_el != null && image_data != null) {
-                if(typeof image_data.width != 'undefined')
-                    image_el.attr('width', image_data.width + 'px');
 
-                if(typeof image_data.height != 'undefined')
-                    image_el.attr('height', image_data.height + 'px');
+                if(typeof image_data.width != 'undefined' && typeof image_data.height != 'undefined') {
+                    var zoom = 1 + image_data.scale / 50 - 0.5;
+                    console.log(zoom);
+                    image_el.attr('width', image_data.width * zoom + 'px');
+                    image_el.attr('height', image_data.height * zoom + 'px');
+                }
 
                 if(typeof image_data.url != 'undefined')
                     image_el.attr('xlink:href', image_data.url);
