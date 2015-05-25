@@ -54,7 +54,7 @@
                         case "consumerGroup-suitcase":
                         case "door":
                         case "suitcase":
-                            return "Entities in queue: " + d.consumerDataList[d.progress].entitiesInQueue.length + "</br>" +
+                            return "Entities in queue: " + d.consumerDataList[d.progress].entitiesInQueue + "</br>" +
                                     "Waiting time: " + TicksToTimeService.standardTicksToTime(d.consumerDataList[d.progress].maxWaitingTime);
 
                     }
