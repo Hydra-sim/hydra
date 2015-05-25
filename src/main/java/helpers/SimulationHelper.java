@@ -80,6 +80,8 @@ public class SimulationHelper {
 
             maxWaitingTime = calculateWaitingTime( maxWaitingTime );
 
+            getNumberOfBusesInQueue( simulation );
+
         }
 
         // Update node data for end if not updated on last tick
@@ -102,15 +104,7 @@ public class SimulationHelper {
 
         updateNodeData( 0, simulation, consumerHelper );
 
-        simulation.getEntitiesQueueing().stream().filter(
-                queueElement -> !queueElement.getRelationships().isEmpty() ).forEach(
-                queueElement -> {
-
-                    Producer source = ( Producer ) queueElement.getRelationships().get( 0 ).getSource();
-
-                    source.setNumberOfBusesInQueue( source.getNumberOfBusesInQueue() + 1 );
-
-                } );
+        getNumberOfBusesInQueue( simulation );
 
         simulation.setResult(
                 new SimulationResult(
@@ -537,11 +531,35 @@ public class SimulationHelper {
 
                 Producer producer = ( Producer ) node;
 
-                producer.getProducerDataList().add(
-                        new ProducerData( producer.getNumberOfArrivals() )
-                );
+                producer.getProducerDataList().add( new ProducerData(
+                        producer.getNumberOfArrivals(),
+                        producer.getNumberOfBusesInQueue()
+                ) );
             }
         }
+    }
+
+    private void getNumberOfBusesInQueue( Simulation simulation ) {
+
+        simulation.getNodes().stream().filter( this::isProducer ).forEach(
+                node -> {
+
+                    Producer producer = ( Producer ) node;
+
+                    producer.setNumberOfBusesInQueue( 0 );
+
+                } );
+
+
+        simulation.getEntitiesQueueing().stream().filter(
+                queueElement -> !queueElement.getRelationships().isEmpty() ).forEach(
+                queueElement -> {
+
+                    Producer source = ( Producer ) queueElement.getRelationships().get( 0 ).getSource();
+
+                    source.setNumberOfBusesInQueue( source.getNumberOfBusesInQueue() + 1 );
+
+                } );
     }
 
     private boolean isConsumer( Node node ) {
