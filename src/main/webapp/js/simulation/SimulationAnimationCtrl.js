@@ -40,7 +40,8 @@
                         case "bus":
                         case "train":
                             return "Brought " + d.nodeDataList[d.progress].entitiesTransfered + " passengers to the location." + "<br/>" +
-                            "Number of arrivals: " + d.producerDataList[d.progress].arrivals;
+                            "Number of arrivals: " + d.producerDataList[d.progress].arrivals + "<br/>" +
+                                "Number of " + d.type + " in queue: " + d.producerDataList[d.progress].numberOfBusesInQueue;
 
                         case "passengerflow":
                             return  "Brought " + d.nodeDataList[d.progress].entitiesTransfered + " passengers to the location." + "</br>" +
@@ -67,6 +68,10 @@
                 if(typeof d.consumerDataList !== "undefined" && d.type !== "parking") {
                     var val = d.consumerDataList[d.progress].entitiesInQueue;
                     return WeightToColor.colorFromValue(val);
+                }
+                if(d.type == "train" || d.type == "bus"){
+                    var val = d.producerDataList[d.progress].numberOfBusesInQueue;
+                    return WeightToColor.colorFromValue(val*50);
                 }
             }
 
