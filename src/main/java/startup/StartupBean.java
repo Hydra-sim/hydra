@@ -69,24 +69,10 @@ public class StartupBean {
             // Persist the map to the database
             mapDao.add(map);
 
-
-            // Simple preset
-            Simulation simplePreset = new SimplePreset().createPreset( timetables.get( 0 ) );
-            entityManager.persist( simplePreset );
-
-            //Simulation OSLPreset = new OSLPreset().createPreset( timetables.get( 0 ) );
-            //entityManager.persist( OSLPreset );
-
             Simulation OSLPreset2 = persistJsonFile( "presets/OSLPreset.json" );
             OSLPreset2.setMap(map);
             OSLPreset2.setName( "OSL Preset with Map" );
 
-            Simulation OSLPreset3 = persistJsonFile( "presets/OSLPresetWithProducers.json" );
-            OSLPreset3.setMap(map);
-
-            persistJsonFile( "presets/OSLPreset.json" );
-            persistJsonFile( "presets/OSLPresetWithManyProducers.json" );
-            persistJsonFile( "presets/TestPreset.json" );
 
         } catch(Exception e) {
 
