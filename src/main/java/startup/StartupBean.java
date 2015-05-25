@@ -71,7 +71,7 @@ public class StartupBean {
 
             Simulation OSLPreset2 = persistJsonFile( "presets/OSLPreset.json" );
             OSLPreset2.setMap(map);
-            OSLPreset2.setName( "OSL Preset with Map" );
+            OSLPreset2.setName( "OSL" );
 
 
         } catch(Exception e) {
