@@ -52,7 +52,8 @@
         // Prototype method
         function image() {
             image_el = this
-                .append("svg:image");
+                .append("svg:image")
+                .style('opacity', '0.7');
 
             update();
         }
