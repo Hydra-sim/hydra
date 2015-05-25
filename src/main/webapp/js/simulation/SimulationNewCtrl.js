@@ -81,8 +81,8 @@
                     file: data.file,
                     fields: {
                         'zoom': data.zoom,
-                        'width': data.width + 'px',
-                        'height': data.height + 'px'
+                        'width': data.width,
+                        'height': data.height
                     }
                 }).success(function(d) {
                     that.image = d;

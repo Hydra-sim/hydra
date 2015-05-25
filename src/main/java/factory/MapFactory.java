@@ -20,7 +20,7 @@ public class MapFactory {
         );
     }
 
-    public Map createMap(byte[] data, int zoom, String width, String height) throws Exception {
+    public Map createMap(byte[] data, int zoom, int width, int height) throws Exception {
         // Hash the content to generate unique name
         String hash = EncryptionHelper.hashByteArray(data);
 

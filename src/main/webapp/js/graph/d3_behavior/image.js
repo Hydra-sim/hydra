@@ -65,8 +65,8 @@
         function update() {
             if(image_data != null && image_el != null) {
                 image_el
-                    .attr('width', image_data.width)
-                    .attr('height', image_data.height)
+                    .attr('width', image_data.width + 'px')
+                    .attr('height', image_data.height + 'px')
                     .attr('xlink:href', image_data.url);
             }
         }
