@@ -63,11 +63,15 @@
         };
 
         function update() {
-            if(image_data != null && image_el != null) {
-                image_el
-                    .attr('width', image_data.width + 'px')
-                    .attr('height', image_data.height + 'px')
-                    .attr('xlink:href', image_data.url);
+            if(image_el != null && image_data != null) {
+                if(typeof image_data.width != 'undefined')
+                    image_el.attr('width', image_data.width + 'px');
+
+                if(typeof image_data.height != 'undefined')
+                    image_el.attr('height', image_data.height + 'px');
+
+                if(typeof image_data.url != 'undefined')
+                    image_el.attr('xlink:href', image_data.url);
             }
         }
 
