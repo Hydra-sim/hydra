@@ -74,10 +74,6 @@
                             });
                         });
 
-                        // Hack to hide tooltip if you delete a node
-                        if(tooltip != null)
-                            tooltip.close();
-
                         update();
                     }
 
