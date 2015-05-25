@@ -54,7 +54,7 @@ public class SimulationHelper {
 
             if ( ticksBetweenBreakpoints != 0 && i % ticksBetweenBreakpoints == 0 ) {
 
-                updateNodeData( simulation, consumerHelper );
+                updateNodeData( i, simulation, consumerHelper );
 
                 breakpoints++;
             }
@@ -85,7 +85,7 @@ public class SimulationHelper {
         // Update node data for end if not updated on last tick
         if ( breakpoints != simulation.getTickBreakpoints() ) {
 
-            updateNodeData( simulation, consumerHelper );
+            updateNodeData( 0, simulation, consumerHelper );
         }
 
         for ( Node node : simulation.getNodes() ) {
@@ -501,7 +501,7 @@ public class SimulationHelper {
                 .sum();
     }
 
-    private void updateNodeData( Simulation simulation, ConsumerHelper consumerHelper ) {
+    private void updateNodeData( int tick, Simulation simulation, ConsumerHelper consumerHelper ) {
 
         for ( Node node : simulation.getNodes() ) {
 
@@ -522,6 +522,8 @@ public class SimulationHelper {
                 ) );
 
             } else if ( isProducer( node ) ) {
+
+                int t = tick;
 
                 Producer producer = ( Producer ) node;
 

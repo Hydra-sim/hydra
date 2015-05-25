@@ -498,6 +498,8 @@ public class TestingCorner {
 
         Simulation simulation = new Simulation("test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
         simulationHelper.simulate(simulation);
+
+        System.out.println();
     }
 
     @Test

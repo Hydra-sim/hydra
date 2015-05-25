@@ -37,9 +37,10 @@ public class ProducerHelper {
         }
 
         producer.setTimetable(timetable);
-        producer.setNumberOfArrivals(timetable.getArrivals().size());
+        producer.setNumberOfArrivals(0);
         producer.setTimeBetweenArrivals(tickBetweenArrivals);
         producer.setTimeBetweenArrivals( tickBetweenArrivals );
         producer.setPersonsPerArrival( numberOfPassengers ); // TODO: Why to fuck do you have this line???
+                                                             // Answer: To be able to return it to frontend
     }
 }
