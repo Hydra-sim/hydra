@@ -61,6 +61,7 @@ public class Simulation {
     public void delete(int id) throws Exception
     {
         models.Simulation item = entityManager.find(models.Simulation.class, id);
+        item.setMap(null); // Set image to null before deleting it since that won't work
         entityManager.remove(item);
     }
 
