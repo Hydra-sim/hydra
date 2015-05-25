@@ -1,13 +1,9 @@
 package calculations;
 
-import api.data.SimulationFormData;
-import api.data.SimulationNode;
-import factory.SimulationFactory;
 import helpers.ProducerHelper;
 import helpers.SimulationHelper;
 import models.*;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -182,7 +178,7 @@ public class TestingCorner {
         relationships.add(new Relationship(producer, consumer, 100));
 
         Simulation simulation = new Simulation("Simulation with data which has been simulated",
-                                                new Date(), nodes, relationships, 0, 100, 25);
+                                                new Date(), nodes, relationships, 0, 99, 25);
 
         SimulationHelper simulationHelper = new SimulationHelper();
         simulationHelper.simulate(simulation);
@@ -256,56 +252,6 @@ public class TestingCorner {
 
         // entities consumed (sim1 lower than sim2)
         assertTrue(sim1.getResult().getEntitiesConsumed() > sim2.getResult().getEntitiesConsumed());
-    }
-
-    @Ignore
-    @Test
-    public void testSimulationFactoryWithBreakpoints() throws Exception {
-
-        SimulationFormData formData = new SimulationFormData();
-
-        formData.name = "Test";
-        formData.startTick = 0;
-        formData.ticks = 100;
-
-        formData.nodes = new ArrayList<>();
-
-        SimulationNode producer = new SimulationNode();
-        producer.type = "producer";
-        producer.timetableId = 95;
-        formData.nodes.add(producer);
-
-        SimulationNode consumer = new SimulationNode();
-        consumer.type = "consumer";
-        consumer.ticksToConsumeEntity = 10;
-        formData.nodes.add(consumer);
-
-        formData.edges = new ArrayList<>();
-
-        SimulationFactory simulationFactory = new SimulationFactory();
-
-        Simulation simulation = simulationFactory.createSimulation(formData);
-
-        Timetable timetable = new Timetable(new ArrayList<TimetableEntry>() {{
-
-            add(new TimetableEntry(25, 500));
-            add(new TimetableEntry(50, 500));
-            add(new TimetableEntry(75, 500));
-
-        }}, "Timetable");
-
-        List<Relationship> relationships = new ArrayList<>();
-        relationships.add(new Relationship(simulation.getNodes().get(0), simulation.getNodes().get(1), 100));
-        simulation.setRelationships(relationships);
-
-        simulation.getNodes().stream().filter(
-                node -> node instanceof Producer).forEach(
-                node -> ((Producer) node).setTimetable(timetable));
-
-        simulationHelper.simulate(simulation);
-        simulation = simulationHelper.getSimulation();
-
-        assertTrue(simulation.getNodes().get(0).getNodeDataList().size() > 0);
     }
 
     @Test

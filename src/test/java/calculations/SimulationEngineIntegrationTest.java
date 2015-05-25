@@ -5,9 +5,7 @@ import helpers.ProducerHelper;
 import helpers.SimulationHelper;
 import models.*;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import presets.OSLPreset;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -183,7 +181,6 @@ public class SimulationEngineIntegrationTest {
     }
 
 
-    @Ignore
     @Test
     public void testSimulationSpeed(){
 

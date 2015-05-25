@@ -96,14 +96,13 @@ public class Simulation
 
     public Simulation(String name, int ticks) {
 
-        this(name, new Date(), new ArrayList<>(), new ArrayList<>(), 0, ticks, 0);
+        this(name, new Date(), new ArrayList<>(), new ArrayList<>(), 0, ticks, 100);
     }
 
     public Simulation(String name, List<Node> nodes, List<Relationship> relationships, int ticks) {
 
-        this(name, new Date(), nodes, relationships, 0, ticks, 0);
+        this(name, new Date(), nodes, relationships, 0, ticks, 100);
     }
-
 
     public Simulation(String name, Date date, List<Node> nodes, List<Relationship> relationships, int startTick, int ticks, int tickBreakpoints) {
         this.name = name;
