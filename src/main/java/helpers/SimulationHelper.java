@@ -52,7 +52,7 @@ public class SimulationHelper {
 
         for ( int i = simulation.getStartTick(); i < simulation.getStartTick() + simulation.getTicks(); i++ ) {
 
-            if ( ticksBetweenBreakpoints != 0 && i % ticksBetweenBreakpoints == 0 && breakpoints != simulation.getTickBreakpoints()) {
+            if ( ticksBetweenBreakpoints != 0 && i % ticksBetweenBreakpoints == 0 && breakpoints != simulation.getTickBreakpoints() ) {
 
                 updateNodeData( i, simulation, consumerHelper );
 
@@ -513,7 +513,17 @@ public class SimulationHelper {
                     node.getEntitiesReady().size()
             ) );
 
-            if ( isConsumer( node ) ) {
+            if ( isConsumerGroup( node ) ) {
+
+                ConsumerGroup consumerGroup = ( ConsumerGroup ) node;
+
+                consumerGroup.getConsumerDataList().add( new ConsumerData(
+                        consumerGroup.getNumberOfConsumersInQueue(),
+                        consumerGroup.getEntitiesConsumed().size(),
+                        consumerHelper.getMaxWaitingTime( consumerGroup )
+                ) );
+
+            } else if ( isConsumer( node ) ) {
 
                 Consumer consumer = ( Consumer ) node;
 
@@ -524,8 +534,6 @@ public class SimulationHelper {
                 ) );
 
             } else if ( isProducer( node ) ) {
-
-                int t = tick;
 
                 Producer producer = ( Producer ) node;
 

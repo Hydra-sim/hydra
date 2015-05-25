@@ -447,7 +447,7 @@ public class TestingCorner {
 
         int startTick = 0;
         int ticks = 5;
-        int tickBreakpoints = 1;
+        int tickBreakpoints = 5;
 
         Simulation simulation = new Simulation("Test", new Date(), nodes, relationships, startTick, ticks, tickBreakpoints);
         simulationHelper.simulate(simulation);

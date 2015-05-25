@@ -18,50 +18,50 @@ public class ConsumerHelper {
     /**
      * Adds entity to the queue of a consumer
      *
-     * @param con the consumer to add entity to
+     * @param con    the consumer to add entity to
      * @param entity the entity to add
      */
-    public void addEntity(Consumer con, Entity entity) {
+    public void addEntity( Consumer con, Entity entity ) {
 
-        List<Entity> conEntities = con.getEntitiesInQueue();
-        conEntities.add(entity);
-        con.setEntitiesInQueue(conEntities);
+        List< Entity > conEntities = con.getEntitiesInQueue();
+        conEntities.add( entity );
+        con.setEntitiesInQueue( conEntities );
     }
 
     /**
      * Increases the registered waiting time for entities in queue on a consumer
      *
-     * @param con the consumer on which the entities are queueing
+     * @param con   the consumer on which the entities are queueing
      * @param ticks the number of ticks the entities have waited
      */
-    public static void increaseWaitingTime(Consumer con, int ticks) {
+    public static void increaseWaitingTime( Consumer con, int ticks ) {
 
-        if(con instanceof ConsumerGroup) {
+        if ( con instanceof ConsumerGroup ) {
 
-            ConsumerGroup consumerGroup = (ConsumerGroup) con;
+            ConsumerGroup consumerGroup = ( ConsumerGroup ) con;
 
-            for(Consumer consumer : consumerGroup.getConsumers()) {
+            for ( Consumer consumer : consumerGroup.getConsumers() ) {
 
-                for (Entity entity : consumer.getEntitiesInQueue()) {
+                for ( Entity entity : consumer.getEntitiesInQueue() ) {
 
-                    entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + ticks);
+                    entity.setWaitingTimeInTicks( entity.getWaitingTimeInTicks() + ticks );
                 }
 
                 ConsumerHelper consumerHelper = new ConsumerHelper();
-                int max = consumerHelper.getMaxWaitingTime(consumer);
+                int max = consumerHelper.getMaxWaitingTime( consumer );
 
-                if(max > consumerGroup.getMaxWaitingTimeOnCurrentNode()) {
+                if ( max > consumerGroup.getMaxWaitingTimeOnCurrentNode() ) {
 
-                    consumerGroup.setMaxWaitingTimeOnCurrentNode(max);
+                    consumerGroup.setMaxWaitingTimeOnCurrentNode( max );
                 }
             }
 
 
         } else {
 
-            for (Entity entity : con.getEntitiesInQueue()) {
+            for ( Entity entity : con.getEntitiesInQueue() ) {
 
-                entity.setWaitingTimeInTicks(entity.getWaitingTimeInTicks() + ticks);
+                entity.setWaitingTimeInTicks( entity.getWaitingTimeInTicks() + ticks );
             }
         }
     }
@@ -71,8 +71,8 @@ public class ConsumerHelper {
      *
      * @param con the consumer on which the entities are queueing
      */
-    public static void increaseWaitingTime(Consumer con) {
-        increaseWaitingTime(con, 1);
+    public static void increaseWaitingTime( Consumer con ) {
+        increaseWaitingTime( con, 1 );
     }
 
     /**
@@ -80,39 +80,39 @@ public class ConsumerHelper {
      *
      * @param con the consumer on which the entities are to be moved
      */
-    public void consumeEntity(Consumer con, int tick) {
+    public void consumeEntity( Consumer con, int tick ) {
 
-        List<Entity> entities = con.getEntitiesInQueue();
-        List<Entity> entitiesConsumed = new ArrayList<>();
+        List< Entity > entities = con.getEntitiesInQueue();
+        List< Entity > entitiesConsumed = new ArrayList<>();
 
-        if(tick == -1) {
+        if ( tick == -1 ) {
 
-            while (!entities.isEmpty()){
+            while ( !entities.isEmpty() ) {
 
-                entitiesConsumed.add(con.getEntitiesInQueue().get(0));
-                entities.remove(0);
+                entitiesConsumed.add( con.getEntitiesInQueue().get( 0 ) );
+                entities.remove( 0 );
             }
 
         } else {
 
-            if (!entities.isEmpty()) {
+            if ( !entities.isEmpty() ) {
 
-                if (tick == 0 || tick % con.getTicksToConsumeEntity() == 0) {
+                if ( tick == 0 || tick % con.getTicksToConsumeEntity() == 0 ) {
 
-                    entitiesConsumed.add(con.getEntitiesInQueue().get(0));
-                    entities.remove(0);
+                    entitiesConsumed.add( con.getEntitiesInQueue().get( 0 ) );
+                    entities.remove( 0 );
                 }
             }
         }
 
-        con.setEntitiesInQueue(entities);
+        con.setEntitiesInQueue( entities );
 
-        List<Entity> entitiesConsumedBeforeSimulation = con.getEntitiesConsumed();
+        List< Entity > entitiesConsumedBeforeSimulation = con.getEntitiesConsumed();
 
-        entitiesConsumedBeforeSimulation.addAll(entitiesConsumed.stream().collect(Collectors.toList()));
-        con.setEntitiesConsumed(entitiesConsumedBeforeSimulation);
+        entitiesConsumedBeforeSimulation.addAll( entitiesConsumed.stream().collect( Collectors.toList() ) );
+        con.setEntitiesConsumed( entitiesConsumedBeforeSimulation );
 
-        con.setEntitiesReady(entitiesConsumed);
+        con.setEntitiesReady( entitiesConsumed );
     }
 
     /**
@@ -120,9 +120,9 @@ public class ConsumerHelper {
      *
      * @param con the consumer on which the entities are to be moved
      */
-    public void consumeAllEntities(Consumer con) {
+    public void consumeAllEntities( Consumer con ) {
 
-        consumeEntity(con, -1);
+        consumeEntity( con, -1 );
     }
 
     /**
@@ -131,19 +131,39 @@ public class ConsumerHelper {
      * @param con the consumer on which the entities to be checked are
      * @return the highest recorded waiting time on a entity on the given consumer
      */
-    public int getMaxWaitingTime(Consumer con) {
+    public int getMaxWaitingTime( Consumer con ) {
 
         int maxWaitingTime = 0;
 
-        for(Entity entity : con.getEntitiesInQueue()) {
+        if ( con instanceof ConsumerGroup ) {
 
-            if(entity.getWaitingTimeInTicks() > maxWaitingTime) maxWaitingTime = entity.getWaitingTimeInTicks();
+            ConsumerGroup consumerGroup = ( ConsumerGroup ) con;
 
-            if(entity.getWaitingTimeOnCurrentNode() > con.getMaxWaitingTimeOnCurrentNode()) {
-                con.setMaxWaitingTimeOnCurrentNode(entity.getWaitingTimeOnCurrentNode());
+            for ( Consumer consumer : consumerGroup.getConsumers() ) {
+
+                for ( Entity entity : consumer.getEntitiesInQueue() ) {
+
+                    maxWaitingTime = getMaxWaitingTimeFromEntity( con, maxWaitingTime, entity );
+                }
+
             }
         }
 
+        for ( Entity entity : con.getEntitiesInQueue() ) {
+
+            maxWaitingTime = getMaxWaitingTimeFromEntity( con, maxWaitingTime, entity );
+        }
+
+        return maxWaitingTime;
+    }
+
+    private int getMaxWaitingTimeFromEntity( Consumer con, int maxWaitingTime, Entity entity ) {
+
+        if ( entity.getWaitingTimeInTicks() > maxWaitingTime ) maxWaitingTime = entity.getWaitingTimeInTicks();
+
+        if ( entity.getWaitingTimeOnCurrentNode() > con.getMaxWaitingTimeOnCurrentNode() ) {
+            con.setMaxWaitingTimeOnCurrentNode( entity.getWaitingTimeOnCurrentNode() );
+        }
         return maxWaitingTime;
     }
 
@@ -153,7 +173,7 @@ public class ConsumerHelper {
      * @param consumer the consumer on which we wish to count the entites
      * @return the number of entites sent in total to the consumer
      */
-    public int getTotalSentToConsumer(Consumer consumer) {
+    public int getTotalSentToConsumer( Consumer consumer ) {
 
         return consumer.getEntitiesConsumed().size() + consumer.getEntitiesInQueue().size();
     }
