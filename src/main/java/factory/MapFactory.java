@@ -20,10 +20,6 @@ public class MapFactory {
         );
     }
 
-    public Map createMap(byte[] data, int zoom) throws Exception {
-        return createMap( data, zoom, "100%", "100%" );
-    }
-
     public Map createMap(byte[] data, int zoom, String width, String height) throws Exception {
         // Hash the content to generate unique name
         String hash = EncryptionHelper.hashByteArray(data);

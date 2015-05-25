@@ -59,7 +59,7 @@ public class StartupBean {
             // Upload map
             InputStream InputStreamOslPng = StartupBean.class.getResourceAsStream("osl.png");
             byte[] bytes = IOUtils.toByteArray(InputStreamOslPng);
-            models.Map map = mapFactory.createMap(bytes, 1);
+            models.Map map = mapFactory.createMap(bytes, 1, "1741px", "752px");
 
             // Create the output stream & copy the input stream to the output
             OutputStream os = new FileOutputStream(map.getFile());
