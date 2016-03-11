@@ -7,3 +7,7 @@ Hydra is a queue simulator. It's created to simulate queuing behavior on airport
 The build process is composed of several steps and build systems.
 The easiest way to build it is just doing a regular maven build.
 The application is tested to work with Wildfly.
+
+## License
+
+MIT License, see license file
